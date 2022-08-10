@@ -24,7 +24,7 @@
 ;; Comment or uncomment region with M-/
 (map! :ne "M-/" #'comment-or-uncomment-region)
 
-(map! :leader :desc "Dashboard" "d" #'+doom-dashboard/open)
+(map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 
 ;; Search with deadgrep
 (map! :ne "SPC r" #'deadgrep)
