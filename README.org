@@ -6,10 +6,10 @@ Place your private configuration here! Remember, you do not need to run 'doom sy
 
 Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets. It is optional.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq user-full-name "DC"
       user-mail-address "des@riseup.net")
-#+END_SRC
+#+end_src
 
 Doom exposes five (optional) variables for controlling fonts in Doom:
 
@@ -29,21 +29,21 @@ If you or Emacs can't find your font, use 'M-x describe-font' to look them up, `
 
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq doom-theme 'doom-nord-light)
-#+END_SRC
+#+end_src
 
 This determines the style of line numbers in effect. If set to `nil', line
 numbers are disabled. For relative line numbers, set this to `relative'.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq display-line-numbers-type t)
-#+END_SRC
+#+end_src
 
 If you use `org' and don't want your org files in the default location below, change `org-directory'. It must be set before org loads!
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq org-directory "~/org/")
-#+END_SRC
+#+end_src
 
 Whenever you reconfigure a package, make sure to wrap your config in an
   (after! PACKAGE
@@ -81,7 +81,7 @@ This package adds a blame legend besides the current line in version-controlled 
 
 It's somewhat handy but at the same time I can't see how I can jump to the diff for that blame, so I can't make it fully useful to me.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package blamer
   :bind (("s-i" . blamer-show-commit-info))
   :defer 20
@@ -95,13 +95,14 @@ It's somewhat handy but at the same time I can't see how I can jump to the diff 
                     :italic t)))
   :config
   (global-blamer-mode 1))
-#+END_SRC
+#+end_src
 
 TODO: Find out how to jump to the blame commit.
 
 ** Better Jumper
+Better jump (remember jump list).
+
 #+begin_src emacs-lisp
-;; Better jump (remember jump list)
 (use-package better-jumper
   :ensure t
   :config
@@ -109,27 +110,35 @@ TODO: Find out how to jump to the blame commit.
 (with-eval-after-load 'evil-maps
   (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
   (define-key evil-motion-state-map (kbd "<C-i>") 'better-jumper-jump-forward))
-#+end_src* General configs
+#+end_src
 
 ** Super save
+Automatically save open buffers on certain events.
+
+Package repository: [[https://github.com/bbatsov/super-save][here]].
+
 #+begin_src emacs-lisp
-;; https://github.com/bbatsov/super-save
 (use-package super-save
   :ensure t
   :config
   (super-save-mode +1))
 #+end_src
 
-
 * Custom keybindings
+- Open dashboard
 
 #+begin_src emacs-lisp
-;; Comment or uncomment region with M-/
-(map! :ne "M-/" #'comment-or-uncomment-region)
-
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
+#+end_src
 
-;; Search with deadgrep
+- Comment or uncomment region with M-/
+#+begin_src emacs-lisp
+(map! :ne "M-/" #'comment-or-uncomment-region)
+#+end_src
+
+- Search with deadgrep
+#+begin_src emacs-lisp
+
 (map! :ne "SPC r" #'deadgrep)
 #+end_src
 
