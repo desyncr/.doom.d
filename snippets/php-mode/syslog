@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: syslog
+# uuid:
+# key: trigger-key
+# condition: t
+# --
+if (openlog('LOG_IDENT', LOG_PID, LOG_LOCAL3)) {
+    $data = [
+
+    ];
+    syslog(LOG_NOTICE, json_encode($data));
+
+    closelog();
+}
