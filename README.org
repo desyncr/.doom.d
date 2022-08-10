@@ -214,14 +214,14 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
 #+end_src
 
 * UI
-- Show git gutter for unsaved changes, https://github.com/doomemacs/doomemacs/issues/2377#issuecomment-576117218
+- Show git gutter for unsaved changes, source: [[https://github.com/doomemacs/doomemacs/issues/2377#issuecomment-576117218][github comment]]
 #+begin_src emacs-lisp
 (after! git-gutter
   (setq git-gutter:update-interval 0.5))
 
 #+end_src
 
-- Center isearch: https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3
+- Center isearch, source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]]
 #+begin_src emacs-lisp
 (advice-add 'evil-ex-search-next :after
             (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
