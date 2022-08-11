@@ -138,37 +138,38 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
 (map! :ne "M-/" #'comment-or-uncomment-region)
 #+end_src
 
-- Search with deadgrep
+- Switch to buffer
 #+begin_src emacs-lisp
-
-(map! :ne "SPC r" #'deadgrep)
+(map! "s-b" #'ido-switch-buffer)
 #+end_src
 
-* Magit
-** Multi-git
+- Toggle treemacs
+
+Toggle treemacs with M-p (project) and M-§ (key left hand side of the number 1 and above the tab key).
 
 #+begin_src emacs-lisp
-(use-package multi-magit
-  :bind ("C-x G" . multi-magit-status)
-  :ensure nil
-  :config (progn
-            (unless magit-repository-directories
-              (setq magit-repository-directories '(("~/sys-vagrant/code/" . 2))))
-            (magit-add-section-hook 'magit-status-sections-hook
-                                    'multi-magit-insert-repos-overview
-                                    nil t)))
+(map! "s-p" #'+treemacs/toggle)
+(map! "s-§" #'+treemacs/toggle)
+#+end_src
 
+- Save buffer
 
-(use-package which-key
-  :ensure t
-  :config
-  (setq which-key-idle-delay 1.0 ;; Default is 1.0
-      which-key-idle-secondary-delay 0.5) ;; Default is nil
-)
+Quickly save buffer with M-s (save).
+
+#+begin_src emacs-lisp
+(map! "s-s" #'save-buffer)
+#+end_src
+
+- Search project
+
+Search project's contents with M-f (find). Replaces Go To Line.
+
+#+begin_src emacs-lisp
+(map! "s-f" #'+default/search-project)
 #+end_src
 
 * Project management
-- Projectile
+** projectile
 #+begin_src emacs-lisp
 (after! projectile
    (setq
