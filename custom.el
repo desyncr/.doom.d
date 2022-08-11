@@ -6,6 +6,9 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(treemacs-projectile shut-up persp-projectile helm evil-multiedit)))
+'(flycheck-checker-error-threshold 10000)
+'(flycheck-phpcs-standard "psr12 ")
+'(lsp-file-watch-threshold 100000)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
