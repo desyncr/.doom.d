@@ -283,7 +283,10 @@ source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_so
   (global-centered-cursor-mode))
 #+end_src
 
-- Ctrl+P / command launcher-like for M-x
+** vertico-posframe
+
+Ctrl+P / command launcher-like for M-x.
+
 #+begin_src emacs-lisp
 (use-package vertico-posframe
   :config
