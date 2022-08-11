@@ -174,54 +174,97 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
    )
 )
 
-(setq doom-modeline-enable-word-count t)
 #+end_src
 
-- Treemacs
+** treemacs
+
+Enable treemacs and never move to treemacs with other-window:
+
 #+begin_src emacs-lisp
 (use-package treemacs
   :ensure t
   :config
   (setq treemacs-is-never-other-window t))
+#+end_src
 
+Ensure treemacs-projectile integration:
+
+#+begin_src emacs-lisp
 (use-package treemacs-projectile
   :after (treemacs projectile)
   :ensure t)
+#+end_src
 
+Ensure treemacs-magit integration:
+
+#+begin_src emacs-lisp
 (use-package treemacs-magit
   :after (treemacs magit)
   :ensure t)
 
+#+end_src
+
+Ensure treemacs-persp integration"
+
+#+begin_src emacs-lisp
 (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
+#+end_src
 
+* Files
+- Allow deleting files in OSX. Source: [[https://emacs.stackexchange.com/a/15012][Emacs' StackExchange]]
 
-;; https://github.com/emacs-lsp/lsp-treemacs/issues/89
-(with-eval-after-load 'lsp-treemacs
-          (doom-themes-treemacs-config))
-(define-key evil-normal-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-box)
-(define-key evil-normal-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-box)
-(define-key evil-normal-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-box)
-(define-key evil-normal-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-box)
-(define-key evil-insert-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-bar)
-(define-key evil-insert-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-bar)
-(define-key evil-insert-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-bar)
-(define-key evil-insert-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-bar)
+#+begin_src emacs-lisp
+(setq delete-by-moving-to-trash t)
+(setq trash-directory "~/.Trash")
+#+end_src
 
+*Also required*: Go to Settings -> Security & Privacy -> Privacy -> Automation and Allow Emacs -> Finder. Source: [[https://ajar.freshdesk.com/support/solutions/articles/26000045119-install-error-not-authorized-to-send-apple-events-to-system-events-][freshdesk.com]]
 
+- Archive entries in sub-directory. Source: [[https://emacs.stackexchange.com/a/25020][Emacs' StackExchange]]
+
+#+begin_src emacs-lisp
+(setq org-archive-location (concat "archive/archive-"
+                                   (format-time-string "%Y%m" (current-time)) ".org_archive::"))
+#+end_src
+
+* Org/Agenda
+** org-log-repeat
+
+Disable log lines on repeat tasks.
+
+#+begin_src emacs-lisp
+(use-package org
+  :config
+    (setq org-log-repeat nil)
+)
 #+end_src
 
 * UI
-- Show git gutter for unsaved changes, source: [[https://github.com/doomemacs/doomemacs/issues/2377#issuecomment-576117218][github comment]]
+** doom-modeline-word-count
+
+Add word count to status/modeline. Useful for org documents and writing in general.
+
+#+begin_src emacs-lisp
+(use-package modeline
+  (setq doom-modeline-enable-word-count t))
+#+end_src
+
+** git-gutter
+
+Show git gutter for unsaved changes, source: [[https://github.com/doomemacs/doomemacs/issues/2377#issuecomment-576117218][github comment]].
+
 #+begin_src emacs-lisp
 (after! git-gutter
   (setq git-gutter:update-interval 0.5))
-
 #+end_src
 
-- Center isearch, source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]]
+** center-isearch
+
+source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]].
+
 #+begin_src emacs-lisp
 (advice-add 'evil-ex-search-next :after
             (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
@@ -252,4 +295,26 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
         '((left-fringe . 5)
           (right-fringe . 5)))
   )
+#+end_src
+** spatial-navigate
+
+source: https://github.com/emacs-lsp/lsp-treemacs/issues/89
+
+#+begin_src emacs-lisp
+(use-package spatial-navigate
+  :after (lsp-treemacs)
+  :ensure t)
+#+end_src
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'lsp-treemacs
+  (doom-themes-treemacs-config))
+    (define-keyevil-normal-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-box)
+    (define-key evil-normal-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-box)
+    (define-key evil-normal-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-box)
+    (define-key evil-normal-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-box)
+    (define-key evil-insert-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-bar)
+    (define-key evil-insert-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-bar)
+    (define-key evil-insert-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-bar)
+    (define-key evil-insert-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-bar)
 #+end_src
