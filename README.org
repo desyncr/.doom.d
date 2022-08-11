@@ -94,12 +94,12 @@ The problem is with org files you got line-wrap. Since I use splits (treemacs | 
                     :background nil
                     :italic t)))
   :config
-  (global-blamer-mode 1))
+  (global-blamer-mode 0))
 #+end_src
 
 TODO: Find out how to jump to the blame commit.
 
-** Better Jumper
+** better-jumper
 Better jump (remember jump list).
 
 #+begin_src emacs-lisp
