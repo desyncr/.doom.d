@@ -275,7 +275,10 @@ source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_so
 
 #+end_src
 
-- https://github.com/andre-r/centered-cursor-mode.el
+** centered-cursor-mode
+
+source: https://github.com/andre-r/centered-cursor-mode.el
+
 #+begin_src emacs-lisp
 (use-package centered-cursor-mode
   :demand
