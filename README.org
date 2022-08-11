@@ -112,7 +112,7 @@ Better jump (remember jump list).
   (better-jumper-mode +1))
 (with-eval-after-load 'evil-maps
   (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
-  (define-key evil-motion-state-map (kbd "<C-i>") 'better-jumper-jump-forward))
+  (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
 #+end_src
 
 Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
@@ -284,7 +284,6 @@ source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_so
             (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
 (advice-add 'evil-ex-search-previous :after
             (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
-
 #+end_src
 
 ** centered-cursor-mode
@@ -316,6 +315,7 @@ Ctrl+P / command launcher-like for M-x.
           (right-fringe . 5)))
   )
 #+end_src
+
 ** spatial-navigate
 
 source: https://github.com/emacs-lsp/lsp-treemacs/issues/89
@@ -327,14 +327,14 @@ source: https://github.com/emacs-lsp/lsp-treemacs/issues/89
 #+end_src
 
 #+begin_src emacs-lisp
-(with-eval-after-load 'lsp-treemacs
-  (doom-themes-treemacs-config))
-    (define-keyevil-normal-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-box)
-    (define-key evil-normal-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-box)
-    (define-key evil-normal-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-box)
-    (define-key evil-normal-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-box)
-    (define-key evil-insert-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-bar)
-    (define-key evil-insert-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-bar)
-    (define-key evil-insert-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-bar)
-    (define-key evil-insert-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-bar)
+;; (with-eval-after-load 'lsp-treemacs
+;;   (doom-themes-treemacs-config))
+;;     (define-keyevil-normal-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-box)
+;;     (define-key evil-normal-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-box)
+;;     (define-key evil-normal-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-box)
+;;     (define-key evil-normal-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-box)
+;;     (define-key evil-insert-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-bar)
+;;     (define-key evil-insert-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-bar)
+;;     (define-key evil-insert-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-bar)
+    ;; (define-key evil-insert-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-bar)
 #+end_src
