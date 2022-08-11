@@ -74,14 +74,13 @@ Alternatively, use `C-h o' to look up a symbol (functions, variables, faces, etc
 You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implemented.
 
 * Custom packages
-
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
-
-** Blamer
+** blamer
 This package adds a blame legend besides the current line in version-controlled files.
 
 It's somewhat handy but at the same time I can't see how I can jump to the diff for that blame, so I can't make it fully useful to me.
-
+Another small annoyance I found is that when I switched to a literate configuration format (i.e. use org files) the blamer shows up.
+The problem is with org files you got line-wrap. Since I use splits (treemacs | vsplit | vsplit) the blamer packages causes text reflow with the line wrap.
 #+begin_src emacs-lisp
 (use-package blamer
   :bind (("s-i" . blamer-show-commit-info))
