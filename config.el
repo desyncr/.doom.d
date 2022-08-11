@@ -1,5 +1,6 @@
 (setq user-full-name "DC"
       user-mail-address "des@riseup.net")
+(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
 (setq doom-theme 'doom-nord-light)
 (setq display-line-numbers-type t)
 (setq org-directory "~/org/")
@@ -22,7 +23,7 @@
   (better-jumper-mode +1))
 (with-eval-after-load 'evil-maps
   (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
-  (define-key evil-motion-state-map (kbd "<C-i>") 'better-jumper-jump-forward))
+  (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
 (use-package super-save
   :ensure t
   :config
@@ -30,10 +31,11 @@
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 (map! :ne "M-/" #'comment-or-uncomment-region)
 (map! "s-b" #'ido-switch-buffer)
-(map! "s-p" #'+treemacs/toggle)
+(map! "s-t" #'+treemacs/toggle)
 (map! "s-§" #'+treemacs/toggle)
 (map! "s-s" #'save-buffer)
 (map! "s-f" #'+default/search-project)
+(map! "s-p" #'projectile-find-file)
 (after! projectile
    (setq
         projectile-project-search-path '("~/sys-vagrant/code/")
@@ -61,8 +63,7 @@
   :config
     (setq org-log-repeat nil)
 )
-(use-package modeline
-  (setq doom-modeline-enable-word-count t))
+(setq doom-modeline-enable-word-count t)
 (after! git-gutter
   (setq git-gutter:update-interval 0.5))
 (advice-add 'evil-ex-search-next :after
@@ -88,13 +89,13 @@
 (use-package spatial-navigate
   :after (lsp-treemacs)
   :ensure t)
-(with-eval-after-load 'lsp-treemacs
-  (doom-themes-treemacs-config))
-    (define-keyevil-normal-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-box)
-    (define-key evil-normal-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-box)
-    (define-key evil-normal-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-box)
-    (define-key evil-normal-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-box)
-    (define-key evil-insert-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-bar)
-    (define-key evil-insert-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-bar)
-    (define-key evil-insert-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-bar)
-    (define-key evil-insert-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-bar)
+;; (with-eval-after-load 'lsp-treemacs
+;;   (doom-themes-treemacs-config))
+;;     (define-keyevil-normal-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-box)
+;;     (define-key evil-normal-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-box)
+;;     (define-key evil-normal-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-box)
+;;     (define-key evil-normal-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-box)
+;;     (define-key evil-insert-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-bar)
+;;     (define-key evil-insert-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-bar)
+;;     (define-key evil-insert-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-bar)
+    ;; (define-key evil-insert-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-bar)
