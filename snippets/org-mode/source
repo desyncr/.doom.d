@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: #+begin_src emacs-lisp ... #+end_src
+# uuid:
+# key: source-emacs-lisp
+# condition: t
+# --
+
+#+begin_src emacs-lisp
+`yas/selected-text`$0
+#+end_src
