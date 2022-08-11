@@ -263,8 +263,7 @@ Disable log lines on repeat tasks.
 Add word count to status/modeline. Useful for org documents and writing in general.
 
 #+begin_src emacs-lisp
-(use-package modeline
-  (setq doom-modeline-enable-word-count t))
+(setq doom-modeline-enable-word-count t)
 #+end_src
 
 ** git-gutter
