@@ -148,10 +148,10 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
 
 - Toggle treemacs
 
-Toggle treemacs with M-p (project) and M-§ (key left hand side of the number 1 and above the tab key).
+Toggle treemacs with M-t (tree) and M-§ (key left hand side of the number 1 and above the tab key).
 
 #+begin_src emacs-lisp
-(map! "s-p" #'+treemacs/toggle)
+(map! "s-t" #'+treemacs/toggle)
 (map! "s-§" #'+treemacs/toggle)
 #+end_src
 
@@ -170,6 +170,15 @@ Search project's contents with M-f (find). Replaces Go To Line.
 #+begin_src emacs-lisp
 (map! "s-f" #'+default/search-project)
 #+end_src
+
+- Find file
+
+M-p: find file in project, also SPC SPC.
+
+#+begin_src emacs-lisp
+(map! "s-p" #'projectile-find-file)
+#+end_src
+
 
 * Project management
 ** projectile
