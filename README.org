@@ -112,7 +112,9 @@ Better jump (remember jump list).
   (define-key evil-motion-state-map (kbd "<C-i>") 'better-jumper-jump-forward))
 #+end_src
 
-** Super save
+Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
+
+** super-save
 Automatically save open buffers on certain events.
 
 Package repository: [[https://github.com/bbatsov/super-save][here]].
