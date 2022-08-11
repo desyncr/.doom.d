@@ -4,7 +4,7 @@
 # key: trigger-key
 # condition: t
 # --
-if (openlog('LOG_IDENT', LOG_PID, LOG_LOCAL3)) {
+if (openlog('$0LOG_IDENT', LOG_PID, LOG_LOCAL3)) {
     $data = [
 
     ];
