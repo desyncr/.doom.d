@@ -219,7 +219,7 @@ M-p: find file in project, also SPC SPC.
 * Version control
 ** Magit
 Configure user and email address:
-#+begin_src bash
+#+begin_src bash :tangle no
 git config --local user.email "des@riseup.net"
 git config --local user.name "DC*"
 #+end_src
