@@ -79,7 +79,7 @@ You can also try 'gd' (or 'C-c c d') to jump to their definition and see how the
 * Fancy splash image
 
 #+begin_src emacs-lisp
-(setq fancy-splash-image "./splash/doom-emacs-bw-light.svg")
+(setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
 #+end_src
 
 * Custom packages
