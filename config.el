@@ -4,6 +4,7 @@
 (setq doom-theme 'doom-nord-light)
 (setq display-line-numbers-type t)
 (setq org-directory "~/org/")
+(setq fancy-splash-image "./splash/doom-emacs-bw-light.svg")
 (use-package blamer
   :bind (("s-i" . blamer-show-commit-info))
   :defer 20
