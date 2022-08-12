@@ -76,6 +76,12 @@ Alternatively, use `C-h o' to look up a symbol (functions, variables, faces, etc
 
 You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implemented.
 
+* Fancy splash image
+
+#+begin_src emacs-lisp
+(setq fancy-splash-image "./splash/doom-emacs-bw-light.svg")
+#+end_src
+
 * Custom packages
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
 ** blamer
