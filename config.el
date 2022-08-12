@@ -1,10 +1,21 @@
 (setq user-full-name "DC*"
       user-mail-address "des@riseup.net")
+(require 'org-tempo)
+(add-to-list 'org-structure-template-alist '("sh" . "src shell"))
 (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
 (setq doom-theme 'doom-nord-light)
 (setq display-line-numbers-type t)
 (setq org-directory "~/org/")
 (setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
+(use-package yasnippet
+  :ensure t
+  :config (yas-global-mode 1))
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+
+(require 'yasnippet-snippets)
 (use-package blamer
   :bind (("s-i" . blamer-show-commit-info))
   :defer 20
