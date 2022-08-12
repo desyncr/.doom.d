@@ -184,8 +184,15 @@ M-p: find file in project, also SPC SPC.
 #+begin_src emacs-lisp
 (map! "s-p" #'projectile-find-file)
 #+end_src
+* Version control
+** Magit
+Configure user and email address:
+#+begin_src bash
+git config --local user.email "des@riseup.net"
+git config --local user.name "DC*"
+#+end_src
 
-
+This configuration applies to the repository the command is running on (--local). You can apply global (i.e. to all repositories) replacing --lcoal with the flag --global.
 * Project management
 ** projectile
 #+begin_src emacs-lisp
