@@ -1,6 +1,9 @@
 #+TITLE: Emacs doom configuration
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :cache yes :results silent :padline no
+#+STARTUP: inlineimages
+
+[[~/.doom.d/splash/doom-emacs-bw-light.svg]]
 
 * General
 Place your private configuration here! Remember, you do not need to run 'doom sync' after modifying this file!
