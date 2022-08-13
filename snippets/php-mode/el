@@ -1,0 +1,7 @@
+# name: "else { ... }"
+# key: el
+# group: control
+# --
+else {
+  ${0:`yas-selected-text`}
+}

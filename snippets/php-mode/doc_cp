@@ -1,0 +1,9 @@
+# name: doc_cp
+# key: doc_cp
+# group: documentation
+# --
+/**
+ * ${1:undocumented class}
+ *
+ * @author ${4:`"Name"`}
+ */

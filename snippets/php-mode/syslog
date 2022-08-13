@@ -1,12 +1,13 @@
 # -*- mode: snippet -*-
 # name: syslog
 # uuid:
-# key: trigger-key
+# key: sys
+# group: application
 # condition: t
 # --
-if (openlog('$0LOG_IDENT', LOG_PID, LOG_LOCAL3)) {
+if (openlog('${1:DEBUG}', LOG_PID, LOG_LOCAL3)) {
     $data = [
-
+        '$2' => $0
     ];
     syslog(LOG_NOTICE, json_encode($data));
 

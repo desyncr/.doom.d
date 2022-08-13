@@ -1,0 +1,15 @@
+# name: class file
+# key: nc
+# group: structure
+# --
+declare(strict_types=1)
+
+namespace ${1:};
+
+/**
+ * Class description.
+ */
+${2:abstract }class ${3:}
+{
+  ${0:`yas-selected-text`}
+}

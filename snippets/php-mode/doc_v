@@ -1,0 +1,10 @@
+# name: doc_v
+# key: doc_v
+# group: documentation
+# --
+/**
+ * ${3:undocumented class variable}
+ *
+ * @var ${4:string}
+ */
+${1:var} $$2;
