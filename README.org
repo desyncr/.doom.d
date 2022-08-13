@@ -184,7 +184,7 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
 
 - Switch to buffer
 #+begin_src emacs-lisp
-(map! "s-b" #'ido-switch-buffer)
+(map! "s-b" #'ido-switch-buffer-other-window)
 #+end_src
 
 - Toggle treemacs
