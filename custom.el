@@ -4,12 +4,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
- '(flycheck-checker-error-threshold 10000)
  '(lsp-file-watch-threshold 100000)
- '(org-link-descriptive t)
  '(package-selected-packages
-   '(treemacs-projectile shut-up persp-projectile helm evil-multiedit)))
+   '(yasnippet-snippets treemacs-projectile shut-up persp-projectile helm evil-multiedit)))
 '(flycheck-checker-error-threshold 10000)
 '(flycheck-phpcs-standard "psr12 ")
 '(lsp-file-watch-threshold 100000)
