@@ -246,6 +246,8 @@ In the code above I'm actually requiring the package via lisp, which should inst
 
 There's an additional package with extra snippets maintained by the Doom Emacs' github organization: [[https://github.com/doomemacs/snippets][doomemacs/snippets]]
 
+I'm also imported several snippets from [[https://github.com/cartolari/yasnippet-vim-snippets][cartolari/yasnippet-vim-snippets]] repository, primarily [[https://github.com/cartolari/yasnippet-vim-snippets/tree/master/snippets/php-mode][php-mode]].
+
 Tip: Use M-x yas-describe-tables to see the list of snippets and edit them.
 
 * Version control
