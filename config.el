@@ -36,9 +36,10 @@
 (map! "s-s" #'save-buffer)
 (map! "s-f" #'+default/search-project)
 (map! "s-p" #'projectile-find-file)
+(setq flycheck-checker-error-threshold 10000)
+(setq flycheck-phpcs-standard "psr12")
+(setq lsp-file-watch-threshold 100000)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-(use-package yasnippet
-  :config (yas-global-mode 1))
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
