@@ -80,43 +80,9 @@ Alternatively, use `C-h o' to look up a symbol (functions, variables, faces, etc
 You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implemented.
 
 * Fancy splash image
-
 #+begin_src emacs-lisp
 (setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
 #+end_src
-* Coding
-** Snippets
-
-I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to manage code snippets. As per the instructions:
-
-#+begin_src emacs-lisp
-(use-package yasnippet
-  :ensure t
-  :config (yas-global-mode 1))
-#+end_src
-
-Additionally I'm installing pre-defined snippets with the package [[The above instructions also setup the package][Yasnippets-snippets]]:
-
-#+begin_src emacs-lisp
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
-
-(require 'yasnippet-snippets)
-#+end_src
-
-As per the [[package-refresh-contents][instructions]] I'm configuring melpa archive repositories. After that the command `package-refresh-contents` must be ran to be able to pull updates from it:
-
-- `M-x package-refresh-contents`
-- `M-x package-install yasnippet-snippets`
-
-In the code above I'm actually requiring the package via lisp, which should install and load it.
-
-There's an additional package with extra snippets maintained by the Doom Emacs' github organization: [[https://github.com/doomemacs/snippets][doomemacs/snippets]]
-
-Tip: Use M-x yas-describe-tables to see the list of snippets and edit them.
-
 * Custom packages
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
 ** blamer
@@ -125,6 +91,7 @@ This package adds a blame legend besides the current line in version-controlled 
 It's somewhat handy but at the same time I can't see how I can jump to the diff for that blame, so I can't make it fully useful to me.
 Another small annoyance I found is that when I switched to a literate configuration format (i.e. use org files) the blamer shows up.
 The problem is with org files you got line-wrap. Since I use splits (treemacs | vsplit | vsplit) the blamer packages causes text reflow with the line wrap.
+
 #+begin_src emacs-lisp
 (use-package blamer
   :bind (("s-i" . blamer-show-commit-info))
@@ -218,8 +185,47 @@ M-p: find file in project, also SPC SPC.
 #+begin_src emacs-lisp
 (map! "s-p" #'projectile-find-file)
 #+end_src
+* Coding
+** rainbow-delimiters-mode
+Rainbow coloring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
+
+#+begin_src emacs-lisp
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+#+end_src
+
+** yasnippets
+
+I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to manage code snippets. As per the instructions:
+
+#+begin_src emacs-lisp
+(use-package yasnippet
+  :config (yas-global-mode 1))
+#+end_src
+
+Additionally I'm installing pre-defined snippets with the package [[The above instructions also setup the package][Yasnippets-snippets]]:
+
+#+begin_src emacs-lisp
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+
+(require 'yasnippet-snippets)
+#+end_src
+
+As per the [[package-refresh-contents][instructions]] I'm configuring melpa archive repositories. After that the command `package-refresh-contents` must be ran to be able to pull updates from it:
+
+- `M-x package-refresh-contents`
+- `M-x package-install yasnippet-snippets`
+
+In the code above I'm actually requiring the package via lisp, which should install and load it.
+
+There's an additional package with extra snippets maintained by the Doom Emacs' github organization: [[https://github.com/doomemacs/snippets][doomemacs/snippets]]
+
+Tip: Use M-x yas-describe-tables to see the list of snippets and edit them.
+
 * Version control
-** Magit
+** Git
 Configure user and email address:
 #+begin_src bash :tangle no
 git config --local user.email "des@riseup.net"
