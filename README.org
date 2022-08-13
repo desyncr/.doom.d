@@ -193,7 +193,6 @@ Toggle treemacs with M-t (tree) and M-§ (key left hand side of the number 1 and
 
 #+begin_src emacs-lisp
 (map! "s-t" #'+treemacs/toggle)
-(map! "s-§" #'+treemacs/toggle)
 #+end_src
 
 - Save buffer
