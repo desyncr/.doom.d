@@ -218,10 +218,13 @@ Rainbow coloring for brackets and other delimiters in prog mode. Package: [[http
 
 I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to manage code snippets. As per the instructions:
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package yasnippet
   :config (yas-global-mode 1))
 #+end_src
+
+*Warning*: I had to disable (:tangle no) yas-global-mode since it interfered with LSP/company-mode. Throwing errors trying to display completions on PHP-mode.
+With this settings disabled now both company mode and yas-snippets work just fine.
 
 Additionally I'm installing pre-defined snippets with the package [[The above instructions also setup the package][Yasnippets-snippets]]:
 
