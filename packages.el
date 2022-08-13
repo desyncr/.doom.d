@@ -56,3 +56,5 @@
 (package! centered-cursor-mode)
 (package! spatial-navigate)
 (package! vertico-posframe)
+(package! rainbow-delimiters)
+(package! org-modern)
