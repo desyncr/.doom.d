@@ -186,6 +186,27 @@ M-p: find file in project, also SPC SPC.
 (map! "s-p" #'projectile-find-file)
 #+end_src
 * Coding
+** flycheck
+Most classes/php files I'm working with are quite large and cause a large number of errors to popup. I'm topping up the error threshold to avoid a warning during start up:
+
+#+begin_src emacs-lisp
+(setq flycheck-checker-error-threshold 10000)
+#+end_src
+
+Most projects I work with are somewhat following the PSR12 standard, so let's configure flycheck to respect that:
+#+begin_src emacs-lisp
+(setq flycheck-phpcs-standard "psr12")
+#+end_src
+
+** lsp
+I'm working on a large series of interrelated projects which work well under the same directory structure (code/{project1, project2, project3}).
+The downside is that this causes LSP to complain about the large number of files and file descriptors it uses.
+
+So I'm forced to top up the default threshold via thiw variable:
+
+#+begin_src emacs-lisp
+(setq lsp-file-watch-threshold 100000)
+#+end_src
 ** rainbow-delimiters-mode
 Rainbow coloring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
 
