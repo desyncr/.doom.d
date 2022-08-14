@@ -215,7 +215,6 @@ Rainbow coloring for brackets and other delimiters in prog mode. Package: [[http
 #+end_src
 
 ** yasnippets
-
 I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to manage code snippets. As per the instructions:
 
 #+begin_src emacs-lisp :tangle no
@@ -258,7 +257,8 @@ git config --local user.email "des@riseup.net"
 git config --local user.name "DC*"
 #+end_src
 
-This configuration applies to the repository the command is running on (--local). You can apply global (i.e. to all repositories) replacing --lcoal with the flag --global.
+This configuration applies to the repository the command is running on (--local). You can apply global (i.e. to all repositories) replacing --local with the flag --global.
+
 * Project management
 ** projectile
 #+begin_src emacs-lisp
@@ -271,7 +271,6 @@ This configuration applies to the repository the command is running on (--local)
 #+end_src
 
 ** treemacs
-
 Enable treemacs and never move to treemacs with other-window:
 
 #+begin_src emacs-lisp
@@ -298,7 +297,7 @@ Ensure treemacs-magit integration:
 
 #+end_src
 
-Ensure treemacs-persp integration"
+Ensure treemacs-persp integration:
 
 #+begin_src emacs-lisp
 (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
@@ -326,7 +325,6 @@ Ensure treemacs-persp integration"
 
 * Org/Agenda
 ** org-modern
-
 Modern look and feel for Org files. Package: [[https://github.com/minad/org-modern][org-modern]].
 
 This package in [[https://github.com/doomemacs/doomemacs/issues/6434#issuecomment-1146242143][under review]] for inclusion into Doom Emacs.
@@ -373,7 +371,6 @@ This package in [[https://github.com/doomemacs/doomemacs/issues/6434#issuecommen
   )
 #+end_src
 ** org-log-repeat
-
 Disable log lines on repeat tasks.
 
 #+begin_src emacs-lisp
@@ -385,7 +382,6 @@ Disable log lines on repeat tasks.
 
 * UI
 ** doom-modeline-word-count
-
 Add word count to status/modeline. Useful for org documents and writing in general.
 
 #+begin_src emacs-lisp
@@ -393,7 +389,6 @@ Add word count to status/modeline. Useful for org documents and writing in gener
 #+end_src
 
 ** git-gutter
-
 Show git gutter for unsaved changes, source: [[https://github.com/doomemacs/doomemacs/issues/2377#issuecomment-576117218][github comment]].
 
 #+begin_src emacs-lisp
@@ -402,7 +397,6 @@ Show git gutter for unsaved changes, source: [[https://github.com/doomemacs/doom
 #+end_src
 
 ** center-isearch
-
 source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]].
 
 #+begin_src emacs-lisp
@@ -413,7 +407,6 @@ source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_so
 #+end_src
 
 ** centered-cursor-mode
-
 source: https://github.com/andre-r/centered-cursor-mode.el
 
 #+begin_src emacs-lisp
@@ -425,7 +418,6 @@ source: https://github.com/andre-r/centered-cursor-mode.el
 #+end_src
 
 ** vertico-posframe
-
 Ctrl+P / command launcher-like for M-x.
 
 #+begin_src emacs-lisp
@@ -443,7 +435,6 @@ Ctrl+P / command launcher-like for M-x.
 #+end_src
 
 ** spatial-navigate
-
 source: https://github.com/emacs-lsp/lsp-treemacs/issues/89
 
 #+begin_src emacs-lisp
