@@ -248,7 +248,32 @@ There's an additional package with extra snippets maintained by the Doom Emacs' 
 I'm also imported several snippets from [[https://github.com/cartolari/yasnippet-vim-snippets][cartolari/yasnippet-vim-snippets]] repository, primarily [[https://github.com/cartolari/yasnippet-vim-snippets/tree/master/snippets/php-mode][php-mode]].
 
 Tip: Use M-x yas-describe-tables to see the list of snippets and edit them.
+** evil-snipe
+This package provides a way to quickly navigate through a buffer with `s` and `S` for forward and backward 2-character search.
 
+Once it finds a 2-character match it jumps to it. You can jump to further matches with `;` (or `,` to jump backwards).
+
+#+begin_src emacs-lisp
+(use-package evil-snipe
+    (setq evil-snipe-spillover-scope 'whole-buffer)
+)
+#+end_src
+
+The above code snippet configures evil-snipe to use a "fallback" scope when the default scope doesn't find a match. The default scope is bind to the current line, the "spillover" (or "fallback") scope is useful when configured with a larger scope, in this case 'whole-buffer.
+
+The full list of scopes are:
+
+|---------------+----------------------------------------------------------------|
+| Scope         | Description                                                    |
+|               |                                                                |
+|---------------+----------------------------------------------------------------|
+| line          | Rest of the current line after cursor                          |
+| buffer        | Rest of the buffer after cursor                                |
+| visible       | Rest of the _visible_ buffer after cursor                        |
+| whole-line    | Same as `line` but highlights on either side of cursor         |
+| whole-buffer  | Same as `buffer` but highlights all matches in buffer          |
+| whole-visible | Same as `visible` but highlights all _visible_ matches in buffer |
+|---------------+----------------------------------------------------------------|
 * Version control
 ** Git
 Configure user and email address:
