@@ -31,7 +31,7 @@
   (super-save-mode +1))
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 (map! :ne "M-/" #'comment-or-uncomment-region)
-(map! "s-b" #'ido-switch-buffer-other-window)
+(map! "s-b" #'ido-switch-buffer)
 (map! "s-t" #'+treemacs/toggle)
 (map! "s-s" #'save-buffer)
 (map! "s-f" #'+default/search-project)
@@ -46,6 +46,13 @@
 (package-initialize)
 
 (require 'yasnippet-snippets)
+(use-package evil-snipe
+  :defer t
+  :config
+  (setq evil-snipe-scope 'visible)
+  (setq evil-snipe-repeat-scope 'buffer)
+  (setq evil-snipe-spillover-scope 'whole-buffer)
+)
 (after! projectile
    (setq
         projectile-project-search-path '("~/sys-vagrant/code/")
