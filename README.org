@@ -255,7 +255,11 @@ Once it finds a 2-character match it jumps to it. You can jump to further matche
 
 #+begin_src emacs-lisp
 (use-package evil-snipe
-    (setq evil-snipe-spillover-scope 'whole-buffer)
+  :defer t
+  :config
+  (setq evil-snipe-scope 'visible)
+  (setq evil-snipe-repeat-scope 'buffer)
+  (setq evil-snipe-spillover-scope 'whole-buffer)
 )
 #+end_src
 
@@ -273,6 +277,7 @@ The full list of scopes are:
 | whole-line    | Same as `line` but highlights on either side of cursor         |
 | whole-buffer  | Same as `buffer` but highlights all matches in buffer          |
 | whole-visible | Same as `visible` but highlights all _visible_ matches in buffer |
+|               |                                                                |
 |---------------+----------------------------------------------------------------|
 * Version control
 ** Git

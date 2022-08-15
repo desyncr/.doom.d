@@ -57,4 +57,5 @@ Doom's packages are pinned to a specific commit and updated from release to rele
 (package! vertico-posframe)
 (package! rainbow-delimiters)
 (package! org-modern)
+(package! evil-snipe)
 #+end_src
