@@ -1,15 +1,15 @@
 # -*- mode: snippet -*-
 # name: syslog
 # uuid:
-# key: sys
+# key: syslog
 # group: application
 # condition: t
 # --
 if (openlog('${1:DEBUG}', LOG_PID, LOG_LOCAL3)) {
-    $data = [
+    $logData = [
         '$2' => $0
     ];
-    syslog(LOG_NOTICE, json_encode($data));
+    syslog(LOG_NOTICE, json_encode($logData, JSON_PRETTY_PRINT));
 
     closelog();
 }
