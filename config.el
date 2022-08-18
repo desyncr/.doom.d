@@ -1,13 +1,14 @@
 (setq user-full-name "DC*"
       user-mail-address "des@riseup.net")
 
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
-
 (setq doom-theme 'doom-nord-light)
 
 (setq display-line-numbers-type t)
 
 (setq org-directory "~/org/")
+
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)) ;; Fira Code,  :weight 'medium
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 12))
 
 (setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
 
@@ -79,7 +80,7 @@
 
 (setq
  lsp-idle-delay 0.1
- company-minimum-prefix-length 1
+ company-minimum-prefix-length 2
  company-idle-delay 0.0
  company-tooltip-minimum-width 50
  company-tooltip-maximum-width 50
@@ -196,7 +197,8 @@
   :demand
   :config
   ;; Optional, enables centered-cursor-mode in all buffers.
-  (global-centered-cursor-mode))
+  ;;(global-centered-cursor-mode)
+)
 
 (use-package vertico-posframe
   :config
