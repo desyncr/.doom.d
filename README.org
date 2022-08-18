@@ -524,25 +524,3 @@ Ctrl+P / command launcher-like for M-x.
           (right-fringe . 5)))
   )
 #+end_src
-
-** spatial-navigate
-source: https://github.com/emacs-lsp/lsp-treemacs/issues/89
-
-#+begin_src emacs-lisp
-(use-package spatial-navigate
-  :after (lsp-treemacs)
-  :ensure t)
-#+end_src
-
-#+begin_src emacs-lisp
-;; (with-eval-after-load 'lsp-treemacs
-;;   (doom-themes-treemacs-config))
-;;     (define-keyevil-normal-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-box)
-;;     (define-key evil-normal-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-box)
-;;     (define-key evil-normal-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-box)
-;;     (define-key evil-normal-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-box)
-;;     (define-key evil-insert-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-bar)
-;;     (define-key evil-insert-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-bar)
-;;     (define-key evil-insert-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-bar)
-    ;; (define-key evil-insert-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-bar)
-#+end_src
