@@ -41,7 +41,7 @@
 (setq lsp-file-watch-threshold 10000)
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc-dev-contrib\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc-dev-contrib\\~")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]push-notifications\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]main\\'")

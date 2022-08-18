@@ -7,7 +7,7 @@
 [[./splash/doom-emacs-bw-light.svg]]
 
 * General
-Place your private configuration here! Remember, you do not need to run 'doom sync' after modifying this file!
+Place your private configuration here! Remember, you do not need to run ~doom sync~ after modifying this file!
 
 Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets. It is optional.
 
@@ -18,14 +18,14 @@ Some functionality uses this to identify you, e.g. GPG configuration, email clie
 
 Doom exposes five (optional) variables for controlling fonts in Doom:
 
-- `doom-font' -- the primary font to use
-- `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-- `doom-big-font' -- used for `doom-big-font-mode'; use this for
+- ~doom-font~ -- the primary font to use
+- ~doom-variable-pitch-font~ -- a non-monospace font (where applicable)
+- ~doom-big-font~ -- used for ~doom-big-font-mode~; use this for
   presentations or streaming.
-- `doom-unicode-font' -- for unicode glyphs
-- `doom-serif-font' -- for the `fixed-pitch-serif' face
+- ~doom-unicode-font~ -- for unicode glyphs
+- ~doom-serif-font~ -- for the ~fixed-pitch-serif~ face
 
-See 'C-h v doom-font' for documentation and more examples of what they accept. For example:
+See ~C-h v doom-font~ for documentation and more examples of what they accept. For example:
 
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
@@ -33,22 +33,22 @@ See 'C-h v doom-font' for documentation and more examples of what they accept. F
 
 Installing Fira Code: https://github.com/tonsky/FiraCode/wiki/Installing
 
-If you or Emacs can't find your font, use 'M-x describe-font' to look them up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to refresh your font settings. If Emacs still can't find your font, it likely wasn't installed correctly. Font issues are rarely Doom issues!
+If you or Emacs can't find your font, use ~M-x describe-font~ to look them up, ~M-x eval-region~ to execute elisp code, and ~M-x doom/reload-font~ to refresh your font settings. If Emacs still can't find your font, it likely wasn't installed correctly. Font issues are rarely Doom issues!
 
-There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
+There are two ways to load a theme. Both assume the theme is installed and available. You can either set ~doom-theme~ or manually load a theme with the ~load-theme~ function. This is the default:
 
 #+begin_src emacs-lisp
 (setq doom-theme 'doom-nord-light)
 #+end_src
 
-This determines the style of line numbers in effect. If set to `nil', line
-numbers are disabled. For relative line numbers, set this to `relative'.
+This determines the style of line numbers in effect. If set to ~nil~, line
+numbers are disabled. For relative line numbers, set this to ~relative~.
 
 #+begin_src emacs-lisp
 (setq display-line-numbers-type t)
 #+end_src
 
-If you use `org' and don't want your org files in the default location below, change `org-directory'. It must be set before org loads!
+If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
 #+begin_src emacs-lisp
 (setq org-directory "~/org/")
 #+end_src
@@ -62,29 +62,29 @@ Whenever you reconfigure a package, make sure to wrap your config in an
 
 The exceptions to this rule:
 
-  - Setting file/directory variables (like `org-directory')
+  - Setting file/directory variables (like ~org-directory~)
   - Setting variables which explicitly tell you to set them before their
-    package is loaded (see 'C-h v VARIABLE' to look up their documentation).
-  - Setting doom variables (which start with 'doom-' or '+').
+    package is loaded (see ~C-h v VARIABLE~ to look up their documentation).
+  - Setting doom variables (which start with ~doom-~ or ~+~).
 
 Here are some additional functions/macros that will help you configure Doom.
 
-- `load!' for loading external *.el files relative to this one
-- `use-package!' for configuring packages
-- `after!' for running code after a package has loaded
-- `add-load-path!' for adding directories to the `load-path', relative to
-  this file. Emacs searches the `load-path' when you load packages with
-  `require' or `use-package'.
-- `map!' for binding new keys
+- ~load!~ for loading external *.el files relative to this one
+- ~use-package!~ for configuring packages
+- ~after!~ for running code after a package has loaded
+- ~add-load-path!~ for adding directories to the ~load-path~, relative to
+  this file. Emacs searches the ~load-path~ when you load packages with
+  ~require~ or ~use-package~.
+- ~map!~ for binding new keys
 
-To get information about any of these functions/macros, move the cursor over the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+To get information about any of these functions/macros, move the cursor over the highlighted symbol at press ~K~ (non-evil users must press ~C-c c k~).
 This will open documentation for it, including demos of how they are used.
-Alternatively, use `C-h o' to look up a symbol (functions, variables, faces, etc).
+Alternatively, use ~C-h o~ to look up a symbol (functions, variables, faces, etc).
 
-You can also try 'gd' (or 'C-c c d') to jump to their definition and see how they are implemented.
+You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how they are implemented.
 
 * Packages
-To install a package with Doom you must declare them here and run 'doom sync' on the command line, then restart Emacs for the changes to take effect -- or use 'M-x doom/reload'.
+To install a package with Doom you must declare them here and run ~doom sync~ on the command line, then restart Emacs for the changes to take effect -- or use ~M-x doom/reload~.
 
 To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 
@@ -92,14 +92,14 @@ To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
     (package! some-package)
 #+end_example
 
-To install a package directly from a remote git repo, you must specify a `:recipe'. You'll find documentation on what `:recipe' accepts here: https://github.com/radian-software/straight.el#the-recipe-format
+To install a package directly from a remote git repo, you must specify a ~:recipe~. You'll find documentation on what ~:recipe~ accepts here: https://github.com/radian-software/straight.el#the-recipe-format
 
     #+begin_example
     (package! another-package
     :recipe (:host github :repo "username/repo"))
     #+end_example
 
-If the package you are trying to install does not contain a PACKAGENAME.el file, or is located in a subdirectory of the repo, you'll need to specify `:files' in the `:recipe':
+If the package you are trying to install does not contain a PACKAGENAME.el file, or is located in a subdirectory of the repo, you'll need to specify ~:files~ in the ~:recipe~:
 
     #+begin_example
     (package! this-package
@@ -107,34 +107,34 @@ If the package you are trying to install does not contain a PACKAGENAME.el file,
     :files ("some-file.el" "src/lisp/*.el")))
     #+end_example
 
-If you'd like to disable a package included with Doom, you can do so here with the `:disable' property:
+If you'd like to disable a package included with Doom, you can do so here with the ~:disable~ property:
 
     #+begin_example
     (package! builtin-package :disable t)
     #+end_example
 
-You can override the recipe of a built in package without having to specify all the properties for `:recipe'. These will inherit the rest of its recipe from Doom or MELPA/ELPA/Emacsmirror:
+You can override the recipe of a built in package without having to specify all the properties for ~:recipe~. These will inherit the rest of its recipe from Doom or MELPA/ELPA/Emacsmirror:
 
     #+begin_example
     (package! builtin-package :recipe (:nonrecursive t))
     (package! builtin-package-2 :recipe (:repo "myfork/package"))
     #+end_example
 
-Specify a `:branch' to install a package from a particular branch or tag.
-This is required for some packages whose default branch isn't 'master' (which our package manager can't deal with; see radian-software/straight.el#279)
+Specify a ~:branch~ to install a package from a particular branch or tag.
+This is required for some packages whose default branch isn't ~master~ (which our package manager can't deal with; see radian-software/straight.el#279)
 
     #+begin_example
     (package! builtin-package :recipe (:branch "develop"))
     #+end_example
 
-Use `:pin' to specify a particular commit to install.
+Use ~:pin~ to specify a particular commit to install.
 
     #+begin_example
     (package! builtin-package :pin "1a2b3c4d5e")
     #+end_example
 
 
-Doom's packages are pinned to a specific commit and updated from release to release. The `unpin!' macro allows you to unpin single packages...
+Doom's packages are pinned to a specific commit and updated from release to release. The ~unpin!~ macro allows you to unpin single packages...
 
     #+begin_example
     (unpin! pinned-package)
@@ -167,7 +167,7 @@ Doom's packages are pinned to a specific commit and updated from release to rele
 #+end_src
 
 * Packages
-To install a package with Doom you must declare them here and run 'doom sync' on the command line, then restart Emacs for the changes to take effect -- or use 'M-x doom/reload'.
+To install a package with Doom you must declare them here and run ~doom sync~ on the command line, then restart Emacs for the changes to take effect -- or use ~M-x doom/reload~.
 
 To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 
@@ -175,14 +175,14 @@ To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
     (package! some-package)
 #+end_example
 
-To install a package directly from a remote git repo, you must specify a `:recipe'. You'll find documentation on what `:recipe' accepts here: https://github.com/radian-software/straight.el#the-recipe-format
+To install a package directly from a remote git repo, you must specify a ~:recipe~. You'll find documentation on what ~:recipe~ accepts here: https://github.com/radian-software/straight.el#the-recipe-format
 
     #+begin_example
     (package! another-package
     :recipe (:host github :repo "username/repo"))
     #+end_example
 
-If the package you are trying to install does not contain a PACKAGENAME.el file, or is located in a subdirectory of the repo, you'll need to specify `:files' in the `:recipe':
+If the package you are trying to install does not contain a PACKAGENAME.el file, or is located in a subdirectory of the repo, you'll need to specify ~:files~ in the ~:recipe~:
 
     #+begin_example
     (package! this-package
@@ -190,34 +190,34 @@ If the package you are trying to install does not contain a PACKAGENAME.el file,
     :files ("some-file.el" "src/lisp/*.el")))
     #+end_example
 
-If you'd like to disable a package included with Doom, you can do so here with the `:disable' property:
+If you'd like to disable a package included with Doom, you can do so here with the ~:disable~ property:
 
     #+begin_example
     (package! builtin-package :disable t)
     #+end_example
 
-You can override the recipe of a built in package without having to specify all the properties for `:recipe'. These will inherit the rest of its recipe from Doom or MELPA/ELPA/Emacsmirror:
+You can override the recipe of a built in package without having to specify all the properties for ~:recipe~. These will inherit the rest of its recipe from Doom or MELPA/ELPA/Emacsmirror:
 
     #+begin_example
     (package! builtin-package :recipe (:nonrecursive t))
     (package! builtin-package-2 :recipe (:repo "myfork/package"))
     #+end_example
 
-Specify a `:branch' to install a package from a particular branch or tag.
-This is required for some packages whose default branch isn't 'master' (which our package manager can't deal with; see radian-software/straight.el#279)
+Specify a ~:branch~ to install a package from a particular branch or tag.
+This is required for some packages whose default branch isn't ~master~ (which our package manager can't deal with; see radian-software/straight.el#279)
 
     #+begin_example
     (package! builtin-package :recipe (:branch "develop"))
     #+end_example
 
-Use `:pin' to specify a particular commit to install.
+Use ~:pin~ to specify a particular commit to install.
 
     #+begin_example
     (package! builtin-package :pin "1a2b3c4d5e")
     #+end_example
 
 
-Doom's packages are pinned to a specific commit and updated from release to release. The `unpin!' macro allows you to unpin single packages...
+Doom's packages are pinned to a specific commit and updated from release to release. The ~unpin!~ macro allows you to unpin single packages...
 
     #+begin_example
     (unpin! pinned-package)
@@ -256,7 +256,7 @@ Configure Doom Emacs Splash image. Taken from [[https://gitlab.com/zzamboni/dot-
 (setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
 #+end_src
 
-You can have Emacs display image inline via `#+STARTUP: inlineimages`. See the top of this document for an example.
+You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the top of this document for an example.
 
 * Custom packages
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
@@ -386,7 +386,7 @@ So I'm forced to top up the default threshold via thiw variable:
 #+begin_src emacs-lisp
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc-dev-contrib\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc-dev-contrib\\~")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]push-notifications\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]main\\'")
@@ -444,10 +444,10 @@ Additionally I'm installing pre-defined snippets with the package [[The above in
 (require 'yasnippet-snippets)
 #+end_src
 
-As per the [[package-refresh-contents][instructions]] I'm configuring melpa archive repositories. After that the command `package-refresh-contents` must be ran to be able to pull updates from it:
+As per the [[package-refresh-contents][instructions]] I'm configuring melpa archive repositories. After that the command ~package-refresh-contents~ must be ran to be able to pull updates from it:
 
-- `M-x package-refresh-contents`
-- `M-x package-install yasnippet-snippets`
+- ~M-x package-refresh-contents~
+- ~M-x package-install yasnippet-snippets~
 
 In the code above I'm actually requiring the package via lisp, which should install and load it.
 
@@ -457,9 +457,9 @@ I'm also imported several snippets from [[https://github.com/cartolari/yasnippet
 
 Tip: Use M-x yas-describe-tables to see the list of snippets and edit them.
 ** evil-snipe
-This package provides a way to quickly navigate through a buffer with `s` and `S` for forward and backward 2-character search.
+This package provides a way to quickly navigate through a buffer with ~s~ and ~S~ for forward and backward 2-character search.
 
-Once it finds a 2-character match it jumps to it. You can jump to further matches with `;` (or `,` to jump backwards).
+Once it finds a 2-character match it jumps to it. You can jump to further matches with ~;~ (or ~,~ to jump backwards).
 
 #+begin_src emacs-lisp
 (use-package evil-snipe
@@ -482,17 +482,17 @@ The full list of scopes are:
 | line          | Rest of the current line after cursor                          |
 | buffer        | Rest of the buffer after cursor                                |
 | visible       | Rest of the _visible_ buffer after cursor                        |
-| whole-line    | Same as `line` but highlights on either side of cursor         |
-| whole-buffer  | Same as `buffer` but highlights all matches in buffer          |
-| whole-visible | Same as `visible` but highlights all _visible_ matches in buffer |
+| whole-line    | Same as ~line~ but highlights on either side of cursor         |
+| whole-buffer  | Same as ~buffer~ but highlights all matches in buffer          |
+| whole-visible | Same as ~visible~ but highlights all _visible_ matches in buffer |
 |               |                                                                |
 |---------------+----------------------------------------------------------------|
 ** devdocs
 This package somewhat expands on Doom Emacs' [[https://docs.doomemacs.org/latest/modules/tools/lookup/][lookup]] functionality.
 
-The 'SPC s o' opens up documentation for the current symbol under cursor in the default browser. I didn't like to require a browser to navigate documentation as I don't want to leave the code I'm working on to check on something.
+The ~SPC s o~ opens up documentation for the current symbol under cursor in the default browser. I didn't like to require a browser to navigate documentation as I don't want to leave the code I'm working on to check on something.
 
-Alternatively it can be configured to use `eww` instead. Which is way better. But the problem is devdocs require javascript to work correctly (it can work offline, but still requires a browser and javascript enabled).
+Alternatively it can be configured to use ~eww~ instead. Which is way better. But the problem is devdocs require javascript to work correctly (it can work offline, but still requires a browser and javascript enabled).
 
 This package uses devdocs generated documentation (downloads it) and queries it offline, showing it on a separate window/buffer.
 
@@ -503,7 +503,7 @@ This package uses devdocs generated documentation (downloads it) and queries it 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
 #+end_src
 
-Use `C-h D` or `SPC h D` to search for the symbol under cursor. Note: The documentation will not be displayed right away, you'll need to press RET on the given symbol.
+Use ~C-h D~ or ~SPC h D~ to search for the symbol under cursor. Note: The documentation will not be displayed right away, you'll need to press RET on the given symbol.
 * Version control
 ** Git
 Configure user and email address:
