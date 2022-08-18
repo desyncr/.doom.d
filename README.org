@@ -1,6 +1,6 @@
 #+TITLE: Emacs doom configuration
 #+LANGUAGE: en
-#+PROPERTY: header-args :tangle yes :cache yes :results silent :padline no
+#+PROPERTY: header-args :tangle yes :cache yes :results silent
 #+STARTUP: inlineimages
 
 #+ATTR_HTML: :style margin-left: auto; margin-right: auto;

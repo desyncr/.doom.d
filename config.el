@@ -1,10 +1,16 @@
 (setq user-full-name "DC*"
       user-mail-address "des@riseup.net")
+
 (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
+
 (setq doom-theme 'doom-nord-light)
+
 (setq display-line-numbers-type t)
+
 (setq org-directory "~/org/")
+
 (setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
+
 (use-package blamer
   :bind (("s-i" . blamer-show-commit-info))
   :defer 20
@@ -18,6 +24,7 @@
                     :italic t)))
   :config
   (global-blamer-mode 0))
+
 (use-package better-jumper
   :ensure t
   :config
@@ -25,20 +32,32 @@
 (with-eval-after-load 'evil-maps
   (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
   (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
+
 (use-package super-save
   :ensure t
   :config
   (super-save-mode +1))
+
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
+
 (map! :ne "M-/" #'comment-or-uncomment-region)
+
 (map! "s-b" #'ido-switch-buffer)
+
 (map! "s-t" #'+treemacs/toggle)
+
 (map! "s-s" #'save-buffer)
+
 (map! "s-f" #'+default/search-project)
+
 (map! "s-p" #'projectile-find-file)
+
 (setq flycheck-checker-error-threshold 10000)
+
 (setq flycheck-phpcs-standard "psr12")
+
 (setq lsp-file-watch-threshold 10000)
+
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc-dev-contrib\\~")
@@ -57,6 +76,7 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]management\'")
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'"))
+
 (setq
  lsp-idle-delay 0.1
  company-minimum-prefix-length 1
@@ -64,13 +84,16 @@
  company-tooltip-minimum-width 50
  company-tooltip-maximum-width 50
  )
+
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
 (require 'yasnippet-snippets)
+
 (use-package evil-snipe
   :defer t
   :config
@@ -78,33 +101,42 @@
   (setq evil-snipe-repeat-scope 'buffer)
   (setq evil-snipe-spillover-scope 'whole-buffer)
 )
+
 (use-package devdocs
   :ensure t)
 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
+
 (after! projectile
    (setq
         projectile-project-search-path '("~/sys-vagrant/code/")
    )
 )
+
 (use-package treemacs
   :ensure t
   :config
   (setq treemacs-is-never-other-window t))
+
 (use-package treemacs-projectile
   :after (treemacs projectile)
   :ensure t)
+
 (use-package treemacs-magit
   :after (treemacs magit)
   :ensure t)
+
 (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
+
 (setq delete-by-moving-to-trash t)
 (setq trash-directory "~/.Trash")
+
 (setq org-archive-location (concat "archive/archive-"
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
+
 (use-package org-modern
   :config
     ;; Add frame borders and window dividers
@@ -144,22 +176,28 @@
 
     (global-org-modern-mode)
   )
+
 (use-package org
   :config
     (setq org-log-repeat nil)
 )
+
 (setq doom-modeline-enable-word-count t)
+
 (after! git-gutter
   (setq git-gutter:update-interval 0.5))
+
 (advice-add 'evil-ex-search-next :after
             (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
 (advice-add 'evil-ex-search-previous :after
             (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+
 (use-package centered-cursor-mode
   :demand
   :config
   ;; Optional, enables centered-cursor-mode in all buffers.
   (global-centered-cursor-mode))
+
 (use-package vertico-posframe
   :config
   (vertico-posframe-mode 1)
