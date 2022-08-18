@@ -336,7 +336,7 @@ So I'm forced to top up the default threshold via thiw variable:
  #+begin_src emacs-lisp
 (setq
  lsp-idle-delay 0.1
- company-minimum-prefix-length 1
+ company-minimum-prefix-length 2
  company-idle-delay 0.0
  company-tooltip-minimum-width 50
  company-tooltip-maximum-width 50
