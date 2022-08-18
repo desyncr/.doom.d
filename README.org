@@ -562,6 +562,67 @@ Disable log lines on repeat tasks.
     (setq org-log-repeat nil)
 )
 #+end_src
+* Term
+** vterm
+This package offers a fully featured terminal emulation layer for Emacs. It works by leveraging ~libvterm~ library, which powers xterm. Check [[https://www.youtube.com/watch?v=8oNycFLwKfE][this presentation]] for an introduction and walkthrough. Find more in [[https://emacsconf.org/2020/talks/30/][this talk]]. Find the main repository [[https://github.com/akermu/emacs-libvterm][here]].
+
+Since it leverages ~libvterm~ it requires a extra steps for the installation. Check out the Doom Emacs' [[https://docs.doomemacs.org/latest/modules/term/vterm/][instructions]].
+
+I'm using ~vterm~ with [[https://github.com/tmux/tmux/wiki][tmux]] for multiplexing and [[fishshell.com/][fish]] as the shell. Down below I'll describe the configurations I use.
+
+Daily workflow:
+
+1. Create a new workspace for the shell (~SPC TAB n~)
+   (ideally save and re-open a workspace for the shell with ~SPC TAB s~ / ~SPC TAB l~)
+2. Use tmux with resurrect plugin to load pre-configured panels (~C-A C-R~ to reload panels, ~C-A C-S~ to save panels)
+   Essential [[https://github.com/tmux-plugins/tmux-resurrect][Tmux resurrect]] plugin. [[https://github.com/desyncr/tmux][My tmux config]] with keybindings, theme and plugins.
+3. Hack away!
+
+*** Tmux
+Find my tmux configuration in [[https://github.com/desyncr/tmux][this]] repository. The important bits there are:
+
+1. Set up the shell to use:
+
+#+begin_example
+set-option -g default-shell /usr/bin/fish
+#+end_example
+
+2. Configure the terminal color support
+
+#+begin_example
+set -ag terminal-overrides ",xterm-256color:RGB"
+set  -g default-terminal "tmux-256color"
+#+end_example
+
+This part might be tricky to setup correctly since it requires the shell and terminal emulator support to match.
+
+3. Enable plugin manager
+
+  #+begin_example
+set -g @plugin 'tmux-plugins/tpm'
+  #+end_example
+
+4. Configure theme
+
+  #+begin_example
+set -g @tmux_power_theme 'sky'
+set -g @plugin 'wfxr/tmux-power'
+  #+end_example
+
+*** Fish
+I'm using fish shell with basic configurations. Essentially abbrevs (aliases). Additionally to that I'm using the [[https://github.com/starship/starship][starship shell theme]].
+
+Install startship theme with the following command:
+
+#+begin_example
+curl -sS https://starship.rs/install.sh | sh
+#+end_example
+
+Then you'll need to update your ~./config/fish/config.fish~ with the following line:
+
+#+begin_example
+starship init fish | source
+#+end_example
 
 * UI
 ** doom-modeline-word-count
