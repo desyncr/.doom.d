@@ -597,8 +597,11 @@ source: https://github.com/andre-r/centered-cursor-mode.el
   :demand
   :config
   ;; Optional, enables centered-cursor-mode in all buffers.
-  (global-centered-cursor-mode))
+  ;;(global-centered-cursor-mode)
+)
 #+end_src
+
+Note: ~global-centered-cursor-mode~ causes line jumps while typing on vterm. Disabling for the moment.
 
 ** vertico-posframe
 Ctrl+P / command launcher-like for M-x.
