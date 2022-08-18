@@ -38,7 +38,32 @@
 (map! "s-p" #'projectile-find-file)
 (setq flycheck-checker-error-threshold 10000)
 (setq flycheck-phpcs-standard "psr12")
-(setq lsp-file-watch-threshold 100000)
+(setq lsp-file-watch-threshold 10000)
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc-dev-contrib\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]push-notifications\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]main\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]kantox-sdk-guzzle5\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]ecadmin\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]docs-api-swagger\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]docs-network-api-swagger\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]dbmigration\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]admin-v2\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]static\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]sandbox\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]rtb\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]management\'")
+  ;; or
+  (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'"))
+(setq
+ lsp-idle-delay 0.1
+ company-minimum-prefix-length 1
+ company-idle-delay 0.0
+ company-tooltip-minimum-width 50
+ company-tooltip-maximum-width 50
+ )
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (require 'package)
 (add-to-list 'package-archives
@@ -146,16 +171,3 @@
         '((left-fringe . 5)
           (right-fringe . 5)))
   )
-(use-package spatial-navigate
-  :after (lsp-treemacs)
-  :ensure t)
-;; (with-eval-after-load 'lsp-treemacs
-;;   (doom-themes-treemacs-config))
-;;     (define-keyevil-normal-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-box)
-;;     (define-key evil-normal-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-box)
-;;     (define-key evil-normal-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-box)
-;;     (define-key evil-normal-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-box)
-;;     (define-key evil-insert-state-map (kbd "C-k") 'spatial-navigate-backward-vertical-bar)
-;;     (define-key evil-insert-state-map (kbd "C-j") 'spatial-navigate-forward-vertical-bar)
-;;     (define-key evil-insert-state-map (kbd "C-h") 'spatial-navigate-backward-horizontal-bar)
-    ;; (define-key evil-insert-state-map (kbd "C-l") 'spatial-navigate-forward-horizontal-bar)
