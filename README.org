@@ -340,6 +340,23 @@ The full list of scopes are:
 | whole-visible | Same as `visible` but highlights all _visible_ matches in buffer |
 |               |                                                                |
 |---------------+----------------------------------------------------------------|
+** devdocs
+This package somewhat expands on Doom Emacs' [[https://docs.doomemacs.org/latest/modules/tools/lookup/][lookup]] functionality.
+
+The 'SPC s o' opens up documentation for the current symbol under cursor in the default browser. I didn't like to require a browser to navigate documentation as I don't want to leave the code I'm working on to check on something.
+
+Alternatively it can be configured to use `eww` instead. Which is way better. But the problem is devdocs require javascript to work correctly (it can work offline, but still requires a browser and javascript enabled).
+
+This package uses devdocs generated documentation (downloads it) and queries it offline, showing it on a separate window/buffer.
+
+#+begin_src emacs-lisp
+(use-package devdocs
+  :ensure t)
+
+(global-set-key (kbd "C-h D") 'devdocs-lookup)
+#+end_src
+
+Use `C-h D` or `SPC h D` to search for the symbol under cursor. Note: The documentation will not be displayed right away, you'll need to press RET on the given symbol.
 * Version control
 ** Git
 Configure user and email address:
