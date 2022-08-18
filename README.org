@@ -20,18 +20,11 @@ Doom exposes five (optional) variables for controlling fonts in Doom:
 
 - ~doom-font~ -- the primary font to use
 - ~doom-variable-pitch-font~ -- a non-monospace font (where applicable)
-- ~doom-big-font~ -- used for ~doom-big-font-mode~; use this for
-  presentations or streaming.
+- ~doom-big-font~ -- used for ~doom-big-font-mode~; use this for presentations or streaming.
 - ~doom-unicode-font~ -- for unicode glyphs
 - ~doom-serif-font~ -- for the ~fixed-pitch-serif~ face
 
 See ~C-h v doom-font~ for documentation and more examples of what they accept. For example:
-
-#+begin_src emacs-lisp
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
-#+end_src
-
-Installing Fira Code: https://github.com/tonsky/FiraCode/wiki/Installing
 
 If you or Emacs can't find your font, use ~M-x describe-font~ to look them up, ~M-x eval-region~ to execute elisp code, and ~M-x doom/reload-font~ to refresh your font settings. If Emacs still can't find your font, it likely wasn't installed correctly. Font issues are rarely Doom issues!
 
@@ -82,6 +75,24 @@ This will open documentation for it, including demos of how they are used.
 Alternatively, use ~C-h o~ to look up a symbol (functions, variables, faces, etc).
 
 You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how they are implemented.
+
+* Fonts
+I'm using the following fonts at the moment. Nothing in particular about these fonts, only that they support glyphs and ligatures.
+
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)) ;; Fira Code,  :weight 'medium
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 12))
+#+end_src
+
+Instructions to install ~Fira Code~ can be found [[https://github.com/tonsky/FiraCode/wiki/Installing][here]].
+
+Run the following command to install ~JetBrains Mono Nerd Font~:
+
+#+begin_example
+brew install --cask font-jetbrains-mono-nerd-font
+#+end_example
+
+You can install other fonts with a similar command following [[https://github.com/ryanoasis/nerd-fonts#option-4-homebrew-fonts][these]] instructions. See comment [[https://www.reddit.com/r/DoomEmacs/comments/qqqbon/comment/hrlhkzn/?utm_source=share&utm_medium=web2x&context=3][here]] and more info can be found [[https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/font-info.md][here]] as well.
 
 * Packages
 To install a package with Doom you must declare them here and run ~doom sync~ on the command line, then restart Emacs for the changes to take effect -- or use ~M-x doom/reload~.
