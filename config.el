@@ -53,6 +53,10 @@
   (setq evil-snipe-repeat-scope 'buffer)
   (setq evil-snipe-spillover-scope 'whole-buffer)
 )
+(use-package devdocs
+  :ensure t)
+
+(global-set-key (kbd "C-h D") 'devdocs-lookup)
 (after! projectile
    (setq
         projectile-project-search-path '("~/sys-vagrant/code/")
