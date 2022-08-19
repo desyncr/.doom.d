@@ -80,8 +80,8 @@ You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how the
 I'm using the following fonts at the moment. Nothing in particular about these fonts, only that they support glyphs and ligatures.
 
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)) ;; Fira Code,  :weight 'medium
-(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 12))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font")) ;; Fira Code,  :weight 'medium, :size 12
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font"))
 #+end_src
 
 Instructions to install ~Fira Code~ can be found [[https://github.com/tonsky/FiraCode/wiki/Installing][here]].

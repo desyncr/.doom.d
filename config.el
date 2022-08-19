@@ -7,8 +7,8 @@
 
 (setq org-directory "~/org/")
 
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)) ;; Fira Code,  :weight 'medium
-(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 12))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font")) ;; Fira Code,  :weight 'medium, :size 12
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font"))
 
 (setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
 
