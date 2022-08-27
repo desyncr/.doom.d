@@ -238,6 +238,7 @@ You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how the
 (package! org-modern) ; Modern org UI
 (package! evil-snipe)
 (package! devdocs)
+(package! org-bullets)
 #+end_src
 
 * Fancy splash image
@@ -569,53 +570,52 @@ Ensure treemacs-persp integration:
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
 #+end_src
 
-* Org/Agenda
-** org-modern
-Modern look and feel for Org files. Package: [[https://github.com/minad/org-modern][org-modern]].
-
-This package in [[https://github.com/doomemacs/doomemacs/issues/6434#issuecomment-1146242143][under review]] for inclusion into Doom Emacs.
+* Org
+** org-mode
+If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
 
 #+begin_src emacs-lisp
-(use-package org-modern
-  :config
-    ;; Add frame borders and window dividers
-    (modify-all-frames-parameters
-    '((right-divider-width . 5)
-    (internal-border-width . 5)))
+(setq org-directory "~/org/")
+#+end_src
 
-    (dolist (face '(window-divider
-                    window-divider-first-pixel
-                    window-divider-last-pixel))
-    (face-spec-reset-face face)
-    (set-face-foreground face (face-attribute 'default :background)))
-    (set-face-background 'fringe (face-attribute 'default :background))
+** org-roam
+Org-roam is a package to create a non-hierarchical knowledge base. The package is meant to be used as a Zettelkasten note taking tool.
 
-    (setq
-    ;; Edit settings
-    org-auto-align-tags nil
-    org-tags-column 0
-    org-catch-invisible-edits 'show-and-error
-    org-special-ctrl-a/e t
-    org-insert-heading-respect-content t
-
-    ;; Org styling, hide markup etc.
-    org-hide-emphasis-markers t
-    org-pretty-entities t
-    org-ellipsis "…"
-
-    ;; Agenda styling
-    org-agenda-tags-column 0
-    org-agenda-block-separator ?─
-    org-agenda-time-grid
-    '((daily today require-timed)
-    (800 1000 1200 1400 1600 1800 2000)
-    " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-    org-agenda-current-time-string
-    "⭠ now ─────────────────────────────────────────────────")
-
-    (global-org-modern-mode)
+#+begin_src emacs-lisp
+(use-package org-roam
+  :custom
+  (org-roam-directory "~/org/roam")
+  (org-roam-index-file "~/org/roam/index.org")
   )
 #+end_src
+
+We're making only a few configurations only since Doom Emacs already integrates the package via ~:editor (org +roam)~.
+** org-todo-keywords
+Custom ~org-todo-keywords~. It needs to be wrapper in (~after! ..~) block to apply correctly (see [[https://github.com/doomemacs/doomemacs/issues/2913#issuecomment-614773557][comment]]).
+
+#+begin_src emacs-lisp
+(after! org
+    (setq org-todo-keywords
+        '((sequence  "PROJ(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
+    (setq org-tag-alist '(("personal" . ?p) ("learning" . ?l) ("@home" . ?h) ("@work" . ?w) ("@computer" . ?c) ("errands" . ?e)))
+    )
+#+end_src
+
+I'm also configuring a few tags to classify items under.
+** org-bullets
+This package is a lightweight alternative to [[https://github.com/minad/org-modern][org-modern]]. Project page [[https://github.com/sabof/org-bullets][here]].
+
+I opted for this package rather than org-modern since the latter was rather invasive changing for example the look of dates, tags etc.
+
+#+begin_src emacs-lisp
+(use-package org-bullets
+  :ensure t
+  :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  )
+#+end_src
+
+In the above block I'm enabling the org-bullets-mode after ~org-mode~ is enabled (see documentation [[https://orgmode.org/worg/doc.html][here]].)
 ** org-log-repeat
 Disable log lines on repeat tasks.
 
