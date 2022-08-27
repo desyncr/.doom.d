@@ -352,12 +352,38 @@ M-p: find file in project, also SPC SPC.
 #+begin_src emacs-lisp
 (map! "s-p" #'projectile-find-file)
 #+end_src
+
+- Find buffer
+
+#+begin_src emacs-lisp
+(map! "s-f" #'consult-buffer)
+(map! "s-F" #'consult-buffer-other-window)
+#+end_src
+
+- Next/previous window
+
+#+begin_src emacs-lisp
+(map! "s-]" #'next-window-any-frame)
+(map! "s-[" #'previous-window-any-frame)
+#+end_src
+
+- Increase/decrease window width
+
+ #+begin_src emacs-lisp :tangle yes
+(map! "s-`" #'evil-window-increase-width)
+(map! "s-~" #'evil-window-decrease-width)
+
+(map! "s-." #'evil-window-increase-height)
+(map! "s->" #'evil-window-decrease-height)
+
+ #+end_src
+
 * Coding
 ** flycheck
 Most classes/php files I'm working with are quite large and cause a large number of errors to popup. I'm topping up the error threshold to avoid a warning during start up:
 
 #+begin_src emacs-lisp
-(setq flycheck-checker-error-threshold 10000)
+(setq flycheck-checker-error-threshold 5000)
 #+end_src
 
 Most projects I work with are somewhat following the PSR12 standard, so let's configure flycheck to respect that:
