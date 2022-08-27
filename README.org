@@ -646,6 +646,8 @@ Since it leverages ~libvterm~ it requires a extra steps for the installation. Ch
 
 I'm using ~vterm~ with [[https://github.com/tmux/tmux/wiki][tmux]] for multiplexing and [[fishshell.com/][fish]] as the shell. Down below I'll describe the configurations I use.
 
+*WARNING*: I'm currently moving away from Tmux-in-Emacs workflow. Preferring instead using the Emacs provided window/pane management. While this is not as powerful as Tmux it does reduces the setup complexity.
+
 Daily workflow:
 
 1. Create a new workspace for the shell (~SPC TAB n~)
