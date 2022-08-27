@@ -638,6 +638,8 @@ Disable log lines on repeat tasks.
     (setq org-log-repeat nil)
 )
 #+end_src
+
+This code disables logging status changes on TODO and agenda entries.
 * Term
 ** vterm
 This package offers a fully featured terminal emulation layer for Emacs. It works by leveraging ~libvterm~ library, which powers xterm. Check [[https://www.youtube.com/watch?v=8oNycFLwKfE][this presentation]] for an introduction and walkthrough. Find more in [[https://emacsconf.org/2020/talks/30/][this talk]]. Find the main repository [[https://github.com/akermu/emacs-libvterm][here]].
