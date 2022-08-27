@@ -157,52 +157,80 @@ Ctrl+P / command launcher-like for M-x.
 #+end_src
 
 This package also works for selecting files and other similar components.
-* Writing
-** Spell checking
-Change dictionary with the following:
-
-#+begin_example
-ispell-change-dictionary
-#+end_example
-
-Or use the following configuration:
+* Keybindings
+- Open dashboard
 
 #+begin_src emacs-lisp
-(setq ispell-dictionary "british")
+(map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 #+end_src
 
-Use ~z-=~ to get spelling corrections while under a word.
+- Comment or uncomment region with M-/
+#+begin_src emacs-lisp
+(map! :ne "M-/" #'comment-or-uncomment-region)
+#+end_src
 
-Doom Emacs also come with these 2 packages for grammar checking:
+- Switch to buffer
+#+begin_src emacs-lisp
+(map! "s-b" #'ido-switch-buffer)
+#+end_src
 
-- [[https://github.com/mhayashi1120/Emacs-langtool][Langtool]]
-- [[https://github.com/bnbeckwith/writegood-mode][Writegood-mode]]
+- Toggle treemacs
 
-*** Langtool
-For langtool package you need to install the underlying tool languagetool, which is a java package. See instructions [[https://docs.doomemacs.org/latest/#/prerequisites][here]].
-
-Configure language:
+Toggle treemacs with M-t (tree) and M-§ (key left hand side of the number 1 and above the tab key).
 
 #+begin_src emacs-lisp
-(setq langtool-default-language "en-GB")
+(map! "s-t" #'+treemacs/toggle)
 #+end_src
+
+- Save buffer
+
+Quickly save buffer with M-s (save).
 
 #+begin_src emacs-lisp
-(defun langtool-autoshow-detail-popup (overlays)
-  (when (require 'popup nil t)
-    ;; Do not interrupt current popup
-    (unless (or popup-instances
-                ;; suppress popup after type `C-g` .
-                (memq last-command '(keyboard-quit)))
-      (let ((msg (langtool-details-error-message overlays)))
-        (popup-tip msg)))))
-
-(setq langtool-autoshow-message-function
-      'langtool-autoshow-detail-popup)
+(map! "s-s" #'save-buffer)
 #+end_src
 
-*** Writegood
-Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/][original article]] for writegood.
+- Search project
+
+Search project's contents with M-r (regexp).
+
+#+begin_src emacs-lisp
+(map! "s-r" #'+default/search-project)
+#+end_src
+
+- Find file
+
+M-p: find file in project, also SPC SPC.
+
+#+begin_src emacs-lisp
+(map! "s-p" #'projectile-find-file)
+#+end_src
+
+- Find buffer
+
+#+begin_src emacs-lisp
+(map! "s-f" #'consult-buffer)
+(map! "s-F" #'consult-buffer-other-window)
+#+end_src
+
+- Next/previous window
+
+#+begin_src emacs-lisp
+(map! "s-]" #'next-window-any-frame)
+(map! "s-[" #'previous-window-any-frame)
+#+end_src
+
+- Increase/decrease window width
+
+ #+begin_src emacs-lisp :tangle yes
+(map! "s-`" #'evil-window-increase-width)
+(map! "s-~" #'evil-window-decrease-width)
+
+(map! "s-." #'evil-window-increase-height)
+(map! "s->" #'evil-window-decrease-height)
+
+ #+end_src
+
 * Packages
 ** Installing
 To install a package with Doom you must declare them here and run ~doom sync~ on the command line, then restart Emacs for the changes to take effect -- or use ~M-x doom/reload~.
@@ -369,80 +397,66 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
   (super-save-mode +1))
 #+end_src
 
-* Custom keybindings
-- Open dashboard
+*** benchmark-init
+1. Add ~(package! benchmark-init)~ to ~\~/.doom.d/packages.el~
+2. Add this to ~\~/.doom.d/init.el~
+#+begin_example elisp
+    (when init-file-debug
+    (require 'benchmark-init)
+    (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
+#+end_example
+1. Run ~doom sync~
+2. Close Emacs
+3. Start Emacs in debug mode ~emacs --debug-init~.
+4. ~M-x benchmark-init/show-durations-tabuled~ or ~M-x benchmark-init/show-durations-tree~
+
+See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913][this]] comment.
+* Writing
+** Spell checking
+Change dictionary with the following:
+
+#+begin_example
+ispell-change-dictionary
+#+end_example
+
+Or use the following configuration:
 
 #+begin_src emacs-lisp
-(map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
+(setq ispell-dictionary "british")
 #+end_src
 
-- Comment or uncomment region with M-/
-#+begin_src emacs-lisp
-(map! :ne "M-/" #'comment-or-uncomment-region)
-#+end_src
+Use ~z-=~ to get spelling corrections while under a word.
 
-- Switch to buffer
-#+begin_src emacs-lisp
-(map! "s-b" #'ido-switch-buffer)
-#+end_src
+Doom Emacs also come with these 2 packages for grammar checking:
 
-- Toggle treemacs
+- [[https://github.com/mhayashi1120/Emacs-langtool][Langtool]]
+- [[https://github.com/bnbeckwith/writegood-mode][Writegood-mode]]
 
-Toggle treemacs with M-t (tree) and M-§ (key left hand side of the number 1 and above the tab key).
+*** Langtool
+For langtool package you need to install the underlying tool languagetool, which is a java package. See instructions [[https://docs.doomemacs.org/latest/#/prerequisites][here]].
+
+Configure language:
 
 #+begin_src emacs-lisp
-(map! "s-t" #'+treemacs/toggle)
+(setq langtool-default-language "en-GB")
 #+end_src
-
-- Save buffer
-
-Quickly save buffer with M-s (save).
 
 #+begin_src emacs-lisp
-(map! "s-s" #'save-buffer)
+(defun langtool-autoshow-detail-popup (overlays)
+  (when (require 'popup nil t)
+    ;; Do not interrupt current popup
+    (unless (or popup-instances
+                ;; suppress popup after type `C-g` .
+                (memq last-command '(keyboard-quit)))
+      (let ((msg (langtool-details-error-message overlays)))
+        (popup-tip msg)))))
+
+(setq langtool-autoshow-message-function
+      'langtool-autoshow-detail-popup)
 #+end_src
 
-- Search project
-
-Search project's contents with M-r (regexp).
-
-#+begin_src emacs-lisp
-(map! "s-r" #'+default/search-project)
-#+end_src
-
-- Find file
-
-M-p: find file in project, also SPC SPC.
-
-#+begin_src emacs-lisp
-(map! "s-p" #'projectile-find-file)
-#+end_src
-
-- Find buffer
-
-#+begin_src emacs-lisp
-(map! "s-f" #'consult-buffer)
-(map! "s-F" #'consult-buffer-other-window)
-#+end_src
-
-- Next/previous window
-
-#+begin_src emacs-lisp
-(map! "s-]" #'next-window-any-frame)
-(map! "s-[" #'previous-window-any-frame)
-#+end_src
-
-- Increase/decrease window width
-
- #+begin_src emacs-lisp :tangle yes
-(map! "s-`" #'evil-window-increase-width)
-(map! "s-~" #'evil-window-decrease-width)
-
-(map! "s-." #'evil-window-increase-height)
-(map! "s->" #'evil-window-decrease-height)
-
- #+end_src
-
+*** Writegood
+Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/][original article]] for writegood.
 * Coding
 ** flycheck
 Most classes/php files I'm working with are quite large and cause a large number of errors to popup. I'm topping up the error threshold to avoid a warning during start up:
