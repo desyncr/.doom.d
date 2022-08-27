@@ -496,6 +496,19 @@ This package uses devdocs generated documentation (downloads it) and queries it 
 #+end_src
 
 Use ~C-h D~ or ~SPC h D~ to search for the symbol under cursor. Note: The documentation will not be displayed right away, you'll need to press RET on the given symbol.
+** evil-multiedit
+evil-multiedit is a multi-cursor implementation. This enables you to visually select matching characters and edit them simultaneously.
+
+#+begin_src emacs-lisp
+(after! org
+  :custom
+    (map! :nv "C-D" #'evil-multiedit-match-symbol-and-prev
+        :nv "C-d" #'evil-multiedit-match-symbol-and-next))
+#+end_src
+
+The evil-multiedit package is enabled via ~:ui multiple-cursors~.
+
+In the above snippet I'm configuring binding the usual M-D, M-d to C-D and C-d since the default keybindings are mapped to other actions such as isearch: see [[https://emacs.stackexchange.com/q/73234][this]] stackoverflow question and [[https://github.com/doomemacs/doomemacs/issues/3461][this]] Github issue.
 * Version control
 ** Git
 Configure user and email address:
