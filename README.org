@@ -59,60 +59,11 @@ See ~C-h v doom-font~ for documentation and more examples of what they accept. F
 
 If you or Emacs can't find your font, use ~M-x describe-font~ to look them up, ~M-x eval-region~ to execute elisp code, and ~M-x doom/reload-font~ to refresh your font settings. If Emacs still can't find your font, it likely wasn't installed correctly. Font issues are rarely Doom issues!
 
-There are two ways to load a theme. Both assume the theme is installed and available. You can either set ~doom-theme~ or manually load a theme with the ~load-theme~ function. This is the default:
-
-#+begin_src emacs-lisp
-(setq doom-theme 'doom-nord-light)
-#+end_src
-
-This determines the style of line numbers in effect. If set to ~nil~, line
-numbers are disabled. For relative line numbers, set this to ~relative~.
-
-#+begin_src emacs-lisp
-(setq display-line-numbers-type t)
-#+end_src
-
-If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
-#+begin_src emacs-lisp
-(setq org-directory "~/org/")
-#+end_src
-
-Whenever you reconfigure a package, make sure to wrap your config in an
-
-  #+begin_example
-  (after! PACKAGE
-  (setq x y))
-  #+end_example
-
-The exceptions to this rule:
-
-  - Setting file/directory variables (like ~org-directory~)
-  - Setting variables which explicitly tell you to set them before their
-    package is loaded (see ~C-h v VARIABLE~ to look up their documentation).
-  - Setting doom variables (which start with ~doom-~ or ~+~).
-
-Here are some additional functions/macros that will help you configure Doom.
-
-- ~load!~ for loading external *.el files relative to this one
-- ~use-package!~ for configuring packages
-- ~after!~ for running code after a package has loaded
-- ~add-load-path!~ for adding directories to the ~load-path~, relative to
-  this file. Emacs searches the ~load-path~ when you load packages with
-  ~require~ or ~use-package~.
-- ~map!~ for binding new keys
-
-To get information about any of these functions/macros, move the cursor over the highlighted symbol at press ~K~ (non-evil users must press ~C-c c k~).
-This will open documentation for it, including demos of how they are used.
-Alternatively, use ~C-h o~ to look up a symbol (functions, variables, faces, etc).
-
-You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how they are implemented.
-
-* Fonts
 I'm using the following fonts at the moment. Nothing in particular about these fonts, only that they support glyphs and ligatures.
 
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font")) ;; Fira Code,  :weight 'medium, :size 12
-(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font"))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)) ;; Fira Code,  :weight 'medium, :size 12
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 12))
 #+end_src
 
 Instructions to install ~Fira Code~ can be found [[https://github.com/tonsky/FiraCode/wiki/Installing][here]].
@@ -125,7 +76,126 @@ brew install --cask font-jetbrains-mono-nerd-font
 
 You can install other fonts with a similar command following [[https://github.com/ryanoasis/nerd-fonts#option-4-homebrew-fonts][these]] instructions. See comment [[https://www.reddit.com/r/DoomEmacs/comments/qqqbon/comment/hrlhkzn/?utm_source=share&utm_medium=web2x&context=3][here]] and more info can be found [[https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/font-info.md][here]] as well.
 
+** Dark/light theme sync
+Emacs plus build supports OS integration for [[https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change][light/dark theme switching]].
+
+#+begin_src emacs-lisp
+(defun my/apply-theme (appearance)
+  "Load theme, taking current system APPEARANCE into consideration."
+  (mapc #'disable-theme custom-enabled-themes)
+  (pcase appearance
+    ('light (load-theme 'doom-nord-light t))
+    ('dark (load-theme 'doom-nord t))))
+
+(add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
+#+end_src
+
+This will not work on non-Mac OSes. But [[https://github.com/doomemacs/doomemacs/issues/6424#issue-1251604264][here's]] way to do it.
+** doom-modeline-word-count
+Add word count to status/modeline. Useful for org documents and writing in general.
+
+#+begin_src emacs-lisp
+(setq doom-modeline-enable-word-count t)
+#+end_src
+
+** git-gutter
+Show git gutter for unsaved changes, source: [[https://github.com/doomemacs/doomemacs/issues/2377#issuecomment-576117218][github comment]].
+
+#+begin_src emacs-lisp
+(after! git-gutter
+  (setq git-gutter:update-interval 0.5))
+#+end_src
+
+** center-isearch
+source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]].
+
+#+begin_src emacs-lisp
+(advice-add 'evil-ex-search-next :after
+            (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+(advice-add 'evil-ex-search-previous :after
+            (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+#+end_src
+
+** centered-cursor-mode
+source: https://github.com/andre-r/centered-cursor-mode.el
+
+#+begin_src emacs-lisp
+(use-package centered-cursor-mode
+  :demand
+  :config
+  ;; Optional, enables centered-cursor-mode in all buffers.
+  ;;(global-centered-cursor-mode)
+)
+#+end_src
+
+Note: ~global-centered-cursor-mode~ causes line jumps while typing on vterm. Disabling for the moment.
+
+** vertico-posframe
+Ctrl+P / command launcher-like for M-x.
+
+#+begin_src emacs-lisp
+(use-package vertico-posframe
+  :config
+  (vertico-posframe-mode 1)
+  (setq vertico-posframe-border-width 8
+        vertico-posframe-width 120
+        vertico-posframe-height 20
+        vertico-posframe-min-height 10
+        vertico-posframe-parameters
+        '((left-fringe . 5)
+          (right-fringe . 5)))
+  )
+#+end_src
+
+This package also works for selecting files and other similar components.
+* Writing
+** Spell checking
+Change dictionary with the following:
+
+#+begin_example
+ispell-change-dictionary
+#+end_example
+
+Or use the following configuration:
+
+#+begin_src emacs-lisp
+(setq ispell-dictionary "british")
+#+end_src
+
+Use ~z-=~ to get spelling corrections while under a word.
+
+Doom Emacs also come with these 2 packages for grammar checking:
+
+- [[https://github.com/mhayashi1120/Emacs-langtool][Langtool]]
+- [[https://github.com/bnbeckwith/writegood-mode][Writegood-mode]]
+
+*** Langtool
+For langtool package you need to install the underlying tool languagetool, which is a java package. See instructions [[https://docs.doomemacs.org/latest/#/prerequisites][here]].
+
+Configure language:
+
+#+begin_src emacs-lisp
+(setq langtool-default-language "en-GB")
+#+end_src
+
+#+begin_src emacs-lisp
+(defun langtool-autoshow-detail-popup (overlays)
+  (when (require 'popup nil t)
+    ;; Do not interrupt current popup
+    (unless (or popup-instances
+                ;; suppress popup after type `C-g` .
+                (memq last-command '(keyboard-quit)))
+      (let ((msg (langtool-details-error-message overlays)))
+        (popup-tip msg)))))
+
+(setq langtool-autoshow-message-function
+      'langtool-autoshow-detail-popup)
+#+end_src
+
+*** Writegood
+Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/][original article]] for writegood.
 * Packages
+** Installing
 To install a package with Doom you must declare them here and run ~doom sync~ on the command line, then restart Emacs for the changes to take effect -- or use ~M-x doom/reload~.
 
 To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
