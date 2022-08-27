@@ -408,7 +408,7 @@ So I'm forced to top up the default threshold via thiw variable:
  #+end_src
 
 ** rainbow-delimiters-mode
-Rainbow coloring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
+Rainbow colouring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
 
 #+begin_src emacs-lisp
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
