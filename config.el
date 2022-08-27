@@ -177,6 +177,9 @@
     (map! :nv "C-D" #'evil-multiedit-match-symbol-and-prev
         :nv "C-d" #'evil-multiedit-match-symbol-and-next))
 
+(after! magit
+    (setq git-commit-summary-max-length 100))
+
 (after! projectile
    (setq
         projectile-project-search-path '("~/sys-vagrant/code/")
