@@ -142,6 +142,10 @@ Note: ~global-centered-cursor-mode~ causes line jumps while typing on vterm. Dis
 ** vertico-posframe
 Ctrl+P / command launcher-like for M-x.
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! vertico-posframe)
+#+end_src
+
 #+begin_src emacs-lisp
 (use-package vertico-posframe
   :config
@@ -246,71 +250,71 @@ To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 
 To install a package directly from a remote git repo, you must specify a ~:recipe~. You'll find documentation on what ~:recipe~ accepts here: https://github.com/radian-software/straight.el#the-recipe-format
 
-    #+begin_example
+#+begin_example
     (package! another-package
-    :recipe (:host github :repo "username/repo"))
-    #+end_example
+        :recipe (:host github :repo "username/repo"))
+#+end_example
 
 If the package you are trying to install does not contain a PACKAGENAME.el file, or is located in a subdirectory of the repo, you'll need to specify ~:files~ in the ~:recipe~:
 
-    #+begin_example
+#+begin_example
     (package! this-package
-    :recipe (:host github :repo "username/repo"
-    :files ("some-file.el" "src/lisp/*.el")))
-    #+end_example
+        :recipe (:host github :repo "username/repo"
+        :files ("some-file.el" "src/lisp/*.el")))
+#+end_example
 
 If you'd like to disable a package included with Doom, you can do so here with the ~:disable~ property:
 
-    #+begin_example
+#+begin_example
     (package! builtin-package :disable t)
-    #+end_example
+#+end_example
 
 You can override the recipe of a built in package without having to specify all the properties for ~:recipe~. These will inherit the rest of its recipe from Doom or MELPA/ELPA/Emacsmirror:
 
-    #+begin_example
+#+begin_example
     (package! builtin-package :recipe (:nonrecursive t))
     (package! builtin-package-2 :recipe (:repo "myfork/package"))
-    #+end_example
+#+end_example
 
 Specify a ~:branch~ to install a package from a particular branch or tag.
 This is required for some packages whose default branch isn't ~master~ (which our package manager can't deal with; see radian-software/straight.el#279)
 
-    #+begin_example
+#+begin_example
     (package! builtin-package :recipe (:branch "develop"))
-    #+end_example
+#+end_example
 
 Use ~:pin~ to specify a particular commit to install.
 
-    #+begin_example
+#+begin_example
     (package! builtin-package :pin "1a2b3c4d5e")
-    #+end_example
+#+end_example
 
 
 Doom's packages are pinned to a specific commit and updated from release to release. The ~unpin!~ macro allows you to unpin single packages...
 
-    #+begin_example
+#+begin_example
     (unpin! pinned-package)
-    #+end_example
+#+end_example
 
 ...or multiple packages
 
-    #+begin_example
+#+begin_example
     (unpin! pinned-package another-pinned-package)
-    #+end_example
+#+end_example
 
  ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 
-    #+begin_example
+#+begin_example
     (unpin! t)
-    #+end_example
+#+end_example
 
-** Configure
+** Configuring
 Whenever you reconfigure a package, make sure to wrap your config in an
 
-  #+begin_example
+#+begin_example
   (after! PACKAGE
-  (setq x y))
-  #+end_example
+    (setq x y))
+#+end_example
 
 The exceptions to this rule:
   - Setting file/directory variables (like ~org-directory~)
@@ -335,61 +339,12 @@ Alternatively, use ~C-h o~ to look up a symbol (functions, variables, faces, etc
 You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how they are implemented.
 ** Custom
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
-#+begin_src emacs-lisp :tangle packages.el
-(package! blamer)
-(package! deadgrep)
-(package! treemacs-projectile)
-(package! super-save)
-(package! better-jumper)
-(package! centered-cursor-mode)
-(package! vertico-posframe)
-(package! rainbow-delimiters)
-(package! evil-snipe)
-(package! devdocs)
-(package! org-bullets)
-#+end_src
-*** blamer
-This package adds a blame legend besides the current line in version-controlled files.
-
-It's somewhat handy but at the same time I can't see how I can jump to the diff for that blame, so I can't make it fully useful to me.
-Another small annoyance I found is that when I switched to a literate configuration format (i.e. use org files) the blamer shows up.
-The problem is with org files you got line-wrap. Since I use splits (treemacs | vsplit | vsplit) the blamer packages causes text reflow with the line wrap.
-
-#+begin_src emacs-lisp
-(use-package blamer
-  :bind (("s-i" . blamer-show-commit-info))
-  :defer 20
-  :custom
-    (blamer-idle-time 0.3)
-    (blamer-min-offset 70)
-    (blamer-max-commit-message-length 100)
-  :custom-face
-    (blamer-face ((t :foreground "#7a88cf"
-                    :background nil
-                    :italic t)))
-  :config
-  (global-blamer-mode 0))
-#+end_src
-
-TODO: Find out how to jump to the blame commit.
-
-*** better-jumper
-Better jump (remember jump list).
-
-#+begin_src emacs-lisp
-(use-package better-jumper
-  :ensure t
-  :config
-  (better-jumper-mode +1))
-(with-eval-after-load 'evil-maps
-  (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
-  (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
-#+end_src
-
-Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
-
 *** super-save
 Automatically save open buffers on certain events.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! super-save)
+#+end_src
 
 Package repository: [[https://github.com/bbatsov/super-save][here]].
 
@@ -399,7 +354,10 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
   :config
   (super-save-mode +1))
 #+end_src
-
+*** deadgrep
+#+begin_src emacs-lisp :tangle packages.el
+(package! deadgrep)
+#+end_src
 *** benchmark-init
 1. Add ~(package! benchmark-init)~ to ~\~/.doom.d/packages.el~
 2. Add this to ~\~/.doom.d/init.el~
@@ -518,6 +476,10 @@ So I'm forced to top up the default threshold via this variable:
 ** rainbow-delimiters-mode
 Rainbow colouring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! rainbow-delimiters)
+#+end_src
+
 #+begin_src emacs-lisp
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 #+end_src
@@ -563,6 +525,10 @@ Tip: Use M-x yas-describe-tables to see the list of snippets and edit them.
 ** evil-snipe
 This package provides a way to quickly navigate through a buffer with ~s~ and ~S~ for forward and backward 2-character search.
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! evil-snipe)
+#+end_src
+
 Once it finds a 2-character match it jumps to it. You can jump to further matches with ~;~ (or ~,~ to jump backwards).
 
 #+begin_src emacs-lisp
@@ -594,6 +560,10 @@ The full list of scopes are:
 ** devdocs
 This package somewhat expands on Doom Emacs' [[https://docs.doomemacs.org/latest/modules/tools/lookup/][lookup]] functionality.
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! devdocs)
+#+end_src
+
 The ~SPC s o~ opens up documentation for the current symbol under cursor in the default browser. I didn't like to require a browser to navigate documentation as I don't want to leave the code I'm working on to check on something.
 
 Alternatively it can be configured to use ~eww~ instead. Which is way better. But the problem is devdocs require javascript to work correctly (it can work offline, but still requires a browser and javascript enabled).
@@ -621,6 +591,29 @@ evil-multiedit is a multi-cursor implementation. This enables you to visually se
 The evil-multiedit package is enabled via ~:ui multiple-cursors~.
 
 In the above snippet I'm configuring binding the usual M-D, M-d to C-D and C-d since the default keybindings are mapped to other actions such as isearch: see [[https://emacs.stackexchange.com/q/73234][this]] stackoverflow question and [[https://github.com/doomemacs/doomemacs/issues/3461][this]] Github issue.
+** better-jumper
+Better jump (remember jump list).
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! better-jumper)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package better-jumper
+  :ensure t
+  :config
+  (better-jumper-mode +1))
+(with-eval-after-load 'evil-maps
+  (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
+  (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
+#+end_src
+
+Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
+** centered-cursor-mode
+#+begin_src emacs-lisp :tangle packages.el
+(package! centered-cursor-mode)
+#+end_src
+
 * Version control
 ** Git
 Configure user and email address:
@@ -638,6 +631,34 @@ This configuration applies to the repository the command is running on (--local)
     (setq git-commit-summary-max-length 100))
 #+end_src
 Anyway, in the above code setting the commit's summary max length to 100 so I'm not bothered with auto-formattig in commit's title/descriptions.
+** blamer
+This package adds a blame legend besides the current line in version-controlled files.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! blamer)
+#+end_src
+
+It's somewhat handy but at the same time I can't see how I can jump to the diff for that blame, so I can't make it fully useful to me.
+Another small annoyance I found is that when I switched to a literate configuration format (i.e. use org files) the blamer shows up.
+The problem is with org files you got line-wrap. Since I use splits (treemacs | vsplit | vsplit) the blamer packages causes text reflow with the line wrap.
+
+#+begin_src emacs-lisp
+(use-package blamer
+  :bind (("s-i" . blamer-show-commit-info))
+  :defer 20
+  :custom
+    (blamer-idle-time 0.3)
+    (blamer-min-offset 70)
+    (blamer-max-commit-message-length 100)
+  :custom-face
+    (blamer-face ((t :foreground "#7a88cf"
+                    :background nil
+                    :italic t)))
+  :config
+  (global-blamer-mode 0))
+#+end_src
+
+TODO: Find out how to jump to the blame commit.
 
 * Project management
 ** projectile
@@ -664,6 +685,10 @@ Enable treemacs and never move to treemacs with other-window as well as disablin
 Take a look at more configuration options in [[https://github.com/Alexander-Miller/treemacs#configuration][github]].
 
 Ensure treemacs-projectile integration:
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! treemacs-projectile)
+#+end_src
 
 #+begin_src emacs-lisp
 (use-package treemacs-projectile
@@ -714,6 +739,22 @@ If you use ~org~ and don't want your org files in the default location below, ch
 (setq org-directory "~/org/")
 #+end_src
 
+Disable company-mode (autocompletions) on org-mode (i.e. prose):
+#+begin_src emacs-lisp
+(setq company-global-modes '(not org-mode))
+#+end_src
+Source: [[https://stackoverflow.com/a/34660219][stackoverflow]].
+** org-babel
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-auto-tangle)
+#+end_src
+
+(use-package! org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default t))
+
 ** org-roam
 Org-roam is a package to create a non-hierarchical knowledge base. The package is meant to be used as a Zettelkasten note taking tool.
 
@@ -742,6 +783,10 @@ I'm also configuring a few tags to classify items under.
 This package is a lightweight alternative to [[https://github.com/minad/org-modern][org-modern]]. Project page [[https://github.com/sabof/org-bullets][here]].
 
 I opted for this package rather than org-modern since the latter was rather invasive changing for example the look of dates, tags etc.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-bullets)
+#+end_src
 
 #+begin_src emacs-lisp
 (use-package org-bullets
