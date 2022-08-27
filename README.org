@@ -369,10 +369,10 @@ Most projects I work with are somewhat following the PSR12 standard, so let's co
 I'm working on a large series of interrelated projects which work well under the same directory structure (code/{project1, project2, project3}).
 The downside is that this causes LSP to complain about the large number of files and file descriptors it uses.
 
-So I'm forced to top up the default threshold via thiw variable:
+So I'm forced to top up the default threshold via this variable:
 
 #+begin_src emacs-lisp
-(setq lsp-file-watch-threshold 10000)
+(setq lsp-file-watch-threshold 5000)
 #+end_src
 
 #+begin_src emacs-lisp
