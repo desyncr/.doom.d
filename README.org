@@ -339,10 +339,10 @@ Quickly save buffer with M-s (save).
 
 - Search project
 
-Search project's contents with M-f (find). Replaces Go To Line.
+Search project's contents with M-r (regexp).
 
 #+begin_src emacs-lisp
-(map! "s-f" #'+default/search-project)
+(map! "s-r" #'+default/search-project)
 #+end_src
 
 - Find file
