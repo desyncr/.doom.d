@@ -158,79 +158,82 @@ Ctrl+P / command launcher-like for M-x.
 
 This package also works for selecting files and other similar components.
 * Keybindings
-- Open dashboard
-
+** Open dashboard
 #+begin_src emacs-lisp
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 #+end_src
 
-- Comment or uncomment region with M-/
+** Comment or uncomment region with M-/
 #+begin_src emacs-lisp
 (map! :ne "M-/" #'comment-or-uncomment-region)
 #+end_src
 
-- Switch to buffer
+** Switch to buffer
 #+begin_src emacs-lisp
 (map! "s-b" #'ido-switch-buffer)
 #+end_src
 
-- Toggle treemacs
-
+** Toggle treemacs
 Toggle treemacs with M-t (tree) and M-§ (key left hand side of the number 1 and above the tab key).
 
 #+begin_src emacs-lisp
 (map! "s-t" #'+treemacs/toggle)
 #+end_src
 
-- Save buffer
-
-Quickly save buffer with M-s (save).
+** Save buffer
+Quickly save buffer with ~M-s~ (save).
 
 #+begin_src emacs-lisp
 (map! "s-s" #'save-buffer)
 #+end_src
 
-- Search project
-
-Search project's contents with M-r (regexp).
+** Search project
+Search project's contents with ~M-r~ (regexp).
 
 #+begin_src emacs-lisp
 (map! "s-r" #'+default/search-project)
 #+end_src
 
-- Find file
-
-M-p: find file in project, also SPC SPC.
+** Find file
+~M-p~: find file in project, also ~SPC SPC~.
 
 #+begin_src emacs-lisp
 (map! "s-p" #'projectile-find-file)
 #+end_src
 
-- Find buffer
+** Find buffer
+Also use ~SPC s s~ to search matching characters on the current buffer.
 
 #+begin_src emacs-lisp
 (map! "s-f" #'consult-buffer)
 (map! "s-F" #'consult-buffer-other-window)
 #+end_src
 
-- Next/previous window
-
+** Next/previous window
 #+begin_src emacs-lisp
 (map! "s-]" #'next-window-any-frame)
 (map! "s-[" #'previous-window-any-frame)
 #+end_src
 
-- Increase/decrease window width
-
+** Increase/decrease window width
  #+begin_src emacs-lisp :tangle yes
 (map! "s-`" #'evil-window-increase-width)
 (map! "s-~" #'evil-window-decrease-width)
 
 (map! "s-." #'evil-window-increase-height)
 (map! "s->" #'evil-window-decrease-height)
-
  #+end_src
+** Mark paragraph
+Visually selects the paragraph. Execute multiple times to expand the selection or move the cursor.
 
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c v p") 'er/mark-paragraph)
+(global-set-key (kbd "C-c v w") 'er/mark-word)
+#+end_src
+
+Use ~C-c v p~ to *v*isual select a *p*aragraph and ~C-c v w~ to select a word under cursor.
+
+Worth checking out [[https://www.johndcook.com/blog/2017/08/09/selecting-things-in-emacs/][this]] article.
 * Packages
 ** Installing
 To install a package with Doom you must declare them here and run ~doom sync~ on the command line, then restart Emacs for the changes to take effect -- or use ~M-x doom/reload~.
