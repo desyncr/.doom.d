@@ -317,32 +317,7 @@ This section contains custom packages and package configurations. Most of the co
 (package! devdocs)
 (package! org-bullets)
 #+end_src
-*** Benchmarking
-1. Add ~(package! benchmark-init)~ to ~\~/.doom.d/packages.el~
-2. Add this to ~\~/.doom.d/init.el~
-#+begin_example elisp
-    (when init-file-debug
-    (require 'benchmark-init)
-    (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
-#+end_example
-1. Run ~doom sync~
-2. Close Emacs
-3. Start Emacs in debug mode ~emacs --debug-init~.
-4. ~M-x benchmark-init/show-durations-tabuled~ or ~M-x benchmark-init/show-durations-tree~
-
-See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913][this]] comment.
-* Fancy splash image
-Configure Doom Emacs Splash image. Taken from [[https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash][zzamboni/dot-doom]]. Alternative splash images can be found at [[https://github.com/jeetelongname/doom-banners][jeetelongname/doom-banners]] repository.
-
-#+begin_src emacs-lisp
-(setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
-#+end_src
-
-You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the top of this document for an example.
-
-* Custom packages
-This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
-** blamer
+*** blamer
 This package adds a blame legend besides the current line in version-controlled files.
 
 It's somewhat handy but at the same time I can't see how I can jump to the diff for that blame, so I can't make it fully useful to me.
@@ -367,7 +342,7 @@ The problem is with org files you got line-wrap. Since I use splits (treemacs | 
 
 TODO: Find out how to jump to the blame commit.
 
-** better-jumper
+*** better-jumper
 Better jump (remember jump list).
 
 #+begin_src emacs-lisp
@@ -382,7 +357,7 @@ Better jump (remember jump list).
 
 Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
 
-** super-save
+*** super-save
 Automatically save open buffers on certain events.
 
 Package repository: [[https://github.com/bbatsov/super-save][here]].
