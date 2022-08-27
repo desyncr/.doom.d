@@ -21,6 +21,8 @@
 
 (add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
 
+(setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
+
 (setq doom-modeline-enable-word-count t)
 
 (after! git-gutter
@@ -50,51 +52,6 @@
           (right-fringe . 5)))
   )
 
-(setq ispell-dictionary "british")
-
-(setq langtool-default-language "en-GB")
-
-(defun langtool-autoshow-detail-popup (overlays)
-  (when (require 'popup nil t)
-    ;; Do not interrupt current popup
-    (unless (or popup-instances
-                ;; suppress popup after type `C-g` .
-                (memq last-command '(keyboard-quit)))
-      (let ((msg (langtool-details-error-message overlays)))
-        (popup-tip msg)))))
-
-(setq langtool-autoshow-message-function
-      'langtool-autoshow-detail-popup)
-
-(setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
-
-(use-package blamer
-  :bind (("s-i" . blamer-show-commit-info))
-  :defer 20
-  :custom
-    (blamer-idle-time 0.3)
-    (blamer-min-offset 70)
-    (blamer-max-commit-message-length 100)
-  :custom-face
-    (blamer-face ((t :foreground "#7a88cf"
-                    :background nil
-                    :italic t)))
-  :config
-  (global-blamer-mode 0))
-
-(use-package better-jumper
-  :ensure t
-  :config
-  (better-jumper-mode +1))
-(with-eval-after-load 'evil-maps
-  (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
-  (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
-
-(use-package super-save
-  :ensure t
-  :config
-  (super-save-mode +1))
-
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 
 (map! :ne "M-/" #'comment-or-uncomment-region)
@@ -120,6 +77,30 @@
 
 (map! "s-." #'evil-window-increase-height)
 (map! "s->" #'evil-window-decrease-height)
+
+(global-set-key (kbd "C-c v p") 'er/mark-paragraph)
+(global-set-key (kbd "C-c v w") 'er/mark-word)
+
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1))
+
+(setq ispell-dictionary "british")
+
+(setq langtool-default-language "en-GB")
+
+(defun langtool-autoshow-detail-popup (overlays)
+  (when (require 'popup nil t)
+    ;; Do not interrupt current popup
+    (unless (or popup-instances
+                ;; suppress popup after type `C-g` .
+                (memq last-command '(keyboard-quit)))
+      (let ((msg (langtool-details-error-message overlays)))
+        (popup-tip msg)))))
+
+(setq langtool-autoshow-message-function
+      'langtool-autoshow-detail-popup)
 
 (setq flycheck-checker-error-threshold 5000)
 
@@ -177,8 +158,30 @@
     (map! :nv "C-D" #'evil-multiedit-match-symbol-and-prev
         :nv "C-d" #'evil-multiedit-match-symbol-and-next))
 
+(use-package better-jumper
+  :ensure t
+  :config
+  (better-jumper-mode +1))
+(with-eval-after-load 'evil-maps
+  (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
+  (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
+
 (after! magit
     (setq git-commit-summary-max-length 100))
+
+(use-package blamer
+  :bind (("s-i" . blamer-show-commit-info))
+  :defer 20
+  :custom
+    (blamer-idle-time 0.3)
+    (blamer-min-offset 70)
+    (blamer-max-commit-message-length 100)
+  :custom-face
+    (blamer-face ((t :foreground "#7a88cf"
+                    :background nil
+                    :italic t)))
+  :config
+  (global-blamer-mode 0))
 
 (after! projectile
    (setq
@@ -212,6 +215,8 @@
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
 
 (setq org-directory "~/org/")
+
+(setq company-global-modes '(not org-mode))
 
 (use-package org-roam
   :custom
