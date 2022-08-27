@@ -419,21 +419,25 @@ I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to man
 
 #+begin_src emacs-lisp :tangle no
 (use-package yasnippet
+  :defer t
   :config (yas-global-mode 1))
 #+end_src
 
 *Warning*: I had to disable (:tangle no) yas-global-mode since it interfered with LSP/company-mode. Throwing errors trying to display completions on PHP-mode.
 With this settings disabled now both company mode and yas-snippets work just fine.
 
-Additionally I'm installing pre-defined snippets with the package [[The above instructions also setup the package][Yasnippets-snippets]]:
-
-#+begin_src emacs-lisp
+Note: I'm disabling the following due to poor performance:
+#+begin_src emacs-lisp :tangle no
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
+#+end_src
 
-(require 'yasnippet-snippets)
+Additionally I'm installing pre-defined snippets with the package [[The above instructions also setup the package][Yasnippets-snippets]]:
+#+begin_src emacs-lisp
+(use-package yasnippet-snippets
+  :defer t)
 #+end_src
 
 As per the [[package-refresh-contents][instructions]] I'm configuring melpa archive repositories. After that the command ~package-refresh-contents~ must be ran to be able to pull updates from it:
