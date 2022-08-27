@@ -303,6 +303,7 @@ Alternatively, use ~C-h o~ to look up a symbol (functions, variables, faces, etc
 
 You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how they are implemented.
 ** Custom
+This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
 #+begin_src emacs-lisp :tangle packages.el
 (package! blamer)
 (package! deadgrep)
