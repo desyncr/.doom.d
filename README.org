@@ -531,14 +531,17 @@ This configuration applies to the repository the command is running on (--local)
 #+end_src
 
 ** treemacs
-Enable treemacs and never move to treemacs with other-window:
+Enable treemacs and never move to treemacs with other-window as well as disabling wrap around:
 
 #+begin_src emacs-lisp
 (use-package treemacs
-  :ensure t
+  :defer t
   :config
-  (setq treemacs-is-never-other-window t))
+  (setq treemacs-is-never-other-window t
+        treemacs-wrap-around nil))
 #+end_src
+
+Take a look at more configuration options in [[https://github.com/Alexander-Miller/treemacs#configuration][github]].
 
 Ensure treemacs-projectile integration:
 
