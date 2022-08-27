@@ -808,6 +808,15 @@ Disable log lines on repeat tasks.
 #+end_src
 
 This code disables logging status changes on TODO and agenda entries.
+** toc-org
+This package automatically generates and maintains a Table of Contents for Org and Markdown files.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! toc-org)
+#+end_src
+
+Package repository [[https://github.com/snosov1/toc-org][here]]. See configuration options and usage [[https://github.com/snosov1/toc-org#use][here]].
+
 * Term
 ** vterm
 This package offers a fully featured terminal emulation layer for Emacs. It works by leveraging ~libvterm~ library, which powers xterm. Check [[https://www.youtube.com/watch?v=8oNycFLwKfE][this presentation]] for an introduction and walkthrough. Find more in [[https://emacsconf.org/2020/talks/30/][this talk]]. Find the main repository [[https://github.com/akermu/emacs-libvterm][here]].
