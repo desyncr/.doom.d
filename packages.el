@@ -21,3 +21,5 @@
 (package! org-auto-tangle)
 
 (package! org-bullets)
+
+(package! toc-org)
