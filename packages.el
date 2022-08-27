@@ -1,5 +1,3 @@
-(package! benchmark-init)
-
 (package! blamer)
 (package! deadgrep)
 (package! treemacs-projectile)

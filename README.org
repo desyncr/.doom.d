@@ -295,8 +295,6 @@ Alternatively, use ~C-h o~ to look up a symbol (functions, variables, faces, etc
 You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how they are implemented.
 ** Custom
 #+begin_src emacs-lisp :tangle packages.el
-(package! benchmark-init)
-
 (package! blamer)
 (package! deadgrep)
 (package! treemacs-projectile)
@@ -305,12 +303,24 @@ You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how the
 (package! centered-cursor-mode)
 (package! vertico-posframe)
 (package! rainbow-delimiters)
-(package! org-modern) ; Modern org UI
 (package! evil-snipe)
 (package! devdocs)
 (package! org-bullets)
 #+end_src
+*** Benchmarking
+1. Add ~(package! benchmark-init)~ to ~~/.doom.d/packages.el~
+2. Add this to ~/.doom.d/init.el
+#+begin_example elisp
+    (when init-file-debug
+    (require 'benchmark-init)
+    (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
+#+end_example
+1. Run ~doom sync~
+2. Close Emacs
+3. Start Emacs in debug mode ~emacs --debug-init~.
+4. ~M-x benchmark-init/show-durations-tabuled~ or ~M-x benchmark-init/show-durations-tree~
 
+See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913][this]] comment.
 * Fancy splash image
 Configure Doom Emacs Splash image. Taken from [[https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash][zzamboni/dot-doom]]. Alternative splash images can be found at [[https://github.com/jeetelongname/doom-banners][jeetelongname/doom-banners]] repository.
 
