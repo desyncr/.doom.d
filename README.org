@@ -91,6 +91,15 @@ Emacs plus build supports OS integration for [[https://github.com/d12frosted/hom
 #+end_src
 
 This will not work on non-Mac OSes. But [[https://github.com/doomemacs/doomemacs/issues/6424#issue-1251604264][here's]] way to do it.
+** Fancy splash image
+Configure Doom Emacs Splash image. Taken from [[https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash][zzamboni/dot-doom]]. Alternative splash images can be found at [[https://github.com/jeetelongname/doom-banners][jeetelongname/doom-banners]] repository.
+
+#+begin_src emacs-lisp
+(setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
+#+end_src
+
+You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the top of this document for an example.
+
 ** doom-modeline-word-count
 Add word count to status/modeline. Useful for org documents and writing in general.
 
