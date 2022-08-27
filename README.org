@@ -308,8 +308,8 @@ You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how the
 (package! org-bullets)
 #+end_src
 *** Benchmarking
-1. Add ~(package! benchmark-init)~ to ~~/.doom.d/packages.el~
-2. Add this to ~/.doom.d/init.el
+1. Add ~(package! benchmark-init)~ to ~\~/.doom.d/packages.el~
+2. Add this to ~\~/.doom.d/init.el~
 #+begin_example elisp
     (when init-file-debug
     (require 'benchmark-init)
