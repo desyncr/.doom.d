@@ -17,7 +17,10 @@
   - [[#center-isearch][center-isearch]]
   - [[#centered-cursor-mode][centered-cursor-mode]]
   - [[#vertico-posframe][vertico-posframe]]
+  - [[#resize-window][resize-window]]
+  - [[#beacon][beacon]]
 - [[#keybindings][Keybindings]]
+  - [[#keyfreq][keyfreq]]
   - [[#open-dashboard][Open dashboard]]
   - [[#comment-or-uncomment-region-with-m-][Comment or uncomment region with M-/]]
   - [[#switch-to-buffer][Switch to buffer]]
@@ -219,12 +222,80 @@ Ctrl+P / command launcher-like for M-x.
 #+end_src
 
 This package also works for selecting files and other similar components.
+** resize-window
+Easier window management with resize-window package. Currently I'm using some quite obnoxious keybindings for window resizing (I use windows a lot):
+~M-`~, ~M-~~, ~M->~, ~M-<~ etc.
+
+Resize-window package actually supports a transient.el-like flow (it's older than transient.el though) where after invoking the command ~M-x resize-window~ you can add a series of commands and apply them: make vertial window larget, create new split etc.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! resize-window)
+#+end_src
+
+There are only a few commands to learn, and they mimic the normal motions in emacs.
+
+|---------+------------------------------------------------------------------------------------------------------|
+| Command | Description                                                                                          |
+|---------+------------------------------------------------------------------------------------------------------|
+| n, N    | Makes the window vertically bigger, think scrolling down. Use N to enlarge 5 lines at once.          |
+| p, P    | Makes the window vertically smaller, again, like scrolling. Use P to shrink 5 lines at once.         |
+| f, F    | Makes the window horizontally bigger, like scrolling forward; F for five lines at once.              |
+| b, B    | window horizontally smaller, B for five lines at once.                                               |
+| r       | reset window layout to standard                                                                      |
+| w       | cycle through windows so that you can adjust other window panes. W cycles in the opposite direction. |
+| 2       | create a new horizontal split                                                                        |
+| 3       | create a new vertical split                                                                          |
+| 0       | delete the current window                                                                            |
+| k       | kill all buffers and put window config on the stack                                                  |
+| y       | make the window configuration according to the last config pushed onto the stack                     |
+| ?       | Display menu listing commands                                                                        |
+|---------+------------------------------------------------------------------------------------------------------|
+
+#+begin_src emacs-lisp
+(use-package resize-window
+  :config
+    (global-set-key (kbd "C-c ;") 'resize-window))
+#+end_src
+
+Package repository [[https://github.com/dpsutton/resize-window][here]].
+** beacon
+I'm having trouble with theme doom-nord and a vterm-terminals. vterm terminal windows don't have modeline, so it's hard to see where's the cursor if you're jumping between a few of them (as in a few vertial and horizontal windows).
+
+This package light the cursor when a (large) movement is performed, useful when jumping around.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! beacon)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package beacon
+    :ensure t
+    :config
+        (beacon-mode 1)
+        (beacon-size 120))
+#+end_src
+
+Package [[https://github.com/Malabarba/beacon][here]].
 * Keybindings
+** keyfreq
+This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
+
+#+begin_src emacs-lisp
+(use-package keyfreq
+  :ensure t
+  :config
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
+#+end_src
+
+Use ~M-X keyfreq-show RET~ to see the command frequency.
+
+Package site [[https://github.com/dacap/keyfreq][here]].
+
 ** Open dashboard
 #+begin_src emacs-lisp
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 #+end_src
-
 ** Comment or uncomment region with M-/
 #+begin_src emacs-lisp
 (map! :ne "M-/" #'comment-or-uncomment-region)
