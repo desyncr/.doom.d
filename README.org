@@ -538,6 +538,14 @@ See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913]
 ** Spell checking
 Change dictionary with the following:
 
+#+begin_src emacs-lisp
+(use-package ispell
+  :defer t)
+
+(use-package flyspell
+  :defer t)
+#+end_src
+
 #+begin_example
 ispell-change-dictionary
 #+end_example
