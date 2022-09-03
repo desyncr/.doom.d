@@ -312,35 +312,26 @@ This package records the command frequency. I'm installing this since I want to 
 Use ~M-X keyfreq-show RET~ to see the command frequency.
 
 Package site [[https://github.com/dacap/keyfreq][here]].
-
-** Open dashboard
+** TODO Open dashboard
 #+begin_src emacs-lisp
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 #+end_src
-** Comment or uncomment region with M-/
+** TODO Comment or uncomment region with M-/
 #+begin_src emacs-lisp
 (map! :ne "M-/" #'comment-or-uncomment-region)
 #+end_src
-
-** Switch to buffer
-#+begin_src emacs-lisp
-(map! "s-b" #'ido-switch-buffer)
-#+end_src
-
 ** Toggle treemacs
 Toggle treemacs with M-t (tree) and M-§ (key left hand side of the number 1 and above the tab key).
 
 #+begin_src emacs-lisp
 (map! "s-t" #'+treemacs/toggle)
 #+end_src
-
 ** Save buffer
 Quickly save buffer with ~M-s~ (save).
 
 #+begin_src emacs-lisp
 (map! "s-s" #'save-buffer)
 #+end_src
-
 ** Search project
 Search project's contents with ~M-r~ (regexp).
 
