@@ -771,11 +771,6 @@ Better jump (remember jump list).
 #+end_src
 
 Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
-** centered-cursor-mode
-#+begin_src emacs-lisp :tangle packages.el
-(package! centered-cursor-mode)
-#+end_src
-
 * Version control
 ** Git
 Configure user and email address:
