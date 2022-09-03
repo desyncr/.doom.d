@@ -247,7 +247,7 @@ This package also works for selecting files and other similar components.
 Easier window management with resize-window package. Currently I'm using some quite obnoxious keybindings for window resizing (I use windows a lot):
 ~M-`~, ~M-~~, ~M->~, ~M-<~ etc.
 
-Resize-window package actually supports a transient.el-like flow (it's older than transient.el though) where after invoking the command ~M-x resize-window~ you can add a series of commands and apply them: make vertial window larget, create new split etc.
+Resize-window package actually supports a transient.el-like flow (it's older than transient.el though) where after invoking the command ~M-x resize-window~ you can add a series of commands and apply them: make vertial window larger, create new split etc.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! resize-window)
