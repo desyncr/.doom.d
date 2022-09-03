@@ -206,9 +206,12 @@ source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_so
 (advice-add 'evil-ex-search-previous :after
             (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
 #+end_src
-
 ** centered-cursor-mode
 source: https://github.com/andre-r/centered-cursor-mode.el
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! centered-cursor-mode)
+#+end_src
 
 #+begin_src emacs-lisp
 (use-package centered-cursor-mode
