@@ -945,12 +945,33 @@ This package automatically generates and maintains a Table of Contents for Org a
 #+end_src
 
 Package repository [[https://github.com/snosov1/toc-org][here]]. See configuration options and usage [[https://github.com/snosov1/toc-org#use][here]].
+** TODO literate-calc-mode
 
+Enable with ~literate-calc-minor-mode~. Use ~literate-calc-insert-results~ to copy results into buffer.
+
+Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! literate-calc-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package literate-calc-mode
+  :ensure t)
+#+end_src
+
+See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]].
 * Term
 ** vterm
 This package offers a fully featured terminal emulation layer for Emacs. It works by leveraging ~libvterm~ library, which powers xterm. Check [[https://www.youtube.com/watch?v=8oNycFLwKfE][this presentation]] for an introduction and walkthrough. Find more in [[https://emacsconf.org/2020/talks/30/][this talk]]. Find the main repository [[https://github.com/akermu/emacs-libvterm][here]].
 
 Since it leverages ~libvterm~ it requires a extra steps for the installation. Check out the Doom Emacs' [[https://docs.doomemacs.org/latest/modules/term/vterm/][instructions]].
+
+#+begin_src emacs-lisp
+(use-package vterm
+  :custom
+  (vterm-shell "fish"))
+#+end_src
 
 I'm using ~vterm~ with [[https://github.com/tmux/tmux/wiki][tmux]] for multiplexing and [[fishshell.com/][fish]] as the shell. Down below I'll describe the configurations I use.
 
