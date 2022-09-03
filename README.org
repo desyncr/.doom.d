@@ -388,6 +388,28 @@ Visually selects the paragraph. Execute multiple times to expand the selection o
 Use ~C-c v p~ to *v*isual select a *p*aragraph and ~C-c v w~ to select a word under cursor.
 
 Worth checking out [[https://www.johndcook.com/blog/2017/08/09/selecting-things-in-emacs/][this]] article.
+** TODO Snippets
+#+begin_src emacs-lisp
+(map! "s-i" #'yas-insert-snippet)
+#+end_src
+** TODO Create link
+Overrides ~consult-goto-line~.
+#+begin_src emacs-lisp
+  (map! "s-l" #'org-insert-link)
+#+end_src
+** TODO Go to definition other window
+Use =M-g= to find reference in other window.
+
+#+begin_src emacs-lisp
+(map! "s-g" #'xref-find-definitions-other-window)
+#+end_src
+
+=g d= changes my context when I just want to peek at the definition of a method. So quickly jumping in other-window work just fine for me.
+** TODO Delete window
+Use =s-w= to delete window or workspace (last window is preserved).
+** TODO Capture buffer
+#+begin_src emacs-lisp
+#+end_src
 * Packages
 ** Installing
 To install a package with Doom you must declare them here and run ~doom sync~ on the command line, then restart Emacs for the changes to take effect -- or use ~M-x doom/reload~.
