@@ -220,7 +220,28 @@ source: https://github.com/andre-r/centered-cursor-mode.el
 #+end_src
 
 Note: ~global-centered-cursor-mode~ causes line jumps while typing on vterm. Disabling for the moment.
+** TODO vertico
+#+begin_src emacs-lisp
+(use-package vertico
+  :init
+  (vertico-mode))
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :init
+  (savehist-mode))
 
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+  :init
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
+  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+#+end_src
+
+The above snippet configures orderless, which enabled searching by keywords in whatever order.
 ** vertico-posframe
 Ctrl+P / command launcher-like for M-x.
 
