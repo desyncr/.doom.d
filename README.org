@@ -273,9 +273,7 @@ There are only a few commands to learn, and they mimic the normal motions in ema
 |---------+------------------------------------------------------------------------------------------------------|
 
 #+begin_src emacs-lisp
-(use-package resize-window
-  :config
-    (global-set-key (kbd "C-c ;") 'resize-window))
+(map! "s-;" #'resize-window)
 #+end_src
 
 Package repository [[https://github.com/dpsutton/resize-window][here]].
