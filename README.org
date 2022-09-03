@@ -729,15 +729,17 @@ Use ~C-h D~ or ~SPC h D~ to search for the symbol under cursor. Note: The docume
 evil-multiedit is a multi-cursor implementation. This enables you to visually select matching characters and edit them simultaneously.
 
 #+begin_src emacs-lisp
-(after! org
-  :custom
-    (map! :nv "C-D" #'evil-multiedit-match-symbol-and-prev
-        :nv "C-d" #'evil-multiedit-match-symbol-and-next))
+  (map! "s-k" #'evil-multiedit-match-symbol-and-prev
+    "s-j" #'evil-multiedit-match-symbol-and-next)
 #+end_src
 
 The evil-multiedit package is enabled via ~:ui multiple-cursors~.
 
-In the above snippet I'm configuring binding the usual M-D, M-d to C-D and C-d since the default keybindings are mapped to other actions such as isearch: see [[https://emacs.stackexchange.com/q/73234][this]] stackoverflow question and [[https://github.com/doomemacs/doomemacs/issues/3461][this]] Github issue.
+In the above snippet I'm configuring M-j, M-k since the default keybindings are mapped to other actions such as isearch: see [[https://emacs.stackexchange.com/q/73234][this]] stackoverflow question and [[https://github.com/doomemacs/doomemacs/issues/3461][this]] Github issue.
+
+I initially wanted to use M-D, M-d but it's actually mapped to page down (C-d, C-u, page down, page up), which to me it's essential to navigate a large file.
+
+M-u is mapped to revert-buffer.
 ** better-jumper
 Better jump (remember jump list).
 
