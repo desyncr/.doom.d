@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: use-package
+# key: use
+# --
+#+begin_src emacs-lisp
+(use-package $1
+  :config
+    $2
+)
+#+end_src
