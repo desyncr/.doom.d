@@ -1,16 +1,39 @@
 (setq user-full-name "DC*"
       user-mail-address "des@riseup.net")
 
+(setenv "PATH" (concat "/usr/local/opt/ruby/bin:" (getenv "PATH")))
+(setq exec-path (append '("/usr/local/opt/ruby/bin") exec-path))
+
 (setq doom-theme 'doom-nord-light)
 
 (setq display-line-numbers-type t)
 
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;(add-to-list 'default-frame-alist '(height . 86))
+;(add-to-list 'default-frame-alist '(width . 326))
+;(add-to-list 'default-frame-alist '(top . 70))
+;(add-to-list 'default-frame-alist '(left . 130))
 
 (setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
 
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)) ;; Fira Code,  :weight 'medium, :size 12
-(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 12))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)) ;; Fira Code,  :weight 'medium, :size 12
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 15))
+(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 17))
+
+(custom-theme-set-faces
+ 'user
+ '(org-block ((t (:inherit fixed-pitch))))
+ '(org-code ((t (:inherit (shadow fixed-pitch)))))
+ '(org-document-info ((t (:foreground "dark orange"))))
+ '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+ '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+ ;;'(org-link ((t (:foreground "royal blue" :underline t))))
+ '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-property-value ((t (:inherit fixed-pitch))) t)
+ '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+ '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+ '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 (defun my/apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
@@ -40,6 +63,24 @@
   ;;(global-centered-cursor-mode)
 )
 
+(use-package vertico
+  :init
+  (vertico-mode))
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :init
+  (savehist-mode))
+
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+  :init
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
+  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
 (use-package vertico-posframe
   :config
   (vertico-posframe-mode 1)
@@ -48,15 +89,53 @@
         vertico-posframe-height 20
         vertico-posframe-min-height 10
         vertico-posframe-parameters
-        '((left-fringe . 5)
-          (right-fringe . 5)))
-  )
+        '((left-fringe . 2)
+          (right-fringe . 2))))
+
+(map! "s-;" #'resize-window)
+
+(use-package beacon
+    :ensure t
+    :config
+        (beacon-mode 1)
+        (setq beacon-size 10))
+
+(after! highlight-indent-guides
+  (highlight-indent-guides-auto-set-faces))
+
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+
+(defadvice! prompt-for-buffer (&rest _)
+  :after 'evil-window-split (consult-projectile))
+(defadvice! prompt-for-vbuffer (&rest _)
+  :after 'evil-window-vsplit (consult-projectile))
+
+(map! "s-n"
+     'evil-window-vnew)
+(defadvice! vnew-righthand (&rest _)
+  :after 'evil-window-vnew (+evil/window-move-right))
+(defadvice! vnew-dashboard (&rest _)
+  :after 'evil-window-vnew (+doom-dashboard/open (selected-frame)))
+(defadvice! vnew-projectile (&rest _)
+  :after 'evil-window-vnew (consult-projectile))
+
+(use-package zoom
+    :config
+    (zoom-mode 0)
+    (global-set-key (kbd "C-x =") 'zoom))
+
+(map! "s-'" 'execute-extended-command)
+
+(use-package keyfreq
+  :ensure t
+  :config
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
 
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 
 (map! :ne "M-/" #'comment-or-uncomment-region)
-
-(map! "s-b" #'ido-switch-buffer)
 
 (map! "s-t" #'+treemacs/toggle)
 
@@ -64,27 +143,43 @@
 
 (map! "s-r" #'+default/search-project)
 
+(map! "s-m" #'consult-imenu)
+(defadvice! expand-folds-imenu(&rest _)
+  :before 'consult-imenu (+org/open-all-folds))
+(defadvice! expand-folds-imenu(&rest _)
+  :before '+default/search-buffer (+org/open-all-folds))
+
+(map! "s-f" #'consult-projectile)
+(map! :leader "SPC" 'consult-projectile)
+
 (map! "s-p" #'projectile-find-file)
 
-(map! "s-f" #'consult-buffer)
-(map! "s-F" #'consult-buffer-other-window)
+(map! "s-b" #'consult-buffer)
 
 (map! "s-]" #'next-window-any-frame)
 (map! "s-[" #'previous-window-any-frame)
 
-(map! "s-`" #'evil-window-increase-width)
-(map! "s-~" #'evil-window-decrease-width)
-
-(map! "s-." #'evil-window-increase-height)
-(map! "s->" #'evil-window-decrease-height)
-
 (global-set-key (kbd "C-c v p") 'er/mark-paragraph)
 (global-set-key (kbd "C-c v w") 'er/mark-word)
+
+(map! "s-i" #'yas-insert-snippet)
+
+(map! "s-l" #'org-insert-link)
+
+(map! "s-g" #'xref-find-definitions-other-window)
+
+
 
 (use-package super-save
   :ensure t
   :config
   (super-save-mode +1))
+
+(use-package ispell
+  :defer t)
+
+(use-package flyspell
+  :defer t)
 
 (setq ispell-dictionary "british")
 
@@ -127,13 +222,23 @@
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'"))
 
-(setq
- lsp-idle-delay 0.1
- company-minimum-prefix-length 2
- company-idle-delay 0.0
- company-tooltip-minimum-width 50
- company-tooltip-maximum-width 50
- )
+(use-package lsp-ui
+  :after lsp
+  :defer t
+  :custom
+    (lsp-idle-delay 0.5
+        company-minimum-prefix-length 4
+        company-idle-delay 0.5
+        company-tooltip-minimum-width 50
+        company-tooltip-maximum-width 50))
+
+(use-package lsp-treemacs
+  :defer t)
+
+(setq lsp-headerline-breadcrumb-enable t)
+(setq lsp-headerline-breadcrumb-segments '(symbols))
+(setq lsp-headerline-breadcrumb-icons-enable t)
+(setq lsp-headerline-breadcrumb-enable-diagnostics nil)
 
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
@@ -153,10 +258,8 @@
 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
 
-(after! org
-  :custom
-    (map! :nv "C-D" #'evil-multiedit-match-symbol-and-prev
-        :nv "C-d" #'evil-multiedit-match-symbol-and-next))
+(map! "s-k" #'evil-multiedit-match-symbol-and-prev
+  "s-j" #'evil-multiedit-match-symbol-and-next)
 
 (use-package better-jumper
   :ensure t
@@ -168,20 +271,6 @@
 
 (after! magit
     (setq git-commit-summary-max-length 100))
-
-(use-package blamer
-  :bind (("s-i" . blamer-show-commit-info))
-  :defer 20
-  :custom
-    (blamer-idle-time 0.3)
-    (blamer-min-offset 70)
-    (blamer-max-commit-message-length 100)
-  :custom-face
-    (blamer-face ((t :foreground "#7a88cf"
-                    :background nil
-                    :italic t)))
-  :config
-  (global-blamer-mode 0))
 
 (after! projectile
    (setq
@@ -215,8 +304,62 @@
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
 
 (setq org-directory "~/org/")
+(after! org
+  (setq
+    org-startup-folded nil
+    org-hide-emphasis-markers t))
+
+(defun me/org-disable-line-numbers-mode()
+  (display-line-numbers-mode -1))
+
+; File mode specification error: (void-function me/org-disable-hl-indent-mode)
+(defun me/org-disable-indent-mode()
+  (setq org-indent-mode -1))
+
+(defun me/org-disable-git-gutter-mode()
+  (git-gutter-mode -1))
+
+(defun me/org-enable-literate-calc-minor-mode()
+  (literate-calc-minor-mode 1))
+
+(defun me/org-disable-hl-indent-guides()
+  (highlight-indent-guides-mode -1))
+
+(add-hook 'org-mode-hook 'visual-line-mode)
+(add-hook 'org-mode-hook 'disable-indent-mode)
+(add-hook 'org-mode-hook 'mixed-pitch-mode)
+(add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
+(add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
+
+;; see https://github.com/doomemacs/doomemacs/issues/4815#issue-834176237
+(add-to-list 'git-gutter:disabled-modes 'org-mode)
 
 (setq company-global-modes '(not org-mode))
+
+(setq org-agenda-custom-commands
+      '(("n" "List :work: TODO/NEXT"
+          ((tags "work/TODO|NEXT")) )))
+
+(use-package org-modern
+  :config
+  (setq org-modern-star nil)
+  (setq org-modern-timestamp nil)
+  (setq org-modern-todo nil)
+  (setq org-modern-tag nil)
+  (setq org-modern-statistics nil)
+  (setq org-modern-hide-stars nil)
+  (global-org-modern-mode)
+  (custom-set-faces
+   '(org-modern-block-name ((t nil)))))
+
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default nil))
+
+(use-package! ob-http
+  :commands org-babel-execute:http)
 
 (use-package org-roam
   :custom
@@ -240,3 +383,10 @@
   :config
     (setq org-log-repeat nil)
 )
+
+(use-package literate-calc-mode
+  :ensure t)
+
+(use-package vterm
+  :custom
+  (vterm-shell "fish"))

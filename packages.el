@@ -1,4 +1,16 @@
+(package! centered-cursor-mode)
+
 (package! vertico-posframe)
+
+(package! resize-window)
+
+(package! beacon)
+
+(package! consult-projectile)
+
+(package! zoom)
+
+(package! keyfreq)
 
 (package! super-save)
 
@@ -12,14 +24,16 @@
 
 (package! better-jumper)
 
-(package! centered-cursor-mode)
-
-(package! blamer)
-
 (package! treemacs-projectile)
 
+(package! org-modern)
+
 (package! org-auto-tangle)
+
+(package! ob-http)
 
 (package! org-bullets)
 
 (package! toc-org)
+
+(package! literate-calc-mode)
