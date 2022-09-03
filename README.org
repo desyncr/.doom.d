@@ -754,35 +754,6 @@ This configuration applies to the repository the command is running on (--local)
     (setq git-commit-summary-max-length 100))
 #+end_src
 Anyway, in the above code setting the commit's summary max length to 100 so I'm not bothered with auto-formattig in commit's title/descriptions.
-** blamer
-This package adds a blame legend besides the current line in version-controlled files.
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! blamer)
-#+end_src
-
-It's somewhat handy but at the same time I can't see how I can jump to the diff for that blame, so I can't make it fully useful to me.
-Another small annoyance I found is that when I switched to a literate configuration format (i.e. use org files) the blamer shows up.
-The problem is with org files you got line-wrap. Since I use splits (treemacs | vsplit | vsplit) the blamer packages causes text reflow with the line wrap.
-
-#+begin_src emacs-lisp
-(use-package blamer
-  :bind (("s-i" . blamer-show-commit-info))
-  :defer 20
-  :custom
-    (blamer-idle-time 0.3)
-    (blamer-min-offset 70)
-    (blamer-max-commit-message-length 100)
-  :custom-face
-    (blamer-face ((t :foreground "#7a88cf"
-                    :background nil
-                    :italic t)))
-  :config
-  (global-blamer-mode 0))
-#+end_src
-
-TODO: Find out how to jump to the blame commit.
-
 * Project management
 ** projectile
 #+begin_src emacs-lisp
@@ -851,31 +822,99 @@ Ensure treemacs-persp integration:
 (setq org-archive-location (concat "archive/archive-"
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
 #+end_src
-
 * Org
 ** org-mode
 If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
 
 #+begin_src emacs-lisp
 (setq org-directory "~/org/")
+(after! org
+  (setq
+    org-startup-folded nil
+    org-hide-emphasis-markers t))
+
+(defun me/org-disable-line-numbers-mode()
+  (display-line-numbers-mode -1))
+
+; File mode specification error: (void-function me/org-disable-hl-indent-mode)
+(defun me/org-disable-indent-mode()
+  (setq org-indent-mode -1))
+
+(defun me/org-disable-git-gutter-mode()
+  (git-gutter-mode -1))
+
+(defun me/org-enable-literate-calc-minor-mode()
+  (literate-calc-minor-mode 1))
+
+(defun me/org-disable-hl-indent-guides()
+  (highlight-indent-guides-mode -1))
+
+(add-hook 'org-mode-hook 'visual-line-mode)
+(add-hook 'org-mode-hook 'disable-indent-mode)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
+(add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
+(add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
+
+;; see https://github.com/doomemacs/doomemacs/issues/4815#issue-834176237
+(add-to-list 'git-gutter:disabled-modes 'org-mode)
 #+end_src
 
 Disable company-mode (autocompletions) on org-mode (i.e. prose):
 #+begin_src emacs-lisp
 (setq company-global-modes '(not org-mode))
 #+end_src
+
+Custom agenda commands! \o/
+
+#+begin_src emacs-lisp
+(setq org-agenda-custom-commands
+      '(("n" "List :work: TODO/NEXT"
+          ((tags "work/TODO|NEXT")) )))
+#+end_src
+
 Source: [[https://stackoverflow.com/a/34660219][stackoverflow]].
-** org-babel
+** TODO org-modern
+It's overkill but I'm using =org-modern= to prettify symbols such as +title and +begin_src. I'm actually happy with =org-bullets=.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-modern)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package org-modern
+  :config
+  (setq org-modern-star nil)
+  (setq org-modern-timestamp nil)
+  (setq org-modern-todo nil)
+  (setq org-modern-tag nil)
+  (setq org-modern-statistics nil)
+  (setq org-modern-hide-stars nil)
+  (global-org-modern-mode)
+  (custom-set-faces
+   '(org-modern-block-name ((t nil)))))
+#+end_src
+** TODO org-babel
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-auto-tangle)
 #+end_src
 
-(use-package! org-auto-tangle
+#+begin_src emacs-lisp
+(use-package org-auto-tangle
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
   :config
-  (setq org-auto-tangle-default t))
+  (setq org-auto-tangle-default nil))
+#+end_src
+** TODO ob-http
+#+begin_src emacs-lisp :tangle packages.el
+(package! ob-http)
+#+end_src
 
+#+begin_src emacs-lisp
+(use-package! ob-http
+  :commands org-babel-execute:http)
+#+end_src
 ** org-roam
 Org-roam is a package to create a non-hierarchical knowledge base. The package is meant to be used as a Zettelkasten note taking tool.
 
