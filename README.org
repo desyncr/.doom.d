@@ -339,35 +339,35 @@ Search project's contents with ~M-r~ (regexp).
 (map! "s-r" #'+default/search-project)
 #+end_src
 
-** Find file
-~M-p~: find file in project, also ~SPC SPC~.
+Also use ~SPC s s~ to search matching characters on the current buffer.
+** Go to item
+Use =M-m= for jump into a menu item (section in the buffer).
 
 #+begin_src emacs-lisp
+(map! "s-m" #'consult-imenu)
+(defadvice! expand-folds-imenu(&rest _)
+  :before 'consult-imenu (+org/open-all-folds))
+(defadvice! expand-folds-imenu(&rest _)
+  :before '+default/search-buffer (+org/open-all-folds))
+#+end_src
+** Find project files
+~M-p~: find file in project, also ~SPC SPC~. Prefer consult for everything.
+
+#+begin_src emacs-lisp
+(map! "s-f" #'consult-projectile)
+(map! :leader "SPC" 'consult-projectile)
+
 (map! "s-p" #'projectile-find-file)
 #+end_src
-
-** Find buffer
-Also use ~SPC s s~ to search matching characters on the current buffer.
-
+** Find buffers
 #+begin_src emacs-lisp
-(map! "s-f" #'consult-buffer)
-(map! "s-F" #'consult-buffer-other-window)
+(map! "s-b" #'consult-buffer)
 #+end_src
-
 ** Next/previous window
 #+begin_src emacs-lisp
 (map! "s-]" #'next-window-any-frame)
 (map! "s-[" #'previous-window-any-frame)
 #+end_src
-
-** Increase/decrease window width
- #+begin_src emacs-lisp :tangle yes
-(map! "s-`" #'evil-window-increase-width)
-(map! "s-~" #'evil-window-decrease-width)
-
-(map! "s-." #'evil-window-increase-height)
-(map! "s->" #'evil-window-decrease-height)
- #+end_src
 ** Mark paragraph
 Visually selects the paragraph. Execute multiple times to expand the selection or move the cursor.
 
