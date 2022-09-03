@@ -293,13 +293,77 @@ This package light the cursor when a (large) movement is performed, useful when 
     :ensure t
     :config
         (beacon-mode 1)
-        (beacon-size 120))
+        (setq beacon-size 10))
 #+end_src
 
 Package [[https://github.com/Malabarba/beacon][here]].
+** highlight-indent-guides
+On a fresh Emacs 28.1 install I started to see the highlight indent guides changing colour when a new frame is open (!). The following seems to correct the issue:
+
+#+begin_src emacs-lisp
+(after! highlight-indent-guides
+  (highlight-indent-guides-auto-set-faces))
+#+end_src
+
+Source: [[https://github.com/doomemacs/doomemacs/issues/2666#issuecomment-596700175][github]]
+** prompt-for-buffer
+Use =SPC w V= (vertical split + follow) or =SPC w S= (horizontal split + follow).
+
+Split to the right and below! Source: [[https://tecosaur.github.io/emacs-config/config.html#windows][here]].
+
+#+begin_src emacs-lisp
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+#+end_src
+
+#+begin_src emacs-lisp
+(defadvice! prompt-for-buffer (&rest _)
+  :after 'evil-window-split (consult-projectile))
+(defadvice! prompt-for-vbuffer (&rest _)
+  :after 'evil-window-vsplit (consult-projectile))
+#+end_src
+
+Use =M-n= to create a new empty buffer. The following advices will automatically move the buffer window to the right and invoice =consult-projectile=.
+
+#+begin_src emacs-lisp
+(map! "s-n"
+     'evil-window-vnew)
+(defadvice! vnew-righthand (&rest _)
+  :after 'evil-window-vnew (+evil/window-move-right))
+(defadvice! vnew-dashboard (&rest _)
+  :after 'evil-window-vnew (+doom-dashboard/open (selected-frame)))
+(defadvice! vnew-projectile (&rest _)
+  :after 'evil-window-vnew (consult-projectile))
+#+end_src
+** TODO consult-projectile
+Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! consult-projectile)
+#+end_src
+
+=consult-projectile= is a consult source to integrate with projectile.
+** TODO zoom
+#+begin_src emacs-lisp :tangle packages.el
+(package! zoom)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package zoom
+    :config
+    (zoom-mode 0)
+    (global-set-key (kbd "C-x =") 'zoom))
+#+end_src
 * Keybindings
+** TODO evil-ex
+#+begin_src emacs-lisp
+(map! "s-'" 'execute-extended-command)
+#+end_src
 ** keyfreq
 This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
+#+begin_src emacs-lisp :tangle packages.el
+(package! keyfreq)
+#+end_src
 
 #+begin_src emacs-lisp
 (use-package keyfreq
