@@ -145,6 +145,22 @@ brew install --cask font-jetbrains-mono-nerd-font
 
 You can install other fonts with a similar command following [[https://github.com/ryanoasis/nerd-fonts#option-4-homebrew-fonts][these]] instructions. See comment [[https://www.reddit.com/r/DoomEmacs/comments/qqqbon/comment/hrlhkzn/?utm_source=share&utm_medium=web2x&context=3][here]] and more info can be found [[https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/font-info.md][here]] as well.
 
+#+begin_src emacs-lisp
+  (custom-theme-set-faces
+   'user
+   '(org-block ((t (:inherit fixed-pitch))))
+   '(org-code ((t (:inherit (shadow fixed-pitch)))))
+   '(org-document-info ((t (:foreground "dark orange"))))
+   '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+   ;;'(org-link ((t (:foreground "royal blue" :underline t))))
+   '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+   '(org-property-value ((t (:inherit fixed-pitch))) t)
+   '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+   '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+   '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+   '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+#+end_src
 ** Dark/light theme sync
 Emacs plus build supports OS integration for [[https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change][light/dark theme switching]].
 
