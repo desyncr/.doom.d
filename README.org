@@ -160,14 +160,12 @@ Configure Doom Emacs Splash image. Taken from [[https://gitlab.com/zzamboni/dot-
 #+end_src
 
 You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the top of this document for an example.
-
 ** doom-modeline-word-count
 Add word count to status/modeline. Useful for org documents and writing in general.
 
 #+begin_src emacs-lisp
 (setq doom-modeline-enable-word-count t)
 #+end_src
-
 ** git-gutter
 Show git gutter for unsaved changes, source: [[https://github.com/doomemacs/doomemacs/issues/2377#issuecomment-576117218][github comment]].
 
@@ -175,7 +173,6 @@ Show git gutter for unsaved changes, source: [[https://github.com/doomemacs/doom
 (after! git-gutter
   (setq git-gutter:update-interval 0.5))
 #+end_src
-
 ** center-isearch
 source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]].
 
@@ -436,7 +433,6 @@ Doom's packages are pinned to a specific commit and updated from release to rele
 #+begin_example
     (unpin! t)
 #+end_example
-
 ** Configuring
 Whenever you reconfigure a package, make sure to wrap your config in an
 
@@ -559,7 +555,6 @@ Most projects I work with are somewhat following the PSR12 standard, so let's co
 #+begin_src emacs-lisp
 (setq flycheck-phpcs-standard "psr12")
 #+end_src
-
 ** lsp
 I'm working on a large series of interrelated projects which work well under the same directory structure (code/{project1, project2, project3}).
 The downside is that this causes LSP to complain about the large number of files and file descriptors it uses.
@@ -612,7 +607,6 @@ Rainbow colouring for brackets and other delimiters in prog mode. Package: [[htt
 #+begin_src emacs-lisp
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 #+end_src
-
 ** yasnippets
 I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to manage code snippets. As per the instructions:
 
@@ -799,7 +793,6 @@ TODO: Find out how to jump to the blame commit.
 )
 
 #+end_src
-
 ** treemacs
 Enable treemacs and never move to treemacs with other-window as well as disabling wrap around:
 
@@ -842,7 +835,6 @@ Ensure treemacs-persp integration:
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
 #+end_src
-
 * Files
 - Allow deleting files in OSX. Source: [[https://emacs.stackexchange.com/a/15012][Emacs' StackExchange]]
 
