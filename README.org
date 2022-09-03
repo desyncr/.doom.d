@@ -237,9 +237,8 @@ Ctrl+P / command launcher-like for M-x.
         vertico-posframe-height 20
         vertico-posframe-min-height 10
         vertico-posframe-parameters
-        '((left-fringe . 5)
-          (right-fringe . 5)))
-  )
+        '((left-fringe . 2)
+          (right-fringe . 2))))
 #+end_src
 
 This package also works for selecting files and other similar components.
