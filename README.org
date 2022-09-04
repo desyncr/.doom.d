@@ -1002,7 +1002,7 @@ If you use ~org~ and don't want your org files in the default location below, ch
   (highlight-indent-guides-mode -1))
 
 (add-hook 'org-mode-hook 'visual-line-mode)
-(add-hook 'org-mode-hook 'disable-indent-mode)
+(add-hook 'org-mode-hook 'me/org-disable-indent-mode)
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 (add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
 (add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
