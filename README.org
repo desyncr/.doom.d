@@ -497,6 +497,10 @@ Use =s-w= to delete window or workspace (last window is preserved).
 ** TODO Capture buffer
 #+begin_src emacs-lisp
 #+end_src
+** TODO Edit source block
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c e") 'org-edit-src-code)
+#+end_src
 * Packages
 ** Installing
 To install a package with Doom you must declare them here and run ~doom sync~ on the command line, then restart Emacs for the changes to take effect -- or use ~M-x doom/reload~.
