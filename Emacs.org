@@ -82,6 +82,16 @@
 * General
 Place your private configuration here! Remember, you do not need to run ~doom sync~ after modifying this file!
 
+Since this is a literate configuration I'm making sure no body edits the resulting tangled configuration manually:
+#+begin_src emacs-lisp
+;; THIS FILE WAS GENERATED AUTOMATICALLY VIA org-babel. DO NOT EDIT MANUALLY.
+#+end_src
+
+Similarly I'll do the same for the =package.el= file:
+#+begin_src emacs-lisp :tangle packages.el
+;; THIS FILE WAS GENERATED AUTOMATICALLY VIA org-babel. DO NOT EDIT MANUALLY.
+#+end_src
+
 Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets. It is optional.
 
 #+begin_src emacs-lisp
@@ -390,7 +400,8 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 * Keybindings
 ** TODO evil-ex
 #+begin_src emacs-lisp
-(map! "s-'" 'execute-extended-command)
+(map! "s-;" 'execute-extended-command)
+(map! :n "s-<return>" 'execute-extended-command)
 #+end_src
 ** keyfreq
 This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.

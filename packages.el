@@ -1,3 +1,5 @@
+;; THIS FILE WAS GENERATED AUTOMATICALLY VIA org-babel. DO NOT EDIT MANUALLY.
+
 (package! centered-cursor-mode)
 
 (package! vertico-posframe)
@@ -37,6 +39,3 @@
 (package! toc-org)
 
 (package! literate-calc-mode)
-
-(package! elfeed)
-(package! elfeed-goodies)

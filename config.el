@@ -1,50 +1,34 @@
+;; THIS FILE WAS GENERATED AUTOMATICALLY VIA org-babel. DO NOT EDIT MANUALLY.
+
 (setq user-full-name "DC*"
       user-mail-address "des@riseup.net")
-
-(setenv "PATH" (concat "/usr/local/opt/ruby/bin:" (getenv "PATH")))
-(setq exec-path (append '("/usr/local/opt/ruby/bin") exec-path))
 
 (setq doom-theme 'doom-nord-light)
 
 (setq display-line-numbers-type t)
 
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-;(add-to-list 'default-frame-alist '(height . 86))
-;(add-to-list 'default-frame-alist '(width . 326))
-;(add-to-list 'default-frame-alist '(top . 70))
-;(add-to-list 'default-frame-alist '(left . 130))
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
 
-(setq scroll-margin 10
-       evil-want-fine-undo t
-       undo-limit 80000000
-       auto-save-default t)
-(display-time-mode 1)
-(global-subword-mode 1)
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)) ;; Fira Code,  :weight 'medium, :size 12
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 15))
+(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
 
-(setq display-time-format "%H:%M%p %a, %d %b | W%U")
-(setq display-time-default-load-average nil)
-(display-time)
-
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14)) ;; Fira Code,  :weight 'medium, :size 12
-(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
-(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
-
-(custom-theme-set-faces
- 'user
- '(org-block ((t (:inherit fixed-pitch))))
- '(org-code ((t (:inherit (shadow fixed-pitch)))))
- '(org-document-info ((t (:foreground "dark orange"))))
- '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
- '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- ;;'(org-link ((t (:foreground "royal blue" :underline t))))
- '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-property-value ((t (:inherit fixed-pitch))) t)
- '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
- '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold))))
- '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+  (custom-theme-set-faces
+   'user
+   '(org-block ((t (:inherit fixed-pitch))))
+   '(org-code ((t (:inherit (shadow fixed-pitch)))))
+   '(org-document-info ((t (:foreground "dark orange"))))
+   '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+   ;;'(org-link ((t (:foreground "royal blue" :underline t))))
+   '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+   '(org-property-value ((t (:inherit fixed-pitch))) t)
+   '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+   '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+   '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+   '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 (defun my/apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
@@ -103,7 +87,7 @@
         '((left-fringe . 2)
           (right-fringe . 2))))
 
-(map! "s-§" #'resize-window)
+(map! "s-;" #'resize-window)
 
 (use-package beacon
     :ensure t
@@ -137,6 +121,7 @@
     (global-set-key (kbd "C-x =") 'zoom))
 
 (map! "s-;" 'execute-extended-command)
+(map! :n "s-<return>" 'execute-extended-command)
 
 (use-package keyfreq
   :ensure t
@@ -175,11 +160,9 @@
 
 (map! "s-i" #'yas-insert-snippet)
 
-(map! "s-l" #'org-insert-link)
+  (map! "s-l" #'org-insert-link)
 
 (map! "s-g" #'xref-find-definitions-other-window)
-
-
 
 (global-set-key (kbd "C-c e") 'org-edit-src-code)
 
@@ -274,8 +257,8 @@
 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
 
-(map! "s-k" #'evil-multiedit-match-symbol-and-prev
-  "s-j" #'evil-multiedit-match-symbol-and-next)
+  (map! "s-k" #'evil-multiedit-match-symbol-and-prev
+    "s-j" #'evil-multiedit-match-symbol-and-next)
 
 (use-package better-jumper
   :ensure t
@@ -353,6 +336,10 @@
 
 (setq company-global-modes '(not org-mode))
 
+(setq org-agenda-custom-commands
+      '(("n" "List :work: TODO/NEXT"
+          ((tags "work/TODO|NEXT")) )))
+
 (use-package org-modern
   :config
   (setq org-modern-star nil)
@@ -364,18 +351,6 @@
   (global-org-modern-mode)
   (custom-set-faces
    '(org-modern-block-name ((t nil)))))
-
-(setq org-agenda-custom-commands
-      '(
-        ("n" "List :work: TODO/NEXT"
-          ((tags "work/TODO|NEXT")))
-        ("p" "List :personal: TODO/NEXT"
-          ((tags "personal/TODO|NEXT")))
-        ("P" "List :projects: TODO/NEXT"
-          ((tags "projects/TODO|NEXT")))
-    ))
-
-(map! "s-o" 'org-agenda)
 
 (use-package org-auto-tangle
   :defer t
@@ -395,7 +370,7 @@
 (after! org
     (setq org-todo-keywords
         '((sequence  "PROJ(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
-    (setq org-tag-alist '(("personal" . ?p) ("projects" . ?P) ("learning" . ?l) ("@home" . ?h) ("work" . ?w) ("@computer" . ?c) ("errands" . ?e)))
+    (setq org-tag-alist '(("personal" . ?p) ("learning" . ?l) ("@home" . ?h) ("@work" . ?w) ("@computer" . ?c) ("errands" . ?e)))
     )
 
 (use-package org-bullets
@@ -415,7 +390,3 @@
 (use-package vterm
   :custom
   (vterm-shell "fish"))
-
-(setq elfeed-feeds
-      '(("https://www.reddit.com/r/emacs.rss" reddit)
-        ("https://planet.emacslife.com/atom.xml" emacslife)))
