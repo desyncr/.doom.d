@@ -87,7 +87,7 @@
         '((left-fringe . 2)
           (right-fringe . 2))))
 
-(map! "s-;" #'resize-window)
+(map! "s-§" #'resize-window)
 
 (use-package beacon
     :ensure t

@@ -318,7 +318,7 @@ There are only a few commands to learn, and they mimic the normal motions in ema
 |---------+------------------------------------------------------------------------------------------------------|
 
 #+begin_src emacs-lisp
-(map! "s-;" #'resize-window)
+(map! "s-§" #'resize-window)
 #+end_src
 
 Package repository [[https://github.com/dpsutton/resize-window][here]].
@@ -429,7 +429,7 @@ Package site [[https://github.com/dacap/keyfreq][here]].
 (map! :ne "M-/" #'comment-or-uncomment-region)
 #+end_src
 ** Toggle treemacs
-Toggle treemacs with M-t (tree) and M-§ (key left hand side of the number 1 and above the tab key).
+Toggle treemacs with M-t (tree):
 
 #+begin_src emacs-lisp
 (map! "s-t" #'+treemacs/toggle)
