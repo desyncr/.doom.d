@@ -41,7 +41,8 @@
   - [[#create-link][Create link]]
   - [[#go-to-definition-other-window][Go to definition other window]]
   - [[#delete-window][Delete window]]
-  - [[#capture-buffer][Capture buffer]]
+  - [[#edit-source-block][Edit source block]]
+  - [[#page-updown][Page up/down]]
 - [[#packages][Packages]]
   - [[#installing][Installing]]
   - [[#configuring][Configuring]]
@@ -494,12 +495,15 @@ Use =M-g= to find reference in other window.
 =g d= changes my context when I just want to peek at the definition of a method. So quickly jumping in other-window work just fine for me.
 ** TODO Delete window
 Use =s-w= to delete window or workspace (last window is preserved).
-** TODO Capture buffer
-#+begin_src emacs-lisp
-#+end_src
 ** TODO Edit source block
+Edit source block in capture buffer.
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c e") 'org-edit-src-code)
+#+end_src
+** TODO Page up/down
+#+begin_src emacs-lisp
+(map! "s-d" 'evil-scroll-down)
+(map! "s-u" 'evil-scroll-up)
 #+end_src
 * Packages
 ** Installing
