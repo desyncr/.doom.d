@@ -67,6 +67,7 @@
 - [[#files][Files]]
 - [[#org][Org]]
   - [[#org-mode][org-mode]]
+  - [[#org-agenda][org-agenda]]
   - [[#org-modern][org-modern]]
   - [[#org-babel][org-babel]]
   - [[#ob-http][ob-http]]
@@ -1031,13 +1032,26 @@ Disable company-mode (autocompletions) on org-mode (i.e. prose):
 #+begin_src emacs-lisp
 (setq company-global-modes '(not org-mode))
 #+end_src
-
+** TODO org-agenda
+#+begin_src emacs-lisp
+(map! "s-o" 'org-agenda)
+#+end_src
 Custom agenda commands! \o/
 
 #+begin_src emacs-lisp
 (setq org-agenda-custom-commands
-      '(("n" "List :work: TODO/NEXT"
-          ((tags "work/TODO|NEXT")) )))
+      '(
+        ("n" "List :work: TODO/NEXT"
+          ((tags "work/TODO|NEXT")))
+        ("p" "List :personal: TODO/NEXT"
+            ((tags "personal/TODO|NEXT")))
+        ("P" "List :projects: TODO/NEXT"
+            ((tags "projects/TODO|NEXT")))
+        ("e" "List :emacs: TODO/NEXT"
+            ((tags "emacs/TODO|NEXT")))
+        ("l" "List :learn:"
+            ((tags "learn")))
+    ))
 #+end_src
 
 Source: [[https://stackoverflow.com/a/34660219][stackoverflow]].
