@@ -37,3 +37,6 @@
 (package! toc-org)
 
 (package! literate-calc-mode)
+
+(package! elfeed)
+(package! elfeed-goodies)
