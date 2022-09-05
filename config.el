@@ -16,9 +16,20 @@
 
 (setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
 
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)) ;; Fira Code,  :weight 'medium, :size 12
-(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 15))
-(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 17))
+(setq scroll-margin 10
+       evil-want-fine-undo t
+       undo-limit 80000000
+       auto-save-default t)
+(display-time-mode 1)
+(global-subword-mode 1)
+
+(setq display-time-format "%H:%M%p %a, %d %b | W%U")
+(setq display-time-default-load-average nil)
+(display-time)
+
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14)) ;; Fira Code,  :weight 'medium, :size 12
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
+(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
 
 (custom-theme-set-faces
  'user
@@ -32,7 +43,7 @@
  '(org-property-value ((t (:inherit fixed-pitch))) t)
  '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
  '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
- '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+ '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold))))
  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 (defun my/apply-theme (appearance)
@@ -92,7 +103,7 @@
         '((left-fringe . 2)
           (right-fringe . 2))))
 
-(map! "s-;" #'resize-window)
+(map! "s-§" #'resize-window)
 
 (use-package beacon
     :ensure t
@@ -125,7 +136,7 @@
     (zoom-mode 0)
     (global-set-key (kbd "C-x =") 'zoom))
 
-(map! "s-'" 'execute-extended-command)
+(map! "s-;" 'execute-extended-command)
 
 (use-package keyfreq
   :ensure t
@@ -169,6 +180,11 @@
 (map! "s-g" #'xref-find-definitions-other-window)
 
 
+
+(global-set-key (kbd "C-c e") 'org-edit-src-code)
+
+(map! "s-d" 'evil-scroll-down)
+(map! "s-u" 'evil-scroll-up)
 
 (use-package super-save
   :ensure t
@@ -326,19 +342,16 @@
   (highlight-indent-guides-mode -1))
 
 (add-hook 'org-mode-hook 'visual-line-mode)
-(add-hook 'org-mode-hook 'disable-indent-mode)
-(add-hook 'org-mode-hook 'mixed-pitch-mode)
+(add-hook 'org-mode-hook 'me/org-disable-indent-mode)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
 (add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
 (add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
+(add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
 
 ;; see https://github.com/doomemacs/doomemacs/issues/4815#issue-834176237
 (add-to-list 'git-gutter:disabled-modes 'org-mode)
 
 (setq company-global-modes '(not org-mode))
-
-(setq org-agenda-custom-commands
-      '(("n" "List :work: TODO/NEXT"
-          ((tags "work/TODO|NEXT")) )))
 
 (use-package org-modern
   :config
@@ -351,6 +364,18 @@
   (global-org-modern-mode)
   (custom-set-faces
    '(org-modern-block-name ((t nil)))))
+
+(setq org-agenda-custom-commands
+      '(
+        ("n" "List :work: TODO/NEXT"
+          ((tags "work/TODO|NEXT")))
+        ("p" "List :personal: TODO/NEXT"
+          ((tags "personal/TODO|NEXT")))
+        ("P" "List :projects: TODO/NEXT"
+          ((tags "projects/TODO|NEXT")))
+    ))
+
+(map! "s-o" 'org-agenda)
 
 (use-package org-auto-tangle
   :defer t
@@ -370,7 +395,7 @@
 (after! org
     (setq org-todo-keywords
         '((sequence  "PROJ(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
-    (setq org-tag-alist '(("personal" . ?p) ("learning" . ?l) ("@home" . ?h) ("@work" . ?w) ("@computer" . ?c) ("errands" . ?e)))
+    (setq org-tag-alist '(("personal" . ?p) ("projects" . ?P) ("learning" . ?l) ("@home" . ?h) ("work" . ?w) ("@computer" . ?c) ("errands" . ?e)))
     )
 
 (use-package org-bullets
@@ -390,3 +415,7 @@
 (use-package vterm
   :custom
   (vterm-shell "fish"))
+
+(setq elfeed-feeds
+      '(("https://www.reddit.com/r/emacs.rss" reddit)
+        ("https://planet.emacslife.com/atom.xml" emacslife)))
