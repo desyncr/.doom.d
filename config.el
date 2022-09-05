@@ -336,9 +336,21 @@
 
 (setq company-global-modes '(not org-mode))
 
+(map! "s-o" 'org-agenda)
+
 (setq org-agenda-custom-commands
-      '(("n" "List :work: TODO/NEXT"
-          ((tags "work/TODO|NEXT")) )))
+      '(
+        ("n" "List :work: TODO/NEXT"
+          ((tags "work/TODO|NEXT")))
+        ("p" "List :personal: TODO/NEXT"
+            ((tags "personal/TODO|NEXT")))
+        ("P" "List :projects: TODO/NEXT"
+            ((tags "projects/TODO|NEXT")))
+        ("e" "List :emacs: TODO/NEXT"
+            ((tags "emacs/TODO|NEXT")))
+        ("l" "List :learn:"
+            ((tags "learn")))
+    ))
 
 (use-package org-modern
   :config
@@ -370,7 +382,7 @@
 (after! org
     (setq org-todo-keywords
         '((sequence  "PROJ(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
-    (setq org-tag-alist '(("personal" . ?p) ("learning" . ?l) ("@home" . ?h) ("@work" . ?w) ("@computer" . ?c) ("errands" . ?e)))
+    (setq org-tag-alist '(("personal" . ?p) ("projects" . ?P) ("learning" . ?l) ("@home" . ?h) ("work" . ?w) ("@computer" . ?c) ("errands" . ?e)))
     )
 
 (use-package org-bullets
