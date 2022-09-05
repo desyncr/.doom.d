@@ -15,20 +15,20 @@
 (setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 15))
 (setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
 
-  (custom-theme-set-faces
-   'user
-   '(org-block ((t (:inherit fixed-pitch))))
-   '(org-code ((t (:inherit (shadow fixed-pitch)))))
-   '(org-document-info ((t (:foreground "dark orange"))))
-   '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-   ;;'(org-link ((t (:foreground "royal blue" :underline t))))
-   '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-   '(org-property-value ((t (:inherit fixed-pitch))) t)
-   '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-   '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
-   '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
-   '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+(custom-theme-set-faces
+ 'user
+ '(org-block ((t (:inherit fixed-pitch))))
+ '(org-code ((t (:inherit (shadow fixed-pitch)))))
+ '(org-document-info ((t (:foreground "dark orange"))))
+ '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+ '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+ ;;'(org-link ((t (:foreground "royal blue" :underline t))))
+ '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-property-value ((t (:inherit fixed-pitch))) t)
+ '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+ '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+ '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 (defun my/apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
@@ -160,7 +160,7 @@
 
 (map! "s-i" #'yas-insert-snippet)
 
-  (map! "s-l" #'org-insert-link)
+(map! "s-l" #'org-insert-link)
 
 (map! "s-g" #'xref-find-definitions-other-window)
 
@@ -257,8 +257,8 @@
 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
 
-  (map! "s-k" #'evil-multiedit-match-symbol-and-prev
-    "s-j" #'evil-multiedit-match-symbol-and-next)
+(map! "s-k" #'evil-multiedit-match-symbol-and-prev
+  "s-j" #'evil-multiedit-match-symbol-and-next)
 
 (use-package better-jumper
   :ensure t
