@@ -77,8 +77,9 @@
   - [[#org-log-repeat][org-log-repeat]]
   - [[#toc-org][toc-org]]
   - [[#literate-calc-mode][literate-calc-mode]]
-- [[#term][Term]]
-  - [[#vterm][vterm]]
+- [[#terminal-integration][Terminal integration]]
+  - [[#tmux][Tmux]]
+  - [[#fish][Fish]]
 
 * General
 Place your private configuration here! Remember, you do not need to run ~doom sync~ after modifying this file!
@@ -1173,9 +1174,10 @@ Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
 #+end_src
 
 See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]].
-* Term
-** vterm
-This package offers a fully featured terminal emulation layer for Emacs. It works by leveraging ~libvterm~ library, which powers xterm. Check [[https://www.youtube.com/watch?v=8oNycFLwKfE][this presentation]] for an introduction and walkthrough. Find more in [[https://emacsconf.org/2020/talks/30/][this talk]]. Find the main repository [[https://github.com/akermu/emacs-libvterm][here]].
+* Terminal integration
+There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell=, =term=, =shell=. I'll be using =vterm= and I'll refering to this package for the rest of this section.
+
+=vterm= offers a fully featured terminal emulation layer for Emacs. It works by leveraging ~libvterm~ library, which powers xterm. Check [[https://www.youtube.com/watch?v=8oNycFLwKfE][this presentation]] for an introduction and walkthrough. Find more in [[https://emacsconf.org/2020/talks/30/][this talk]]. Find the main repository [[https://github.com/akermu/emacs-libvterm][here]].
 
 Since it leverages ~libvterm~ it requires a extra steps for the installation. Check out the Doom Emacs' [[https://docs.doomemacs.org/latest/modules/term/vterm/][instructions]].
 
@@ -1197,7 +1199,7 @@ Daily workflow:
    Essential [[https://github.com/tmux-plugins/tmux-resurrect][Tmux resurrect]] plugin. [[https://github.com/desyncr/tmux][My tmux config]] with keybindings, theme and plugins.
 3. Hack away!
 
-*** Tmux
+** Tmux
 Find my tmux configuration in [[https://github.com/desyncr/tmux][this]] repository. The important bits there are:
 
 1. Set up the shell to use:
@@ -1228,7 +1230,7 @@ set -g @tmux_power_theme 'sky'
 set -g @plugin 'wfxr/tmux-power'
   #+end_example
 
-*** Fish
+** Fish
 I'm using fish shell with basic configurations. Essentially abbrevs (aliases). Additionally to that I'm using the [[https://github.com/starship/starship][starship shell theme]].
 
 Install startship theme with the following command:
