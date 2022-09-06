@@ -991,6 +991,27 @@ Ensure treemacs-persp integration:
 (setq org-archive-location (concat "archive/archive-"
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
 #+end_src
+** undo-tree
+This package is activated via =:emacs (undo +tree)=.
+
+#+begin_src emacs-lisp
+(use-package undo-tree
+    :ensure t
+    :init
+    (setq undo-limit 80000000)
+    (setq undo-outer-limit 100000000)
+    (setq undo-strong-limit 150000000)
+    (setq undo-tree-mode-lighter " UN")
+    (setq undo-tree-auto-save-history t)
+    (setq undo-tree-enable-undo-in-region nil)
+    (setq undo-tree-history-directory-alist '(("." . "~/emacs.d/undo")))
+    (add-hook 'undo-tree-visualizer-mode-hook
+              (lambda () (undo-tree-visualizer-selection-mode)
+                (setq display-line-numbers nil)))
+    (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
+    :config
+        (global-undo-tree-mode 1))
+#+end_src
 * Org
 ** org-mode
 If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
