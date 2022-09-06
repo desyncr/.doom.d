@@ -7,9 +7,12 @@
 
 (setq display-line-numbers-type t)
 
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+;(add-to-list 'initial-frame-alist '(fullscreen . maximized)) ;; only starting frame
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
+
+(setq scroll-margin 10)
 
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)) ;; Fira Code,  :weight 'medium, :size 12
 (setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 15))
@@ -27,7 +30,7 @@
  '(org-property-value ((t (:inherit fixed-pitch))) t)
  '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
  '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
- '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
+ '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold))))
  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 (defun my/apply-theme (appearance)
@@ -296,11 +299,35 @@
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
 
+(defun me/switch-workspace-in-new-frame ()
+  (interactive)
+  (select-frame (make-frame))
+  (toggle-frame-maximized)
+  (call-interactively #'+workspace/load))
+(map! "s-." #'me/switch-workspace-in-new-frame)
+
 (setq delete-by-moving-to-trash t)
 (setq trash-directory "~/.Trash")
 
 (setq org-archive-location (concat "archive/archive-"
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
+
+(use-package undo-tree
+    :ensure t
+    :init
+    (setq undo-limit 80000000)
+    (setq undo-outer-limit 100000000)
+    (setq undo-strong-limit 150000000)
+    (setq undo-tree-mode-lighter " UN")
+    (setq undo-tree-auto-save-history t)
+    (setq undo-tree-enable-undo-in-region nil)
+    (setq undo-tree-history-directory-alist '(("." . "~/emacs.d/undo")))
+    (add-hook 'undo-tree-visualizer-mode-hook
+              (lambda () (undo-tree-visualizer-selection-mode)
+                (setq display-line-numbers nil)))
+    (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
+    :config
+        (global-undo-tree-mode 1))
 
 (setq org-directory "~/org/")
 (after! org
@@ -340,16 +367,16 @@
 
 (setq org-agenda-custom-commands
       '(
-        ("n" "List :work: TODO/NEXT"
-          ((tags "work/TODO|NEXT")))
-        ("p" "List :personal: TODO/NEXT"
-            ((tags "personal/TODO|NEXT")))
-        ("P" "List :projects: TODO/NEXT"
-            ((tags "projects/TODO|NEXT")))
-        ("e" "List :emacs: TODO/NEXT"
-            ((tags "emacs/TODO|NEXT")))
-        ("l" "List :learn:"
-            ((tags "learn")))
+        ("n" "List :work: TODO/INPROGRESS/NEXT"
+          ((tags "work/TODO|INPROGRESS|NEXT")))
+        ("p" "List :personal: TODO/INPROGRESS/NEXT"
+            ((tags "personal/TODO|INPROGRESS|NEXT")))
+        ("P" "List :projects: TODO/INPROGRESS/NEXT"
+            ((tags "projects/TODO|INPROGRESS|NEXT")))
+        ("e" "List :emacs: TODO/INPROGRESS/NEXT"
+            ((tags "emacs/TODO|INPROGRESS|NEXT")))
+        ("l" "List :learning:"
+            ((tags "learning")))
     ))
 
 (use-package org-modern
