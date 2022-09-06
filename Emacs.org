@@ -1063,14 +1063,14 @@ Custom agenda commands! \o/
 #+begin_src emacs-lisp
 (setq org-agenda-custom-commands
       '(
-        ("n" "List :work: TODO/NEXT"
-          ((tags "work/TODO|NEXT")))
-        ("p" "List :personal: TODO/NEXT"
-            ((tags "personal/TODO|NEXT")))
-        ("P" "List :projects: TODO/NEXT"
-            ((tags "projects/TODO|NEXT")))
-        ("e" "List :emacs: TODO/NEXT"
-            ((tags "emacs/TODO|NEXT")))
+        ("n" "List :work: TODO/INPROGRESS/NEXT"
+          ((tags "work/TODO|INPROGRESS|NEXT")))
+        ("p" "List :personal: TODO/INPROGRESS/NEXT"
+            ((tags "personal/TODO|INPROGRESS|NEXT")))
+        ("P" "List :projects: TODO/INPROGRESS/NEXT"
+            ((tags "projects/TODO|INPROGRESS|NEXT")))
+        ("e" "List :emacs: TODO/INPROGRESS/NEXT"
+            ((tags "emacs/TODO|INPROGRESS|NEXT")))
         ("l" "List :learning:"
             ((tags "learning")))
     ))
