@@ -975,6 +975,15 @@ Ensure treemacs-persp integration:
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
 #+end_src
+** workspaces
+#+begin_src emacs-lisp
+(defun me/switch-workspace-in-new-frame ()
+  (interactive)
+  (select-frame (make-frame))
+  (toggle-frame-maximized)
+  (call-interactively #'+workspace/load))
+(map! "s-." #'me/switch-workspace-in-new-frame)
+#+end_src
 * Files
 - Allow deleting files in OSX. Source: [[https://emacs.stackexchange.com/a/15012][Emacs' StackExchange]]
 
