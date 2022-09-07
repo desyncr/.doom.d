@@ -103,6 +103,43 @@ Some functionality uses this to identify you, e.g. GPG configuration, email clie
       user-mail-address "des@riseup.net")
 #+end_src
 
+Switch to normal mode on save:
+#+begin_src emacs-lisp
+(add-hook 'after-save-hook #'evil-normal-state)
+#+end_src
+** Files
+- Allow deleting files in OSX. Source: [[https://emacs.stackexchange.com/a/15012][Emacs' StackExchange]]
+
+#+begin_src emacs-lisp
+(setq delete-by-moving-to-trash t)
+(setq trash-directory "~/.Trash")
+#+end_src
+
+*Also required*: Go to Settings -> Security & Privacy -> Privacy -> Automation and Allow Emacs -> Finder. Source: [[https://ajar.freshdesk.com/support/solutions/articles/26000045119-install-error-not-authorized-to-send-apple-events-to-system-events-][freshdesk.com]]
+
+- Archive entries in sub-directory. Source: [[https://emacs.stackexchange.com/a/25020][Emacs' StackExchange]]
+
+** undo-tree
+This package is activated via =:emacs (undo +tree)=.
+
+#+begin_src emacs-lisp
+(use-package undo-tree
+    :ensure t
+    :init
+    (setq undo-limit 80000000)
+    (setq undo-outer-limit 100000000)
+    (setq undo-strong-limit 150000000)
+    (setq undo-tree-mode-lighter " UN")
+    (setq undo-tree-auto-save-history t)
+    (setq undo-tree-enable-undo-in-region nil)
+    (setq undo-tree-history-directory-alist '(("." . "~/emacs.d/undo")))
+    (add-hook 'undo-tree-visualizer-mode-hook
+              (lambda () (undo-tree-visualizer-selection-mode)
+                (setq display-line-numbers nil)))
+    (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
+    :config
+        (global-undo-tree-mode 1))
+#+end_src
 * UI
 ** General
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set ~doom-theme~ or manually load a theme with the ~load-theme~ function. This is the default:
@@ -989,44 +1026,7 @@ Ensure treemacs-persp integration:
   (call-interactively #'+workspace/load))
 (map! "s-." #'me/switch-workspace-in-new-frame)
 #+end_src
-* Files
-- Allow deleting files in OSX. Source: [[https://emacs.stackexchange.com/a/15012][Emacs' StackExchange]]
-
-#+begin_src emacs-lisp
-(setq delete-by-moving-to-trash t)
-(setq trash-directory "~/.Trash")
-#+end_src
-
-*Also required*: Go to Settings -> Security & Privacy -> Privacy -> Automation and Allow Emacs -> Finder. Source: [[https://ajar.freshdesk.com/support/solutions/articles/26000045119-install-error-not-authorized-to-send-apple-events-to-system-events-][freshdesk.com]]
-
-- Archive entries in sub-directory. Source: [[https://emacs.stackexchange.com/a/25020][Emacs' StackExchange]]
-
-#+begin_src emacs-lisp
-(setq org-archive-location (concat "archive/archive-"
-                                   (format-time-string "%Y%m" (current-time)) ".org_archive::"))
-#+end_src
-** undo-tree
-This package is activated via =:emacs (undo +tree)=.
-
-#+begin_src emacs-lisp
-(use-package undo-tree
-    :ensure t
-    :init
-    (setq undo-limit 80000000)
-    (setq undo-outer-limit 100000000)
-    (setq undo-strong-limit 150000000)
-    (setq undo-tree-mode-lighter " UN")
-    (setq undo-tree-auto-save-history t)
-    (setq undo-tree-enable-undo-in-region nil)
-    (setq undo-tree-history-directory-alist '(("." . "~/emacs.d/undo")))
-    (add-hook 'undo-tree-visualizer-mode-hook
-              (lambda () (undo-tree-visualizer-selection-mode)
-                (setq display-line-numbers nil)))
-    (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
-    :config
-        (global-undo-tree-mode 1))
-#+end_src
-* Org
+* Org everything
 ** org-mode
 If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
 
