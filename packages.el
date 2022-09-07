@@ -1,5 +1,11 @@
 ;; THIS FILE WAS GENERATED AUTOMATICALLY VIA org-babel. DO NOT EDIT MANUALLY.
 
+(package! super-save)
+
+(package! keyfreq)
+
+(package! deadgrep)
+
 (package! centered-cursor-mode)
 
 (package! vertico-posframe)
@@ -11,12 +17,6 @@
 (package! consult-projectile)
 
 (package! zoom)
-
-(package! keyfreq)
-
-(package! super-save)
-
-(package! deadgrep)
 
 (package! rainbow-delimiters)
 

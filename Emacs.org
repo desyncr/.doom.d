@@ -8,13 +8,11 @@
 * Table of Contents :TOC:
 - [[#general][General]]
   - [[#files][Files]]
-  - [[#undo-tree][undo-tree]]
+  - [[#other][Other]]
 - [[#ui][UI]]
-  - [[#general-1][General]]
   - [[#fonts][Fonts]]
   - [[#darklight-theme-sync][Dark/light theme sync]]
   - [[#fancy-splash-image][Fancy splash image]]
-  - [[#doom-modeline-word-count][doom-modeline-word-count]]
   - [[#git-gutter][git-gutter]]
   - [[#center-isearch][center-isearch]]
   - [[#centered-cursor-mode][centered-cursor-mode]]
@@ -28,7 +26,6 @@
   - [[#zoom][zoom]]
 - [[#keybindings][Keybindings]]
   - [[#evil-ex][evil-ex]]
-  - [[#keyfreq][keyfreq]]
   - [[#open-dashboard][Open dashboard]]
   - [[#comment-or-uncomment-region-with-m-][Comment or uncomment region with M-/]]
   - [[#toggle-treemacs][Toggle treemacs]]
@@ -45,10 +42,6 @@
   - [[#delete-window][Delete window]]
   - [[#edit-source-block][Edit source block]]
   - [[#page-updown][Page up/down]]
-- [[#packages][Packages]]
-  - [[#super-save][super-save]]
-  - [[#deadgrep][deadgrep]]
-  - [[#benchmark-init][benchmark-init]]
 - [[#writing][Writing]]
   - [[#spell-checking][Spell checking]]
 - [[#coding][Coding]]
@@ -85,7 +78,7 @@
   - [[#fish][Fish]]
 
 * General
-Place your private configuration here! Remember, you do not need to run ~doom sync~ after modifying this file!
+This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
 
 Since this is a literate configuration I'm making sure no body edits the resulting tangled configuration manually:
 #+name: org-babel-warning-message
@@ -110,8 +103,17 @@ Switch to normal mode on save:
 #+begin_src emacs-lisp
 (add-hook 'after-save-hook #'evil-normal-state)
 #+end_src
+
+Disable this warning message that appears from time to time:
+
+#+begin_src emacs-lisp
+(setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
+#+end_src
+
+See [[https://github.com/nobiot/org-transclusion/issues/105][this]] github issue for a possible cause of the warning.
+
 ** Files
-- Allow deleting files in OSX. Source: [[https://emacs.stackexchange.com/a/15012][Emacs' StackExchange]]
+Allow deleting files in OSX. Source: [[https://emacs.stackexchange.com/a/15012][Emacs' StackExchange]]
 
 #+begin_src emacs-lisp
 (setq delete-by-moving-to-trash t)
@@ -120,9 +122,8 @@ Switch to normal mode on save:
 
 *Also required*: Go to Settings -> Security & Privacy -> Privacy -> Automation and Allow Emacs -> Finder. Source: [[https://ajar.freshdesk.com/support/solutions/articles/26000045119-install-error-not-authorized-to-send-apple-events-to-system-events-][freshdesk.com]]
 
-- Archive entries in sub-directory. Source: [[https://emacs.stackexchange.com/a/25020][Emacs' StackExchange]]
-
-** undo-tree
+Archive entries in sub-directory. Source: [[https://emacs.stackexchange.com/a/25020][Emacs' StackExchange]]
+*** undo-tree
 This package is activated via =:emacs (undo +tree)=.
 
 #+begin_src emacs-lisp
@@ -143,8 +144,58 @@ This package is activated via =:emacs (undo +tree)=.
     :config
         (global-undo-tree-mode 1))
 #+end_src
+*** super-save
+Automatically save open buffers on certain events.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! super-save)
+#+end_src
+
+Package repository: [[https://github.com/bbatsov/super-save][here]].
+
+#+begin_src emacs-lisp
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1))
+#+end_src
+** Other
+*** keyfreq
+This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
+#+begin_src emacs-lisp :tangle packages.el
+(package! keyfreq)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package keyfreq
+  :ensure t
+  :config
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
+#+end_src
+
+Use ~M-X keyfreq-show RET~ to see the command frequency.
+
+Package site [[https://github.com/dacap/keyfreq][here]].
+*** deadgrep
+#+begin_src emacs-lisp :tangle packages.el
+(package! deadgrep)
+#+end_src
+*** benchmark-init
+1. Add ~(package! benchmark-init)~ to ~\~/.doom.d/packages.el~
+2. Add this to ~\~/.doom.d/init.el~
+#+begin_example elisp
+    (when init-file-debug
+    (require 'benchmark-init)
+    (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
+#+end_example
+1. Run ~doom sync~
+2. Close Emacs
+3. Start Emacs in debug mode ~emacs --debug-init~.
+4. ~M-x benchmark-init/show-durations-tabuled~ or ~M-x benchmark-init/show-durations-tree~
+
+See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913][this]] comment.
 * UI
-** General
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set ~doom-theme~ or manually load a theme with the ~load-theme~ function. This is the default:
 
 #+begin_src emacs-lisp
@@ -166,17 +217,16 @@ Configure emacs to turn fullscreen/maximized on startup:
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
-Disable this warning message that appears from time to time:
-
-#+begin_src emacs-lisp
-(setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
-#+end_src
-
-See [[https://github.com/nobiot/org-transclusion/issues/105][this]] github issue for a possible cause of the warning.
-
 #+begin_src emacs-lisp
 (setq scroll-margin 10)
 #+end_src
+
+Add word count to status/modeline. Useful for org documents and writing in general.
+
+#+begin_src emacs-lisp
+(setq doom-modeline-enable-word-count t)
+#+end_src
+
 ** Fonts
 Doom exposes five (optional) variables for controlling fonts in Doom:
 
@@ -198,9 +248,7 @@ I'm using the following fonts at the moment. Nothing in particular about these f
 (setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
 #+end_src
 
-Instructions to install ~Fira Code~ can be found [[https://github.com/tonsky/FiraCode/wiki/Installing][here]].
-Install =Fira Sans= via brew:
-
+Instructions to install ~Fira Code~ can be found [[https://github.com/tonsky/FiraCode/wiki/Installing][here]]. Install =Fira Sans= via brew:
 #+begin_example bash
 brew tap homebrew/cask-fonts
 brew install --cask font-fira-sans
@@ -208,13 +256,11 @@ brew install --cask font-fira-sans
 Source: [[https://gist.github.com/muammar/a5ffb635eb7f532346a8e777b847f8a7?permalink_comment_id=3609035#gistcomment-3609035][gist comment]].
 
 Run the following command to install ~JetBrains Mono Nerd Font~:
-
 #+begin_example
 brew install --cask font-jetbrains-mono-nerd-font
 #+end_example
 
 You can install other fonts with a similar command following [[https://github.com/ryanoasis/nerd-fonts#option-4-homebrew-fonts][these]] instructions. See comment [[https://www.reddit.com/r/DoomEmacs/comments/qqqbon/comment/hrlhkzn/?utm_source=share&utm_medium=web2x&context=3][here]] and more info can be found [[https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/font-info.md][here]] as well.
-
 #+begin_src emacs-lisp
 (after! org-modern
     (custom-theme-set-faces
@@ -255,12 +301,6 @@ Configure Doom Emacs Splash image. Taken from [[https://gitlab.com/zzamboni/dot-
 #+end_src
 
 You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the top of this document for an example.
-** doom-modeline-word-count
-Add word count to status/modeline. Useful for org documents and writing in general.
-
-#+begin_src emacs-lisp
-(setq doom-modeline-enable-word-count t)
-#+end_src
 ** git-gutter
 Show git gutter for unsaved changes, source: [[https://github.com/doomemacs/doomemacs/issues/2377#issuecomment-576117218][github comment]].
 
@@ -452,23 +492,6 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 (map! "s-;" 'execute-extended-command)
 (map! :n "s-<return>" 'execute-extended-command)
 #+end_src
-** keyfreq
-This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
-#+begin_src emacs-lisp :tangle packages.el
-(package! keyfreq)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package keyfreq
-  :ensure t
-  :config
-    (keyfreq-mode 1)
-    (keyfreq-autosave-mode 1))
-#+end_src
-
-Use ~M-X keyfreq-show RET~ to see the command frequency.
-
-Package site [[https://github.com/dacap/keyfreq][here]].
 ** TODO Open dashboard
 #+begin_src emacs-lisp
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
@@ -565,41 +588,6 @@ Edit source block in capture buffer.
 (map! "s-d" 'evil-scroll-down)
 (map! "s-u" 'evil-scroll-up)
 #+end_src
-* Packages
-This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
-** super-save
-Automatically save open buffers on certain events.
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! super-save)
-#+end_src
-
-Package repository: [[https://github.com/bbatsov/super-save][here]].
-
-#+begin_src emacs-lisp
-(use-package super-save
-  :ensure t
-  :config
-  (super-save-mode +1))
-#+end_src
-** deadgrep
-#+begin_src emacs-lisp :tangle packages.el
-(package! deadgrep)
-#+end_src
-** benchmark-init
-1. Add ~(package! benchmark-init)~ to ~\~/.doom.d/packages.el~
-2. Add this to ~\~/.doom.d/init.el~
-#+begin_example elisp
-    (when init-file-debug
-    (require 'benchmark-init)
-    (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
-#+end_example
-1. Run ~doom sync~
-2. Close Emacs
-3. Start Emacs in debug mode ~emacs --debug-init~.
-4. ~M-x benchmark-init/show-durations-tabuled~ or ~M-x benchmark-init/show-durations-tree~
-
-See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913][this]] comment.
 * Writing
 ** Spell checking
 Change dictionary with the following:
@@ -876,11 +864,7 @@ Anyway, in the above code setting the commit's summary max length to 100 so I'm 
 ** projectile
 #+begin_src emacs-lisp
 (after! projectile
-   (setq
-        projectile-project-search-path '("~/sys-vagrant/code")
-   )
-)
-
+   (setq projectile-project-search-path '("~/sys-vagrant/code")))
 #+end_src
 ** treemacs
 Enable treemacs and never move to treemacs with other-window as well as disabling wrap around:

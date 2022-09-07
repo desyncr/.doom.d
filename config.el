@@ -5,6 +5,8 @@
 
 (add-hook 'after-save-hook #'evil-normal-state)
 
+(setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
+
 (setq delete-by-moving-to-trash t)
 (setq trash-directory "~/.Trash")
 
@@ -25,6 +27,17 @@
     :config
         (global-undo-tree-mode 1))
 
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1))
+
+(use-package keyfreq
+  :ensure t
+  :config
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
+
 (setq doom-theme 'doom-nord-light)
 
 (setq display-line-numbers-type t)
@@ -32,9 +45,9 @@
 ;(add-to-list 'initial-frame-alist '(fullscreen . maximized)) ;; only starting frame
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-(setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
-
 (setq scroll-margin 10)
+
+(setq doom-modeline-enable-word-count t)
 
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14)) ;; Fira Code,  :weight 'medium, :size 12
 (setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
@@ -66,8 +79,6 @@
 (add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
 
 (setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
-
-(setq doom-modeline-enable-word-count t)
 
 (after! git-gutter
   (setq git-gutter:update-interval 0.5))
@@ -149,12 +160,6 @@
 (map! "s-;" 'execute-extended-command)
 (map! :n "s-<return>" 'execute-extended-command)
 
-(use-package keyfreq
-  :ensure t
-  :config
-    (keyfreq-mode 1)
-    (keyfreq-autosave-mode 1))
-
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 
 (map! :ne "M-/" #'comment-or-uncomment-region)
@@ -194,11 +199,6 @@
 
 (map! "s-d" 'evil-scroll-down)
 (map! "s-u" 'evil-scroll-up)
-
-(use-package super-save
-  :ensure t
-  :config
-  (super-save-mode +1))
 
 (use-package ispell
   :defer t)
@@ -298,10 +298,7 @@
     (setq git-commit-summary-max-length 100))
 
 (after! projectile
-   (setq
-        projectile-project-search-path '("~/sys-vagrant/code")
-   )
-)
+   (setq projectile-project-search-path '("~/sys-vagrant/code")))
 
 (use-package treemacs
   :defer t
