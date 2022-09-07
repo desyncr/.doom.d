@@ -1071,6 +1071,12 @@ Disable company-mode (autocompletions) on org-mode (i.e. prose):
 #+begin_src emacs-lisp
 (setq company-global-modes '(not org-mode))
 #+end_src
+
+#+begin_src emacs-lisp
+(setq org-archive-location (concat "archive/archive-"
+                                   (format-time-string "%Y%m" (current-time)) ".org_archive::"))
+#+end_src
+
 ** TODO org-agenda
 #+begin_src emacs-lisp
 (map! "s-o" 'org-agenda)
