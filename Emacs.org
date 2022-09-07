@@ -7,6 +7,8 @@
 [[./splash/doom-emacs-bw-light.svg]]
 * Table of Contents :TOC:
 - [[#general][General]]
+  - [[#files][Files]]
+  - [[#undo-tree][undo-tree]]
 - [[#ui][UI]]
   - [[#general-1][General]]
   - [[#fonts][Fonts]]
@@ -65,9 +67,7 @@
   - [[#projectile][projectile]]
   - [[#treemacs][treemacs]]
   - [[#workspaces][workspaces]]
-- [[#files][Files]]
-  - [[#undo-tree][undo-tree]]
-- [[#org][Org]]
+- [[#org-everything][Org everything]]
   - [[#org-mode][org-mode]]
   - [[#org-agenda][org-agenda]]
   - [[#org-modern][org-modern]]
@@ -79,6 +79,7 @@
   - [[#org-log-repeat][org-log-repeat]]
   - [[#toc-org][toc-org]]
   - [[#literate-calc-mode][literate-calc-mode]]
+  - [[#org-pomodoro][org-pomodoro]]
 - [[#terminal-integration][Terminal integration]]
   - [[#tmux][Tmux]]
   - [[#fish][Fish]]
@@ -1203,7 +1204,6 @@ This package automatically generates and maintains a Table of Contents for Org a
 
 Package repository [[https://github.com/snosov1/toc-org][here]]. See configuration options and usage [[https://github.com/snosov1/toc-org#use][here]].
 ** TODO literate-calc-mode
-
 Enable with ~literate-calc-minor-mode~. Use ~literate-calc-insert-results~ to copy results into buffer.
 
 Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
