@@ -46,9 +46,9 @@
   - [[#edit-source-block][Edit source block]]
   - [[#page-updown][Page up/down]]
 - [[#packages][Packages]]
-  - [[#installing][Installing]]
-  - [[#configuring][Configuring]]
-  - [[#custom][Custom]]
+  - [[#super-save][super-save]]
+  - [[#deadgrep][deadgrep]]
+  - [[#benchmark-init][benchmark-init]]
 - [[#writing][Writing]]
   - [[#spell-checking][Spell checking]]
 - [[#coding][Coding]]
@@ -162,7 +162,8 @@ This determines the style of line numbers in effect. If set to ~nil~, line numbe
 Configure emacs to turn fullscreen/maximized on startup:
 
 #+begin_src emacs-lisp
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+;(add-to-list 'initial-frame-alist '(fullscreen . maximized)) ;; only starting frame
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
 Disable this warning message that appears from time to time:
@@ -565,106 +566,8 @@ Edit source block in capture buffer.
 (map! "s-u" 'evil-scroll-up)
 #+end_src
 * Packages
-** Installing
-To install a package with Doom you must declare them here and run ~doom sync~ on the command line, then restart Emacs for the changes to take effect -- or use ~M-x doom/reload~.
-
-To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
-
-#+begin_example
-    (package! some-package)
-#+end_example
-
-To install a package directly from a remote git repo, you must specify a ~:recipe~. You'll find documentation on what ~:recipe~ accepts here: https://github.com/radian-software/straight.el#the-recipe-format
-
-#+begin_example
-    (package! another-package
-        :recipe (:host github :repo "username/repo"))
-#+end_example
-
-If the package you are trying to install does not contain a PACKAGENAME.el file, or is located in a subdirectory of the repo, you'll need to specify ~:files~ in the ~:recipe~:
-
-#+begin_example
-    (package! this-package
-        :recipe (:host github :repo "username/repo"
-        :files ("some-file.el" "src/lisp/*.el")))
-#+end_example
-
-If you'd like to disable a package included with Doom, you can do so here with the ~:disable~ property:
-
-#+begin_example
-    (package! builtin-package :disable t)
-#+end_example
-
-You can override the recipe of a built in package without having to specify all the properties for ~:recipe~. These will inherit the rest of its recipe from Doom or MELPA/ELPA/Emacsmirror:
-
-#+begin_example
-    (package! builtin-package :recipe (:nonrecursive t))
-    (package! builtin-package-2 :recipe (:repo "myfork/package"))
-#+end_example
-
-Specify a ~:branch~ to install a package from a particular branch or tag.
-This is required for some packages whose default branch isn't ~master~ (which our package manager can't deal with; see radian-software/straight.el#279)
-
-#+begin_example
-    (package! builtin-package :recipe (:branch "develop"))
-#+end_example
-
-Use ~:pin~ to specify a particular commit to install.
-
-#+begin_example
-    (package! builtin-package :pin "1a2b3c4d5e")
-#+end_example
-
-
-Doom's packages are pinned to a specific commit and updated from release to release. The ~unpin!~ macro allows you to unpin single packages...
-
-#+begin_example
-    (unpin! pinned-package)
-#+end_example
-
-...or multiple packages
-
-#+begin_example
-    (unpin! pinned-package another-pinned-package)
-#+end_example
-
- ...Or *all* packages (NOT RECOMMENDED; will likely break things)
-
-#+begin_example
-    (unpin! t)
-#+end_example
-** Configuring
-Whenever you reconfigure a package, make sure to wrap your config in an
-
-#+begin_example
-  (after! PACKAGE
-    (setq x y))
-#+end_example
-
-The exceptions to this rule:
-  - Setting file/directory variables (like ~org-directory~)
-  - Setting variables which explicitly tell you to set them before their
-    package is loaded (see ~C-h v VARIABLE~ to look up their documentation).
-  - Setting doom variables (which start with ~doom-~ or ~+~).
-
-Here are some additional functions/macros that will help you configure Doom.
-
-- ~load!~ for loading external *.el files relative to this one
-- ~use-package!~ for configuring packages
-- ~after!~ for running code after a package has loaded
-- ~add-load-path!~ for adding directories to the ~load-path~, relative to
-  this file. Emacs searches the ~load-path~ when you load packages with
-  ~require~ or ~use-package~.
-- ~map!~ for binding new keys
-
-To get information about any of these functions/macros, move the cursor over the highlighted symbol at press ~K~ (non-evil users must press ~C-c c k~).
-This will open documentation for it, including demos of how they are used.
-Alternatively, use ~C-h o~ to look up a symbol (functions, variables, faces, etc).
-
-You can also try ~gd~ (or ~C-c c d~) to jump to their definition and see how they are implemented.
-** Custom
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
-*** super-save
+** super-save
 Automatically save open buffers on certain events.
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -679,11 +582,11 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
   :config
   (super-save-mode +1))
 #+end_src
-*** deadgrep
+** deadgrep
 #+begin_src emacs-lisp :tangle packages.el
 (package! deadgrep)
 #+end_src
-*** benchmark-init
+** benchmark-init
 1. Add ~(package! benchmark-init)~ to ~\~/.doom.d/packages.el~
 2. Add this to ~\~/.doom.d/init.el~
 #+begin_example elisp
