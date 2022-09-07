@@ -3,6 +3,28 @@
 (setq user-full-name "DC*"
       user-mail-address "des@riseup.net")
 
+(add-hook 'after-save-hook #'evil-normal-state)
+
+(setq delete-by-moving-to-trash t)
+(setq trash-directory "~/.Trash")
+
+(use-package undo-tree
+    :ensure t
+    :init
+    (setq undo-limit 80000000)
+    (setq undo-outer-limit 100000000)
+    (setq undo-strong-limit 150000000)
+    (setq undo-tree-mode-lighter " UN")
+    (setq undo-tree-auto-save-history t)
+    (setq undo-tree-enable-undo-in-region nil)
+    (setq undo-tree-history-directory-alist '(("." . "~/emacs.d/undo")))
+    (add-hook 'undo-tree-visualizer-mode-hook
+              (lambda () (undo-tree-visualizer-selection-mode)
+                (setq display-line-numbers nil)))
+    (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
+    :config
+        (global-undo-tree-mode 1))
+
 (setq doom-theme 'doom-nord-light)
 
 (setq display-line-numbers-type t)
@@ -14,24 +36,25 @@
 
 (setq scroll-margin 10)
 
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)) ;; Fira Code,  :weight 'medium, :size 12
-(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 15))
-(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14)) ;; Fira Code,  :weight 'medium, :size 12
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
+(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
 
-(custom-theme-set-faces
- 'user
- '(org-block ((t (:inherit fixed-pitch))))
- '(org-code ((t (:inherit (shadow fixed-pitch)))))
- '(org-document-info ((t (:foreground "dark orange"))))
- '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
- '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- ;;'(org-link ((t (:foreground "royal blue" :underline t))))
- '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-property-value ((t (:inherit fixed-pitch))) t)
- '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
- '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold))))
- '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+(after! org-modern
+    (custom-theme-set-faces
+    'user
+    '(org-block ((t (:inherit fixed-pitch))))
+    '(org-code ((t (:inherit (shadow fixed-pitch)))))
+    '(org-document-info ((t (:foreground "dark orange"))))
+    '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+    ;;'(org-link ((t (:foreground "royal blue" :underline t))))
+    '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+    '(org-property-value ((t (:inherit fixed-pitch))) t)
+    '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+    '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+    '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold))))
+    '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))
 
 (defun my/apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
@@ -276,7 +299,7 @@
 
 (after! projectile
    (setq
-        projectile-project-search-path '("~/sys-vagrant/code/")
+        projectile-project-search-path '("~/sys-vagrant/code")
    )
 )
 
@@ -305,29 +328,6 @@
   (toggle-frame-maximized)
   (call-interactively #'+workspace/load))
 (map! "s-." #'me/switch-workspace-in-new-frame)
-
-(setq delete-by-moving-to-trash t)
-(setq trash-directory "~/.Trash")
-
-(setq org-archive-location (concat "archive/archive-"
-                                   (format-time-string "%Y%m" (current-time)) ".org_archive::"))
-
-(use-package undo-tree
-    :ensure t
-    :init
-    (setq undo-limit 80000000)
-    (setq undo-outer-limit 100000000)
-    (setq undo-strong-limit 150000000)
-    (setq undo-tree-mode-lighter " UN")
-    (setq undo-tree-auto-save-history t)
-    (setq undo-tree-enable-undo-in-region nil)
-    (setq undo-tree-history-directory-alist '(("." . "~/emacs.d/undo")))
-    (add-hook 'undo-tree-visualizer-mode-hook
-              (lambda () (undo-tree-visualizer-selection-mode)
-                (setq display-line-numbers nil)))
-    (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
-    :config
-        (global-undo-tree-mode 1))
 
 (setq org-directory "~/org/")
 (after! org
@@ -363,11 +363,14 @@
 
 (setq company-global-modes '(not org-mode))
 
+(setq org-archive-location (concat "archive/archive-"
+                                   (format-time-string "%Y%m" (current-time)) ".org_archive::"))
+
 (map! "s-o" 'org-agenda)
 
 (setq org-agenda-custom-commands
       '(
-        ("n" "List :work: TODO/INPROGRESS/NEXT"
+        ("w" "List :work: TODO/INPROGRESS/NEXT"
           ((tags "work/TODO|INPROGRESS|NEXT")))
         ("p" "List :personal: TODO/INPROGRESS/NEXT"
             ((tags "personal/TODO|INPROGRESS|NEXT")))
@@ -425,6 +428,16 @@
 
 (use-package literate-calc-mode
   :ensure t)
+
+(setq org-clock-clocked-in-display nil)
+(setq org-pomodoro-format "%s")
+(setq org-pomodoro-finished-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-start-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-long-break-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-short-break-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-ticking-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-overtime-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-start-sound-p t)
 
 (use-package vterm
   :custom
