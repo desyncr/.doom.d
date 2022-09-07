@@ -1209,8 +1209,21 @@ Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
 #+end_src
 
 See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]].
+** TODO org-pomodoro
+=org-pomodoro= package uses =org-clock=. This latter shows the task title in the modeline, sometimes this title is lengthy making it hard to see the Pomodoro's timer. So I'm disabling it:
+#+begin_src emacs-lisp :tangle yes
+(setq org-clock-clocked-in-display nil)
+(setq org-pomodoro-format "%s")
+(setq org-pomodoro-finished-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-start-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-long-break-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-short-break-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-ticking-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-overtime-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-start-sound-p t)
+#+end_src
 * Terminal integration
-There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell=, =term=, =shell=. I'll be using =vterm= and I'll refering to this package for the rest of this section.
+There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell=, =term=, =shell=. I'll be using =vterm= and I'll referring to this package for the rest of this section.
 
 =vterm= offers a fully featured terminal emulation layer for Emacs. It works by leveraging ~libvterm~ library, which powers xterm. Check [[https://www.youtube.com/watch?v=8oNycFLwKfE][this presentation]] for an introduction and walkthrough. Find more in [[https://emacsconf.org/2020/talks/30/][this talk]]. Find the main repository [[https://github.com/akermu/emacs-libvterm][here]].
 
