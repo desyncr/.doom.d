@@ -973,7 +973,7 @@ Anyway, in the above code setting the commit's summary max length to 100 so I'm 
 #+begin_src emacs-lisp
 (after! projectile
    (setq
-        projectile-project-search-path '("~/sys-vagrant/code/")
+        projectile-project-search-path '("~/sys-vagrant/code")
    )
 )
 
