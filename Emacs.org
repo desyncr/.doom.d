@@ -87,14 +87,16 @@
 Place your private configuration here! Remember, you do not need to run ~doom sync~ after modifying this file!
 
 Since this is a literate configuration I'm making sure no body edits the resulting tangled configuration manually:
+#+name: org-babel-warning-message
 #+begin_src emacs-lisp
 ;; THIS FILE WAS GENERATED AUTOMATICALLY VIA org-babel. DO NOT EDIT MANUALLY.
 #+end_src
 
 Similarly I'll do the same for the =package.el= file:
-#+begin_src emacs-lisp :tangle packages.el
-;; THIS FILE WAS GENERATED AUTOMATICALLY VIA org-babel. DO NOT EDIT MANUALLY.
+#+begin_src emacs-lisp :noweb yes :tangle packages.el
+<<org-babel-warning-message>>
 #+end_src
+In the above code block I'm using =:noweb yes=. This flag tells babel to use the referenced src block via the ~<< .. >>~  syntax, replacing the tag with the result of the referenced source block.
 
 Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets. It is optional.
 
