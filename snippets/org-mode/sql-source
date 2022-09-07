@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: sql-source
+# key: sql
+# --
+#+begin_src sql
+${0:`yas-selected-text`}
+#+end_src
