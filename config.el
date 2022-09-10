@@ -335,6 +335,14 @@
   :after (treemacs magit)
   :ensure t)
 
+(defun me/switch-workspace ()
+  (interactive)
+  (call-interactively #'+workspace/switch-to))
+
+(map! :leader
+    :desc "Switch workspace"
+    "TAB TAB" #'me/switch-workspace)
+
 (setq org-directory "~/org/")
 (after! org
   (setq
@@ -481,15 +489,8 @@
 
 (use-package vterm
   :custom
-  (vterm-shell "fish"))
-
-(defun me/switch-workspace ()
-  (interactive)
-  (call-interactively #'+workspace/switch-to))
-
-(map! :leader
-    :desc "Switch workspace"
-    "TAB TAB" #'me/switch-workspace)
+  (vterm-shell "fish")
+  (setq vterm-timer-delay 0))
 
 (use-package elfeed
   :init
