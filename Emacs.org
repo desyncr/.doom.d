@@ -1091,6 +1091,41 @@ Org-roam is a package to create a non-hierarchical knowledge base. The package i
 #+end_src
 
 We're making only a few configurations only since Doom Emacs already integrates the package via ~:editor (org +roam)~.
+
+#+begin_src emacs-lisp
+(defun me/counsel-ag-roam ()
+ "Do counsel-ag on the org roam directory"
+ (interactive)
+ (counsel-ag nil org-roam-directory))
+#+end_src
+
+Search org-roam notes via consult (source: [[https://github.com/jgru/consult-org-roam#installation][here]]):
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! consult-org-roam)
+
+#+end_src
+#+begin_src emacs-lisp
+(use-package consult-org-roam
+   :ensure t
+   :init
+   (require 'consult-org-roam)
+   ;; Activate the minor-mode
+   (consult-org-roam-mode 1)
+   :custom
+   (consult-org-roam-grep-func #'consult-ripgrep)
+   :config
+   ;; Eventually suppress previewing for certain functions
+   (consult-customize
+    consult-org-roam-forward-links
+    :preview-key (kbd "M-.")))
+
+(map! :leader
+      :desc "Search via consult"
+      "n r S" #'consult-org-roam-search)
+#+end_src
+
+Keybinding example (see this [[https://rameezkhan.me/adding-keybindings-to-doom-emacs/][blog]]).
 ** org-todo-keywords
 Custom ~org-todo-keywords~. It needs to be wrapper in (~after! ..~) block to apply correctly (see [[https://github.com/doomemacs/doomemacs/issues/2913#issuecomment-614773557][comment]]).
 
