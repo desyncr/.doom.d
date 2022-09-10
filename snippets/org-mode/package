@@ -4,5 +4,4 @@
 # --
 #+begin_src emacs-lisp :tangle packages.el
 (package! $0)
-
 #+end_src

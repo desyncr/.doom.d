@@ -1,5 +1,6 @@
-# name: "phpunit expects"
+# name: phpunit expects
 # key: exp
+# group: phpunit
 # --
 expects($this->${1:once}())
   ->method('$2')
