@@ -2,10 +2,6 @@
 
 (package! super-save)
 
-(package! keyfreq)
-
-(package! deadgrep)
-
 (package! centered-cursor-mode)
 
 (package! vertico-posframe)
@@ -19,6 +15,8 @@
 (package! zoom)
 
 (package! rainbow-delimiters)
+
+(package! consult-yasnippet)
 
 (package! evil-snipe)
 
@@ -44,3 +42,7 @@
 (package! elfeed-goodies)
 
 (package! calibredb)
+
+(package! evil-tutor)
+
+(package! keyfreq)

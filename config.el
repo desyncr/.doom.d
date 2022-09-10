@@ -42,12 +42,6 @@
 	(apply orig-fun args)))
 (advice-add 'super-save-command-advice :around #'me/super-save-disable-advice)
 
-(use-package keyfreq
-  :ensure t
-  :config
-    (keyfreq-mode 1)
-    (keyfreq-autosave-mode 1))
-
 (setq doom-theme 'doom-nord-light)
 
 (setq display-line-numbers-type t)
@@ -206,7 +200,7 @@
 (global-set-key (kbd "C-c v p") 'er/mark-paragraph)
 (global-set-key (kbd "C-c v w") 'er/mark-word)
 
-(map! "M-i" #'yas-insert-snippet)
+(map! "M-i" #'consult-yasnippet)
 
 (after! evil-org
   (define-key evil-org-mode-map (kbd "<visual-state> M-l") 'org-insert-link))
@@ -220,6 +214,11 @@
 (after! evil-org
   (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
   (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
+
+(map! "C-." 'goto-last-change)
+(map! "C-," 'goto-last-change-reverse)
+;(global-set-key [(control ?.)] 'goto-last-change)
+;(global-set-key [(control ?,)] 'goto-last-change-reverse)
 
 (use-package ispell
   :defer t)
@@ -466,14 +465,14 @@
 (use-package literate-calc-mode
   :ensure t)
 
-setq org-pomodoro-format "%s"
+(setq org-pomodoro-format "%s"
       org-pomodoro-start-sound-p t
-      org-pomodoro-short-break-length 10
+      org-pomodoro-short-break-length 10)
 
 (setq org-clock-clocked-in-display nil)
 
 (setq me/org-pomodoro-bell-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-finished-sound me/org-pomodoro-bell-sound)
+(setq org-pomodoro-finished-sound me/org-pomodoro-bell-sound
       org-pomodoro-start-sound me/org-pomodoro-bell-sound
       org-pomodoro-long-break-sound me/org-pomodoro-bell-sound
       org-pomodoro-short-break-sound me/org-pomodoro-bell-sound
@@ -512,3 +511,9 @@ setq org-pomodoro-format "%s"
   (setq calibredb-root-dir "~/Sync/Books/Calibre Library")
   (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
   (setq calibredb-library-alist '(("~/Sync/Books/Calibre Library"))))
+
+(use-package keyfreq
+  :ensure t
+  :config
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
