@@ -1203,18 +1203,28 @@ Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
 
 See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]].
 ** TODO org-pomodoro
+Basic configuration:
+#+begin_src emacs-lisp
+setq org-pomodoro-format "%s"
+      org-pomodoro-start-sound-p t
+      org-pomodoro-short-break-length 10
+#+end_src
+
 =org-pomodoro= package uses =org-clock=. This latter shows the task title in the modeline, sometimes this title is lengthy making it hard to see the Pomodoro's timer. So I'm disabling it:
-#+begin_src emacs-lisp :tangle yes
+
+#+begin_src emacs-lisp
 (setq org-clock-clocked-in-display nil)
-(setq org-pomodoro-format "%s")
-(setq org-pomodoro-finished-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-start-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-long-break-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-short-break-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-ticking-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-overtime-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-start-sound-p t)
-(setq org-pomodoro-short-break-length 10)
+#+end_src
+
+Configure bell sound for break and finish:
+#+begin_src emacs-lisp
+(setq me/org-pomodoro-bell-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-finished-sound me/org-pomodoro-bell-sound)
+      org-pomodoro-start-sound me/org-pomodoro-bell-sound
+      org-pomodoro-long-break-sound me/org-pomodoro-bell-sound
+      org-pomodoro-short-break-sound me/org-pomodoro-bell-sound
+      org-pomodoro-ticking-sound me/org-pomodoro-bell-sound
+      org-pomodoro-overtime-sound me/org-pomodoro-bell-sound)
 #+end_src
 * Terminal integration
 There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell=, =term=, =shell=. I'll be using =vterm= and I'll referring to this package for the rest of this section.
