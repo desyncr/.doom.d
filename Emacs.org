@@ -251,6 +251,7 @@ If you or Emacs can't find your font, use ~M-x describe-font~ to look them up, ~
 I'm using the following fonts at the moment. Nothing in particular about these fonts, only that they support glyphs and ligatures.
 
 #+begin_src emacs-lisp
+(setq doom-font-increment 1)
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14)) ;; Fira Code,  :weight 'medium, :size 12
 (setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
 (setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
