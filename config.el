@@ -32,6 +32,12 @@
   :config
   (super-save-mode +1))
 
+(defun me/super-save-disable-advice (orig-fun &rest args)
+  "Dont auto-save under these conditions."
+  (unless (equal (car args) " *LV*")
+	(apply orig-fun args)))
+(advice-add 'super-save-command-advice :around #'me/super-save-disable-advice)
+
 (use-package keyfreq
   :ensure t
   :config
@@ -47,14 +53,18 @@
 
 (setq scroll-margin 10)
 
+(add-hook 'comint-mode-hook
+          (lambda ()
+              (set (make-local-variable 'scroll-margin) 0)))
+
 (setq doom-modeline-enable-word-count t)
 
+(setq doom-font-increment 1)
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14)) ;; Fira Code,  :weight 'medium, :size 12
 (setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
 (setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
 
-(after! org-modern
-    (custom-theme-set-faces
+(custom-theme-set-faces
     'user
     '(org-block ((t (:inherit fixed-pitch))))
     '(org-code ((t (:inherit (shadow fixed-pitch)))))
@@ -67,7 +77,8 @@
     '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
     '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
     '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold))))
-    '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))
+
+    '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 (defun my/apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
@@ -124,7 +135,7 @@
         '((left-fringe . 2)
           (right-fringe . 2))))
 
-(map! "s-§" #'resize-window)
+(map! "M-§" #'resize-window)
 
 (use-package beacon
     :ensure t
@@ -143,7 +154,7 @@
 (defadvice! prompt-for-vbuffer (&rest _)
   :after 'evil-window-vsplit (consult-projectile))
 
-(map! "s-n"
+(map! "M-n"
      'evil-window-vnew)
 (defadvice! vnew-righthand (&rest _)
   :after 'evil-window-vnew (+evil/window-move-right))
@@ -157,48 +168,55 @@
     (zoom-mode 0)
     (global-set-key (kbd "C-x =") 'zoom))
 
-(map! "s-;" 'execute-extended-command)
-(map! :n "s-<return>" 'execute-extended-command)
+(setq mac-command-modifier 'meta) ; make cmd key do Meta
+(setq mac-option-modifier 'super) ; make opt key do Super
+(setq mac-control-modifier 'control) ; make Control key do Control
+
+(map! "M-v" 'clipboard-yank)
+(map! "M-c" 'copy-region-as-kill)
+
+(map! "M-;" 'execute-extended-command)
+(map! :n "M-<return>" 'execute-extended-command)
 
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 
 (map! :ne "M-/" #'comment-or-uncomment-region)
 
-(map! "s-t" #'+treemacs/toggle)
+(map! "M-t" #'+treemacs/toggle)
 
-(map! "s-s" #'save-buffer)
+(map! "M-s" #'save-buffer)
 
-(map! "s-r" #'+default/search-project)
+(map! "M-r" #'+default/search-project)
 
-(map! "s-m" #'consult-imenu)
+(map! "M-m" #'consult-imenu)
 (defadvice! expand-folds-imenu(&rest _)
   :before 'consult-imenu (+org/open-all-folds))
 (defadvice! expand-folds-imenu(&rest _)
   :before '+default/search-buffer (+org/open-all-folds))
 
-(map! "s-f" #'consult-projectile)
+(map! "M-f" #'consult-projectile)
 (map! :leader "SPC" 'consult-projectile)
 
-(map! "s-p" #'projectile-find-file)
+(map! "M-p" #'projectile-find-file)
 
-(map! "s-b" #'consult-buffer)
+(map! "M-b" #'+vertico/switch-workspace-buffer)
 
-(map! "s-]" #'next-window-any-frame)
-(map! "s-[" #'previous-window-any-frame)
+(map! "M-]" #'next-window-any-frame)
+(map! "M-[" #'previous-window-any-frame)
 
 (global-set-key (kbd "C-c v p") 'er/mark-paragraph)
 (global-set-key (kbd "C-c v w") 'er/mark-word)
 
-(map! "s-i" #'yas-insert-snippet)
+(map! "M-i" #'yas-insert-snippet)
 
-(map! "s-l" #'org-insert-link)
+(map! "M-l" #'org-insert-link)
 
-(map! "s-g" #'xref-find-definitions-other-window)
+(map! "M-g" #'xref-find-definitions-other-window)
 
 (global-set-key (kbd "C-c e") 'org-edit-src-code)
 
-(map! "s-d" 'evil-scroll-down)
-(map! "s-u" 'evil-scroll-up)
+(map! "M-d" 'evil-scroll-down)
+(map! "M-u" 'evil-scroll-up)
 
 (use-package ispell
   :defer t)
@@ -248,14 +266,18 @@
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'"))
 
 (use-package lsp-ui
-  :after lsp
-  :defer t
-  :custom
-    (lsp-idle-delay 0.5
-        company-minimum-prefix-length 4
-        company-idle-delay 0.5
-        company-tooltip-minimum-width 50
-        company-tooltip-maximum-width 50))
+  :after lsp-mode
+  :defer t)
+
+(setq lsp-idle-delay 0.1
+    company-minimum-prefix-length 4
+    company-idle-delay 0.1
+    company-tooltip-minimum-width 50
+    company-tooltip-maximum-width 50
+    lsp-ui-doc-include-signature t
+    lsp-ui-doc-max-width 100
+    lsp-ui-doc-max-height 20
+    lsp-ui-doc-enable t)
 
 (use-package lsp-treemacs
   :defer t)
@@ -264,6 +286,8 @@
 (setq lsp-headerline-breadcrumb-segments '(symbols))
 (setq lsp-headerline-breadcrumb-icons-enable t)
 (setq lsp-headerline-breadcrumb-enable-diagnostics nil)
+
+(map! "M-x" 'lsp-ui-peek-find-references)
 
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
@@ -283,8 +307,8 @@
 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
 
-(map! "s-k" #'evil-multiedit-match-symbol-and-prev
-  "s-j" #'evil-multiedit-match-symbol-and-next)
+(map! "M-k" #'evil-multiedit-match-symbol-and-prev
+  "M-j" #'evil-multiedit-match-symbol-and-next)
 
 (use-package better-jumper
   :ensure t
@@ -304,27 +328,20 @@
   :defer t
   :config
   (setq treemacs-is-never-other-window t
-        treemacs-wrap-around nil))
-
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t)
+        treemacs-wrap-around nil
+        treemacs-display-current-project-exclusively t
+        treemacs-follow-mode t))
 
 (use-package treemacs-magit
   :after (treemacs magit)
   :ensure t)
-
-(use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
-  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
-  :ensure t
-  :config (treemacs-set-scope-type 'Perspectives))
 
 (defun me/switch-workspace-in-new-frame ()
   (interactive)
   (select-frame (make-frame))
   (toggle-frame-maximized)
   (call-interactively #'+workspace/load))
-(map! "s-." #'me/switch-workspace-in-new-frame)
+(map! "M-." #'me/switch-workspace-in-new-frame)
 
 (setq org-directory "~/org/")
 (after! org
@@ -363,7 +380,9 @@
 (setq org-archive-location (concat "archive/archive-"
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
 
-(map! "s-o" 'org-agenda)
+(setq org-capture-bookmark nil)
+
+(map! "M-o" 'org-agenda)
 
 (setq org-agenda-custom-commands
       '(
@@ -378,6 +397,11 @@
         ("l" "List :learning:"
             ((tags "learning")))
     ))
+
+(setq org-agenda-sorting-strategy '((agenda priority-down todo-state-down)
+                                    (todo priority-down todo-state-down)
+                                    (tags priority-down todo-state-down)
+                                    (search priority-down todo-state-down category-keep)))
 
 (use-package org-modern
   :config
@@ -405,6 +429,29 @@
   (org-roam-directory "~/org/roam")
   (org-roam-index-file "~/org/roam/index.org")
   )
+
+(defun me/counsel-ag-roam ()
+ "Do counsel-ag on the org roam directory"
+ (interactive)
+ (counsel-ag nil org-roam-directory))
+
+(use-package consult-org-roam
+   :ensure t
+   :init
+   (require 'consult-org-roam)
+   ;; Activate the minor-mode
+   (consult-org-roam-mode 1)
+   :custom
+   (consult-org-roam-grep-func #'consult-ripgrep)
+   :config
+   ;; Eventually suppress previewing for certain functions
+   (consult-customize
+    consult-org-roam-forward-links
+    :preview-key (kbd "M-.")))
+
+(map! :leader
+      :desc "Search via consult"
+      "n r S" #'consult-org-roam-search)
 
 (after! org
     (setq org-todo-keywords
@@ -435,7 +482,37 @@
 (setq org-pomodoro-ticking-sound "~/.doom.d/resources/bell-ring-01.wav")
 (setq org-pomodoro-overtime-sound "~/.doom.d/resources/bell-ring-01.wav")
 (setq org-pomodoro-start-sound-p t)
+(setq org-pomodoro-short-break-length 10)
 
 (use-package vterm
   :custom
   (vterm-shell "fish"))
+
+(defun me/switch-workspace ()
+  (interactive)
+  (call-interactively #'+workspace/switch-to))
+
+(map! :leader
+    :desc "Switch workspace"
+    "TAB TAB" #'me/switch-workspace)
+
+(use-package elfeed
+  :init
+  (elfeed-goodies/setup)
+  :config
+  (add-hook 'elfeed-show-mode-hook #'elfeed-update)
+  (map! "M-e" 'elfeed)
+  (setq elfeed-feeds
+      '(
+        ("https://sachachua.com/blog/category/emacs-news/feed/" emacs)
+        ("https://planet.emacslife.com/atom.xml" emacs)
+        ("http://nedroid.com/feed/" webcomic)
+        ("https://hnrss.org/frontpage" news)
+        )))
+
+(use-package calibredb
+  :defer t
+  :config
+  (setq calibredb-root-dir "~/Sync/Books/Calibre Library")
+  (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+  (setq calibredb-library-alist '(("~/Sync/Books/Calibre Library"))))

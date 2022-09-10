@@ -26,16 +26,21 @@
 
 (package! better-jumper)
 
-(package! treemacs-projectile)
-
 (package! org-modern)
 
 (package! org-auto-tangle)
 
 (package! ob-http)
 
+(package! consult-org-roam)
+
 (package! org-bullets)
 
 (package! toc-org)
 
 (package! literate-calc-mode)
+
+(package! elfeed)
+(package! elfeed-goodies)
+
+(package! calibredb)
