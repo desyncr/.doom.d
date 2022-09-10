@@ -184,42 +184,6 @@ Super-save/lsp-mode were causing issues while typing. When a function call was t
 #+end_src
 
 Source: [[https://github.com/bbatsov/super-save/issues/38#issuecomment-1229537100][github comment]].
-** Other
-*** keyfreq
-This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
-#+begin_src emacs-lisp :tangle packages.el
-(package! keyfreq)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package keyfreq
-  :ensure t
-  :config
-    (keyfreq-mode 1)
-    (keyfreq-autosave-mode 1))
-#+end_src
-
-Use ~M-X keyfreq-show RET~ to see the command frequency.
-
-Package site [[https://github.com/dacap/keyfreq][here]].
-*** deadgrep
-#+begin_src emacs-lisp :tangle packages.el
-(package! deadgrep)
-#+end_src
-*** benchmark-init
-1. Add ~(package! benchmark-init)~ to ~\~/.doom.d/packages.el~
-2. Add this to ~\~/.doom.d/init.el~
-#+begin_example elisp
-    (when init-file-debug
-    (require 'benchmark-init)
-    (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
-#+end_example
-1. Run ~doom sync~
-2. Close Emacs
-3. Start Emacs in debug mode ~emacs --debug-init~.
-4. ~M-x benchmark-init/show-durations-tabuled~ or ~M-x benchmark-init/show-durations-tree~
-
-See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913][this]] comment.
 * UI
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set ~doom-theme~ or manually load a theme with the ~load-theme~ function. This is the default:
 
@@ -1384,3 +1348,39 @@ The above block is the fish configuration to enable opening files from vterm int
   (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
   (setq calibredb-library-alist '(("~/Sync/Books/Calibre Library"))))
 #+end_src
+
+** TODO evil-tutor
+#+begin_src emacs-lisp :tangle packages.el
+(package! evil-tutor)
+#+end_src
+** keyfreq
+This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
+#+begin_src emacs-lisp :tangle packages.el
+(package! keyfreq)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package keyfreq
+  :ensure t
+  :config
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
+#+end_src
+
+Use ~M-X keyfreq-show RET~ to see the command frequency.
+
+Package site [[https://github.com/dacap/keyfreq][here]].
+** benchmark-init
+1. Add ~(package! benchmark-init)~ to ~\~/.doom.d/packages.el~
+2. Add this to ~\~/.doom.d/init.el~
+#+begin_example elisp
+    (when init-file-debug
+    (require 'benchmark-init)
+    (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
+#+end_example
+1. Run ~doom sync~
+2. Close Emacs
+3. Start Emacs in debug mode ~emacs --debug-init~.
+4. ~M-x benchmark-init/show-durations-tabuled~ or ~M-x benchmark-init/show-durations-tree~
+
+See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913][this]] comment.
