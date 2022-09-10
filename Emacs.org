@@ -159,6 +159,18 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
   :config
   (super-save-mode +1))
 #+end_src
+
+Super-save/lsp-mode were causing issues while typing. When a function call was typed (e.g. =call-to-func(=), lsp-mode would show the signature in the echo area, this will in turn cause super-save to save the file - as it lost focus - and switch to normal mode via the ~after-save-hook~ configured in the General section.
+
+#+begin_src emacs-lisp
+(defun me/super-save-disable-advice (orig-fun &rest args)
+  "Dont auto-save under these conditions."
+  (unless (equal (car args) " *LV*")
+	(apply orig-fun args)))
+(advice-add 'super-save-command-advice :around #'me/super-save-disable-advice)
+#+end_src
+
+Source: [[https://github.com/bbatsov/super-save/issues/38#issuecomment-1229537100][github comment]].
 ** Other
 *** keyfreq
 This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
