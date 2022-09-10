@@ -696,14 +696,18 @@ So I'm forced to top up the default threshold via this variable:
 
  #+begin_src emacs-lisp
 (use-package lsp-ui
-  :after lsp
-  :defer t
-  :custom
-    (lsp-idle-delay 0.5
-        company-minimum-prefix-length 4
-        company-idle-delay 0.5
-        company-tooltip-minimum-width 50
-        company-tooltip-maximum-width 50))
+  :after lsp-mode
+  :defer t)
+
+(setq lsp-idle-delay 0.1
+    company-minimum-prefix-length 4
+    company-idle-delay 0.1
+    company-tooltip-minimum-width 50
+    company-tooltip-maximum-width 50
+    lsp-ui-doc-include-signature t
+    lsp-ui-doc-max-width 100
+    lsp-ui-doc-max-height 20
+    lsp-ui-doc-enable t)
 
 (use-package lsp-treemacs
   :defer t)
@@ -714,6 +718,11 @@ So I'm forced to top up the default threshold via this variable:
 (setq lsp-headerline-breadcrumb-segments '(symbols))
 (setq lsp-headerline-breadcrumb-icons-enable t)
 (setq lsp-headerline-breadcrumb-enable-diagnostics nil)
+ #+end_src
+
+ #+begin_src emacs-lisp
+(map! "M-x" 'lsp-ui-peek-find-references)
+
  #+end_src
 ** rainbow-delimiters-mode
 Rainbow colouring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
