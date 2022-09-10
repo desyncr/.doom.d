@@ -7,6 +7,7 @@
 [[./splash/doom-emacs-bw-light.svg]]
 * Table of Contents :TOC:
 - [[#general][General]]
+  - [[#keyboard][Keyboard]]
   - [[#files][Files]]
   - [[#other][Other]]
 - [[#ui][UI]]
@@ -41,7 +42,6 @@
   - [[#go-to-definition-other-window][Go to definition other window]]
   - [[#delete-window][Delete window]]
   - [[#edit-source-block][Edit source block]]
-  - [[#page-updown][Page up/down]]
 - [[#writing][Writing]]
   - [[#spell-checking][Spell checking]]
 - [[#coding][Coding]]
@@ -114,6 +114,15 @@ Disable this warning message that appears from time to time:
 #+end_src
 
 See [[https://github.com/nobiot/org-transclusion/issues/105][this]] github issue for a possible cause of the warning.
+** Keyboard
+Explicitly define the Mac modifiers:
+
+#+begin_src emacs-lisp
+(setq mac-command-modifier 'meta) ; make cmd key do Meta
+(setq mac-option-modifier 'super) ; make opt key do Super
+(setq mac-control-modifier 'control) ; make Control key do Control
+#+end_src
+Source: [[http://xahlee.info/emacs/emacs/emacs_hyper_super_keys.html][here]].
 
 ** Files
 Allow deleting files in OSX. Source: [[https://emacs.stackexchange.com/a/15012][Emacs' StackExchange]]
@@ -511,14 +520,7 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
     (global-set-key (kbd "C-x =") 'zoom))
 #+end_src
 * Keybindings
-Explicitely define the Mac modifiers:
-
-#+begin_src emacs-lisp
-(setq mac-command-modifier 'meta) ; make cmd key do Meta
-(setq mac-option-modifier 'super) ; make opt key do Super
-(setq mac-control-modifier 'control) ; make Control key do Control
-#+end_src
-Source: [[http://xahlee.info/emacs/emacs/emacs_hyper_super_keys.html][here]].
+Support yanking/killing via M-v, M-c:
 
 #+begin_src emacs-lisp
 (map! "M-v" 'clipboard-yank)
@@ -528,7 +530,6 @@ Source: [[http://xahlee.info/emacs/emacs/emacs_hyper_super_keys.html][here]].
 ** TODO evil-ex
 #+begin_src emacs-lisp
 (map! "M-;" 'execute-extended-command)
-(map! :n "M-<return>" 'execute-extended-command)
 #+end_src
 ** TODO Open dashboard
 #+begin_src emacs-lisp
@@ -603,8 +604,16 @@ Worth checking out [[https://www.johndcook.com/blog/2017/08/09/selecting-things-
 #+end_src
 ** TODO Create link
 Overrides ~consult-goto-line~.
+
+Disable org keybindings (source: [[https://emacs.stackexchange.com/a/55607][here]]):
 #+begin_src emacs-lisp
-  (map! "M-l" #'org-insert-link)
+(define-key evil-org-mode-map (kbd "<insert-state> M-l") nil)
+(define-key evil-org-mode-map (kbd "<normal-state> M-l") nil)
+(define-key evil-org-mode-map (kbd "<visual-state> M-l") nil)
+#+end_src
+
+#+begin_src emacs-lisp
+(map! "M-l" #'org-insert-link)
 #+end_src
 ** TODO Go to definition other window
 Use =M-g= to find reference in other window.
@@ -615,16 +624,14 @@ Use =M-g= to find reference in other window.
 
 =g d= changes my context when I just want to peek at the definition of a method. So quickly jumping in other-window work just fine for me.
 ** TODO Delete window
-Use =s-w= to delete window or workspace (last window is preserved).
+Use =M-w= to delete window or workspace (last window is preserved).
+#+begin_src emacs-lisp
+(map! "M-w" 'delete-window)
+#+end_src
 ** TODO Edit source block
 Edit source block in capture buffer.
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c e") 'org-edit-src-code)
-#+end_src
-** TODO Page up/down
-#+begin_src emacs-lisp
-(map! "M-d" 'evil-scroll-down)
-(map! "M-u" 'evil-scroll-up)
 #+end_src
 * Writing
 ** Spell checking
@@ -860,18 +867,7 @@ Use ~C-h D~ or ~SPC h D~ to search for the symbol under cursor. Note: The docume
 ** evil-multiedit
 evil-multiedit is a multi-cursor implementation. This enables you to visually select matching characters and edit them simultaneously.
 
-#+begin_src emacs-lisp
-  (map! "M-k" #'evil-multiedit-match-symbol-and-prev
-    "M-j" #'evil-multiedit-match-symbol-and-next)
-#+end_src
-
 The evil-multiedit package is enabled via ~:ui multiple-cursors~.
-
-In the above snippet I'm configuring M-j, M-k since the default keybindings are mapped to other actions such as isearch: see [[https://emacs.stackexchange.com/q/73234][this]] stackoverflow question and [[https://github.com/doomemacs/doomemacs/issues/3461][this]] Github issue.
-
-I initially wanted to use M-D, M-d but it's actually mapped to page down (C-d, C-u, page down, page up), which to me it's essential to navigate a large file.
-
-M-u is mapped to revert-buffer.
 ** better-jumper
 Better jump (remember jump list).
 
@@ -957,8 +953,8 @@ Ensure treemacs-persp integration:
   :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
 #+end_src
-** workspaces
-#+begin_src emacs-lisp
+** TODO workspaces
+#+begin_src emacs-lisp :tangle no
 (defun me/switch-workspace-in-new-frame ()
   (interactive)
   (select-frame (make-frame))

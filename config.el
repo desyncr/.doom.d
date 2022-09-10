@@ -7,6 +7,10 @@
 
 (setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
 
+(setq mac-command-modifier 'meta) ; make cmd key do Meta
+(setq mac-option-modifier 'super) ; make opt key do Super
+(setq mac-control-modifier 'control) ; make Control key do Control
+
 (setq delete-by-moving-to-trash t)
 (setq trash-directory "~/.Trash")
 
@@ -168,15 +172,10 @@
     (zoom-mode 0)
     (global-set-key (kbd "C-x =") 'zoom))
 
-(setq mac-command-modifier 'meta) ; make cmd key do Meta
-(setq mac-option-modifier 'super) ; make opt key do Super
-(setq mac-control-modifier 'control) ; make Control key do Control
-
 (map! "M-v" 'clipboard-yank)
 (map! "M-c" 'copy-region-as-kill)
 
 (map! "M-;" 'execute-extended-command)
-(map! :n "M-<return>" 'execute-extended-command)
 
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 
@@ -209,14 +208,17 @@
 
 (map! "M-i" #'yas-insert-snippet)
 
+(define-key evil-org-mode-map (kbd "<insert-state> M-l") nil)
+(define-key evil-org-mode-map (kbd "<normal-state> M-l") nil)
+(define-key evil-org-mode-map (kbd "<visual-state> M-l") nil)
+
 (map! "M-l" #'org-insert-link)
 
 (map! "M-g" #'xref-find-definitions-other-window)
 
-(global-set-key (kbd "C-c e") 'org-edit-src-code)
+(map! "M-w" 'delete-window)
 
-(map! "M-d" 'evil-scroll-down)
-(map! "M-u" 'evil-scroll-up)
+(global-set-key (kbd "C-c e") 'org-edit-src-code)
 
 (use-package ispell
   :defer t)
@@ -307,9 +309,6 @@
 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
 
-(map! "M-k" #'evil-multiedit-match-symbol-and-prev
-  "M-j" #'evil-multiedit-match-symbol-and-next)
-
 (use-package better-jumper
   :ensure t
   :config
@@ -335,13 +334,6 @@
 (use-package treemacs-magit
   :after (treemacs magit)
   :ensure t)
-
-(defun me/switch-workspace-in-new-frame ()
-  (interactive)
-  (select-frame (make-frame))
-  (toggle-frame-maximized)
-  (call-interactively #'+workspace/load))
-(map! "M-." #'me/switch-workspace-in-new-frame)
 
 (setq org-directory "~/org/")
 (after! org
