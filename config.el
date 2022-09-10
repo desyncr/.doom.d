@@ -208,17 +208,18 @@
 
 (map! "M-i" #'yas-insert-snippet)
 
-(define-key evil-org-mode-map (kbd "<insert-state> M-l") nil)
-(define-key evil-org-mode-map (kbd "<normal-state> M-l") nil)
-(define-key evil-org-mode-map (kbd "<visual-state> M-l") nil)
-
-(map! "M-l" #'org-insert-link)
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<visual-state> M-l") 'org-insert-link))
 
 (map! "M-g" #'xref-find-definitions-other-window)
 
 (map! "M-w" 'delete-window)
 
 (global-set-key (kbd "C-c e") 'org-edit-src-code)
+
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
 
 (use-package ispell
   :defer t)
@@ -465,16 +466,19 @@
 (use-package literate-calc-mode
   :ensure t)
 
+setq org-pomodoro-format "%s"
+      org-pomodoro-start-sound-p t
+      org-pomodoro-short-break-length 10
+
 (setq org-clock-clocked-in-display nil)
-(setq org-pomodoro-format "%s")
-(setq org-pomodoro-finished-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-start-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-long-break-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-short-break-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-ticking-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-overtime-sound "~/.doom.d/resources/bell-ring-01.wav")
-(setq org-pomodoro-start-sound-p t)
-(setq org-pomodoro-short-break-length 10)
+
+(setq me/org-pomodoro-bell-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-finished-sound me/org-pomodoro-bell-sound)
+      org-pomodoro-start-sound me/org-pomodoro-bell-sound
+      org-pomodoro-long-break-sound me/org-pomodoro-bell-sound
+      org-pomodoro-short-break-sound me/org-pomodoro-bell-sound
+      org-pomodoro-ticking-sound me/org-pomodoro-bell-sound
+      org-pomodoro-overtime-sound me/org-pomodoro-bell-sound)
 
 (use-package vterm
   :custom
