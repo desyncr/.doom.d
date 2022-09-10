@@ -1006,6 +1006,17 @@ Custom agenda commands! \o/
 #+end_src
 
 Source: [[https://stackoverflow.com/a/34660219][stackoverflow]].
+
+Sorting strategy:
+
+#+begin_src emacs-lisp
+(setq org-agenda-sorting-strategy '((agenda priority-down todo-state-down)
+                                    (todo priority-down todo-state-down)
+                                    (tags priority-down todo-state-down)
+                                    (search priority-down todo-state-down category-keep)))
+#+end_src
+
+See documentation [[https://orgmode.org/org.html#Sorting-of-agenda-items][here]].
 ** TODO org-modern
 It's overkill but I'm using =org-modern= to prettify symbols such as +title and +begin_src. I'm actually happy with =org-bullets=.
 
