@@ -42,6 +42,7 @@
   - [[#go-to-definition-other-window][Go to definition other window]]
   - [[#delete-window][Delete window]]
   - [[#edit-source-block][Edit source block]]
+  - [[#page-up--down][Page up / down]]
 - [[#writing][Writing]]
   - [[#spell-checking][Spell checking]]
 - [[#coding][Coding]]
@@ -604,17 +605,11 @@ Worth checking out [[https://www.johndcook.com/blog/2017/08/09/selecting-things-
 #+end_src
 ** TODO Create link
 Overrides ~consult-goto-line~.
-
-Disable org keybindings (source: [[https://emacs.stackexchange.com/a/55607][here]]):
 #+begin_src emacs-lisp
-(define-key evil-org-mode-map (kbd "<insert-state> M-l") nil)
-(define-key evil-org-mode-map (kbd "<normal-state> M-l") nil)
-(define-key evil-org-mode-map (kbd "<visual-state> M-l") nil)
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<visual-state> M-l") 'org-insert-link))
 #+end_src
 
-#+begin_src emacs-lisp
-(map! "M-l" #'org-insert-link)
-#+end_src
 ** TODO Go to definition other window
 Use =M-g= to find reference in other window.
 
@@ -632,6 +627,12 @@ Use =M-w= to delete window or workspace (last window is preserved).
 Edit source block in capture buffer.
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c e") 'org-edit-src-code)
+#+end_src
+** TODO Page up / down
+#+begin_src emacs-lisp
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
 #+end_src
 * Writing
 ** Spell checking
