@@ -946,6 +946,17 @@ Ensure treemacs-persp integration:
   (call-interactively #'+workspace/load))
 (map! "M-." #'me/switch-workspace-in-new-frame)
 #+end_src
+
+Overwrite default =SPC TAB TAB= with a consult base selection:
+#+begin_src emacs-lisp
+(defun me/switch-workspace ()
+  (interactive)
+  (call-interactively #'+workspace/switch-to))
+
+(map! :leader
+    :desc "Switch workspace"
+    "TAB TAB" #'me/switch-workspace)
+#+end_src
 * Org everything
 ** org-mode
 If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
@@ -1234,15 +1245,6 @@ Daily workflow:
    Essential [[https://github.com/tmux-plugins/tmux-resurrect][Tmux resurrect]] plugin. [[https://github.com/desyncr/tmux][My tmux config]] with keybindings, theme and plugins.
 3. Hack away!
 
-#+begin_src emacs-lisp
-(defun me/switch-workspace ()
-  (interactive)
-  (call-interactively #'+workspace/switch-to))
-
-(map! :leader
-    :desc "Switch workspace"
-    "TAB TAB" #'me/switch-workspace)
-#+end_src
 ** Tmux
 Find my tmux configuration in [[https://github.com/desyncr/tmux][this]] repository. The important bits there are:
 
