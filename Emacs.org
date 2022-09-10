@@ -1233,7 +1233,7 @@ Find my tmux configuration in [[https://github.com/desyncr/tmux][this]] reposito
 set-option -g default-shell /usr/bin/fish
 #+end_example
 
-2. Configure the terminal color support
+2. Configure the terminal colour support
 
 #+begin_example
 set -ag terminal-overrides ",xterm-256color:RGB"
