@@ -58,9 +58,9 @@
 (setq doom-modeline-enable-word-count t)
 
 (setq doom-font-increment 1)
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14)) ;; Fira Code,  :weight 'medium, :size 12
-(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
-(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)) ;; Fira Code,  :weight 'medium, :size 12
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 15))
+(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
 
 (custom-theme-set-faces
     'user
@@ -169,9 +169,9 @@
 (map! "M-v" 'clipboard-yank)
 (map! "M-c" 'copy-region-as-kill)
 
-(map! "M-;" 'execute-extended-command)
-
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
+
+(map! "M-;" 'execute-extended-command)
 
 (map! :ne "M-/" #'comment-or-uncomment-region)
 
