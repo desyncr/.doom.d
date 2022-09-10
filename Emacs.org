@@ -26,7 +26,6 @@
   - [[#zoom][zoom]]
 - [[#keybindings][Keybindings]]
   - [[#evil-ex][evil-ex]]
-  - [[#open-dashboard][Open dashboard]]
   - [[#comment-or-uncomment-region-with-m-][Comment or uncomment region with M-/]]
   - [[#toggle-treemacs][Toggle treemacs]]
   - [[#save-buffer][Save buffer]]
@@ -279,6 +278,7 @@ You can install other fonts with a similar command following [[https://github.co
 
     '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 #+end_src
+
 ** Dark/light theme sync
 Emacs plus build supports OS integration for [[https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change][light/dark theme switching]].
 
@@ -495,13 +495,14 @@ Support yanking/killing via M-v, M-c:
 (map! "M-c" 'copy-region-as-kill)
 #+end_src
 
+Shortcut for opening the Doom's dashboard:
+#+begin_src emacs-lisp
+(map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
+#+end_src
+
 ** TODO evil-ex
 #+begin_src emacs-lisp
 (map! "M-;" 'execute-extended-command)
-#+end_src
-** TODO Open dashboard
-#+begin_src emacs-lisp
-(map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 #+end_src
 ** TODO Comment or uncomment region with M-/
 #+begin_src emacs-lisp
