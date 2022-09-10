@@ -1175,9 +1175,9 @@ See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]].
 ** TODO org-pomodoro
 Basic configuration:
 #+begin_src emacs-lisp
-setq org-pomodoro-format "%s"
+(setq org-pomodoro-format "%s"
       org-pomodoro-start-sound-p t
-      org-pomodoro-short-break-length 10
+      org-pomodoro-short-break-length 10)
 #+end_src
 
 =org-pomodoro= package uses =org-clock=. This latter shows the task title in the modeline, sometimes this title is lengthy making it hard to see the Pomodoro's timer. So I'm disabling it:
