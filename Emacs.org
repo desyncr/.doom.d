@@ -596,6 +596,7 @@ Edit source block in capture buffer.
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c e") 'org-edit-src-code)
 #+end_src
+TODO: Consider using =M-e= to =org-edit-src-code=, =C-c e= for elfeed. Although I don't use edit-src-code a lot.
 ** TODO Page up / down
 #+begin_src emacs-lisp
 (after! evil-org
