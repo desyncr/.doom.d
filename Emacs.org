@@ -598,6 +598,14 @@ Edit source block in capture buffer.
   (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
   (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
 #+end_src
+** TODO Go to last change
+#+begin_src emacs-lisp
+(map! "C-." 'goto-last-change)
+(map! "C-," 'goto-last-change-reverse)
+;(global-set-key [(control ?.)] 'goto-last-change)
+;(global-set-key [(control ?,)] 'goto-last-change-reverse)
+#+end_src
+
 * Writing
 ** Spell checking
 Change dictionary with the following:
