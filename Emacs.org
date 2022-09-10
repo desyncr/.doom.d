@@ -983,9 +983,14 @@ Disable company-mode (autocompletions) on org-mode (i.e. prose):
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
 #+end_src
 
+Do not create bookmarks on last org-capture:
+#+begin_src emacs-lisp
+(setq org-capture-bookmark nil)
+#+end_src
+
 ** TODO org-agenda
 #+begin_src emacs-lisp
-(map! "s-o" 'org-agenda)
+(map! "M-o" 'org-agenda)
 #+end_src
 Custom agenda commands! \o/
 
