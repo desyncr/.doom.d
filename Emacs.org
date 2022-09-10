@@ -1152,6 +1152,15 @@ Daily workflow:
    Essential [[https://github.com/tmux-plugins/tmux-resurrect][Tmux resurrect]] plugin. [[https://github.com/desyncr/tmux][My tmux config]] with keybindings, theme and plugins.
 3. Hack away!
 
+#+begin_src emacs-lisp
+(defun me/switch-workspace ()
+  (interactive)
+  (call-interactively #'+workspace/switch-to))
+
+(map! :leader
+    :desc "Switch workspace"
+    "TAB TAB" #'me/switch-workspace)
+#+end_src
 ** Tmux
 Find my tmux configuration in [[https://github.com/desyncr/tmux][this]] repository. The important bits there are:
 
