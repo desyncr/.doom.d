@@ -1126,6 +1126,7 @@ See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]].
 (setq org-pomodoro-ticking-sound "~/.doom.d/resources/bell-ring-01.wav")
 (setq org-pomodoro-overtime-sound "~/.doom.d/resources/bell-ring-01.wav")
 (setq org-pomodoro-start-sound-p t)
+(setq org-pomodoro-short-break-length 10)
 #+end_src
 * Terminal integration
 There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell=, =term=, =shell=. I'll be using =vterm= and I'll referring to this package for the rest of this section.
