@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
-# name: #+begin_src emacs-lisp ... #+end_src
-# uuid:
+# name: emacs-lisp
 # key: <em
 # condition: t
 # --
