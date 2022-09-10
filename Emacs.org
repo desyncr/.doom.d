@@ -1230,7 +1230,8 @@ Since it leverages ~libvterm~ it requires a extra steps for the installation. Ch
 #+begin_src emacs-lisp
 (use-package vterm
   :custom
-  (vterm-shell "fish"))
+  (vterm-shell "fish")
+  (setq vterm-timer-delay 0))
 #+end_src
 
 I'm using ~vterm~ with [[https://github.com/tmux/tmux/wiki][tmux]] for multiplexing and [[fishshell.com/][fish]] as the shell. Down below I'll describe the configurations I use.
