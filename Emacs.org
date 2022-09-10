@@ -76,6 +76,9 @@
 - [[#terminal-integration][Terminal integration]]
   - [[#tmux][Tmux]]
   - [[#fish][Fish]]
+- [[#other-1][Other]]
+  - [[#elfeed][elfeed]]
+  - [[#calibredbel][calibredb.el]]
 
 * General
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
@@ -1339,3 +1342,38 @@ end
 #+end_src
 
 The above block is the fish configuration to enable opening files from vterm into emacs via =find_file <filename>= .
+* Other
+** TODO elfeed
+#+begin_src emacs-lisp :tangle packages.el
+(package! elfeed)
+(package! elfeed-goodies)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package elfeed
+  :init
+  (elfeed-goodies/setup)
+  :config
+  (add-hook 'elfeed-show-mode-hook #'elfeed-update)
+  (map! "M-e" 'elfeed)
+  (setq elfeed-feeds
+      '(
+        ("https://sachachua.com/blog/category/emacs-news/feed/" emacs)
+        ("https://planet.emacslife.com/atom.xml" emacs)
+        ("http://nedroid.com/feed/" webcomic)
+        ("https://hnrss.org/frontpage" news)
+        )))
+#+end_src
+** TODO calibredb.el
+#+begin_src emacs-lisp :tangle packages.el
+(package! calibredb)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package calibredb
+  :defer t
+  :config
+  (setq calibredb-root-dir "~/Sync/Books/Calibre Library")
+  (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+  (setq calibredb-library-alist '(("~/Sync/Books/Calibre Library"))))
+#+end_src
