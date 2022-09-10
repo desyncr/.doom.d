@@ -9,7 +9,6 @@
 - [[#general][General]]
   - [[#keyboard][Keyboard]]
   - [[#files][Files]]
-  - [[#other][Other]]
 - [[#ui][UI]]
   - [[#fonts][Fonts]]
   - [[#darklight-theme-sync][Dark/light theme sync]]
@@ -43,6 +42,7 @@
   - [[#delete-window][Delete window]]
   - [[#edit-source-block][Edit source block]]
   - [[#page-up--down][Page up / down]]
+  - [[#go-to-last-change][Go to last change]]
 - [[#writing][Writing]]
   - [[#spell-checking][Spell checking]]
 - [[#coding][Coding]]
@@ -77,9 +77,12 @@
 - [[#terminal-integration][Terminal integration]]
   - [[#tmux][Tmux]]
   - [[#fish][Fish]]
-- [[#other-1][Other]]
+- [[#other][Other]]
   - [[#elfeed][elfeed]]
   - [[#calibredbel][calibredb.el]]
+  - [[#evil-tutor][evil-tutor]]
+  - [[#keyfreq][keyfreq]]
+  - [[#benchmark-init][benchmark-init]]
 
 * General
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
