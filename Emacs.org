@@ -1341,10 +1341,12 @@ The above block is the fish configuration to enable opening files from vterm int
 
 #+begin_src emacs-lisp
 (use-package elfeed
+  :defer 2
   :init
   (elfeed-goodies/setup)
   :config
   (add-hook 'elfeed-show-mode-hook #'elfeed-update)
+  (add-hook  'elfeed-show-mode-hook 'variable-pitch-mode)
   (map! "M-e" 'elfeed)
   (setq elfeed-feeds
       '(
