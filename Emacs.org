@@ -82,6 +82,8 @@
   - [[#evil-tutor][evil-tutor]]
   - [[#keyfreq][keyfreq]]
   - [[#benchmark-init][benchmark-init]]
+  - [[#circe][circe]]
+  - [[#browser-url][browser-url]]
 
 * General
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
@@ -171,6 +173,7 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
 #+begin_src emacs-lisp
 (use-package super-save
   :ensure t
+  :defer 2
   :config
   (super-save-mode +1))
 #+end_src
@@ -324,7 +327,7 @@ source: https://github.com/andre-r/centered-cursor-mode.el
 
 #+begin_src emacs-lisp
 (use-package centered-cursor-mode
-  :demand
+  :defer 2
   :config
   ;; Optional, enables centered-cursor-mode in all buffers.
   ;;(global-centered-cursor-mode)
@@ -339,11 +342,13 @@ Note: ~global-centered-cursor-mode~ causes line jumps while typing on vterm. Dis
   (vertico-mode))
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
+  :defer 2
   :init
   (savehist-mode))
 
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
+  :defer 2
   :init
   ;; Configure a custom style dispatcher (see the Consult wiki)
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
@@ -420,10 +425,11 @@ This package light the cursor when a (large) movement is performed, useful when 
 
 #+begin_src emacs-lisp
 (use-package beacon
-    :ensure t
-    :config
-        (beacon-mode 1)
-        (setq beacon-size 10))
+  :defer 2
+  :ensure t
+  :config
+    (beacon-mode 1)
+    (setq beacon-size 10))
 #+end_src
 
 Package [[https://github.com/Malabarba/beacon][here]].
@@ -481,7 +487,8 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 
 #+begin_src emacs-lisp
 (use-package zoom
-    :config
+  :defer 2
+  :config
     (zoom-mode 0)
     (global-set-key (kbd "C-x =") 'zoom))
 #+end_src
@@ -615,10 +622,10 @@ Change dictionary with the following:
 
 #+begin_src emacs-lisp
 (use-package ispell
-  :defer t)
+  :defer 2)
 
 (use-package flyspell
-  :defer t)
+  :defer 2)
 #+end_src
 
 #+begin_example
@@ -840,6 +847,7 @@ This package uses devdocs generated documentation (downloads it) and queries it 
 
 #+begin_src emacs-lisp
 (use-package devdocs
+  :defer 2
   :ensure t)
 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
@@ -859,6 +867,7 @@ Better jump (remember jump list).
 
 #+begin_src emacs-lisp
 (use-package better-jumper
+  :defer 2
   :ensure t
   :config
   (better-jumper-mode +1))
@@ -940,6 +949,7 @@ Ensure treemacs-magit integration:
 
 #+begin_src emacs-lisp
 (use-package treemacs-magit
+  :defer 2
   :after (treemacs magit)
   :ensure t)
 
@@ -1001,8 +1011,8 @@ If you use ~org~ and don't want your org files in the default location below, ch
   (highlight-indent-guides-mode -1))
 
 (add-hook 'org-mode-hook 'visual-line-mode)
-(add-hook 'org-mode-hook 'me/org-disable-indent-mode)
 (add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook 'me/org-disable-indent-mode)
 (add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
 (add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
 (add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
@@ -1069,6 +1079,7 @@ It's overkill but I'm using =org-modern= to prettify symbols such as +title and 
 
 #+begin_src emacs-lisp
 (use-package org-modern
+  :defer 2
   :config
   (setq org-modern-star nil)
   (setq org-modern-timestamp nil)
@@ -1106,6 +1117,7 @@ Org-roam is a package to create a non-hierarchical knowledge base. The package i
 
 #+begin_src emacs-lisp
 (use-package org-roam
+  :defer 2
   :custom
   (org-roam-directory "~/org/roam")
   (org-roam-index-file "~/org/roam/index.org")
@@ -1129,6 +1141,7 @@ Search org-roam notes via consult (source: [[https://github.com/jgru/consult-org
 #+end_src
 #+begin_src emacs-lisp
 (use-package consult-org-roam
+  :defer 2
    :ensure t
    :init
    (require 'consult-org-roam)
@@ -1171,6 +1184,7 @@ I opted for this package rather than org-modern since the latter was rather inva
 
 #+begin_src emacs-lisp
 (use-package org-bullets
+  :defer 2
   :ensure t
   :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -1208,6 +1222,7 @@ Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
 
 #+begin_src emacs-lisp
 (use-package literate-calc-mode
+  :defer 2
   :ensure t)
 #+end_src
 
@@ -1245,6 +1260,7 @@ Since it leverages ~libvterm~ it requires a extra steps for the installation. Ch
 
 #+begin_src emacs-lisp
 (use-package vterm
+  :defer 2
   :custom
   (vterm-shell "fish")
   (setq vterm-timer-delay 0))
@@ -1401,7 +1417,7 @@ This package records the command frequency. I'm installing this since I want to 
 
 #+begin_src emacs-lisp
 (use-package keyfreq
-  :ensure t
+  :defer 2
   :config
     (keyfreq-mode 1)
     (keyfreq-autosave-mode 1))
