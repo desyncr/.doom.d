@@ -208,16 +208,13 @@ Configure emacs to turn fullscreen/maximized on startup:
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
-#+begin_src emacs-lisp
-(setq scroll-margin 10)
-#+end_src
-
 Avoid applying this margin to the =SPC h r r= output buffer:
 #+begin_src emacs-lisp :tangle yes
-(add-hook 'comint-mode-hook
-          (lambda ()
-              (set (make-local-variable 'scroll-margin) 0)))
+(defun me/set-scroll-margin()
+  (set (make-local-variable 'scroll-margin) 10))
 
+(add-hook 'org-mode-hook 'me/set-scroll-margin)
+(add-hook 'prog-mode-hook 'me/set-scroll-margin)
 #+end_src
 
 Add word count to status/modeline. Useful for org documents and writing in general.
