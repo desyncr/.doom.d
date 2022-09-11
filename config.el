@@ -33,6 +33,7 @@
 
 (use-package super-save
   :ensure t
+  :defer 2
   :config
   (super-save-mode +1))
 
@@ -49,11 +50,11 @@
 ;(add-to-list 'initial-frame-alist '(fullscreen . maximized)) ;; only starting frame
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-(setq scroll-margin 10)
+(defun me/set-scroll-margin()
+  (set (make-local-variable 'scroll-margin) 10))
 
-(add-hook 'comint-mode-hook
-          (lambda ()
-              (set (make-local-variable 'scroll-margin) 0)))
+(add-hook 'org-mode-hook 'me/set-scroll-margin)
+(add-hook 'prog-mode-hook 'me/set-scroll-margin)
 
 (setq doom-modeline-enable-word-count t)
 
@@ -98,7 +99,7 @@
             (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
 
 (use-package centered-cursor-mode
-  :demand
+  :defer 2
   :config
   ;; Optional, enables centered-cursor-mode in all buffers.
   ;;(global-centered-cursor-mode)
@@ -109,11 +110,13 @@
   (vertico-mode))
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
+  :defer 2
   :init
   (savehist-mode))
 
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
+  :defer 2
   :init
   ;; Configure a custom style dispatcher (see the Consult wiki)
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
@@ -136,14 +139,16 @@
 (map! "M-§" #'resize-window)
 
 (use-package beacon
-    :ensure t
-    :config
-        (beacon-mode 1)
-        (setq beacon-size 10))
+  :defer 2
+  :ensure t
+  :config
+    (beacon-mode 1)
+    (setq beacon-size 10))
 
 (after! highlight-indent-guides
   (highlight-indent-guides-auto-set-faces))
 
+(setq split-width-threshold 1)
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
 
@@ -162,7 +167,8 @@
   :after 'evil-window-vnew (consult-projectile))
 
 (use-package zoom
-    :config
+  :defer 2
+  :config
     (zoom-mode 0)
     (global-set-key (kbd "C-x =") 'zoom))
 
@@ -221,10 +227,10 @@
 ;(global-set-key [(control ?,)] 'goto-last-change-reverse)
 
 (use-package ispell
-  :defer t)
+  :defer 2)
 
 (use-package flyspell
-  :defer t)
+  :defer 2)
 
 (setq ispell-dictionary "british")
 
@@ -305,11 +311,13 @@
 )
 
 (use-package devdocs
+  :defer 2
   :ensure t)
 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
 
 (use-package better-jumper
+  :defer 2
   :ensure t
   :config
   (better-jumper-mode +1))
@@ -332,6 +340,7 @@
         treemacs-follow-mode t))
 
 (use-package treemacs-magit
+  :defer 2
   :after (treemacs magit)
   :ensure t)
 
@@ -366,8 +375,8 @@
   (highlight-indent-guides-mode -1))
 
 (add-hook 'org-mode-hook 'visual-line-mode)
-(add-hook 'org-mode-hook 'me/org-disable-indent-mode)
 (add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook 'me/org-disable-indent-mode)
 (add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
 (add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
 (add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
@@ -404,6 +413,7 @@
                                     (search priority-down todo-state-down category-keep)))
 
 (use-package org-modern
+  :defer 2
   :config
   (setq org-modern-star nil)
   (setq org-modern-timestamp nil)
@@ -425,6 +435,7 @@
   :commands org-babel-execute:http)
 
 (use-package org-roam
+  :defer 2
   :custom
   (org-roam-directory "~/org/roam")
   (org-roam-index-file "~/org/roam/index.org")
@@ -436,6 +447,7 @@
  (counsel-ag nil org-roam-directory))
 
 (use-package consult-org-roam
+  :defer 2
    :ensure t
    :init
    (require 'consult-org-roam)
@@ -460,6 +472,7 @@
     )
 
 (use-package org-bullets
+  :defer 2
   :ensure t
   :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -471,6 +484,7 @@
 )
 
 (use-package literate-calc-mode
+  :defer 2
   :ensure t)
 
 (setq org-pomodoro-format "%s"
@@ -488,15 +502,18 @@
       org-pomodoro-overtime-sound me/org-pomodoro-bell-sound)
 
 (use-package vterm
+  :defer 2
   :custom
   (vterm-shell "fish")
   (setq vterm-timer-delay 0))
 
 (use-package elfeed
+  :defer 2
   :init
   (elfeed-goodies/setup)
   :config
   (add-hook 'elfeed-show-mode-hook #'elfeed-update)
+  (add-hook  'elfeed-show-mode-hook 'variable-pitch-mode)
   (map! "M-e" 'elfeed)
   (setq elfeed-feeds
       '(
@@ -514,7 +531,16 @@
   (setq calibredb-library-alist '(("~/Sync/Books/Calibre Library"))))
 
 (use-package keyfreq
-  :ensure t
+  :defer 2
   :config
     (keyfreq-mode 1)
     (keyfreq-autosave-mode 1))
+
+(setq circe-network-options
+      '(("Libera"
+         :tls t
+         :nick "DC[e]"
+         :channels ("#freenet"))))
+
+(setq browse-url-browser-function 'browse-url-generic)
+(setq browse-url-generic-program "/Applications/Firefox.app/Contents/MacOS/firefox")

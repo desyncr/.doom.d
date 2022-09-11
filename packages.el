@@ -46,3 +46,5 @@
 (package! evil-tutor)
 
 (package! keyfreq)
+
+(package! circe)
