@@ -442,6 +442,7 @@ Use =SPC w V= (vertical split + follow) or =SPC w S= (horizontal split + follow)
 Split to the right and below! Source: [[https://tecosaur.github.io/emacs-config/config.html#windows][here]].
 
 #+begin_src emacs-lisp
+(setq split-width-threshold 1)
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
 #+end_src
