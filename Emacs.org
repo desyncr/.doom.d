@@ -1440,3 +1440,20 @@ Package site [[https://github.com/dacap/keyfreq][here]].
 4. ~M-x benchmark-init/show-durations-tabuled~ or ~M-x benchmark-init/show-durations-tree~
 
 See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913][this]] comment.
+** circe
+#+begin_src emacs-lisp :tangle packages.el
+(package! circe)
+#+end_src
+
+#+begin_src emacs-lisp
+(setq circe-network-options
+      '(("Libera"
+         :tls t
+         :nick "DC[e]"
+         :channels ("#freenet"))))
+#+end_src
+** browser-url
+#+begin_src emacs-lisp
+(setq browse-url-browser-function 'browse-url-generic)
+(setq browse-url-generic-program "/Applications/Firefox.app/Contents/MacOS/firefox")
+#+end_src
