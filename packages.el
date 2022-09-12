@@ -30,6 +30,8 @@
 
 (package! org-auto-tangle)
 
+(package! inf-ruby)
+
 (package! ob-http)
 
 (package! consult-org-roam)
