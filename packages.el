@@ -32,30 +32,6 @@
 
 (package! inf-ruby)
 
-(package! ob-http)
-
-(package! consult-org-roam)
-
-(package! org-bullets)
-
-(package! toc-org)
-
-(package! literate-calc-mode)
-
-(package! rainbow-delimiters)
-
-(package! consult-yasnippet)
-
-(package! evil-snipe)
-
-(package! devdocs)
-
-(package! better-jumper)
-
-(package! treemacs-projectile)
-
-(package! org-modern)
-
 (package! org-auto-tangle)
 
 (package! ob-http)
