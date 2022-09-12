@@ -936,11 +936,11 @@ Run =treemacs-edit-workspaces=.
 
 Ensure treemacs-projectile integration:
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (package! treemacs-projectile)
 #+end_src
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package treemacs-projectile
   :after (treemacs projectile)
   :ensure t)
@@ -958,7 +958,7 @@ Ensure treemacs-magit integration:
 
 Ensure treemacs-persp integration:
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
   :ensure t
