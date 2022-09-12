@@ -24,6 +24,8 @@
 
 (package! better-jumper)
 
+(package! treemacs-projectile)
+
 (package! org-modern)
 
 (package! org-auto-tangle)

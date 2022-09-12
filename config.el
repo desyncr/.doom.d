@@ -33,7 +33,7 @@
 
 (use-package super-save
   :ensure t
-  :defer 2
+  :defer t
   :config
   (super-save-mode +1))
 
@@ -99,7 +99,7 @@
             (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
 
 (use-package centered-cursor-mode
-  :defer 2
+  :defer t
   :config
   ;; Optional, enables centered-cursor-mode in all buffers.
   ;;(global-centered-cursor-mode)
@@ -110,13 +110,13 @@
   (vertico-mode))
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
-  :defer 2
+  :defer t
   :init
   (savehist-mode))
 
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
-  :defer 2
+  :defer t
   :init
   ;; Configure a custom style dispatcher (see the Consult wiki)
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
@@ -139,7 +139,7 @@
 (map! "M-§" #'resize-window)
 
 (use-package beacon
-  :defer 2
+  :defer t
   :ensure t
   :config
     (beacon-mode 1)
@@ -167,7 +167,7 @@
   :after 'evil-window-vnew (consult-projectile))
 
 (use-package zoom
-  :defer 2
+  :defer t
   :config
     (zoom-mode 0)
     (global-set-key (kbd "C-x =") 'zoom))
@@ -227,10 +227,10 @@
 ;(global-set-key [(control ?,)] 'goto-last-change-reverse)
 
 (use-package ispell
-  :defer 2)
+  :defer t)
 
 (use-package flyspell
-  :defer 2)
+  :defer t)
 
 (setq ispell-dictionary "british")
 
@@ -311,13 +311,13 @@
 )
 
 (use-package devdocs
-  :defer 2
+  :defer t
   :ensure t)
 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
 
 (use-package better-jumper
-  :defer 2
+  :defer t
   :ensure t
   :config
   (better-jumper-mode +1))
@@ -339,10 +339,19 @@
         treemacs-display-current-project-exclusively t
         treemacs-follow-mode t))
 
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t)
+
 (use-package treemacs-magit
-  :defer 2
+  :defer t
   :after (treemacs magit)
   :ensure t)
+
+(use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
+  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
+  :ensure t
+  :config (treemacs-set-scope-type 'Perspectives))
 
 (defun me/switch-workspace ()
   (interactive)
@@ -413,7 +422,7 @@
                                     (search priority-down todo-state-down category-keep)))
 
 (use-package org-modern
-  :defer 2
+  :defer t
   :config
   (setq org-modern-star nil)
   (setq org-modern-timestamp nil)
@@ -435,7 +444,7 @@
   :commands org-babel-execute:http)
 
 (use-package org-roam
-  :defer 2
+  :defer t
   :custom
   (org-roam-directory "~/org/roam")
   (org-roam-index-file "~/org/roam/index.org")
@@ -447,7 +456,7 @@
  (counsel-ag nil org-roam-directory))
 
 (use-package consult-org-roam
-  :defer 2
+  :defer t
    :ensure t
    :init
    (require 'consult-org-roam)
@@ -472,7 +481,7 @@
     )
 
 (use-package org-bullets
-  :defer 2
+  :defer t
   :ensure t
   :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -484,7 +493,7 @@
 )
 
 (use-package literate-calc-mode
-  :defer 2
+  :defer t
   :ensure t)
 
 (setq org-pomodoro-format "%s"
@@ -502,13 +511,13 @@
       org-pomodoro-overtime-sound me/org-pomodoro-bell-sound)
 
 (use-package vterm
-  :defer 2
+  :defer t
   :custom
   (vterm-shell "fish")
   (setq vterm-timer-delay 0))
 
 (use-package elfeed
-  :defer 2
+  :defer t
   :init
   (elfeed-goodies/setup)
   :config
@@ -531,7 +540,7 @@
   (setq calibredb-library-alist '(("~/Sync/Books/Calibre Library"))))
 
 (use-package keyfreq
-  :defer 2
+  :defer t
   :config
     (keyfreq-mode 1)
     (keyfreq-autosave-mode 1))
