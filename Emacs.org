@@ -820,18 +820,19 @@ The above code snippet configures evil-snipe to use a "fallback" scope when the 
 
 The full list of scopes are:
 
-|---------------+--------------------------------------------------------------|
-| Scope         | Description                                                  |
-|               |                                                              |
-|---------------+--------------------------------------------------------------|
-| line          | Rest of the current line after cursor                        |
-| buffer        | Rest of the buffer after cursor                              |
-| visible       | Rest of the _visible_ buffer after cursor                      |
-| whole-line    | Same as ~line~ but highlights on either side of cursor         |
-| whole-buffer  | Same as ~buffer~ but highlights all matches in buffer          |
+|---------------+------------------------------------------------------------------|
+|               |                                                                  |
+| Scope         | Description                                                      |
+|               |                                                                  |
+|---------------+------------------------------------------------------------------|
+| line          | Rest of the current line after cursor                            |
+| buffer        | Rest of the buffer after cursor                                  |
+| visible       | Rest of the _visible_ buffer after cursor                        |
+| whole-line    | Same as ~line~ but highlights on either side of cursor           |
+| whole-buffer  | Same as ~buffer~ but highlights all matches in buffer            |
 | whole-visible | Same as ~visible~ but highlights all _visible_ matches in buffer |
-|               |                                                              |
-|---------------+--------------------------------------------------------------|
+|               |                                                                  |
+|---------------+------------------------------------------------------------------|
 ** devdocs
 This package somewhat expands on Doom Emacs' [[https://docs.doomemacs.org/latest/modules/tools/lookup/][lookup]] functionality.
 
