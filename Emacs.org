@@ -1160,9 +1160,13 @@ It's overkill but I'm using =org-modern= to prettify symbols such as +title and 
    '(org-modern-block-name ((t nil)))))
 #+end_src
 ** TODO org-babel
+Using =org-babel-tangle= each time you make an edition to an org file gets old very quickly. With =org-auto-tangle= you can define an auto-tangling option for the org file you're working with, so each time you save the buffer =org-babel= kicks in.
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-auto-tangle)
 #+end_src
+
+We don't usually tangle every org-file we work with, so I'm setting =org-auto-tangle-default= to =nil= to disable this functionality. Use =:auto_tangle yes= to automatically tangle the org file you're editing:
 
 #+begin_src emacs-lisp
 (use-package org-auto-tangle
@@ -1171,6 +1175,26 @@ It's overkill but I'm using =org-modern= to prettify symbols such as +title and 
   :config
   (setq org-auto-tangle-default nil))
 #+end_src
+
+I'm working with =org-babel= primarly in ruby. While =org-babel= works pretty well out of the box in order to support =:session= we need this package:
+#+begin_src emacs-lisp :tangle packages.el
+(package! inf-ruby)
+#+end_src
+
+=:session= help us to evaluate code blocks as a whole. Meaning that different code blocks can interact as a whole unit.
+
+For example: I can create a funcion in a given code block as follows:
+#+begin_src ruby :tangle no :session example
+def hello_world
+  "Hello world!"
+end
+#+end_src
+
+In a different code block I can call this function:
+#+begin_src ruby :tangle no :resuts output :session example
+hello_world
+#+end_src
+
 ** TODO ob-http
 #+begin_src emacs-lisp :tangle packages.el
 (package! ob-http)
