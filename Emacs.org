@@ -492,6 +492,14 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
     (zoom-mode 0)
     (global-set-key (kbd "C-x =") 'zoom))
 #+end_src
+** TODO Display time
+#+begin_src emacs-lisp
+(setq
+ display-time-format "%I:%M %p %e %b %y | w%U"
+ display-time-default-load-average nil)
+(display-time)
+#+end_src
+
 * Keybindings
 Support yanking/killing via M-v, M-c:
 
