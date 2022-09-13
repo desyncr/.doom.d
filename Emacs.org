@@ -1274,6 +1274,10 @@ Since it leverages ~libvterm~ it requires a extra steps for the installation. Ch
   :custom
   (vterm-shell "fish")
   (setq vterm-timer-delay 0))
+
+(after! vterm
+  (map! :map vterm-mode-map "M-v" 'vterm-yank)
+  (map! :map vterm-mode-map "M-w" '+workspace/close-window-or-workspace))
 #+end_src
 
 I'm using ~vterm~ with [[https://github.com/tmux/tmux/wiki][tmux]] for multiplexing and [[fishshell.com/][fish]] as the shell. Down below I'll describe the configurations I use.
