@@ -1086,6 +1086,18 @@ Sorting strategy:
 #+end_src
 
 See documentation [[https://orgmode.org/org.html#Sorting-of-agenda-items][here]].
+
+Keybinding to specific org-agenda views:
+#+begin_src emacs-lisp
+(defun me/org-agenda-work-view (&optional arg)
+  (interactive "P")
+  (split-window-horizontally)
+  (other-window 1)
+  (org-agenda arg "w"))
+
+(map! :leader :desc "Work view" "o a w" 'me/org-agenda-work-view)
+#+end_src
+Source: [[https://emacs.stackexchange.com/a/868][Stackoverflow]].
 ** TODO org-modern
 It's overkill but I'm using =org-modern= to prettify symbols such as +title and +begin_src. I'm actually happy with =org-bullets=.
 
