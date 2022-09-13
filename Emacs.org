@@ -24,6 +24,7 @@
   - [[#prompt-for-buffer][prompt-for-buffer]]
   - [[#consult-projectile][consult-projectile]]
   - [[#zoom][zoom]]
+  - [[#display-time][Display time]]
 - [[#keybindings][Keybindings]]
   - [[#evil-ex][evil-ex]]
   - [[#comment-or-uncomment-region-with-m-][Comment or uncomment region with M-/]]
