@@ -525,6 +525,13 @@
       org-pomodoro-ticking-sound me/org-pomodoro-bell-sound
       org-pomodoro-overtime-sound me/org-pomodoro-bell-sound)
 
+(setq me/org-pomodoro-sound-args "-volume 0.3")
+(setq org-pomodoro-finished-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-long-break-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-start-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-short-break-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-ticking-sound-args me/org-pomodoro-sound-args)
+
 (use-package vterm
   :defer t
   :custom

@@ -1307,7 +1307,20 @@ Configure bell sound for break and finish:
       org-pomodoro-short-break-sound me/org-pomodoro-bell-sound
       org-pomodoro-ticking-sound me/org-pomodoro-bell-sound
       org-pomodoro-overtime-sound me/org-pomodoro-bell-sound)
+
 #+end_src
+
+Configure volume, see github comment [[https://github.com/marcinkoziej/org-pomodoro/issues/29#issuecomment-129608240][here]]:
+#+begin_src emacs-lisp
+(setq me/org-pomodoro-sound-args "-volume 0.3")
+(setq org-pomodoro-finished-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-long-break-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-start-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-short-break-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-ticking-sound-args me/org-pomodoro-sound-args)
+#+end_src
+
+
 * Terminal integration
 There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell=, =term=, =shell=. I'll be using =vterm= and I'll referring to this package for the rest of this section.
 
