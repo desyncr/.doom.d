@@ -432,7 +432,6 @@
                                     (search priority-down todo-state-down category-keep)))
 
 (use-package org-modern
-  :defer t
   :config
   (setq org-modern-star nil)
   (setq org-modern-timestamp nil)
@@ -440,9 +439,9 @@
   (setq org-modern-tag nil)
   (setq org-modern-statistics nil)
   (setq org-modern-hide-stars nil)
-  (global-org-modern-mode)
   (custom-set-faces
-   '(org-modern-block-name ((t nil)))))
+   '(org-modern-block-name ((t nil))))
+  (global-org-modern-mode))
 
 (use-package org-auto-tangle
   :defer t

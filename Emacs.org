@@ -1147,7 +1147,6 @@ It's overkill but I'm using =org-modern= to prettify symbols such as +title and 
 
 #+begin_src emacs-lisp
 (use-package org-modern
-  :defer t
   :config
   (setq org-modern-star nil)
   (setq org-modern-timestamp nil)
@@ -1155,9 +1154,9 @@ It's overkill but I'm using =org-modern= to prettify symbols such as +title and 
   (setq org-modern-tag nil)
   (setq org-modern-statistics nil)
   (setq org-modern-hide-stars nil)
-  (global-org-modern-mode)
   (custom-set-faces
-   '(org-modern-block-name ((t nil)))))
+   '(org-modern-block-name ((t nil))))
+  (global-org-modern-mode))
 #+end_src
 ** TODO org-babel
 Using =org-babel-tangle= each time you make an edition to an org file gets old very quickly. With =org-auto-tangle= you can define an auto-tangling option for the org file you're working with, so each time you save the buffer =org-babel= kicks in.
