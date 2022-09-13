@@ -1245,11 +1245,29 @@ Basic configuration:
       org-pomodoro-short-break-length 10)
 #+end_src
 
-=org-pomodoro= package uses =org-clock=. This latter shows the task title in the modeline, sometimes this title is lengthy making it hard to see the Pomodoro's timer. So I'm disabling it:
+=org-pomodoro= package uses =org-clock=. This latter shows the task title in the modeline, sometimes this title is lengthy making it hard to see the Pomodoro's timer.
 
 #+begin_src emacs-lisp
-(setq org-clock-clocked-in-display nil)
+(setq org-clock-clocked-in-display 'mode-line)
 #+end_src
+
+|-------------+--------------------------------------------|
+| Value       | Description                                |
+|-------------+--------------------------------------------|
+| both        | displays in both mode line and frame title |
+| mode-line   | displays only in mode line (default)       |
+| frame-title | displays only in frame title               |
+| nil         | current clock is not displayed             |
+|-------------+--------------------------------------------|
+I'm only showing the first 8 characters from the task. In most cases this is enough to show the JIRA ticket I'm working on.
+#+begin_src emacs-lisp
+(setq org-clock-heading-function
+      (lambda ()
+        (let ((str (nth 4 (org-heading-components))))
+          (if (> (length str) 8)
+              (substring str 0 8)))))
+#+end_src
+Source: [[https://stackoverflow.com/a/14527487][here]].
 
 Configure bell sound for break and finish:
 #+begin_src emacs-lisp
