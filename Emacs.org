@@ -74,6 +74,55 @@
   - [[#literate-calc-mode][literate-calc-mode]]
   - [[#org-pomodoro][org-pomodoro]]
 - [[#terminal-integration][Terminal integration]]
+  - [[#evil-ex-1][evil-ex]]
+  - [[#comment-or-uncomment-region-with-m--1][Comment or uncomment region with M-/]]
+  - [[#toggle-treemacs-1][Toggle treemacs]]
+  - [[#save-buffer-1][Save buffer]]
+  - [[#search-project-1][Search project]]
+  - [[#go-to-item-1][Go to item]]
+  - [[#find-project-files-1][Find project files]]
+  - [[#find-buffers-1][Find buffers]]
+  - [[#nextprevious-window-1][Next/previous window]]
+  - [[#mark-paragraph-1][Mark paragraph]]
+  - [[#snippets-1][Snippets]]
+  - [[#create-link-1][Create link]]
+  - [[#go-to-definition-other-window-1][Go to definition other window]]
+  - [[#delete-window-1][Delete window]]
+  - [[#edit-source-block-1][Edit source block]]
+  - [[#page-up--down-1][Page up / down]]
+  - [[#go-to-last-change-1][Go to last change]]
+- [[#writing-1][Writing]]
+  - [[#spell-checking-1][Spell checking]]
+- [[#coding-1][Coding]]
+  - [[#flycheck-1][flycheck]]
+  - [[#lsp-1][lsp]]
+  - [[#rainbow-delimiters-mode-1][rainbow-delimiters-mode]]
+  - [[#yasnippets-1][yasnippets]]
+  - [[#evil-snipe-1][evil-snipe]]
+  - [[#devdocs-1][devdocs]]
+  - [[#evil-multiedit-1][evil-multiedit]]
+  - [[#better-jumper-1][better-jumper]]
+- [[#version-control-1][Version control]]
+  - [[#git-1][Git]]
+  - [[#magit-1][Magit]]
+- [[#project-management-1][Project management]]
+  - [[#projectile-1][projectile]]
+  - [[#treemacs-1][treemacs]]
+  - [[#workspaces-1][workspaces]]
+- [[#org-everything-1][Org everything]]
+  - [[#org-mode-1][org-mode]]
+  - [[#org-agenda-1][org-agenda]]
+  - [[#org-modern-1][org-modern]]
+  - [[#org-babel-1][org-babel]]
+  - [[#ob-http-1][ob-http]]
+  - [[#org-roam-1][org-roam]]
+  - [[#org-todo-keywords-1][org-todo-keywords]]
+  - [[#org-bullets-1][org-bullets]]
+  - [[#org-log-repeat-1][org-log-repeat]]
+  - [[#toc-org-1][toc-org]]
+  - [[#literate-calc-mode-1][literate-calc-mode]]
+  - [[#org-pomodoro-1][org-pomodoro]]
+- [[#terminal-integration-1][Terminal integration]]
   - [[#tmux][Tmux]]
   - [[#fish][Fish]]
 - [[#other][Other]]
@@ -1317,6 +1366,835 @@ Daily workflow:
 2. Use tmux with resurrect plugin to load pre-configured panels (~C-A C-R~ to reload panels, ~C-A C-S~ to save panels)
    Essential [[https://github.com/tmux-plugins/tmux-resurrect][Tmux resurrect]] plugin. [[https://github.com/desyncr/tmux][My tmux config]] with keybindings, theme and plugins.
 3. Hack away!
+
+#+begin_src emacs-lisp
+(defun me/vterm-split-right ()
+  "Create a new vterm window to the right of the current one."
+  (interactive)
+  (let* ((ignore-window-parameters t)
+         (dedicated-p (window-dedicated-p)))
+    (split-window-horizontally)
+    (other-window 1)
+    (+vterm/here default-directory)))
+
+(map! :leader :desc "Open vterm vsplit" "o T" #'me/vterm-split-right)
+#+end_src
+
+** TODO evil-ex
+#+begin_src emacs-lisp
+(map! "M-;" 'execute-extended-command)
+#+end_src
+** TODO Comment or uncomment region with M-/
+#+begin_src emacs-lisp
+(map! :ne "M-/" #'comment-or-uncomment-region)
+#+end_src
+** Toggle treemacs
+Toggle treemacs with M-t (tree):
+
+#+begin_src emacs-lisp
+(map! "M-t" #'+treemacs/toggle)
+#+end_src
+** Save buffer
+Quickly save buffer with ~M-s~ (save).
+
+#+begin_src emacs-lisp
+(map! "M-s" #'save-buffer)
+#+end_src
+** Search project
+Search project's contents with ~M-r~ (regexp).
+
+#+begin_src emacs-lisp
+(map! "M-r" #'+default/search-project)
+#+end_src
+
+Also use ~SPC s s~ to search matching characters on the current buffer.
+** Go to item
+Use =M-m= for jump into a menu item (section in the buffer).
+
+#+begin_src emacs-lisp
+(map! "M-m" #'consult-imenu)
+(defadvice! expand-folds-imenu(&rest _)
+  :before 'consult-imenu (+org/open-all-folds))
+(defadvice! expand-folds-imenu(&rest _)
+  :before '+default/search-buffer (+org/open-all-folds))
+#+end_src
+** Find project files
+~M-p~: find file in project, also ~SPC SPC~. Prefer consult for everything.
+
+#+begin_src emacs-lisp
+(map! "M-f" #'consult-projectile)
+(map! :leader "SPC" 'consult-projectile)
+
+(map! "M-p" #'projectile-find-file)
+#+end_src
+** Find buffers
+#+begin_src emacs-lisp
+(map! "M-b" #'+vertico/switch-workspace-buffer)
+#+end_src
+** Next/previous window
+#+begin_src emacs-lisp
+(map! "M-]" #'next-window-any-frame)
+(map! "M-[" #'previous-window-any-frame)
+#+end_src
+** Mark paragraph
+Visually selects the paragraph. Execute multiple times to expand the selection or move the cursor.
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c v p") 'er/mark-paragraph)
+(global-set-key (kbd "C-c v w") 'er/mark-word)
+#+end_src
+
+Use ~C-c v p~ to *v*isual select a *p*aragraph and ~C-c v w~ to select a word under cursor.
+
+Worth checking out [[https://www.johndcook.com/blog/2017/08/09/selecting-things-in-emacs/][this]] article.
+** TODO Snippets
+#+begin_src emacs-lisp
+(map! "M-i" #'consult-yasnippet)
+#+end_src
+** TODO Create link
+Overrides ~consult-goto-line~.
+#+begin_src emacs-lisp
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<visual-state> M-l") 'org-insert-link))
+#+end_src
+
+** TODO Go to definition other window
+Use =M-g= to find reference in other window.
+
+#+begin_src emacs-lisp
+(map! "M-g" #'xref-find-definitions-other-window)
+#+end_src
+
+=g d= changes my context when I just want to peek at the definition of a method. So quickly jumping in other-window work just fine for me.
+** TODO Delete window
+Use =M-w= to delete window or workspace (last window is preserved).
+#+begin_src emacs-lisp
+(map! "M-w" 'delete-window)
+#+end_src
+** TODO Edit source block
+Edit source block in capture buffer.
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c e") 'org-edit-src-code)
+#+end_src
+TODO: Consider using =M-e= to =org-edit-src-code=, =C-c e= for elfeed. Although I don't use edit-src-code a lot.
+** TODO Page up / down
+#+begin_src emacs-lisp
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
+#+end_src
+** TODO Go to last change
+#+begin_src emacs-lisp
+(map! "C-." 'goto-last-change)
+(map! "C-," 'goto-last-change-reverse)
+;(global-set-key [(control ?.)] 'goto-last-change)
+;(global-set-key [(control ?,)] 'goto-last-change-reverse)
+#+end_src
+
+* Writing
+** Spell checking
+Change dictionary with the following:
+
+#+begin_src emacs-lisp
+(use-package ispell
+  :defer t)
+
+(use-package flyspell
+  :defer t)
+#+end_src
+
+#+begin_example
+ispell-change-dictionary
+#+end_example
+
+Or use the following configuration:
+
+#+begin_src emacs-lisp
+(setq ispell-dictionary "british")
+#+end_src
+
+Use ~z-=~ to get spelling corrections while under a word.
+
+Doom Emacs also come with these 2 packages for grammar checking:
+
+- [[https://github.com/mhayashi1120/Emacs-langtool][Langtool]]
+- [[https://github.com/bnbeckwith/writegood-mode][Writegood-mode]]
+
+*** Langtool
+For langtool package you need to install the underlying tool languagetool, which is a java package. See instructions [[https://docs.doomemacs.org/latest/#/prerequisites][here]].
+
+Configure language:
+
+#+begin_src emacs-lisp
+(setq langtool-default-language "en-GB")
+#+end_src
+
+#+begin_src emacs-lisp
+(defun langtool-autoshow-detail-popup (overlays)
+  (when (require 'popup nil t)
+    ;; Do not interrupt current popup
+    (unless (or popup-instances
+                ;; suppress popup after type `C-g` .
+                (memq last-command '(keyboard-quit)))
+      (let ((msg (langtool-details-error-message overlays)))
+        (popup-tip msg)))))
+
+(setq langtool-autoshow-message-function
+      'langtool-autoshow-detail-popup)
+#+end_src
+
+*** Writegood
+Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/][original article]] for writegood.
+* Coding
+** flycheck
+Most classes/php files I'm working with are quite large and cause a large number of errors to popup. I'm topping up the error threshold to avoid a warning during start up:
+
+#+begin_src emacs-lisp
+(setq flycheck-checker-error-threshold 5000)
+#+end_src
+
+Most projects I work with are somewhat following the PSR12 standard, so let's configure flycheck to respect that:
+#+begin_src emacs-lisp
+(setq flycheck-phpcs-standard "psr12")
+#+end_src
+** lsp
+I'm working on a large series of interrelated projects which work well under the same directory structure (code/{project1, project2, project3}).
+The downside is that this causes LSP to complain about the large number of files and file descriptors it uses.
+
+So I'm forced to top up the default threshold via this variable:
+
+#+begin_src emacs-lisp
+(setq lsp-file-watch-threshold 5000)
+#+end_src
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc-dev-contrib\\~")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]push-notifications\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]main\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]kantox-sdk-guzzle5\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]ecadmin\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]docs-api-swagger\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]docs-network-api-swagger\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]dbmigration\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]admin-v2\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]static\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]sandbox\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]rtb\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]management\'")
+  ;; or
+  (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'"))
+  #+end_src
+
+ #+begin_src emacs-lisp
+(use-package lsp-ui
+  :after lsp-mode
+  :defer t)
+
+(setq lsp-idle-delay 0.1
+    company-minimum-prefix-length 4
+    company-idle-delay 0.1
+    company-tooltip-minimum-width 50
+    company-tooltip-maximum-width 50
+    lsp-ui-doc-include-signature t
+    lsp-ui-doc-max-width 100
+    lsp-ui-doc-max-height 20
+    lsp-ui-doc-enable t)
+
+(use-package lsp-treemacs
+  :defer t)
+ #+end_src
+
+ #+begin_src emacs-lisp
+(setq lsp-headerline-breadcrumb-enable t)
+(setq lsp-headerline-breadcrumb-segments '(symbols))
+(setq lsp-headerline-breadcrumb-icons-enable t)
+(setq lsp-headerline-breadcrumb-enable-diagnostics nil)
+ #+end_src
+
+ #+begin_src emacs-lisp
+(map! "M-x" 'lsp-ui-peek-find-references)
+
+ #+end_src
+** rainbow-delimiters-mode
+Rainbow colouring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! rainbow-delimiters)
+#+end_src
+
+#+begin_src emacs-lisp
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+#+end_src
+** yasnippets
+I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to manage code snippets. As per the instructions:
+
+#+begin_src emacs-lisp :tangle no
+(use-package yasnippet
+  :defer t
+  :config (yas-global-mode 1))
+#+end_src
+
+*Warning*: I had to disable (:tangle no) yas-global-mode since it interfered with LSP/company-mode. Throwing errors trying to display completions on PHP-mode.
+With this settings disabled now both company mode and yas-snippets work just fine.
+
+Note: I'm disabling the following due to poor performance:
+#+begin_src emacs-lisp :tangle no
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+#+end_src
+
+Additionally I'm installing pre-defined snippets with the package [[The above instructions also setup the package][Yasnippets-snippets]]:
+#+begin_src emacs-lisp
+(use-package yasnippet-snippets
+  :defer t)
+#+end_src
+
+As per the [[package-refresh-contents][instructions]] I'm configuring melpa archive repositories. After that the command ~package-refresh-contents~ must be ran to be able to pull updates from it:
+
+- ~M-x package-refresh-contents~
+- ~M-x package-install yasnippet-snippets~
+
+In the code above I'm actually requiring the package via lisp, which should install and load it.
+
+There's an additional package with extra snippets maintained by the Doom Emacs' github organization: [[https://github.com/doomemacs/snippets][doomemacs/snippets]]
+I'm also imported several snippets from [[https://github.com/cartolari/yasnippet-vim-snippets][cartolari/yasnippet-vim-snippets]] repository, primarily [[https://github.com/cartolari/yasnippet-vim-snippets/tree/master/snippets/php-mode][php-mode]].
+
+Tip: Use M-x yas-describe-tables to see the list of snippets and edit them.
+
+Consult integration with yasnippet:
+#+begin_src emacs-lisp :tangle packages.el
+(package! consult-yasnippet)
+#+end_src
+
+Tip: Use =consult-yasnippet=.
+** evil-snipe
+This package provides a way to quickly navigate through a buffer with ~s~ and ~S~ for forward and backward 2-character search.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! evil-snipe)
+#+end_src
+
+Once it finds a 2-character match it jumps to it. You can jump to further matches with ~;~ (or ~,~ to jump backwards).
+
+#+begin_src emacs-lisp
+(use-package evil-snipe
+  :defer t
+  :config
+  (setq evil-snipe-scope 'visible)
+  (setq evil-snipe-repeat-scope 'buffer)
+  (setq evil-snipe-spillover-scope 'whole-buffer)
+)
+#+end_src
+
+The above code snippet configures evil-snipe to use a "fallback" scope when the default scope doesn't find a match. The default scope is bind to the current line, the "spillover" (or "fallback") scope is useful when configured with a larger scope, in this case 'whole-buffer.
+
+The full list of scopes are:
+
+|---------------+--------------------------------------------------------------|
+| Scope         | Description                                                  |
+|               |                                                              |
+|---------------+--------------------------------------------------------------|
+| line          | Rest of the current line after cursor                        |
+| buffer        | Rest of the buffer after cursor                              |
+| visible       | Rest of the _visible_ buffer after cursor                      |
+| whole-line    | Same as ~line~ but highlights on either side of cursor         |
+| whole-buffer  | Same as ~buffer~ but highlights all matches in buffer          |
+| whole-visible | Same as ~visible~ but highlights all _visible_ matches in buffer |
+|               |                                                              |
+|---------------+--------------------------------------------------------------|
+** devdocs
+This package somewhat expands on Doom Emacs' [[https://docs.doomemacs.org/latest/modules/tools/lookup/][lookup]] functionality.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! devdocs)
+#+end_src
+
+The ~SPC s o~ opens up documentation for the current symbol under cursor in the default browser. I didn't like to require a browser to navigate documentation as I don't want to leave the code I'm working on to check on something.
+
+Alternatively it can be configured to use ~eww~ instead. Which is way better. But the problem is devdocs require javascript to work correctly (it can work offline, but still requires a browser and javascript enabled).
+
+This package uses devdocs generated documentation (downloads it) and queries it offline, showing it on a separate window/buffer.
+
+#+begin_src emacs-lisp
+(use-package devdocs
+  :defer t
+  :ensure t)
+
+(global-set-key (kbd "C-h D") 'devdocs-lookup)
+#+end_src
+
+Use ~C-h D~ or ~SPC h D~ to search for the symbol under cursor. Note: The documentation will not be displayed right away, you'll need to press RET on the given symbol.
+** evil-multiedit
+evil-multiedit is a multi-cursor implementation. This enables you to visually select matching characters and edit them simultaneously.
+
+The evil-multiedit package is enabled via ~:ui multiple-cursors~.
+** better-jumper
+Better jump (remember jump list).
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! better-jumper)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package better-jumper
+  :defer t
+  :ensure t
+  :config
+  (better-jumper-mode +1))
+(with-eval-after-load 'evil-maps
+  (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
+  (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
+#+end_src
+
+Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
+* Version control
+** Git
+Configure user and email address:
+#+begin_src bash :tangle no
+git config --local user.email "des@riseup.net"
+git config --local user.name "DC*"
+#+end_src
+
+This configuration applies to the repository the command is running on (--local). You can apply global (i.e. to all repositories) replacing --local with the flag --global.
+** Magit
+[[https://magit.vc/][Magit]] is a deal-breaker type of package for Emacs. It forever changes the way you interact with Git (Goodbye cli!).
+
+#+begin_src emacs-lisp
+(after! magit
+    (setq git-commit-summary-max-length 100))
+#+end_src
+Anyway, in the above code setting the commit's summary max length to 100 so I'm not bothered with auto-formattig in commit's title/descriptions.
+
+#+begin_src emacs-lisp
+(defun me/magit-commit-setup ()
+  (insert (concat (magit-get-current-branch) ": ")))
+
+(add-hook 'git-commit-setup-hook 'me/magit-commit-setup)
+
+#+end_src
+
+* Project management
+** projectile
+#+begin_src emacs-lisp
+(after! projectile
+   (setq projectile-project-search-path '("~/sys-vagrant/code")))
+#+end_src
+** treemacs
+Enable treemacs and never move to treemacs with other-window as well as disabling wrap around:
+
+#+begin_src emacs-lisp
+(use-package treemacs
+  :defer t
+  :config
+  (setq treemacs-is-never-other-window t
+        treemacs-wrap-around nil
+        treemacs-display-current-project-exclusively t
+        treemacs-follow-mode t))
+#+end_src
+
+Take a look at more configuration options in [[https://github.com/Alexander-Miller/treemacs#configuration][github]].
+
+#+begin_src text :tangle no
+ * Perspective main
+ ** Notes
+ - path :: ~/org
+ ** Doom Emacs
+ - path :: ~/.doom.d
+ ** .emacs.d
+ - path :: ~/.emacs.d
+ * Perspective code
+ ** Code
+  - path :: ~/sys-vagrant/code
+ * Perspective exads-core
+ ** exads-core
+  - path :: ~/sys-vagrant/code/exads-core
+#+end_src
+
+Run =treemacs-edit-workspaces=.
+
+Ensure treemacs-projectile integration:
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! treemacs-projectile)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t)
+#+end_src
+
+Ensure treemacs-magit integration:
+
+#+begin_src emacs-lisp
+(use-package treemacs-magit
+  :defer t
+  :after (treemacs magit)
+  :ensure t)
+
+#+end_src
+
+Ensure treemacs-persp integration:
+
+#+begin_src emacs-lisp
+(use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
+  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
+  :ensure t
+  :config (treemacs-set-scope-type 'Perspectives))
+#+end_src
+** TODO workspaces
+#+begin_src emacs-lisp :tangle no
+(defun me/switch-workspace-in-new-frame ()
+  (interactive)
+  (select-frame (make-frame))
+  (toggle-frame-maximized)
+  (call-interactively #'+workspace/load))
+(map! "M-." #'me/switch-workspace-in-new-frame)
+#+end_src
+
+Overwrite default =SPC TAB TAB= with a consult base selection:
+#+begin_src emacs-lisp
+(defun me/switch-workspace ()
+  (interactive)
+  (call-interactively #'+workspace/switch-to))
+
+(map! :leader
+    :desc "Switch workspace"
+    "TAB TAB" #'me/switch-workspace)
+#+end_src
+* Org everything
+** org-mode
+If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
+
+#+begin_src emacs-lisp
+(setq org-directory "~/org/")
+(after! org
+  (setq
+    org-startup-folded nil
+    org-hide-emphasis-markers t))
+
+(defun me/org-disable-line-numbers-mode()
+  (display-line-numbers-mode -1))
+
+; File mode specification error: (void-function me/org-disable-hl-indent-mode)
+(defun me/org-disable-indent-mode()
+  (setq org-indent-mode -1))
+
+(defun me/org-disable-git-gutter-mode()
+  (git-gutter-mode -1))
+
+(defun me/org-enable-literate-calc-minor-mode()
+  (literate-calc-minor-mode 1))
+
+(defun me/org-disable-hl-indent-guides()
+  (highlight-indent-guides-mode -1))
+
+(add-hook 'org-mode-hook 'visual-line-mode)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook 'me/org-disable-indent-mode)
+(add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
+(add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
+(add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
+
+;; see https://github.com/doomemacs/doomemacs/issues/4815#issue-834176237
+(add-to-list 'git-gutter:disabled-modes 'org-mode)
+#+end_src
+
+Disable company-mode (autocompletions) on org-mode (i.e. prose):
+#+begin_src emacs-lisp
+(setq company-global-modes '(not org-mode))
+#+end_src
+
+#+begin_src emacs-lisp
+(setq org-archive-location (concat "archive/archive-"
+                                   (format-time-string "%Y%m" (current-time)) ".org_archive::"))
+#+end_src
+
+Do not create bookmarks on last org-capture:
+#+begin_src emacs-lisp
+(setq org-capture-bookmark nil)
+#+end_src
+
+** TODO org-agenda
+#+begin_src emacs-lisp
+(map! "M-o" 'org-agenda)
+#+end_src
+Custom agenda commands! \o/
+
+#+begin_src emacs-lisp
+(setq org-agenda-custom-commands
+      '(
+        ("w" "List :work: TODO/INPROGRESS/NEXT"
+          ((tags "work/TODO|INPROGRESS|NEXT")))
+        ("p" "List :personal: TODO/INPROGRESS/NEXT"
+            ((tags "personal/TODO|INPROGRESS|NEXT")))
+        ("P" "List :projects: TODO/INPROGRESS/NEXT"
+            ((tags "projects/TODO|INPROGRESS|NEXT")))
+        ("e" "List :emacs: TODO/INPROGRESS/NEXT"
+            ((tags "emacs/TODO|INPROGRESS|NEXT")))
+        ("l" "List :learning:"
+            ((tags "learning")))
+    ))
+#+end_src
+
+Source: [[https://stackoverflow.com/a/34660219][stackoverflow]].
+
+Sorting strategy:
+
+#+begin_src emacs-lisp
+(setq org-agenda-sorting-strategy '((agenda priority-down todo-state-down)
+                                    (todo priority-down todo-state-down)
+                                    (tags priority-down todo-state-down)
+                                    (search priority-down todo-state-down category-keep)))
+#+end_src
+
+See documentation [[https://orgmode.org/org.html#Sorting-of-agenda-items][here]].
+** TODO org-modern
+It's overkill but I'm using =org-modern= to prettify symbols such as +title and +begin_src. I'm actually happy with =org-bullets=.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-modern)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package org-modern
+  :defer t
+  :config
+  (setq org-modern-star nil)
+  (setq org-modern-timestamp nil)
+  (setq org-modern-todo nil)
+  (setq org-modern-tag nil)
+  (setq org-modern-statistics nil)
+  (setq org-modern-hide-stars nil)
+  (global-org-modern-mode)
+  (custom-set-faces
+   '(org-modern-block-name ((t nil)))))
+#+end_src
+** TODO org-babel
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-auto-tangle)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default nil))
+#+end_src
+** TODO ob-http
+#+begin_src emacs-lisp :tangle packages.el
+(package! ob-http)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! ob-http
+  :commands org-babel-execute:http)
+#+end_src
+** org-roam
+Org-roam is a package to create a non-hierarchical knowledge base. The package is meant to be used as a Zettelkasten note taking tool.
+
+#+begin_src emacs-lisp
+(use-package org-roam
+  :defer t
+  :custom
+  (org-roam-directory "~/org/roam")
+  (org-roam-index-file "~/org/roam/index.org")
+  )
+#+end_src
+
+We're making only a few configurations only since Doom Emacs already integrates the package via ~:editor (org +roam)~.
+
+#+begin_src emacs-lisp
+(defun me/counsel-ag-roam ()
+ "Do counsel-ag on the org roam directory"
+ (interactive)
+ (counsel-ag nil org-roam-directory))
+#+end_src
+
+Search org-roam notes via consult (source: [[https://github.com/jgru/consult-org-roam#installation][here]]):
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! consult-org-roam)
+
+#+end_src
+#+begin_src emacs-lisp
+(use-package consult-org-roam
+  :defer t
+   :ensure t
+   :init
+   (require 'consult-org-roam)
+   ;; Activate the minor-mode
+   (consult-org-roam-mode 1)
+   :custom
+   (consult-org-roam-grep-func #'consult-ripgrep)
+   :config
+   ;; Eventually suppress previewing for certain functions
+   (consult-customize
+    consult-org-roam-forward-links
+    :preview-key (kbd "M-.")))
+
+(map! :leader
+      :desc "Search via consult"
+      "n r S" #'consult-org-roam-search)
+#+end_src
+
+Keybinding example (see this [[https://rameezkhan.me/adding-keybindings-to-doom-emacs/][blog]]).
+** org-todo-keywords
+Custom ~org-todo-keywords~. It needs to be wrapper in (~after! ..~) block to apply correctly (see [[https://github.com/doomemacs/doomemacs/issues/2913#issuecomment-614773557][comment]]).
+
+#+begin_src emacs-lisp
+(after! org
+    (setq org-todo-keywords
+        '((sequence  "PROJ(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
+    (setq org-tag-alist '(("personal" . ?p) ("projects" . ?P) ("learning" . ?l) ("@home" . ?h) ("work" . ?w) ("@computer" . ?c) ("errands" . ?e)))
+    )
+#+end_src
+
+I'm also configuring a few tags to classify items under.
+** org-bullets
+This package is a lightweight alternative to [[https://github.com/minad/org-modern][org-modern]]. Project page [[https://github.com/sabof/org-bullets][here]].
+
+I opted for this package rather than org-modern since the latter was rather invasive changing for example the look of dates, tags etc.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-bullets)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package org-bullets
+  :defer t
+  :ensure t
+  :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  )
+#+end_src
+
+In the above block I'm enabling the org-bullets-mode after ~org-mode~ is enabled (see documentation [[https://orgmode.org/worg/doc.html][here]].)
+** org-log-repeat
+Disable log lines on repeat tasks.
+
+#+begin_src emacs-lisp
+(use-package org
+  :config
+    (setq org-log-repeat nil)
+)
+#+end_src
+
+This code disables logging status changes on TODO and agenda entries.
+** toc-org
+This package automatically generates and maintains a Table of Contents for Org and Markdown files.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! toc-org)
+#+end_src
+
+Package repository [[https://github.com/snosov1/toc-org][here]]. See configuration options and usage [[https://github.com/snosov1/toc-org#use][here]].
+** TODO literate-calc-mode
+Enable with ~literate-calc-minor-mode~. Use ~literate-calc-insert-results~ to copy results into buffer.
+
+Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! literate-calc-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package literate-calc-mode
+  :defer t
+  :ensure t)
+#+end_src
+
+See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]].
+** TODO org-pomodoro
+Basic configuration:
+#+begin_src emacs-lisp
+(setq org-pomodoro-format "%s"
+      org-pomodoro-start-sound-p t
+      org-pomodoro-short-break-length 10)
+#+end_src
+
+=org-pomodoro= package uses =org-clock=. This latter shows the task title in the modeline, sometimes this title is lengthy making it hard to see the Pomodoro's timer.
+
+#+begin_src emacs-lisp
+(setq org-clock-clocked-in-display 'mode-line)
+#+end_src
+
+|-------------+--------------------------------------------|
+| Value       | Description                                |
+|-------------+--------------------------------------------|
+| both        | displays in both mode line and frame title |
+| mode-line   | displays only in mode line (default)       |
+| frame-title | displays only in frame title               |
+| nil         | current clock is not displayed             |
+|-------------+--------------------------------------------|
+I'm only showing the first 8 characters from the task. In most cases this is enough to show the JIRA ticket I'm working on.
+#+begin_src emacs-lisp
+(setq org-clock-heading-function
+      (lambda ()
+        (let ((str (nth 4 (org-heading-components))))
+          (if (> (length str) 8)
+              (substring str 0 8)))))
+#+end_src
+Source: [[https://stackoverflow.com/a/14527487][here]].
+
+Configure bell sound for break and finish:
+#+begin_src emacs-lisp
+(setq me/org-pomodoro-bell-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-finished-sound me/org-pomodoro-bell-sound
+      org-pomodoro-start-sound me/org-pomodoro-bell-sound
+      org-pomodoro-long-break-sound me/org-pomodoro-bell-sound
+      org-pomodoro-short-break-sound me/org-pomodoro-bell-sound
+      org-pomodoro-ticking-sound me/org-pomodoro-bell-sound
+      org-pomodoro-overtime-sound me/org-pomodoro-bell-sound)
+#+end_src
+* Terminal integration
+There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell=, =term=, =shell=. I'll be using =vterm= and I'll referring to this package for the rest of this section.
+
+=vterm= offers a fully featured terminal emulation layer for Emacs. It works by leveraging ~libvterm~ library, which powers xterm. Check [[https://www.youtube.com/watch?v=8oNycFLwKfE][this presentation]] for an introduction and walkthrough. Find more in [[https://emacsconf.org/2020/talks/30/][this talk]]. Find the main repository [[https://github.com/akermu/emacs-libvterm][here]].
+
+Since it leverages ~libvterm~ it requires a extra steps for the installation. Check out the Doom Emacs' [[https://docs.doomemacs.org/latest/modules/term/vterm/][instructions]].
+
+#+begin_src emacs-lisp
+(use-package vterm
+  :defer t
+  :custom
+  (vterm-shell "fish")
+  (setq vterm-timer-delay 0))
+
+(after! vterm
+  (map! :map vterm-mode-map "M-v" 'vterm-yank)
+  (map! :map vterm-mode-map "M-w" '+workspace/close-window-or-workspace))
+#+end_src
+
+I'm using ~vterm~ with [[https://github.com/tmux/tmux/wiki][tmux]] for multiplexing and [[fishshell.com/][fish]] as the shell. Down below I'll describe the configurations I use.
+
+*WARNING*: I'm currently moving away from Tmux-in-Emacs workflow. Preferring instead using the Emacs provided window/pane management. While this is not as powerful as Tmux it does reduces the setup complexity.
+
+Daily workflow:
+
+1. Create a new workspace for the shell (~SPC TAB n~)
+   (ideally save and re-open a workspace for the shell with ~SPC TAB s~ / ~SPC TAB l~)
+2. Use tmux with resurrect plugin to load pre-configured panels (~C-A C-R~ to reload panels, ~C-A C-S~ to save panels)
+   Essential [[https://github.com/tmux-plugins/tmux-resurrect][Tmux resurrect]] plugin. [[https://github.com/desyncr/tmux][My tmux config]] with keybindings, theme and plugins.
+3. Hack away!
+
+#+begin_src emacs-lisp
+(defun me/vterm-split-right ()
+  "Create a new vterm window to the right of the current one."
+  (interactive)
+  (let* ((ignore-window-parameters t)
+         (dedicated-p (window-dedicated-p)))
+    (split-window-horizontally)
+    (other-window 1)
+    (+vterm/here default-directory)))
+#+end_src
+
 
 ** Tmux
 Find my tmux configuration in [[https://github.com/desyncr/tmux][this]] repository. The important bits there are:
