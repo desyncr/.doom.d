@@ -414,8 +414,8 @@
 
 (setq org-agenda-custom-commands
       '(
-        ("w" "List :work: TODO/INPROGRESS/NEXT"
-          ((tags "work/TODO|INPROGRESS|NEXT")))
+        ("w" "List :work: TODO/WAITING|INPROGRESS|NEXT"
+          ((tags "work/TODO|WAITING|INPROGRESS|NEXT")))
         ("p" "List :personal: TODO/INPROGRESS/NEXT"
             ((tags "personal/TODO|INPROGRESS|NEXT")))
         ("P" "List :projects: TODO/INPROGRESS/NEXT"
@@ -430,6 +430,14 @@
                                     (todo priority-down todo-state-down)
                                     (tags priority-down todo-state-down)
                                     (search priority-down todo-state-down category-keep)))
+
+(defun me/org-agenda-work-view (&optional arg)
+  (interactive "P")
+  (split-window-horizontally)
+  (other-window 1)
+  (org-agenda arg "w"))
+
+(map! :leader :desc "Work view" "o a w" 'me/org-agenda-work-view)
 
 (use-package org-modern
   :config
