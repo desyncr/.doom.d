@@ -895,6 +895,15 @@ This configuration applies to the repository the command is running on (--local)
     (setq git-commit-summary-max-length 100))
 #+end_src
 Anyway, in the above code setting the commit's summary max length to 100 so I'm not bothered with auto-formattig in commit's title/descriptions.
+
+#+begin_src emacs-lisp
+(defun me/magit-commit-setup ()
+  (insert (concat (magit-get-current-branch) ": ")))
+
+(add-hook 'git-commit-setup-hook 'me/magit-commit-setup)
+
+#+end_src
+
 * Project management
 ** projectile
 #+begin_src emacs-lisp
