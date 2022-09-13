@@ -1061,8 +1061,8 @@ Custom agenda commands! \o/
 #+begin_src emacs-lisp
 (setq org-agenda-custom-commands
       '(
-        ("w" "List :work: TODO/INPROGRESS/NEXT"
-          ((tags "work/TODO|INPROGRESS|NEXT")))
+        ("w" "List :work: TODO/WAITING|INPROGRESS|NEXT"
+          ((tags "work/TODO|WAITING|INPROGRESS|NEXT")))
         ("p" "List :personal: TODO/INPROGRESS/NEXT"
             ((tags "personal/TODO|INPROGRESS|NEXT")))
         ("P" "List :projects: TODO/INPROGRESS/NEXT"
