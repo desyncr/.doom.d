@@ -606,7 +606,7 @@ Visually selects the paragraph. Execute multiple times to expand the selection o
 (map! :leader :desc "Visually mark word" "v w" 'er/mark-word)
 #+end_src
 
-Use ~C-c v p~ to *v*isual select a *p*aragraph and ~C-c v w~ to select a word under cursor.
+Use ~SPC v p~ to *v*isual select a *p*aragraph and ~SPC v w~ to select a word under cursor.
 
 Worth checking out [[https://www.johndcook.com/blog/2017/08/09/selecting-things-in-emacs/][this]] article.
 
@@ -617,8 +617,9 @@ Triggers consult posframe to select a yasnippet. It also previsualies it in the 
 (map! "M-i" #'consult-yasnippet)
 #+end_src
 
+There's also =SPC i s= keybinding which doesn't uses consult.
+
 - Create link
-Overrides ~consult-goto-line~.
 #+begin_src emacs-lisp
 (after! evil-org
   (define-key evil-org-mode-map (kbd "<visual-state> M-l") 'org-insert-link))
