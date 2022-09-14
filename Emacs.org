@@ -118,6 +118,11 @@ Disable this warning message that appears from time to time:
 #+end_src
 
 See [[https://github.com/nobiot/org-transclusion/issues/105][this]] github issue for a possible cause of the warning.
+
+#+begin_src emacs-lisp
+(setq debug-on-error t)
+#+end_src
+
 ** Keyboard
 Explicitly define the Mac modifiers:
 
