@@ -1106,6 +1106,12 @@ Keybinding to specific org-agenda views:
 (map! :leader :desc "Work view" "o a w" 'me/org-agenda-work-view)
 #+end_src
 Source: [[https://emacs.stackexchange.com/a/868][Stackoverflow]].
+
+Remove file names on agenda views:
+#+begin_src emacs-lisp
+(setq org-agenda-prefix-format "%t %s")
+#+end_src
+Source: [[https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00743.html][here]].
 ** TODO org-modern
 It's overkill but I'm using =org-modern= to prettify symbols such as +title and +begin_src. I'm actually happy with =org-bullets=.
 
