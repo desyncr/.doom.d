@@ -594,16 +594,16 @@ Use =M-g= to find reference in other window.
 - Copy and paste
 Support yanking/killing via M-v, M-c
 #+begin_src emacs-lisp
-(map! "M-v" 'clipboard-yank)
-(map! "M-c" 'copy-region-as-kill)
+(map! :desc "Paste from clipboard" "M-v" 'clipboard-yank)
+(map! :desc "Copy into clipboard" "M-c" 'copy-region-as-kill)
 #+end_src
 
 - Mark paragraph
 Visually selects the paragraph. Execute multiple times to expand the selection or move the cursor.
 
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-c v p") 'er/mark-paragraph)
-(global-set-key (kbd "C-c v w") 'er/mark-word)
+(map! :leader :desc "Visually mark paragraph" "v p" 'er/mark-paragraph)
+(map! :leader :desc "Visually mark word" "v w" 'er/mark-word)
 #+end_src
 
 Use ~C-c v p~ to *v*isual select a *p*aragraph and ~C-c v w~ to select a word under cursor.
