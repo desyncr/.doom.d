@@ -26,23 +26,8 @@
   - [[#zoom][zoom]]
   - [[#display-time][Display time]]
 - [[#keybindings][Keybindings]]
-  - [[#evil-ex][evil-ex]]
-  - [[#comment-or-uncomment-region-with-m-][Comment or uncomment region with M-/]]
-  - [[#toggle-treemacs][Toggle treemacs]]
-  - [[#save-buffer][Save buffer]]
-  - [[#search-project][Search project]]
-  - [[#go-to-item][Go to item]]
-  - [[#find-project-files][Find project files]]
-  - [[#find-buffers][Find buffers]]
-  - [[#nextprevious-window][Next/previous window]]
-  - [[#mark-paragraph][Mark paragraph]]
-  - [[#snippets][Snippets]]
-  - [[#create-link][Create link]]
-  - [[#go-to-definition-other-window][Go to definition other window]]
-  - [[#delete-window][Delete window]]
-  - [[#edit-source-block][Edit source block]]
-  - [[#page-up--down][Page up / down]]
-  - [[#go-to-last-change][Go to last change]]
+  - [[#navigation-and-files][Navigation and files]]
+  - [[#buffers-and-edition][Buffers and Edition]]
 - [[#writing][Writing]]
   - [[#spell-checking][Spell checking]]
 - [[#coding][Coding]]
@@ -505,39 +490,31 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 #+end_src
 
 * Keybindings
-Support yanking/killing via M-v, M-c:
-
-#+begin_src emacs-lisp
-(map! "M-v" 'clipboard-yank)
-(map! "M-c" 'copy-region-as-kill)
-#+end_src
-
-Shortcut for opening the Doom's dashboard:
+** Navigation and files
+*** General
+- Shortcut for opening the Doom's dashboard
 #+begin_src emacs-lisp
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 #+end_src
 
-** TODO evil-ex
+- Setting up this keybinding for the "command palette". I'm still unsure which keybinding is the most commonly used for me.
 #+begin_src emacs-lisp
 (map! "M-;" 'execute-extended-command)
 #+end_src
-** TODO Comment or uncomment region with M-/
-#+begin_src emacs-lisp
-(map! :ne "M-/" #'comment-or-uncomment-region)
-#+end_src
-** Toggle treemacs
-Toggle treemacs with M-t (tree):
 
+- Toggle treemacs with M-t (tree)
 #+begin_src emacs-lisp
 (map! "M-t" #'+treemacs/toggle)
 #+end_src
-** Save buffer
+
+- Save buffer:
 Quickly save buffer with ~M-s~ (save).
 
 #+begin_src emacs-lisp
 (map! "M-s" #'save-buffer)
 #+end_src
-** Search project
+*** Search
+- Search project:
 Search project's contents with ~M-r~ (regexp).
 
 #+begin_src emacs-lisp
@@ -545,7 +522,8 @@ Search project's contents with ~M-r~ (regexp).
 #+end_src
 
 Also use ~SPC s s~ to search matching characters on the current buffer.
-** Go to item
+
+- Go to item:
 Use =M-m= for jump into a menu item (section in the buffer).
 
 #+begin_src emacs-lisp
@@ -555,7 +533,8 @@ Use =M-m= for jump into a menu item (section in the buffer).
 (defadvice! expand-folds-imenu(&rest _)
   :before '+default/search-buffer (+org/open-all-folds))
 #+end_src
-** Find project files
+
+- Find project files
 ~M-p~: find file in project, also ~SPC SPC~. Prefer consult for everything.
 
 #+begin_src emacs-lisp
@@ -564,16 +543,62 @@ Use =M-m= for jump into a menu item (section in the buffer).
 
 (map! "M-p" #'projectile-find-file)
 #+end_src
-** Find buffers
+
+- Find buffers
 #+begin_src emacs-lisp
 (map! "M-b" #'+vertico/switch-workspace-buffer)
 #+end_src
-** Next/previous window
+*** Windows
+- Next/previous window
 #+begin_src emacs-lisp
 (map! "M-]" #'next-window-any-frame)
 (map! "M-[" #'previous-window-any-frame)
 #+end_src
-** Mark paragraph
+
+- Delete window
+Use =M-w= to delete window or workspace (last window is preserved).
+#+begin_src emacs-lisp
+(map! "M-w" 'delete-window)
+#+end_src
+*** Navigation
+- Go to definition other window
+Use =M-g= to find reference in other window.
+
+#+begin_src emacs-lisp
+(map! "M-g" #'xref-find-definitions-other-window)
+#+end_src
+
+=g d= changes my context when I just want to peek at the definition of a method. So quickly jumping in other-window work just fine for me.
+
+- Page up / down
+#+begin_src emacs-lisp
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
+#+end_src
+
+- Go to last change
+#+begin_src emacs-lisp
+(map! "C-." 'goto-last-change)
+(map! "C-," 'goto-last-change-reverse)
+;(global-set-key [(control ?.)] 'goto-last-change)
+;(global-set-key [(control ?,)] 'goto-last-change-reverse)
+#+end_src
+
+** TODO Buffers and Edition
+- Comment or uncomment region
+#+begin_src emacs-lisp
+(map! :ne "M-/" #'comment-or-uncomment-region)
+#+end_src
+
+- Copy and paste
+Support yanking/killing via M-v, M-c
+#+begin_src emacs-lisp
+(map! "M-v" 'clipboard-yank)
+(map! "M-c" 'copy-region-as-kill)
+#+end_src
+
+- Mark paragraph
 Visually selects the paragraph. Execute multiple times to expand the selection or move the cursor.
 
 #+begin_src emacs-lisp
@@ -584,49 +609,25 @@ Visually selects the paragraph. Execute multiple times to expand the selection o
 Use ~C-c v p~ to *v*isual select a *p*aragraph and ~C-c v w~ to select a word under cursor.
 
 Worth checking out [[https://www.johndcook.com/blog/2017/08/09/selecting-things-in-emacs/][this]] article.
-** TODO Snippets
+
+- Insert snippet
 #+begin_src emacs-lisp
 (map! "M-i" #'consult-yasnippet)
 #+end_src
-** TODO Create link
+
+- Create link
 Overrides ~consult-goto-line~.
 #+begin_src emacs-lisp
 (after! evil-org
   (define-key evil-org-mode-map (kbd "<visual-state> M-l") 'org-insert-link))
 #+end_src
 
-** TODO Go to definition other window
-Use =M-g= to find reference in other window.
-
-#+begin_src emacs-lisp
-(map! "M-g" #'xref-find-definitions-other-window)
-#+end_src
-
-=g d= changes my context when I just want to peek at the definition of a method. So quickly jumping in other-window work just fine for me.
-** TODO Delete window
-Use =M-w= to delete window or workspace (last window is preserved).
-#+begin_src emacs-lisp
-(map! "M-w" 'delete-window)
-#+end_src
-** TODO Edit source block
+- Edit source block
 Edit source block in capture buffer.
 #+begin_src emacs-lisp
 (global-set-key (kbd "C-c e") 'org-edit-src-code)
 #+end_src
 TODO: Consider using =M-e= to =org-edit-src-code=, =C-c e= for elfeed. Although I don't use edit-src-code a lot.
-** TODO Page up / down
-#+begin_src emacs-lisp
-(after! evil-org
-  (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
-  (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
-#+end_src
-** TODO Go to last change
-#+begin_src emacs-lisp
-(map! "C-." 'goto-last-change)
-(map! "C-," 'goto-last-change-reverse)
-;(global-set-key [(control ?.)] 'goto-last-change)
-;(global-set-key [(control ?,)] 'goto-last-change-reverse)
-#+end_src
 
 * Writing
 ** Spell checking

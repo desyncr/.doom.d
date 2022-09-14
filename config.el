@@ -7,6 +7,8 @@
 
 (setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
 
+(setq debug-on-error t)
+
 (setq mac-command-modifier 'meta) ; make cmd key do Meta
 (setq mac-option-modifier 'super) ; make opt key do Super
 (setq mac-control-modifier 'control) ; make Control key do Control
@@ -398,7 +400,10 @@
 (add-hook 'org-mode-hook 'me/org-disable-indent-mode)
 (add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
 (add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
-(add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
+
+; Disabling as it causes errors when buffers as killed before the result is computed,
+; usually while switching quickly between org files
+;(add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
 
 ;; see https://github.com/doomemacs/doomemacs/issues/4815#issue-834176237
 (add-to-list 'git-gutter:disabled-modes 'org-mode)
@@ -438,6 +443,8 @@
   (org-agenda arg "w"))
 
 (map! :leader :desc "Work view" "o a w" 'me/org-agenda-work-view)
+
+(setq org-agenda-prefix-format "%t %s")
 
 (use-package org-modern
   :config
@@ -510,8 +517,7 @@
 )
 
 (use-package literate-calc-mode
-  :defer t
-  :ensure t)
+  :defer t)
 
 (setq org-pomodoro-format "%s"
       org-pomodoro-start-sound-p t
@@ -533,7 +539,7 @@
       org-pomodoro-ticking-sound me/org-pomodoro-bell-sound
       org-pomodoro-overtime-sound me/org-pomodoro-bell-sound)
 
-(setq me/org-pomodoro-sound-args "-volume 0.3")
+(setq me/org-pomodoro-sound-args "-volume 0.5")
 (setq org-pomodoro-finished-sound-args me/org-pomodoro-sound-args
       org-pomodoro-long-break-sound-args me/org-pomodoro-sound-args
       org-pomodoro-start-sound-args me/org-pomodoro-sound-args
