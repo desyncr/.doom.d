@@ -48,6 +48,7 @@
   - [[#workspaces][workspaces]]
 - [[#org-everything][Org everything]]
   - [[#org-mode][org-mode]]
+  - [[#org-capture][org-capture]]
   - [[#org-agenda][org-agenda]]
   - [[#org-modern][org-modern]]
   - [[#org-babel][org-babel]]
@@ -1062,6 +1063,27 @@ Disable company-mode (autocompletions) on org-mode (i.e. prose):
 Do not create bookmarks on last org-capture:
 #+begin_src emacs-lisp
 (setq org-capture-bookmark nil)
+#+end_src
+** TODO org-capture
+#+begin_src emacs-lisp
+(setq org-capture-templates
+    '(("t" "TODO" entry (file+headline +org-capture-todo-file "Inbox")
+       "* TODO %? %U\n%i\n%a" :prepend t)
+      ("n" "Notes" entry (file+headline +org-capture-notes-file "Inbox")
+       "* %u %?\n%i\n%a" :prepend t)
+      ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
+       "* %U %?\n%i\n%a" :prepend t)))
+#+end_src
+
+Keybinding to specific org-capture:
+#+begin_src emacs-lisp
+(defun me/org-capture-todo (type &optional arg)
+  (interactive "P")
+  (org-capture arg type))
+
+(map! :leader :desc "Capture a TODO item" "c t" (lambda() (interactive) (me/org-capture-todo "t")))
+(map! :leader :desc "Capture a new note" "c n" (lambda() (interactive) (me/org-capture-todo "n")))
+(map! :leader :desc "Capture a new journal entry" "c j" (lambda() (interactive) (me/org-capture-todo "j")))
 #+end_src
 
 ** TODO org-agenda
