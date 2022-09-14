@@ -1329,7 +1329,7 @@ Configure bell sound for break and finish:
 
 Configure volume, see github comment [[https://github.com/marcinkoziej/org-pomodoro/issues/29#issuecomment-129608240][here]]:
 #+begin_src emacs-lisp
-(setq me/org-pomodoro-sound-args "-volume 0.3")
+(setq me/org-pomodoro-sound-args "-volume 0.5")
 (setq org-pomodoro-finished-sound-args me/org-pomodoro-sound-args
       org-pomodoro-long-break-sound-args me/org-pomodoro-sound-args
       org-pomodoro-start-sound-args me/org-pomodoro-sound-args
