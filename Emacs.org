@@ -579,8 +579,8 @@ Use =M-g= to find reference in other window.
 
 - Go to last change
 #+begin_src emacs-lisp
-(map! "C-." 'goto-last-change)
-(map! "C-," 'goto-last-change-reverse)
+(map! "M-." 'goto-last-change)
+(map! "M-," 'goto-last-change-reverse)
 ;(global-set-key [(control ?.)] 'goto-last-change)
 ;(global-set-key [(control ?,)] 'goto-last-change-reverse)
 #+end_src
