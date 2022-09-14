@@ -1278,11 +1278,10 @@ Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
 
 #+begin_src emacs-lisp
 (use-package literate-calc-mode
-  :defer t
-  :ensure t)
+  :defer t)
 #+end_src
 
-See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]].
+See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]] and repository [[https://github.com/sulami/literate-calc-mode.el][here]] in github.
 ** TODO org-pomodoro
 Basic configuration:
 #+begin_src emacs-lisp
