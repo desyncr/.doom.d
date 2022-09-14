@@ -1036,7 +1036,10 @@ If you use ~org~ and don't want your org files in the default location below, ch
 (add-hook 'org-mode-hook 'me/org-disable-indent-mode)
 (add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
 (add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
-(add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
+
+; Disabling as it causes errors when buffers as killed before the result is computed,
+; usually while switching quickly between org files
+;(add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
 
 ;; see https://github.com/doomemacs/doomemacs/issues/4815#issue-834176237
 (add-to-list 'git-gutter:disabled-modes 'org-mode)
