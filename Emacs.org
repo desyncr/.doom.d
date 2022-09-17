@@ -1429,6 +1429,28 @@ Daily workflow:
 (map! :leader :desc "Open vterm vsplit" "o T" #'me/vterm-split-right)
 #+end_src
 
+Run commands:
+#+begin_src emacs-lisp
+(defun run-command-recipe-example ()
+  (list
+   (list :display "Run APv2 locally"
+         :command-name "www-admin-v2-local"
+         :command-line "npm start"
+         :working-dir "~/Playground/www-admin-v2")
+   (list :display "Tail error logs"
+         :command-name "exads-tail"
+         :command-line "vagrant ssh web -c 'sudo -i tail -f /var/log/php/error.log'"
+         :working-dir "~/sys-vagrant/code")
+   ))
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! run-command
+  :config
+  (add-to-list 'run-command-recipes 'run-command-recipe-example)
+  )
+#+end_src
+
 * Other
 ** TODO elfeed
 #+begin_src emacs-lisp :tangle packages.el
