@@ -1216,7 +1216,13 @@ hello_world
 #+begin_src emacs-lisp
 (use-package! ob-http
   :commands org-babel-execute:http)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (http . t)))
 #+end_src
+
 ** org-roam
 Org-roam is a package to create a non-hierarchical knowledge base. The package is meant to be used as a Zettelkasten note taking tool.
 
