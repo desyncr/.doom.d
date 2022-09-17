@@ -903,6 +903,11 @@ Better jump (remember jump list).
 
 Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
 * Version control
+Often times it's useful to see the local file in the browser, for example to share the exact code you're looking into:
+#+begin_src emacs-lisp :tangle packages.el
+(package! browse-at-remote)
+#+end_src
+
 ** Git
 Configure user and email address:
 #+begin_src bash :tangle no
