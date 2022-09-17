@@ -1459,6 +1459,10 @@ Daily workflow:
 #+end_src
 
 Run commands:
+#+begin_src emacs-lisp :tangle packages.el
+(package! run-command)
+#+end_src
+
 #+begin_src emacs-lisp
 (defun run-command-recipe-example ()
   (list
@@ -1471,13 +1475,10 @@ Run commands:
          :command-line "vagrant ssh web -c 'sudo -i tail -f /var/log/php/error.log'"
          :working-dir "~/sys-vagrant/code")
    ))
-#+end_src
 
-#+begin_src emacs-lisp :tangle packages.el
-(package! run-command
+(use-package run-command
   :config
-  (add-to-list 'run-command-recipes 'run-command-recipe-example)
-  )
+  (add-to-list 'run-command-recipes 'run-command-recipe-example))
 #+end_src
 
 * Other
