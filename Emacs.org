@@ -1142,7 +1142,7 @@ Keybinding to specific org-agenda views:
 (map! :leader :desc "Work view" "o a w" (lambda() (interactive) (me/org-agenda-view "w")))
 (map! :leader :desc "Personal view" "o a p" (lambda() (interactive) (me/org-agenda-view "p")))
 (map! :leader :desc "Projects view" "o a P" (lambda() (interactive) (me/org-agenda-view "P")))
-(map! :leader :desc "Emacs view" "o a P" (lambda() (interactive) (me/org-agenda-view "e")))
+(map! :leader :desc "Emacs view" "o a e" (lambda() (interactive) (me/org-agenda-view "e")))
 (map! :leader :desc "Learning view" "o a l" (lambda() (interactive) (me/org-agenda-view "l")))
 #+end_src
 Source: [[https://emacs.stackexchange.com/a/868][Stackoverflow]].
