@@ -1016,6 +1016,8 @@ Overwrite default =SPC TAB TAB= with a consult base selection:
 (map! :leader
     :desc "Switch workspace"
     "TAB TAB" #'me/switch-workspace)
+
+(map! "M-§" 'me/switch-workspace)
 #+end_src
 * Org everything
 ** org-mode
