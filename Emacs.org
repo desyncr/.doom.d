@@ -400,8 +400,10 @@ There are only a few commands to learn, and they mimic the normal motions in ema
 |---------+------------------------------------------------------------------------------------------------------|
 
 #+begin_src emacs-lisp
-(map! "M-§" #'resize-window)
+(map! "M-±" #'resize-window)
 #+end_src
+
+That's it: M-S-§ on the mac keyboard.
 
 Package repository [[https://github.com/dpsutton/resize-window][here]].
 ** beacon
