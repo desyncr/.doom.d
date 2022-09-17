@@ -563,6 +563,12 @@ Use =M-w= to delete window or workspace (last window is preserved).
 #+begin_src emacs-lisp
 (map! "M-w" 'delete-window)
 #+end_src
+
+- Terminal pop up
+#+begin_src emacs-lisp
+(map! "M-y" '+vterm/toggle)
+#+end_src
+
 *** Navigation
 - Go to definition other window
 Use =M-g= to find reference in other window.
