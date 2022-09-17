@@ -1215,6 +1215,17 @@ All code blocks are ran synchronously. This means the Emacs UI is blocked until 
 #+end_src
 
 Add =:async= to the source block and the process should run asynchronously. Repository [[https://github.com/astahlman/ob-async][here]].
+
+org-babel support for PlantUML:
+#+begin_src emacs-lisp
+(setq plantuml-jar-path "/usr/local/bin/plantuml.jar")
+(setq plantuml-default-exec-mode 'jar)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
+#+end_src
 ** TODO ob-http
 #+begin_src emacs-lisp :tangle packages.el
 (package! ob-http)
