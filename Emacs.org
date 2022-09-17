@@ -1208,6 +1208,13 @@ In a different code block I can call this function:
 hello_world
 #+end_src
 
+All code blocks are ran synchronously. This means the Emacs UI is blocked until the process is done. Unless you use this package:
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! ob-async)
+#+end_src
+
+Add =:async= to the source block and the process should run asynchronously. Repository [[https://github.com/astahlman/ob-async][here]].
 ** TODO ob-http
 #+begin_src emacs-lisp :tangle packages.el
 (package! ob-http)
