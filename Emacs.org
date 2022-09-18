@@ -31,6 +31,7 @@
 - [[#writing][Writing]]
   - [[#spell-checking][Spell checking]]
 - [[#coding][Coding]]
+  - [[#expand-region][expand-region]]
   - [[#flycheck][flycheck]]
   - [[#lsp][lsp]]
   - [[#rainbow-delimiters-mode][rainbow-delimiters-mode]]
@@ -688,6 +689,19 @@ Configure language:
 *** Writegood
 Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/][original article]] for writegood.
 * Coding
+** expand-region
+Visually select text regions with ~M-=~:
+#+begin_src emacs-lisp :tangle packages.el
+(package! expand-region)
+#+end_src
+See repository [[https://github.com/magnars/expand-region.el][here]].
+
+#+begin_src emacs-lisp
+(use-package expand-region
+  :bind ("M-=" . er/expand-region))
+#+end_src
+
+See mention [[https://takeonrules.com/2020/10/18/why-i-chose-emacs-as-my-new-text-editor/][here]].
 ** flycheck
 Most classes/php files I'm working with are quite large and cause a large number of errors to popup. I'm topping up the error threshold to avoid a warning during start up:
 
