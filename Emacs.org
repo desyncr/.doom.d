@@ -454,16 +454,6 @@ Split to the right and below! Source: [[https://tecosaur.github.io/emacs-config/
 
 Use =M-n= to create a new empty buffer. The following advices will automatically move the buffer window to the right and invoice =consult-projectile=.
 
-#+begin_src emacs-lisp
-(map! "M-n"
-     'evil-window-vnew)
-(defadvice! vnew-righthand (&rest _)
-  :after 'evil-window-vnew (+evil/window-move-right))
-(defadvice! vnew-dashboard (&rest _)
-  :after 'evil-window-vnew (+doom-dashboard/open (selected-frame)))
-(defadvice! vnew-projectile (&rest _)
-  :after 'evil-window-vnew (consult-projectile))
-#+end_src
 ** TODO consult-projectile
 Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 
