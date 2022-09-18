@@ -1,0 +1,6 @@
+# key: source
+# name: Source block
+# --
+#+begin_src ${2:$$(yas-choose-value '("bash" "ruby" "elisp" "php" "sql" "http" "json"))}
+  $0
+#+end_src
