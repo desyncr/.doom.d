@@ -666,9 +666,8 @@ Use =M-g= to find reference in other window.
 
 - Page up / down
 #+begin_src emacs-lisp
-(after! evil-org
-  (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
-  (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
+(map! "M-k" 'evil-scroll-up)
+(map! "M-j" 'evil-scroll-down)
 #+end_src
 
 - Go to last change
