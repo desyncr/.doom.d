@@ -668,7 +668,12 @@ Use =M-g= to find reference in other window.
 #+begin_src emacs-lisp
 (map! "M-k" 'evil-scroll-up)
 (map! "M-j" 'evil-scroll-down)
+
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
 #+end_src
+The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
 
 - Go to last change
 #+begin_src emacs-lisp
