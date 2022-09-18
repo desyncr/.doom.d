@@ -308,6 +308,7 @@ I'm setting up Edwina as per the documentation except I'm not setting up the def
 #+begin_src emacs-lisp
 (use-package edwina
   :config
+  (setq display-buffer-base-action '(display-buffer-pop-up-window))
   (edwina-mode 1))
 #+end_src
 
@@ -379,6 +380,7 @@ Configure =glencjones/edwina='s fork to filter certain windows from being arrang
         (if (or (+popup-buffer-p)
                 (cond
                  (( string-match-p "*" (buffer-name in-buffer)) t)
+                 (( string-match-p " *" (buffer-name in-buffer)) t)
                  (( string-match-p "magit" (buffer-name in-buffer)) t)
                  (t nil)
                  )
