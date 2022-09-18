@@ -219,7 +219,6 @@ Add word count to status/modeline. Useful for org documents and writing in gener
 #+begin_src emacs-lisp
 (setq doom-modeline-enable-word-count t)
 #+end_src
-
 ** Fonts
 Doom exposes five (optional) variables for controlling fonts in Doom:
 
@@ -578,7 +577,6 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
  display-time-default-load-average nil)
 (display-time)
 #+end_src
-
 * Keybindings
 ** Navigation and files
 *** General
