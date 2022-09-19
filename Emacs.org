@@ -24,7 +24,6 @@
   - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#prompt-for-buffer][prompt-for-buffer]]
   - [[#consult-projectile][consult-projectile]]
-  - [[#zoom][zoom]]
   - [[#display-time][Display time]]
 - [[#keybindings][Keybindings]]
   - [[#navigation-and-files][Navigation and files]]
@@ -308,9 +307,11 @@ I'm setting up Edwina as per the documentation except I'm not setting up the def
 #+begin_src emacs-lisp
 (use-package edwina
   :config
-  (setq display-buffer-base-action '(display-buffer-pop-up-window))
+  ;(setq display-buffer-base-action '(display-buffer-pop-up-window))
+  (advice-remove #'display-buffer #'edwina--display-buffer)
   (edwina-mode 1))
 #+end_src
+I'm also disabling all automatic Edwina interactions with =advice-remove=.
 
 I'm not configuring the following:
 - =(setq display-buffer-base-action '(display-buffer-below-selected))= : This causes Ibuffer to behave funky  (opening two windows each time).
@@ -318,40 +319,79 @@ I'm not configuring the following:
 
 I need to create these two functions to work around Edwina mismanagement of Treemacs window. Essentially Edwina handles Treemacs window as the main window. I'm using these methods to close Treemacs when arranging windows.
 
-These two functions are a copy of =SPC h f= =+treemacs/toggle=:
-#+begin_src emacs-lisp
-(defun me/treemacs-close ()
-  (interactive)
-  (require 'treemacs)
-  (pcase (treemacs-current-visibility)
-    (`visible (delete-window (treemacs-get-local-window)))))
-
-(defun me/treemacs-open()
-  (interactive)
-  (require 'treemacs)
-  (pcase (treemacs-current-visibility)
-      (`visible (message "Nothing to do"))
-      (_ (if (doom-project-p)
-           (treemacs-add-and-display-current-project)
-         (treemacs)))))
-#+end_src
-
 Setup this function to tell Edwina to close Treemacs and call =edwina-arrange=:
 #+begin_src emacs-lisp
-(defun me/edwina-new ()
+(defun me/edwina-window-create ()
   (interactive)
-  (evil-window-vnew nil nil)
-  (me/treemacs-close)
-  (edwina-arrange))
+  "Create a window preserving layout"
+  (me/edwina-treemacs-snapshot)
 
-(map! "M-n" 'me/edwina-new)
+  (evil-window-vnew nil nil)
+
+  ; arrange windows
+  (edwina-arrange)
+
+  (me/edwina-treemacs-restore)
+
+  ; go back to the previously selected window
+  ; rather than being stuck in treemacs
+  (evil-window-prev 0)
+)
+
+(map! "M-n" 'me/edwina-window-create)
+#+end_src
+
+Similarly when deleting a window Edwina can put Treemacs as the master window. This keybinding + function help work around this issue.
+#+begin_src emacs-lisp
+(defun me/edwina-window-close ()
+  (interactive)
+  "Close a window preserving layout"
+  (message "Edwina close")
+
+  (me/edwina-treemacs-snapshot)
+  (+workspace/close-window-or-workspace)
+  (me/edwina-treemacs-restore)
+
+  ; focus on previous window
+  (evil-window-prev 0)
+)
+
+(map! "M-w" 'me/edwina-window-close)
+#+end_src
+
+
+#+begin_src emacs-lisp
+(defun me/edwina-treemacs-restore ()
+  (interactive)
+  (require 'treemacs)
+  "Restore treemacs if it was visible"
+  (pcase me/treemacs-restore
+    (`visible (if (doom-project-p)
+                  (treemacs-add-and-display-current-project)
+                (treemacs)))
+    (_ (message "No need to restore Treemacs")))
+)
+#+end_src
+
+#+begin_src emacs-lisp
+(defun me/edwina-treemacs-snapshot ()
+  (interactive)
+  (require 'treemacs)
+  "Save treemacs visibility and close it"
+  (setq me/treemacs-restore (treemacs-current-visibility))
+
+  ;; forcibly close treemacs (if open)
+  (pcase (treemacs-current-visibility)
+    (`visible (delete-window (treemacs-get-local-window)))
+    (_ (message "Treemacs is not visible or open")))
+)
 #+end_src
 
 By default Edwina zooms' feature doesn't /selects/ the window zoomed into. See [[https://github.com/ajgrf/edwina/issues/7][this issue]] for reference.
 #+begin_src emacs-lisp
-(defun me/edwina-zoom ()
-    "Zoom/cycle the selected window to/from master area."
+(defun me/edwina-window-zoom ()
     (interactive)
+    "Zoom/cycle the selected window to/from master area."
     (if (eq (selected-window) (frame-first-window))
         (edwina-swap-next-window)
       (let ((pane (edwina-pane (selected-window))))
@@ -366,8 +406,12 @@ Since I'm not using the default Edwina's keybinding I'm setting up a keybinding 
 #+begin_src emacs-lisp
 (defun me/edwina-zoom-arrange ()
   (interactive)
-  (me/edwina-zoom)
-  (edwina-arrange))
+  "Arrange currently selected window as the master window"
+  (me/edwina-treemacs-snapshot)
+  (me/edwina-window-zoom)
+  (edwina-arrange)
+  (me/edwina-treemacs-restore))
+
 (map! "M-a" 'me/edwina-zoom-arrange)
 #+end_src
 
