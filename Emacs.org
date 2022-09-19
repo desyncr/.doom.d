@@ -560,18 +560,6 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 #+end_src
 
 =consult-projectile= is a consult source to integrate with projectile.
-** TODO zoom
-#+begin_src emacs-lisp :tangle packages.el
-(package! zoom)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package zoom
-  :defer t
-  :config
-    (zoom-mode 0)
-    (global-set-key (kbd "C-x =") 'zoom))
-#+end_src
 ** TODO Display time
 #+begin_src emacs-lisp
 (setq
