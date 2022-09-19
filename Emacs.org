@@ -319,6 +319,22 @@ I'm not configuring the following:
 
 I need to create these two functions to work around Edwina mismanagement of Treemacs window. Essentially Edwina handles Treemacs window as the main window. I'm using these methods to close Treemacs when arranging windows.
 
+#+begin_src emacs-lisp
+(defun me/edwina-window-follow-xref ()
+  (interactive)
+  "Create a window preserving layout"
+  (me/edwina-treemacs-snapshot)
+
+  (edwina-arrange)
+
+  (me/edwina-treemacs-restore))
+
+;(map! "M-g" 'me/edwina-window-follow-xref)
+
+(defadvice! me/edwina-window-follow-xref-advice (&rest _)
+  :after 'xref-find-definitions-other-window (me/edwina-window-follow-xref))
+#+end_src
+
 Setup this function to tell Edwina to close Treemacs and call =edwina-arrange=:
 #+begin_src emacs-lisp
 (defun me/edwina-window-create ()
