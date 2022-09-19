@@ -376,17 +376,23 @@ Configure =glencjones/edwina='s fork to filter certain windows from being arrang
 (defun doom-popup-filter (in-buffer)
     (with-current-buffer in-buffer
       (progn
-        (message "[EDWINA] checking buffer t[%s] ib[%s] pun[%s] pub[%s] pu[%s] cb[%s] pm[%s]" (type-of in-buffer) in-buffer (+popup-buffer-p (buffer-name in-buffer)) (+popup-buffer-p in-buffer) (+popup-buffer-p) (current-buffer) +popup-mode)
+        (message "[EDWINA] checking buffer t[%s] ib[%s] pun[%s] pub[%s] pu[%s] cb[%s] pm[%s]"
+                 (type-of in-buffer)
+                 in-buffer
+                 (+popup-buffer-p (buffer-name in-buffer))
+                 (+popup-buffer-p in-buffer)
+                 (+popup-buffer-p)
+                 (current-buffer)
+                 +popup-mode)
         (if (or (+popup-buffer-p)
                 (cond
                  (( string-match-p "*" (buffer-name in-buffer)) t)
                  (( string-match-p " *" (buffer-name in-buffer)) t)
                  (( string-match-p "magit" (buffer-name in-buffer)) t)
-                 (t nil)
-                 )
-                )
+                 (t nil)))
             (progn (message "[EDWINA] Filter %s" (buffer-name in-buffer)) t)
           (progn (message "[EDWINA] No Filter %s" (buffer-name in-buffer)) nil)))))
+
 (setq! edwina-buffer-filter #'doom-popup-filter)
 #+end_src
 Source: [[https://github.com/glencjones/doom-exwm/blob/main/config.org#edwina-configuration][github]].
