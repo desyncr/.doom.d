@@ -316,6 +316,11 @@ I'm not configuring the following:
 - =(setq display-buffer-base-action '(display-buffer-below-selected))= : This causes Ibuffer to behave funky  (opening two windows each time).
 - =(edwina-setup-dwm-keys)=: I'm not using the default keybindings.
 
+Disable modeline via a noop function:
+#+begin_src emacs-lisp
+(defun edwina-mode-line-indicator ())
+#+end_src
+
 I need to create these two functions to work around Edwina mismanagement of Treemacs window. Essentially Edwina handles Treemacs window as the main window. I'm using these methods to close Treemacs when arranging windows.
 
 #+begin_src emacs-lisp
