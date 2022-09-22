@@ -1696,16 +1696,20 @@ Run commands:
 (package! elfeed)
 (package! elfeed-goodies)
 #+end_src
+#+begin_src emacs-lisp
+(defun me/elfeed-view ()
+  (elfeed-update)
+  (elfeed-goodies/setup)
+  (elfeed))
+#+end_src
 
 #+begin_src emacs-lisp
 (use-package elfeed
   :defer t
-  :init
-  (elfeed-goodies/setup)
   :config
   (add-hook 'elfeed-show-mode-hook #'elfeed-update)
   (add-hook  'elfeed-show-mode-hook 'variable-pitch-mode)
-  (map! "M-e" 'elfeed)
+  (map! "M-e" 'me/elfeed-view)
   (setq elfeed-feeds
       '(
         ("https://sachachua.com/blog/category/emacs-news/feed/" emacs)
