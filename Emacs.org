@@ -365,25 +365,6 @@ Setup this function to tell Edwina to close Treemacs and call =edwina-arrange=:
 
 Similarly when deleting a window Edwina can put Treemacs as the master window. This keybinding + function help work around this issue.
 #+begin_src emacs-lisp
-(defun me/edwina-window-close ()
-  (interactive)
-  "Close a window preserving layout"
-  (message "Edwina close")
-
-  (me/edwina-treemacs-snapshot)
-  (+workspace/close-window-or-workspace)
-  (me/edwina-treemacs-restore)
-
-  ; This causes treemacs to be displayed as master window...
-  ; sometimes
-  ;(evil-window-next 1)
-)
-
-(map! "M-w" 'me/edwina-window-close)
-#+end_src
-
-
-#+begin_src emacs-lisp
 (defun me/edwina-treemacs-restore ()
   (interactive)
   (require 'treemacs)
@@ -408,6 +389,24 @@ Similarly when deleting a window Edwina can put Treemacs as the master window. T
     (`visible (delete-window (treemacs-get-local-window)))
     (_ (message "Treemacs is not visible or open")))
 )
+#+end_src
+
+#+begin_src emacs-lisp
+(defun me/edwina-window-close ()
+  (interactive)
+  "Close a window preserving layout"
+  (message "Edwina close")
+
+  (me/edwina-treemacs-snapshot)
+  (+workspace/close-window-or-workspace)
+  (me/edwina-treemacs-restore)
+
+  ; This causes treemacs to be displayed as master window...
+  ; sometimes
+  (evil-window-prev 0)
+)
+
+(map! :map persp-mode-map "M-w" 'me/edwina-window-close)
 #+end_src
 
 By default Edwina zooms' feature doesn't /selects/ the window zoomed into. See [[https://github.com/ajgrf/edwina/issues/7][this issue]] for reference.
