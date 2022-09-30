@@ -25,6 +25,7 @@
   - [[#prompt-for-buffer][prompt-for-buffer]]
   - [[#consult-projectile][consult-projectile]]
   - [[#display-time][Display time]]
+  - [[#doom-modeline][Doom modeline]]
 - [[#keybindings][Keybindings]]
   - [[#navigation-and-files][Navigation and files]]
   - [[#buffers-and-edition][Buffers and Edition]]
@@ -634,6 +635,10 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
  display-time-format "w%U"
  display-time-default-load-average nil)
 (display-time)
+#+end_src
+** TODO Doom modeline
+#+begin_src emacs-lisp
+(setq doom-modeline-buffer-file-name-style 'file-name)
 #+end_src
 * Keybindings
 ** Navigation and files
