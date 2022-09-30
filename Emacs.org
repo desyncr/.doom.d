@@ -753,10 +753,9 @@ The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
 
 - Go to last change
 #+begin_src emacs-lisp
-;(global-set-key [(control ?.)] 'goto-last-change)
-;(global-set-key [(control ?,)] 'goto-last-change-reverse)
-(map! "M-." 'goto-last-change)
-(map! "M-," 'goto-last-change-reverse)
+(with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "M-.") 'goto-last-change-reverse)
+  (define-key evil-normal-state-map (kbd "M-,") 'goto-last-change))
 #+end_src
 
 ** TODO Buffers and Edition
