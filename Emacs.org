@@ -632,7 +632,7 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 ** TODO Display time
 #+begin_src emacs-lisp
 (setq
- display-time-format "%I:%M %p %e %b %y | w%U"
+ display-time-format "w%U"
  display-time-default-load-average nil)
 (display-time)
 #+end_src
