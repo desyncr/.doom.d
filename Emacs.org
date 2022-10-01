@@ -134,7 +134,6 @@ This package is activated via =:emacs (undo +tree)=.
 
 #+begin_src emacs-lisp
 (use-package undo-tree
-    :ensure t
     :init
     (setq undo-limit 80000000)
     (setq undo-outer-limit 100000000)
@@ -161,7 +160,6 @@ Package repository: [[https://github.com/bbatsov/super-save][here]].
 
 #+begin_src emacs-lisp
 (use-package super-save
-  :ensure t
   :defer t
   :config
   (super-save-mode +1))
@@ -586,7 +584,6 @@ This package light the cursor when a (large) movement is performed, useful when 
 #+begin_src emacs-lisp
 (use-package beacon
   :defer t
-  :ensure t
   :config
     (beacon-mode 1)
     (setq beacon-size 10))
@@ -1014,8 +1011,7 @@ This package uses devdocs generated documentation (downloads it) and queries it 
 
 #+begin_src emacs-lisp
 (use-package devdocs
-  :defer t
-  :ensure t)
+  :defer t)
 
 (global-set-key (kbd "C-h D") 'devdocs-lookup)
 #+end_src
@@ -1035,7 +1031,6 @@ Better jump (remember jump list).
 #+begin_src emacs-lisp
 (use-package better-jumper
   :defer t
-  :ensure t
   :config
   (better-jumper-mode +1))
 (with-eval-after-load 'evil-maps
@@ -1122,8 +1117,7 @@ Ensure treemacs-projectile integration:
 
 #+begin_src emacs-lisp
 (use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t)
+  :after (treemacs projectile))
 #+end_src
 
 Ensure treemacs-magit integration:
@@ -1131,8 +1125,7 @@ Ensure treemacs-magit integration:
 #+begin_src emacs-lisp
 (use-package treemacs-magit
   :defer t
-  :after (treemacs magit)
-  :ensure t)
+  :after (treemacs magit))
 
 #+end_src
 
@@ -1141,7 +1134,6 @@ Ensure treemacs-persp integration:
 #+begin_src emacs-lisp
 (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
-  :ensure t
   :config (treemacs-set-scope-type 'Perspectives))
 #+end_src
 ** TODO workspaces
@@ -1421,7 +1413,6 @@ Search org-roam notes via consult (source: [[https://github.com/jgru/consult-org
 #+begin_src emacs-lisp
 (use-package consult-org-roam
   :defer t
-   :ensure t
    :init
    (require 'consult-org-roam)
    ;; Activate the minor-mode
@@ -1464,7 +1455,6 @@ I opted for this package rather than org-modern since the latter was rather inva
 #+begin_src emacs-lisp
 (use-package org-bullets
   :defer t
-  :ensure t
   :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   )
