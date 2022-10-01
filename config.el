@@ -7,8 +7,6 @@
 
 (setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
 
-(setq debug-on-error t)
-
 (setq mac-command-modifier 'meta) ; make cmd key do Meta
 (setq mac-option-modifier 'super) ; make opt key do Super
 (setq mac-control-modifier 'control) ; make Control key do Control
@@ -61,9 +59,10 @@
 (setq doom-modeline-enable-word-count t)
 
 (setq doom-font-increment 1)
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)) ;; Fira Code,  :weight 'medium, :size 12
-(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 15))
-(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
+(setq me/doom-font-size 13)
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size me/doom-font-size)) ;; Fira Code,  :weight 'medium, :size 12
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size me/doom-font-size))
+(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size me/doom-font-size))
 
 (custom-theme-set-faces
     'user
@@ -92,20 +91,128 @@
 
 (setq fancy-splash-image "~/.doom.d/splash/doom-emacs-bw-light.svg")
 
-(after! git-gutter
-  (setq git-gutter:update-interval 0.5))
-
-(advice-add 'evil-ex-search-next :after
-            (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
-(advice-add 'evil-ex-search-previous :after
-            (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
-
-(use-package centered-cursor-mode
-  :defer t
+(use-package edwina
   :config
-  ;; Optional, enables centered-cursor-mode in all buffers.
-  ;;(global-centered-cursor-mode)
+  (advice-remove #'display-buffer #'edwina--display-buffer)
+  (edwina-mode 1))
+
+(defun edwina-mode-line-indicator ())
+
+(defun me/edwina-window-arrange ()
+  (interactive)
+  "Create a window preserving layout"
+  (me/edwina-treemacs-snapshot)
+
+  (edwina-arrange)
+
+  (me/edwina-treemacs-restore))
+
+(defadvice! me/edwina-window-follow-xref-advice (&rest _)
+  :after 'xref-find-definitions-other-window (me/edwina-window-arrange))
+
+(defadvice! me/edwina-terminal-advice (&rest _)
+  :after 'me/vterm-split-right (me/edwina-window-arrange))
+
+(defun me/edwina-window-create ()
+  (interactive)
+  "Create a window preserving layout"
+  (me/edwina-treemacs-snapshot)
+
+  (evil-window-vnew nil nil)
+
+  ; arrange windows
+  (edwina-arrange)
+
+  (me/edwina-treemacs-restore)
+  ; go back to the previously selected window
+  ; rather than being stuck in treemacs
+  (evil-window-prev 0)
 )
+
+(map! "M-n" 'me/edwina-window-create)
+
+(defun me/edwina-treemacs-restore ()
+  (interactive)
+  (require 'treemacs)
+  "Restore treemacs if it was visible"
+  (pcase me/treemacs-restore
+    (`visible (if (doom-project-p)
+                  (treemacs-add-and-display-current-project)
+                (treemacs)))
+    (_ (message "No need to restore Treemacs")))
+)
+
+(defun me/edwina-treemacs-snapshot ()
+  (interactive)
+  (require 'treemacs)
+  "Save treemacs visibility and close it"
+  (setq me/treemacs-restore (treemacs-current-visibility))
+
+  ;; forcibly close treemacs (if open)
+  (pcase (treemacs-current-visibility)
+    (`visible (delete-window (treemacs-get-local-window)))
+    (_ (message "Treemacs is not visible or open")))
+)
+
+(defun me/edwina-window-close ()
+  (interactive)
+  "Close a window preserving layout"
+  (message "Edwina close")
+
+  (me/edwina-treemacs-snapshot)
+  (+workspace/close-window-or-workspace)
+  (me/edwina-treemacs-restore)
+
+  ; This causes treemacs to be displayed as master window...
+  ; sometimes
+  (evil-window-prev 0)
+)
+
+(map! :map persp-mode-map "M-w" 'me/edwina-window-close)
+
+(defun me/edwina-window-zoom ()
+    (interactive)
+    "Zoom/cycle the selected window to/from master area."
+    (if (eq (selected-window) (frame-first-window))
+        (edwina-swap-next-window)
+      (let ((pane (edwina-pane (selected-window))))
+        (edwina-delete-window)
+        (edwina-arrange (cons pane (edwina-pane-list)))
+        ;; switch to master window
+        (select-window (car (edwina--window-list))))))
+
+(defun me/edwina-zoom-arrange ()
+  (interactive)
+  "Arrange currently selected window as the master window"
+  (me/edwina-treemacs-snapshot)
+  (me/edwina-window-zoom)
+  (edwina-arrange)
+  (me/edwina-treemacs-restore))
+
+(map! "M-a" 'me/edwina-zoom-arrange)
+
+(defun doom-popup-filter (in-buffer)
+    (with-current-buffer in-buffer
+      (progn
+        (message "[EDWINA] checking buffer t[%s] ib[%s] pun[%s] pub[%s] pu[%s] cb[%s] pm[%s]"
+                 (type-of in-buffer)
+                 in-buffer
+                 (+popup-buffer-p (buffer-name in-buffer))
+                 (+popup-buffer-p in-buffer)
+                 (+popup-buffer-p)
+                 (current-buffer)
+                 +popup-mode)
+        (if (or (+popup-buffer-p)
+                (cond
+                 (( string-match-p "*" (buffer-name in-buffer)) t)      ; other
+                 (( string-match-p " *" (buffer-name in-buffer)) t)     ; treemacs
+                 (( string-match-p "Preview:" (buffer-name in-buffer)) t) ; lsp-ui follow-xref multiple implementation selection
+                 (( string-match-p "magit" (buffer-name in-buffer)) t)
+                 (t nil)))
+            (progn (message "[EDWINA] Filter out %s" (buffer-name in-buffer)) t)
+          (progn (message "[EDWINA] Allow %s" (buffer-name in-buffer)) nil)))))
+
+(setq! edwina-buffer-filter #'doom-popup-filter)
 
 (use-package vertico
   :init
@@ -138,7 +245,22 @@
         '((left-fringe . 2)
           (right-fringe . 2))))
 
-(map! "M-§" #'resize-window)
+(after! git-gutter
+  (setq git-gutter:update-interval 0.5))
+
+(advice-add 'evil-ex-search-next :after
+            (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+(advice-add 'evil-ex-search-previous :after
+            (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+
+(use-package centered-cursor-mode
+  :defer t
+  :config
+  ;; Optional, enables centered-cursor-mode in all buffers.
+  ;;(global-centered-cursor-mode)
+)
+
+(map! "M-±" #'resize-window)
 
 (use-package beacon
   :defer t
@@ -159,34 +281,16 @@
 (defadvice! prompt-for-vbuffer (&rest _)
   :after 'evil-window-vsplit (consult-projectile))
 
-(map! "M-n"
-     'evil-window-vnew)
-(defadvice! vnew-righthand (&rest _)
-  :after 'evil-window-vnew (+evil/window-move-right))
-(defadvice! vnew-dashboard (&rest _)
-  :after 'evil-window-vnew (+doom-dashboard/open (selected-frame)))
-(defadvice! vnew-projectile (&rest _)
-  :after 'evil-window-vnew (consult-projectile))
-
-(use-package zoom
-  :defer t
-  :config
-    (zoom-mode 0)
-    (global-set-key (kbd "C-x =") 'zoom))
-
 (setq
- display-time-format "%I:%M %p %e %b %y | w%U"
+ display-time-format "w%U"
  display-time-default-load-average nil)
 (display-time)
 
-(map! "M-v" 'clipboard-yank)
-(map! "M-c" 'copy-region-as-kill)
+(setq doom-modeline-buffer-file-name-style 'file-name)
 
 (map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
 
 (map! "M-;" 'execute-extended-command)
-
-(map! :ne "M-/" #'comment-or-uncomment-region)
 
 (map! "M-t" #'+treemacs/toggle)
 
@@ -207,31 +311,45 @@
 
 (map! "M-b" #'+vertico/switch-workspace-buffer)
 
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+(with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "s") 'evil-ex-search-forward)
+  (define-key evil-normal-state-map (kbd "S") 'evil-ex-search-backward))
+
 (map! "M-]" #'next-window-any-frame)
 (map! "M-[" #'previous-window-any-frame)
 
-(global-set-key (kbd "C-c v p") 'er/mark-paragraph)
-(global-set-key (kbd "C-c v w") 'er/mark-word)
+(map! "M-w" 'delete-window)
+
+(map! "M-y" '+vterm/toggle)
+
+(map! "M-g" #'xref-find-definitions-other-window)
+
+(map! "M-k" 'evil-scroll-up)
+(map! "M-j" 'evil-scroll-down)
+
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
+
+(with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "M-,") 'goto-last-change-reverse)
+  (define-key evil-normal-state-map (kbd "M-.") 'goto-last-change))
+
+(map! :ne "M-/" #'comment-or-uncomment-region)
+
+(map! :desc "Paste from clipboard" "M-v" 'clipboard-yank)
+(map! :desc "Copy into clipboard" "M-c" 'copy-region-as-kill)
+
+(map! :leader :desc "Visually mark paragraph" "v p" 'er/mark-paragraph)
+(map! :leader :desc "Visually mark word" "v w" 'er/mark-word)
 
 (map! "M-i" #'consult-yasnippet)
 
 (after! evil-org
   (define-key evil-org-mode-map (kbd "<visual-state> M-l") 'org-insert-link))
 
-(map! "M-g" #'xref-find-definitions-other-window)
-
-(map! "M-w" 'delete-window)
-
 (global-set-key (kbd "C-c e") 'org-edit-src-code)
-
-(after! evil-org
-  (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
-  (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
-
-(map! "C-." 'goto-last-change)
-(map! "C-," 'goto-last-change-reverse)
-;(global-set-key [(control ?.)] 'goto-last-change)
-;(global-set-key [(control ?,)] 'goto-last-change-reverse)
 
 (use-package ispell
   :defer t)
@@ -254,6 +372,9 @@
 
 (setq langtool-autoshow-message-function
       'langtool-autoshow-detail-popup)
+
+(use-package expand-region
+  :bind ("M-=" . er/expand-region))
 
 (setq flycheck-checker-error-threshold 5000)
 
@@ -308,14 +429,6 @@
 
 (use-package yasnippet-snippets
   :defer t)
-
-(use-package evil-snipe
-  :defer t
-  :config
-  (setq evil-snipe-scope 'visible)
-  (setq evil-snipe-repeat-scope 'buffer)
-  (setq evil-snipe-spillover-scope 'whole-buffer)
-)
 
 (use-package devdocs
   :defer t
@@ -373,6 +486,8 @@
     :desc "Switch workspace"
     "TAB TAB" #'me/switch-workspace)
 
+(map! "M-§" 'me/switch-workspace)
+
 (setq org-directory "~/org/")
 (after! org
   (setq
@@ -415,12 +530,30 @@
 
 (setq org-capture-bookmark nil)
 
+(setq org-capture-templates
+    '(("t" "TODO" entry (file+headline +org-capture-todo-file "Inbox")
+       "* TODO %? %U\n%i\n%a" :prepend t)
+      ("n" "Notes" entry (file+headline +org-capture-notes-file "Inbox")
+       "* %u %?\n%i\n%a" :prepend t)
+      ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
+       "* %U %?\n%i\n%a" :prepend t)))
+
+(defun me/org-capture-todo (type &optional arg)
+  (interactive "P")
+  (org-capture arg type))
+
+(map! :leader :desc "Capture a TODO item" "c t" (lambda() (interactive) (me/org-capture-todo "t")))
+(map! :leader :desc "Capture a new note" "c n" (lambda() (interactive) (me/org-capture-todo "n")))
+(map! :leader :desc "Capture a new journal entry" "c j" (lambda() (interactive) (me/org-capture-todo "j")))
+
 (map! "M-o" 'org-agenda)
 
 (setq org-agenda-custom-commands
       '(
         ("w" "List :work: TODO/WAITING|INPROGRESS|NEXT"
           ((tags "work/TODO|WAITING|INPROGRESS|NEXT")))
+        ("d" "List :docs: TODO/WAITING|INPROGRESS|NEXT"
+          ((tags "docs/TODO|WAITING|INPROGRESS|NEXT")))
         ("p" "List :personal: TODO/INPROGRESS/NEXT"
             ((tags "personal/TODO|INPROGRESS|NEXT")))
         ("P" "List :projects: TODO/INPROGRESS/NEXT"
@@ -436,13 +569,18 @@
                                     (tags priority-down todo-state-down)
                                     (search priority-down todo-state-down category-keep)))
 
-(defun me/org-agenda-work-view (&optional arg)
+(defun me/org-agenda-view (type &optional arg)
   (interactive "P")
   (split-window-horizontally)
   (other-window 1)
-  (org-agenda arg "w"))
+  (org-agenda arg type))
 
-(map! :leader :desc "Work view" "o a w" 'me/org-agenda-work-view)
+(map! :leader :desc "Work view" "o a w" (lambda() (interactive) (me/org-agenda-view "w")))
+(map! :leader :desc "Docs view" "o a d" (lambda() (interactive) (me/org-agenda-view "d")))
+(map! :leader :desc "Personal view" "o a p" (lambda() (interactive) (me/org-agenda-view "p")))
+(map! :leader :desc "Projects view" "o a P" (lambda() (interactive) (me/org-agenda-view "P")))
+(map! :leader :desc "Emacs view" "o a e" (lambda() (interactive) (me/org-agenda-view "e")))
+(map! :leader :desc "Learning view" "o a l" (lambda() (interactive) (me/org-agenda-view "l")))
 
 (setq org-agenda-prefix-format "%t %s")
 
@@ -464,8 +602,21 @@
   :config
   (setq org-auto-tangle-default nil))
 
+(setq plantuml-jar-path "/usr/local/bin/plantuml.jar")
+(setq plantuml-default-exec-mode 'jar)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
+
 (use-package! ob-http
   :commands org-babel-execute:http)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (http . t)))
 
 (use-package org-roam
   :defer t
@@ -500,7 +651,7 @@
 
 (after! org
     (setq org-todo-keywords
-        '((sequence  "PROJ(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
+        '((sequence  "REPEAT(r)" "PROJ(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
     (setq org-tag-alist '(("personal" . ?p) ("projects" . ?P) ("learning" . ?l) ("@home" . ?h) ("work" . ?w) ("@computer" . ?c) ("errands" . ?e)))
     )
 
@@ -567,14 +718,76 @@
 
 (map! :leader :desc "Open vterm vsplit" "o T" #'me/vterm-split-right)
 
+(defun run-command-recipe-example ()
+  (list
+   (list :display "Run APv2 locally"
+         :command-name "*www-admin-v2-local"
+         :command-line "npm start"
+         :working-dir "~/Playground/www-admin-v2")
+   (list :display "Tail error logs"
+         :command-name "*exads-tail"
+         :command-line "vagrant ssh web -c 'sudo -i tail -f /var/log/php/error.log'"
+         :working-dir "~/sys-vagrant/code")
+   (list :display "Start VM"
+         :command-name "*exads-up"
+         :command-line "vagrant up"
+         :working-dir "~/sys-vagrant/code")
+   (list :display "Stop VM"
+         :command-name "*exads-down"
+         :command-line "vagrant halt"
+         :working-dir "~/sys-vagrant/code")
+   ))
+
+(use-package run-command
+  :config
+  (add-to-list 'run-command-recipes 'run-command-recipe-example))
+
+(use-package multi-vterm
+    :config
+    (add-hook 'vterm-mode-hook
+            (lambda ()
+            (setq-local evil-insert-state-cursor 'box)
+            (evil-insert-state)))
+    (define-key vterm-mode-map [return]                      #'vterm-send-return)
+
+    (setq vterm-keymap-exceptions nil)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-f")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-a")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-v")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-b")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-w")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-u")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-n")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-m")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-p")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-j")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-k")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-t")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-g")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-c")      #'vterm--self-insert)
+    (evil-define-key 'insert vterm-mode-map (kbd "C-SPC")    #'vterm--self-insert)
+    (evil-define-key 'normal vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+    (evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
+    (evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
+    (evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)
+    (evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
+    (evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
+    (evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume))
+
+(defun me/elfeed-view ()
+  (elfeed-update)
+  (elfeed-goodies/setup)
+  (elfeed))
+
 (use-package elfeed
   :defer t
-  :init
-  (elfeed-goodies/setup)
   :config
   (add-hook 'elfeed-show-mode-hook #'elfeed-update)
   (add-hook  'elfeed-show-mode-hook 'variable-pitch-mode)
-  (map! "M-e" 'elfeed)
+  (map! "M-e" 'me/elfeed-view)
   (setq elfeed-feeds
       '(
         ("https://sachachua.com/blog/category/emacs-news/feed/" emacs)

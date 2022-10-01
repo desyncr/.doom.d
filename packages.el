@@ -2,9 +2,12 @@
 
 (package! super-save)
 
-(package! centered-cursor-mode)
+(package! edwina
+    :recipe (:host github :repo "glencjones/edwina"))
 
 (package! vertico-posframe)
+
+(package! centered-cursor-mode)
 
 (package! resize-window)
 
@@ -12,17 +15,19 @@
 
 (package! consult-projectile)
 
-(package! zoom)
+(package! evil-snipe :disable t)
+
+(package! expand-region)
 
 (package! rainbow-delimiters)
 
 (package! consult-yasnippet)
 
-(package! evil-snipe)
-
 (package! devdocs)
 
 (package! better-jumper)
+
+(package! browse-at-remote)
 
 (package! treemacs-projectile)
 
@@ -31,6 +36,8 @@
 (package! org-auto-tangle)
 
 (package! inf-ruby)
+
+(package! ob-async)
 
 (package! ob-http)
 
@@ -41,6 +48,10 @@
 (package! toc-org)
 
 (package! literate-calc-mode)
+
+(package! run-command)
+
+(package! multi-vterm)
 
 (package! elfeed)
 (package! elfeed-goodies)
