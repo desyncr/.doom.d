@@ -1,7 +1,0 @@
-# name: "if (condition) { ... }"
-# key: if
-# group: control
-# --
-if ($1) {
-  ${0:`yas-selected-text`}
-}

@@ -1,7 +1,0 @@
-# name: "elseif(condition) { ... }"
-# key: eif
-# group: control
-# --
-elseif ($1) {
-  ${0:`yas-selected-text`}
-}

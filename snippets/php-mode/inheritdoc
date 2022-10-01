@@ -1,7 +1,0 @@
-# name: "@inheritdoc docblock"
-# key: inheritdoc
-# group: documentation
-# --
-/**
- * {@inheritdoc}
- */

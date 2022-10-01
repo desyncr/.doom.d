@@ -1,8 +1,0 @@
-# name: interface
-# key: i
-# group: structure
-# --
-interface ${1:}
-{
-  ${0:`yas-selected-text`}
-}

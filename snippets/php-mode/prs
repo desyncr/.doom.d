@@ -1,5 +1,0 @@
-# name: prs
-# key: prs
-# group: logging
-# --
-print_r($0, 1);

@@ -1,8 +1,0 @@
-# name: doc_d
-# key: doc_d
-# group: documentation
-# --
-/**
- * ${3:undocumented constant}
- */
-define($1, $2);

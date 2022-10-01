@@ -1,4 +1,0 @@
-# name: "isset"
-# key: is
-# --
-isset(${1:var})$0

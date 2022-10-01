@@ -1,5 +1,0 @@
-# name: "$... = ['' => ]"
-# key: array
-# group: control
-# --
-$${1:arrayName} = ['$2' => $3];

@@ -1,4 +1,4 @@
-# name: "declare(strict_types=1)"
+# name: declare strict types
 # key: dst
 # group: structure
 # --

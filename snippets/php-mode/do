@@ -1,7 +1,0 @@
-# name: "do { ... } while (condition)"
-# key: do
-# group: control
-# --
-do {
-  ${0:`yas-selected-text`}
-} while ($1);

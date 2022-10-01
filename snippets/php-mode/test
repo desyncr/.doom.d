@@ -1,8 +1,0 @@
-# name: "public function testXYZ() { ... }"
-# key: test
-# group: structure
-# --
-public function test$1()
-{
-  ${0:`yas-selected-text`}
-}

@@ -1,7 +1,0 @@
-# name: "foreach ($var as $key => $value) { .. }"
-# key: foreachk
-# group: control
-# --
-foreach ($${1:variable} as $${2:key} => $${3:value}) {
-  ${0:`yas-selected-text`}
-}

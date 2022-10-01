@@ -1,9 +1,0 @@
-# name: "if (cond) { ... } else { ... }"
-# key: ife
-# group: control
-# --
-if ($1) {
-  ${0:`yas-selected-text`}
-} else {
-  $2
-}

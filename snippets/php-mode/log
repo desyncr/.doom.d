@@ -1,4 +1,0 @@
-# name: "error_log(var_export($var, true));"
-# key: log
-# --
-error_log(var_export($1, true));

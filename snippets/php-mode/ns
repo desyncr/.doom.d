@@ -1,7 +1,0 @@
-# name: namespace
-# key: ns
-# group: structure
-# --
-namespace ${1:Foo\Bar\Baz};
-
-${0:`yas-selected-text`}
