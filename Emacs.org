@@ -53,7 +53,6 @@
   - [[#org-agenda][org-agenda]]
   - [[#org-modern][org-modern]]
   - [[#org-babel][org-babel]]
-  - [[#ob-http][ob-http]]
   - [[#org-roam][org-roam]]
   - [[#org-todo-keywords][org-todo-keywords]]
   - [[#org-bullets][org-bullets]]
@@ -509,13 +508,6 @@ Ctrl+P / command launcher-like for M-x.
 #+end_src
 
 This package also works for selecting files and other similar components.
-** git-gutter
-Show git gutter for unsaved changes, source: [[https://github.com/doomemacs/doomemacs/issues/2377#issuecomment-576117218][github comment]].
-
-#+begin_src emacs-lisp
-(after! git-gutter
-  (setq git-gutter:update-interval 0.5))
-#+end_src
 ** center-isearch
 source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]].
 
