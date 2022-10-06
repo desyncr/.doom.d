@@ -1393,6 +1393,15 @@ This is required to have ob-http be properly loaded in Doom Emacs. See response 
   (autoload 'ob-http-mode "ob-http-mode" nil t))
 #+end_src
 
+Alternatively you can use:
+#+begin_example emacs-lisp
+(use-package! ob-http
+  :commands (ob-http-mode org-babel-execute:http))
+
+(after! org
+  (add-to-list 'org-src-lang-modes '("http" . ob-http)))
+#+end_example
+
 ** org-roam
 Org-roam is a package to create a non-hierarchical knowledge base. The package is meant to be used as a Zettelkasten note taking tool.
 
