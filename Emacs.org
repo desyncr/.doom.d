@@ -1386,6 +1386,13 @@ org-babel support for PlantUML:
 
 #+end_src
 
+This is required to have ob-http be properly loaded in Doom Emacs. See response [[https://discord.com/channels/406534637242810369/1027578581032915045/1027589113257414708][here]].
+#+begin_src emacs-lisp
+(after! org
+  (add-to-list 'org-src-lang-modes '("http" . ob-http))
+  (autoload 'ob-http-mode "ob-http-mode" nil t))
+#+end_src
+
 ** org-roam
 Org-roam is a package to create a non-hierarchical knowledge base. The package is meant to be used as a Zettelkasten note taking tool.
 
