@@ -1375,12 +1375,8 @@ org-babel support for PlantUML:
 (setq plantuml-jar-path "/usr/local/bin/plantuml.jar")
 (setq plantuml-default-exec-mode 'jar)
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(;; other Babel languages
-   (plantuml . t)))
 #+end_src
-** TODO ob-http
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! ob-http)
 #+end_src
@@ -1389,10 +1385,6 @@ org-babel support for PlantUML:
 (use-package! ob-http
   :commands org-babel-execute:http)
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((emacs-lisp . t)
-   (http . t)))
 #+end_src
 
 ** org-roam
