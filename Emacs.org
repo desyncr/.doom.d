@@ -16,7 +16,6 @@
   - [[#edwina][edwina]]
   - [[#vertico][vertico]]
   - [[#vertico-posframe][vertico-posframe]]
-  - [[#git-gutter][git-gutter]]
   - [[#center-isearch][center-isearch]]
   - [[#centered-cursor-mode][centered-cursor-mode]]
   - [[#resize-window][resize-window]]
