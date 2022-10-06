@@ -1188,8 +1188,8 @@ If you use ~org~ and don't want your org files in the default location below, ch
 (defun me/org-disable-indent-mode()
   (setq org-indent-mode -1))
 
-(defun me/org-disable-git-gutter-mode()
-  (git-gutter-mode -1))
+;(defun me/org-disable-git-gutter-mode()
+;  (git-gutter-mode -1))
 
 (defun me/org-enable-literate-calc-minor-mode()
   (literate-calc-minor-mode 1))
@@ -1208,7 +1208,7 @@ If you use ~org~ and don't want your org files in the default location below, ch
 ;(add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
 
 ;; see https://github.com/doomemacs/doomemacs/issues/4815#issue-834176237
-(add-to-list 'git-gutter:disabled-modes 'org-mode)
+;(add-to-list 'git-gutter:disabled-modes 'org-mode)
 #+end_src
 
 Disable company-mode (autocompletions) on org-mode (i.e. prose):
