@@ -13,12 +13,12 @@
   - [[#fonts][Fonts]]
   - [[#darklight-theme-sync][Dark/light theme sync]]
   - [[#fancy-splash-image][Fancy splash image]]
-  - [[#edwina][edwina]]
   - [[#vertico][vertico]]
   - [[#vertico-posframe][vertico-posframe]]
   - [[#center-isearch][center-isearch]]
   - [[#centered-cursor-mode][centered-cursor-mode]]
   - [[#resize-window][resize-window]]
+  - [[#split-windows][Split windows]]
   - [[#beacon][beacon]]
   - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#prompt-for-buffer][prompt-for-buffer]]
@@ -68,7 +68,6 @@
   - [[#evil-tutor][evil-tutor]]
   - [[#keyfreq][keyfreq]]
   - [[#benchmark-init][benchmark-init]]
-  - [[#circe][circe]]
   - [[#browser-url][browser-url]]
 
 * General
@@ -287,181 +286,6 @@ Configure Doom Emacs splash image. Taken from [[https://gitlab.com/zzamboni/dot-
 #+end_src
 
 You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the top of this document for an example.
-** edwina
-Edwina is a dynamic window manager package for Emacs. It makes it easy to work in a multiple split window workflow. Edwina arranges windows in predefined layouts.
-
-I'm using =glencjones/edwina= fork as it as a "filter" functionality to avoid arranging popup windows and alike.
-#+begin_src emacs-lisp :tangle packages.el
-(package! edwina
-    :recipe (:host github :repo "glencjones/edwina"))
-#+end_src
-
-I'm setting up Edwina as per the documentation except I'm not setting up the default keybindings:
-#+begin_src emacs-lisp
-(use-package edwina
-  :config
-  (advice-remove #'display-buffer #'edwina--display-buffer)
-  (edwina-mode 1))
-#+end_src
-I'm also disabling all automatic Edwina interactions with =advice-remove=.
-
-I'm not configuring the following:
-- =(setq display-buffer-base-action '(display-buffer-below-selected))= : This causes Ibuffer to behave funky  (opening two windows each time).
-- =(edwina-setup-dwm-keys)=: I'm not using the default keybindings.
-
-Disable modeline via a noop function:
-#+begin_src emacs-lisp
-(defun edwina-mode-line-indicator ())
-#+end_src
-
-I need to create these two functions to work around Edwina mismanagement of Treemacs window. Essentially Edwina handles Treemacs window as the main window. I'm using these methods to close Treemacs when arranging windows.
-
-#+begin_src emacs-lisp
-(defun me/edwina-window-arrange ()
-  (interactive)
-  "Create a window preserving layout"
-  (me/edwina-treemacs-snapshot)
-
-  (edwina-arrange)
-
-  (me/edwina-treemacs-restore))
-#+end_src
-
-#+begin_src emacs-lisp
-(defadvice! me/edwina-window-follow-xref-advice (&rest _)
-  :before 'xref-find-definitions-other-window (evil-ex-search-word-forward))
-
-; Using evil-ex-search-word-backward/forward to correct the edwina arrangement causing the cursor position to be away the jumped symbol
-; when there's multiple stacked windows and the frame's center differs greatly from the window's center.
-; This works by "searching" for the symbol that was jumped into and going back and forward once to avoid getting the next entry (if any).
-(defadvice! me/edwina-window-follow-xref-advice (&rest _)
-  :after 'xref-find-definitions-other-window (me/edwina-window-arrange) (evil-ex-search-word-backward) (evil-ex-search-word-forward))
-
-(defadvice! me/edwina-terminal-advice (&rest _)
-  :after 'me/vterm-split-right (me/edwina-window-arrange))
-#+end_src
-
-Setup this function to tell Edwina to close Treemacs and call =edwina-arrange=:
-#+begin_src emacs-lisp
-(defun me/edwina-window-create ()
-  (interactive)
-  "Create a window preserving layout"
-  (me/edwina-treemacs-snapshot)
-
-  (evil-window-vnew nil nil)
-
-  ; arrange windows
-  (edwina-arrange)
-
-  (me/edwina-treemacs-restore)
-  ; go back to the previously selected window
-  ; rather than being stuck in treemacs
-  (evil-window-prev 0)
-)
-
-(map! "M-n" 'me/edwina-window-create)
-#+end_src
-
-Similarly when deleting a window Edwina can put Treemacs as the master window. This keybinding + function help work around this issue.
-#+begin_src emacs-lisp
-(defun me/edwina-treemacs-restore ()
-  (interactive)
-  (require 'treemacs)
-  "Restore treemacs if it was visible"
-  (pcase me/treemacs-restore
-    (`visible (if (doom-project-p)
-                  (treemacs-add-and-display-current-project)
-                (treemacs)))
-    (_ (message "No need to restore Treemacs")))
-)
-#+end_src
-
-#+begin_src emacs-lisp
-(defun me/edwina-treemacs-snapshot ()
-  (interactive)
-  (require 'treemacs)
-  "Save treemacs visibility and close it"
-  (setq me/treemacs-restore (treemacs-current-visibility))
-
-  ;; forcibly close treemacs (if open)
-  (pcase (treemacs-current-visibility)
-    (`visible (delete-window (treemacs-get-local-window)))
-    (_ (message "Treemacs is not visible or open")))
-)
-#+end_src
-
-#+begin_src emacs-lisp
-(defun me/edwina-window-close ()
-  (interactive)
-  "Close a window preserving layout"
-  (message "Edwina close")
-
-  (me/edwina-treemacs-snapshot)
-  (+workspace/close-window-or-workspace)
-  (me/edwina-treemacs-restore)
-
-  ; This causes treemacs to be displayed as master window...
-  ; sometimes
-  (evil-window-prev 0)
-)
-
-(map! :map persp-mode-map "M-w" 'me/edwina-window-close)
-#+end_src
-
-By default Edwina zooms' feature doesn't /selects/ the window zoomed into. See [[https://github.com/ajgrf/edwina/issues/7][this issue]] for reference.
-#+begin_src emacs-lisp
-(defun me/edwina-window-zoom ()
-    (interactive)
-    "Zoom/cycle the selected window to/from master area."
-    (if (eq (selected-window) (frame-first-window))
-        (edwina-swap-next-window)
-      (let ((pane (edwina-pane (selected-window))))
-        (edwina-delete-window)
-        (edwina-arrange (cons pane (edwina-pane-list)))
-        ;; switch to master window
-        (select-window (car (edwina--window-list))))))
-#+end_src
-Source: [[https://github.com/ajgrf/edwina/issues/7#issuecomment-663598457][github comment]].
-
-Since I'm not using the default Edwina's keybinding I'm setting up a keybinding for =edwina-arrange= as =M-a=.
-#+begin_src emacs-lisp
-(defun me/edwina-zoom-arrange ()
-  (interactive)
-  "Arrange currently selected window as the master window"
-  (me/edwina-treemacs-snapshot)
-  (me/edwina-window-zoom)
-  (edwina-arrange)
-  (me/edwina-treemacs-restore))
-
-(map! "M-a" 'me/edwina-zoom-arrange)
-#+end_src
-
-Configure =glencjones/edwina='s fork to filter certain windows from being arranged:
-#+begin_src emacs-lisp
-(defun doom-popup-filter (in-buffer)
-    (with-current-buffer in-buffer
-      (progn
-        (message "[EDWINA] checking buffer t[%s] ib[%s] pun[%s] pub[%s] pu[%s] cb[%s] pm[%s]"
-                 (type-of in-buffer)
-                 in-buffer
-                 (+popup-buffer-p (buffer-name in-buffer))
-                 (+popup-buffer-p in-buffer)
-                 (+popup-buffer-p)
-                 (current-buffer)
-                 +popup-mode)
-        (if (or (+popup-buffer-p)
-                (cond
-                 (( string-match-p "*" (buffer-name in-buffer)) t)      ; other
-                 (( string-match-p " *" (buffer-name in-buffer)) t)     ; treemacs
-                 (( string-match-p "Preview:" (buffer-name in-buffer)) t) ; lsp-ui follow-xref multiple implementation selection
-                 (( string-match-p "magit" (buffer-name in-buffer)) t)
-                 (t nil)))
-            (progn (message "[EDWINA] Filter out %s" (buffer-name in-buffer)) t)
-          (progn (message "[EDWINA] Allow %s" (buffer-name in-buffer)) nil)))))
-
-(setq! edwina-buffer-filter #'doom-popup-filter)
-#+end_src
-Source: [[https://github.com/glencjones/doom-exwm/blob/main/config.org#edwina-configuration][github]].
 ** TODO vertico
 #+begin_src emacs-lisp
 (use-package vertico
@@ -569,6 +393,16 @@ There are only a few commands to learn, and they mimic the normal motions in ema
 That's it: M-S-§ on the mac keyboard.
 
 Package repository [[https://github.com/dpsutton/resize-window][here]].
+
+Also available: ~SPC w <~ and ~SPC w >~ to increase and decrease width.
+** Split windows
+#+begin_src emacs-lisp
+(map! :leader "\\" #'evil-window-vsplit)
+(map! :leader "-" #'evil-window-split)
+(map! :leader "w <" (lambda() (interactive) (evil-window-decrease-width 10)))
+(map! :leader "w >" (lambda() (interactive) (evil-window-increase-width 10)))
+#+end_src
+
 ** beacon
 I'm having trouble with theme doom-nord and a vterm-terminals. vterm terminal windows don't have modeline, so it's hard to see where's the cursor if you're jumping between a few of them (as in a few vertial and horizontal windows).
 
@@ -1193,14 +1027,14 @@ If you use ~org~ and don't want your org files in the default location below, ch
 (defun me/org-enable-literate-calc-minor-mode()
   (literate-calc-minor-mode 1))
 
-(defun me/org-disable-hl-indent-guides()
-  (highlight-indent-guides-mode -1))
+;(defun me/org-disable-hl-indent-guides()
+;  (highlight-indent-guides-mode -1))
 
 (add-hook 'org-mode-hook 'visual-line-mode)
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 (add-hook 'org-mode-hook 'me/org-disable-indent-mode)
 (add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
-(add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
+;(add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
 
 ; Disabling as it causes errors when buffers as killed before the result is computed,
 ; usually while switching quickly between org files
@@ -1761,18 +1595,6 @@ Package site [[https://github.com/dacap/keyfreq][here]].
 4. ~M-x benchmark-init/show-durations-tabuled~ or ~M-x benchmark-init/show-durations-tree~
 
 See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913][this]] comment.
-** circe
-#+begin_src emacs-lisp :tangle packages.el
-(package! circe)
-#+end_src
-
-#+begin_src emacs-lisp
-(setq circe-network-options
-      '(("Libera"
-         :tls t
-         :nick "DC[e]"
-         :channels ("#freenet"))))
-#+end_src
 ** browser-url
 #+begin_src emacs-lisp
 (setq browse-url-browser-function 'browse-url-generic)
