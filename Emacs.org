@@ -19,7 +19,6 @@
   - [[#centered-cursor-mode][centered-cursor-mode]]
   - [[#resize-window][resize-window]]
   - [[#split-windows][Split windows]]
-  - [[#beacon][beacon]]
   - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#prompt-for-buffer][prompt-for-buffer]]
   - [[#consult-projectile][consult-projectile]]
@@ -32,6 +31,7 @@
   - [[#spell-checking][Spell checking]]
 - [[#coding][Coding]]
   - [[#expand-region][expand-region]]
+  - [[#syntax-entry][syntax-entry]]
   - [[#flycheck][flycheck]]
   - [[#lsp][lsp]]
   - [[#rainbow-delimiters-mode][rainbow-delimiters-mode]]
@@ -60,12 +60,8 @@
   - [[#literate-calc-mode][literate-calc-mode]]
   - [[#org-pomodoro][org-pomodoro]]
 - [[#terminal-integration][Terminal integration]]
-  - [[#run-command][Run command]]
-  - [[#multi-vterm][Multi-vterm]]
 - [[#other][Other]]
   - [[#elfeed][elfeed]]
-  - [[#calibredbel][calibredb.el]]
-  - [[#evil-tutor][evil-tutor]]
   - [[#keyfreq][keyfreq]]
   - [[#benchmark-init][benchmark-init]]
   - [[#browser-url][browser-url]]
@@ -400,29 +396,26 @@ That's it: M-S-§ on the mac keyboard.
 Package repository [[https://github.com/dpsutton/resize-window][here]].
 
 Also available: ~SPC w <~ and ~SPC w >~ to increase and decrease width.
+
+#+begin_src emacs-lisp
+(defun me/window-resize-main-pane ()
+  (interactive)
+  (setq me/main-window (frame-first-window))
+  (window-resize me/main-window (- (truncate (* 0.6 (frame-width))) (window-width me/main-window)) t))
+
+(map! :leader "w ]" #'me/window-resize-main-pane)
+(map! "M-z" #'+evil/window-move-left)
+#+end_src
+
+Source: https://stackoverflow.com/a/7623081
+
 ** Split windows
 #+begin_src emacs-lisp
-(map! :leader "\\" #'evil-window-vsplit)
-(map! :leader "-" #'evil-window-split)
+(map! :leader "w \\" #'evil-window-vsplit)
+(map! :leader "w -" #'evil-window-split)
+
 (map! :leader "w <" (lambda() (interactive) (evil-window-decrease-width 10)))
 (map! :leader "w >" (lambda() (interactive) (evil-window-increase-width 10)))
-#+end_src
-
-** beacon
-I'm having trouble with theme doom-nord and a vterm-terminals. vterm terminal windows don't have modeline, so it's hard to see where's the cursor if you're jumping between a few of them (as in a few vertial and horizontal windows).
-
-This package light the cursor when a (large) movement is performed, useful when jumping around.
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! beacon)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package beacon
-  :defer t
-  :config
-    (beacon-mode 1)
-    (setq beacon-size 10))
 #+end_src
 
 Package [[https://github.com/Malabarba/beacon][here]].
