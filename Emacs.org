@@ -464,6 +464,11 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 
 Sort buffers MRU:
 #+begin_src emacs-lisp
+(after! consult
+    (consult-customize consult-project-buffer :sort 'mru :add-history)
+    (consult-customize consult-projectile :sort 'mru :add-history)
+)
+
 (defun consult--buffer-sort-mru(xs)
     (append (cdr xs) (list (car xs)))
 )
