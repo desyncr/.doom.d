@@ -601,6 +601,11 @@ The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
 #+end_src
 
 ** TODO Buffers and Edition
+- New empty buffer
+#+begin_src emacs-lisp
+(map! :ne "M-n" #'evil-buffer-new)
+#+end_src
+
 - Comment or uncomment region
 #+begin_src emacs-lisp
 (map! :ne "M-/" #'comment-or-uncomment-region)
