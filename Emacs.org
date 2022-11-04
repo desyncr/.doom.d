@@ -485,7 +485,8 @@ Sort buffers MRU:
 #+begin_src emacs-lisp
 (setq
  display-time-format "w%U"
- display-time-default-load-average nil)
+ display-time-default-load-average nil
+ doom-modeline-time-icon nil)
 (display-time)
 #+end_src
 ** TODO Doom modeline
