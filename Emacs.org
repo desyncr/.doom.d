@@ -1546,24 +1546,6 @@ Run commands:
         ("https://hnrss.org/frontpage" news)
         )))
 #+end_src
-** TODO calibredb.el
-#+begin_src emacs-lisp :tangle packages.el
-(package! calibredb)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package calibredb
-  :defer t
-  :config
-  (setq calibredb-root-dir "~/Sync/Books/Calibre Library")
-  (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
-  (setq calibredb-library-alist '(("~/Sync/Books/Calibre Library"))))
-#+end_src
-
-** TODO evil-tutor
-#+begin_src emacs-lisp :tangle packages.el
-(package! evil-tutor)
-#+end_src
 ** keyfreq
 This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
 #+begin_src emacs-lisp :tangle packages.el
