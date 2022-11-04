@@ -245,9 +245,14 @@ brew install --cask font-jetbrains-mono-nerd-font
 #+end_example
 
 You can install other fonts with a similar command following [[https://github.com/ryanoasis/nerd-fonts#option-4-homebrew-fonts][these]] instructions. See comment [[https://www.reddit.com/r/DoomEmacs/comments/qqqbon/comment/hrlhkzn/?utm_source=share&utm_medium=web2x&context=3][here]] and more info can be found [[https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/font-info.md][here]] as well.
-#+begin_src emacs-lisp
-(custom-theme-set-faces
-    'user
+*** Font faces
+#+begin_src emacs-lisp tangle:yes
+(custom-set-faces
+    '(line-number ((t (:foreground "#6f7787" :weight normal :slant normal))))
+    '(line-number-current-line ((t (:foreground "#AEBACF" :weight normal :slant normal))))
+    '(consult-separator ((t (:foreground "#AEBACF" :weight normal :slant normal))))
+    '(consult-grep-context ((t (:foreground "#AEBACF" :weight normal :slant normal))))
+
     '(org-block ((t (:inherit fixed-pitch))))
     '(org-code ((t (:inherit (shadow fixed-pitch)))))
     '(org-document-info ((t (:foreground "dark orange"))))
