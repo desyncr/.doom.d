@@ -541,16 +541,15 @@ Use =M-m= for jump into a menu item (section in the buffer).
 ~M-p~: find file in project, also ~SPC SPC~. Prefer consult for everything.
 
 #+begin_src emacs-lisp
-;(map! "M-f" #'consult-projectile)
-(map! "M-f" #'consult-buffer)
+(map! "M-p" #'consult-projectile)
 (map! :leader "SPC" 'consult-projectile)
 
-(map! "M-p" #'projectile-find-file)
+(map! "M-f" #'projectile-find-file)
 #+end_src
 
 - Find buffers
 #+begin_src emacs-lisp
-(map! "M-b" #'+vertico/switch-workspace-buffer)
+(map! "M-b" #'consult-project-buffer)
 #+end_src
 
 - Search in buffer
