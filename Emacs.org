@@ -30,6 +30,7 @@
 - [[#writing][Writing]]
   - [[#spell-checking][Spell checking]]
 - [[#coding][Coding]]
+  - [[#phpactor][phpactor]]
   - [[#expand-region][expand-region]]
   - [[#syntax-entry][syntax-entry]]
   - [[#flycheck][flycheck]]
