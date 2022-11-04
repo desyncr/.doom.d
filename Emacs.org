@@ -30,7 +30,6 @@
 - [[#writing][Writing]]
   - [[#spell-checking][Spell checking]]
 - [[#coding][Coding]]
-  - [[#phpactor][phpactor]]
   - [[#expand-region][expand-region]]
   - [[#syntax-entry][syntax-entry]]
   - [[#flycheck][flycheck]]
@@ -60,6 +59,7 @@
   - [[#toc-org][toc-org]]
   - [[#literate-calc-mode][literate-calc-mode]]
   - [[#org-pomodoro][org-pomodoro]]
+  - [[#ox-slack][ox-slack]]
 - [[#terminal-integration][Terminal integration]]
 - [[#other][Other]]
   - [[#elfeed][elfeed]]
@@ -1417,6 +1417,10 @@ Configure volume, see github comment [[https://github.com/marcinkoziej/org-pomod
       org-pomodoro-start-sound-args me/org-pomodoro-sound-args
       org-pomodoro-short-break-sound-args me/org-pomodoro-sound-args
       org-pomodoro-ticking-sound-args me/org-pomodoro-sound-args)
+#+end_src
+** TODO ox-slack
+#+begin_src emacs-lisp :tangle packages.el
+(package! ox-slack)
 #+end_src
 
 * Terminal integration
