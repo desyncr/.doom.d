@@ -969,6 +969,12 @@ git config --local user.name "DC*"
 #+end_src
 
 This configuration applies to the repository the command is running on (--local). You can apply global (i.e. to all repositories) replacing --local with the flag --global.
+
+#+begin_src emacs-lisp
+(map! "M->" 'git-gutter:next-hunk)
+(map! "M-<" 'git-gutter:previous-hunk)
+#+end_src
+
 ** Magit
 [[https://magit.vc/][Magit]] is a deal-breaker type of package for Emacs. It forever changes the way you interact with Git (Goodbye cli!).
 
