@@ -312,8 +312,30 @@ You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the t
 #+end_src
 
 The above snippet configures orderless, which enabled searching by keywords in whatever order.
+** vertico-repeat
+Vertico-repeat but for last command in category, e.g. last =+default/search-project= or last =consult-projectile=:
+#+begin_src emacs-lisp
+(setq vertico-repeat-history '())
+
+; Remember empty completions
+(setq vertico-repeat-transformers
+    (list #'vertico-repeat--filter-commands))
+
+(defun me/vertico-filter-repeat-command (command)
+  (-filter (lambda (x) (eq (car x) command)) vertico-repeat-history))
+
+(defun me/vertico-repeat-last-command (cmd)
+  (interactive)
+
+  (setq session (car (me/vertico-filter-repeat-command cmd)))
+  (if (eq session nil) (setq session (list cmd "")))
+
+  (minibuffer-with-setup-hook
+    (apply-partially #'vertico-repeat--restore session)
+    (command-execute (setq this-command (car session)))))
+#+end_src
 ** vertico-posframe
-Ctrl+P / command launcher-like for M-x.
+=Ctrl+P= / command launcher-like for =M-x=.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! vertico-posframe)
@@ -512,11 +534,19 @@ Quickly save buffer with ~M-s~ (save).
 (map! "M-s" #'save-buffer)
 #+end_src
 *** Search
+- Search buffer:
+#+begin_src emacs-lisp
+;(map! "M-f" #'+default/search-buffer)
+(map! "M-f" (lambda() (interactive) (me/vertico-repeat-last-command #'+default/search-buffer)))
+(map! "M-f" (lambda() (interactive) (me/vertico-repeat-last-command #'+default/search-buffer)))
+#+end_src
+
 - Search project:
-Search project's contents with ~M-r~ (regexp).
+Search project's contents with ~M-F~.
 
 #+begin_src emacs-lisp
-(map! "M-r" #'+default/search-project)
+;(map! "M-r" #'+default/search-project)
+(map! "M-F" (lambda() (interactive) (me/vertico-repeat-last-command #'+default/search-project)))
 #+end_src
 
 Also use ~SPC s s~ to search matching characters on the current buffer.
@@ -536,15 +566,17 @@ Use =M-m= for jump into a menu item (section in the buffer).
 ~M-p~: find file in project, also ~SPC SPC~. Prefer consult for everything.
 
 #+begin_src emacs-lisp
-(map! "M-p" #'consult-projectile)
+;(map! "M-p" #'consult-projectile)
+(map! "M-p" (lambda() (interactive) (me/vertico-repeat-last-command #'consult-projectile)))
 (map! :leader "SPC" 'consult-projectile)
 
-(map! "M-f" #'projectile-find-file)
+(map! "M-P" (lambda() (interactive) (me/vertico-repeat-last-command #'projectile-find-file)))
 #+end_src
 
 - Find buffers
 #+begin_src emacs-lisp
 (map! "M-b" #'consult-project-buffer)
+(map! "M-B" #'consult-buffer)
 #+end_src
 
 - Search in buffer
