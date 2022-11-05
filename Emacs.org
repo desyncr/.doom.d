@@ -759,6 +759,13 @@ Configure language:
 *** Writegood
 Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/][original article]] for writegood.
 * Coding
+** smart-parens
+#+begin_src emacs-lisp
+(after! smartparens
+  (smartparens-global-mode -1))
+#+end_src
+Source: https://github.com/doomemacs/doomemacs/blob/develop/docs/faq.org#how-to-disable-smartparensautomatic-parentheses-completion
+
 ** expand-region
 Visually select text regions with ~M-=~:
 #+begin_src emacs-lisp :tangle packages.el
