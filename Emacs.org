@@ -911,10 +911,6 @@ This package uses devdocs generated documentation (downloads it) and queries it 
 #+end_src
 
 Use ~C-h D~ or ~SPC h D~ to search for the symbol under cursor. Note: The documentation will not be displayed right away, you'll need to press RET on the given symbol.
-** evil-multiedit
-evil-multiedit is a multi-cursor implementation. This enables you to visually select matching characters and edit them simultaneously.
-
-The evil-multiedit package is enabled via ~:ui multiple-cursors~.
 ** better-jumper
 Better jump (remember jump list).
 
@@ -933,6 +929,17 @@ Better jump (remember jump list).
 #+end_src
 
 Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
+** evil-mc
+#+begin_src emacs-lisp
+(global-evil-mc-mode  1)
+; (global-set-key (kbd "M-d") 'evil-mc-make-and-goto-next-match)
+
+(with-eval-after-load 'evil-maps
+  (define-key evil-visual-state-map (kbd "M-d") 'evil-mc-make-and-goto-next-match)
+  (define-key evil-normal-state-map (kbd "M-d") 'evil-mc-make-and-goto-next-match))
+#+end_src
+
+
 * Version control
 Often times it's useful to see the local file in the browser, for example to share the exact code you're looking into:
 #+begin_src emacs-lisp :tangle packages.el
