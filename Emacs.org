@@ -1269,6 +1269,7 @@ It's overkill but I'm using =org-modern= to prettify symbols such as +title and 
   (setq org-modern-todo nil)
   (setq org-modern-tag nil)
   (setq org-modern-statistics nil)
+  (setq org-modern-table nil)
   (setq org-modern-hide-stars nil)
   (custom-set-faces
    '(org-modern-block-name ((t nil))))
