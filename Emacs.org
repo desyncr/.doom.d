@@ -520,6 +520,7 @@ Sort buffers MRU:
 - Setting up this keybinding for the "command palette". I'm still unsure which keybinding is the most commonly used for me.
 #+begin_src emacs-lisp
 (map! "M-;" 'execute-extended-command)
+(map! "M-<return>" 'execute-extended-command)
 #+end_src
 
 - Toggle treemacs with M-t (tree)
@@ -533,6 +534,14 @@ Quickly save buffer with ~M-s~ (save).
 #+begin_src emacs-lisp
 (map! "M-s" #'save-buffer)
 #+end_src
+
+- ielm
+
+#+begin_src emacs-lisp
+(map! :leader ";" 'ielm)
+(map! "M-:" 'ielm)
+#+end_src
+
 *** Search
 - Search buffer:
 #+begin_src emacs-lisp
@@ -637,6 +646,12 @@ The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
 #+end_src
 
 ** TODO Buffers and Edition
+- Evaluate line or region
+
+#+begin_src emacs-lisp
+(map! :ne "M-e" #'+eval/line-or-region)
+#+end_src
+
 - New empty buffer
 #+begin_src emacs-lisp
 (map! :ne "M-n" #'evil-buffer-new)
