@@ -835,14 +835,18 @@ So I'm forced to top up the default threshold via this variable:
   :defer t)
 
 (setq lsp-idle-delay 0.1
-    company-minimum-prefix-length 4
+    company-minimum-prefix-length 1
     company-idle-delay 0.1
     company-tooltip-minimum-width 50
-    company-tooltip-maximum-width 50
+    company-tooltip-maximum-width 90
     lsp-ui-doc-include-signature t
     lsp-ui-doc-max-width 100
     lsp-ui-doc-max-height 20
-    lsp-ui-doc-enable t)
+    lsp-ui-doc-enable t
+    lsp-signature-render-documentation t
+    lsp-signature-auto-activate t
+    lsp-enable-snippet nil
+    lsp-signature-function 'lsp-signature-posframe)
 
 (use-package lsp-treemacs
   :defer t)
