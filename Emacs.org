@@ -1041,16 +1041,40 @@ Ensure treemacs-persp integration:
 #+end_src
 
 Overwrite default =SPC TAB TAB= with a consult base selection:
+
 #+begin_src emacs-lisp
 (defun me/switch-workspace ()
   (interactive)
   (call-interactively #'+workspace/switch-to))
 
+(map! "M-§" 'me/switch-workspace)
+#+end_src
+
+Switch to next workspace with ~SPC TAB TAB~:
+
+#+begin_src emacs-lisp
 (map! :leader
     :desc "Switch workspace"
-    "TAB TAB" #'me/switch-workspace)
+    "TAB TAB" #'+workspace:switch-next)
+#+end_src
 
-(map! "M-§" 'me/switch-workspace)
+Quickly switch to workspace 1, 2, 3, 4 with ~SPC 1, 2, 3, 4~:
+#+begin_src emacs-lisp
+(map! :leader
+    :desc "Switch workspace 0"
+    "1" #'+workspace/switch-to-0)
+(map! :leader
+    :desc "Switch workspace 1"
+    "2" #'+workspace/switch-to-1)
+(map! :leader
+    :desc "Switch workspace 2"
+    "3" #'+workspace/switch-to-2)
+(map! :leader
+    :desc "Switch workspace 3"
+    "4" #'+workspace/switch-to-3)
+(map! :leader
+    :desc "Switch workspace 5"
+    "5" #'+workspace/switch-to-4)
 #+end_src
 * Org everything
 ** org-mode
