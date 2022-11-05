@@ -622,7 +622,8 @@ Use =M-w= to delete window or workspace (last window is preserved).
 Use =M-g= to find reference in other window.
 
 #+begin_src emacs-lisp
-(map! "M-g" #'xref-find-definitions-other-window)
+(map! "M-g" #'xref-find-definitions)
+(map! "M-G" #'xref-find-definitions-other-window)
 #+end_src
 
 =g d= changes my context when I just want to peek at the definition of a method. So quickly jumping in other-window work just fine for me.
