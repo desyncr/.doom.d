@@ -1608,35 +1608,47 @@ Open termina in vsplit window:
         ("https://hnrss.org/frontpage" news)
         )))
 #+end_src
-#+end_src
 
-#+begin_src emacs-lisp
-(use-package keyfreq
-  :defer t
-  :config
-    (keyfreq-mode 1)
-    (keyfreq-autosave-mode 1))
-#+end_src
-
-Use ~M-X keyfreq-show RET~ to see the command frequency.
-
-Package site [[https://github.com/dacap/keyfreq][here]].
-** benchmark-init
-1. Add ~(package! benchmark-init)~ to ~\~/.doom.d/packages.el~
-2. Add this to ~\~/.doom.d/init.el~
-#+begin_example elisp
-    (when init-file-debug
-    (require 'benchmark-init)
-    (add-hook 'doom-first-input-hook #'benchmark-init/deactivate))
-#+end_example
-1. Run ~doom sync~
-2. Close Emacs
-3. Start Emacs in debug mode ~emacs --debug-init~.
-4. ~M-x benchmark-init/show-durations-tabuled~ or ~M-x benchmark-init/show-durations-tree~
-
-See [[https://github.com/doomemacs/doomemacs/issues/4498#issuecomment-753692913][this]] comment.
 ** browser-url
 #+begin_src emacs-lisp
+(defmacro with-system (type &rest body)
+  "Evaluate BODY if `system-type' equals TYPE."
+  (declare (indent defun))
+  `(when (eq system-type ',type)
+     ,@body))
+#+end_src
+Source: https://stackoverflow.com/a/26137517
+
+#+begin_src emacs-lisp
 (setq browse-url-browser-function 'browse-url-generic)
-(setq browse-url-generic-program "/Applications/Firefox.app/Contents/MacOS/firefox")
+(map! :leader "c B" :desc "Browse at remote" 'browse-at-remote)
+#+end_src
+
+Use different browsers depending on theme (similar to modus operandi / modus vivendi themes):
+#+begin_src emacs-lisp
+(with-system gnu/linux
+    (setq me/chrome-bin-path "chrome")
+    (setq me/firefox-bin-path "firefox"))
+
+(with-system darwin
+    (setq me/chrome-bin-path "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
+    (setq me/firefox-bin-path "/Applications/Firefox.app/Contents/MacOS/firefox"))
+#+end_src
+
+In the above code I'm using the =system-type= variable to determine what to assigned to the me/chrome / me/firefox variables. The =system-type= variable is described [[https://www.gnu.org/software/emacs/manual/html_node/elisp/System-Environment.html#index-system_002dtype][here]] together with this great snippet:
+
+#+begin_quote
+gnu/linux
+A GNU/Linux system—that is, a variant GNU system, using the Linux kernel. (These systems are the ones people often call “Linux”, but actually Linux is just the kernel, not the whole system.)
+#+end_quote
+
+Automatically switch browser depending on OS appearance:
+#+begin_src emacs-lisp
+(defun me/switch-browser (appearance)
+  "Switch browser, taking current system APPEARANCE into consideration."
+  (pcase appearance
+    ('light (setq browse-url-generic-program me/chrome-bin-path))
+    ('dark (setq browse-url-generic-program me/firefox-bin-path))))
+
+(add-hook 'ns-system-appearance-change-functions #'me/switch-browser)
 #+end_src
