@@ -682,6 +682,7 @@ The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
 #+begin_src emacs-lisp
 (map! :ne "C-/" #'comment-or-uncomment-region)
 #+end_src
+TODO: Most code-related keybindings should be =C-<something>=.
 
 - Copy and paste
 Support yanking/killing via M-v, M-c
