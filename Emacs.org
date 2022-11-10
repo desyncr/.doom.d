@@ -1608,10 +1608,6 @@ Open termina in vsplit window:
         ("https://hnrss.org/frontpage" news)
         )))
 #+end_src
-** keyfreq
-This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
-#+begin_src emacs-lisp :tangle packages.el
-(package! keyfreq)
 #+end_src
 
 #+begin_src emacs-lisp
