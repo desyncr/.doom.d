@@ -680,7 +680,7 @@ The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
 
 - Comment or uncomment region
 #+begin_src emacs-lisp
-(map! :ne "M-/" #'comment-or-uncomment-region)
+(map! :ne "C-/" #'comment-or-uncomment-region)
 #+end_src
 
 - Copy and paste
