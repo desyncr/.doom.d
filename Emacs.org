@@ -746,6 +746,7 @@ Or use the following configuration:
 
 #+begin_src emacs-lisp
 (setq ispell-dictionary "british")
+(setq company-ispell-available nil)
 #+end_src
 
 Use ~z-=~ to get spelling corrections while under a word.
