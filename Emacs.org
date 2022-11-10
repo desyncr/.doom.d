@@ -820,7 +820,8 @@ Most classes/php files I'm working with are quite large and cause a large number
 
 Most projects I work with are somewhat following the PSR12 standard, so let's configure flycheck to respect that:
 #+begin_src emacs-lisp
-(setq flycheck-phpcs-standard "psr12")
+(setq flycheck-phpcs-standard "PSR12"
+      flycheck-php-phpcs-executable "/usr/local/bin/phpcs")
 #+end_src
 ** lsp
 I'm working on a large series of interrelated projects which work well under the same directory structure (code/{project1, project2, project3}).
@@ -859,12 +860,12 @@ So I'm forced to top up the default threshold via this variable:
   :defer t)
 
 (setq lsp-idle-delay 0.1
-    company-minimum-prefix-length 1
+    company-minimum-prefix-length 2
     company-idle-delay 0.1
     company-tooltip-minimum-width 50
-    company-tooltip-maximum-width 90
+    company-tooltip-maximum-width 120
     lsp-ui-doc-include-signature t
-    lsp-ui-doc-max-width 100
+    lsp-ui-doc-max-width 120
     lsp-ui-doc-max-height 20
     lsp-ui-doc-enable t
     lsp-signature-render-documentation t
