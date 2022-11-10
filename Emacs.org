@@ -659,6 +659,13 @@ The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
   (define-key evil-normal-state-map (kbd "M-.") 'goto-last-change))
 #+end_src
 
+- Go to line
+
+#+begin_src emacs-lisp
+(map! "M-l" 'consult-goto-line)
+#+end_src
+
+
 ** TODO Buffers and Edition
 - Evaluate line or region
 
