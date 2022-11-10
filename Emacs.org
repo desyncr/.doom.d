@@ -12,7 +12,7 @@
 - [[#ui][UI]]
   - [[#fonts][Fonts]]
   - [[#darklight-theme-sync][Dark/light theme sync]]
-  - [[#fancy-splash-image][Fancy splash image]]
+  - [[#splash-image][Splash image]]
   - [[#vertico][vertico]]
   - [[#vertico-repeat][vertico-repeat]]
   - [[#vertico-posframe][vertico-posframe]]
@@ -65,8 +65,6 @@
 - [[#terminal-integration][Terminal integration]]
 - [[#other][Other]]
   - [[#elfeed][elfeed]]
-  - [[#keyfreq][keyfreq]]
-  - [[#benchmark-init][benchmark-init]]
   - [[#browser-url][browser-url]]
 
 * General
@@ -733,7 +731,6 @@ Change dictionary with the following:
 #+begin_src emacs-lisp
 (use-package ispell
   :defer t)
-
 (use-package flyspell
   :defer t)
 #+end_src
