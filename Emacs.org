@@ -687,9 +687,10 @@ TODO: Most code-related keybindings should be =C-<something>=.
 - Copy and paste
 Support yanking/killing via M-v, M-c
 #+begin_src emacs-lisp
-(map! :desc "Paste from clipboard" "M-v" 'clipboard-yank)
+(map! (:when IS-MAC (:map general-override-mode-map :gi :desc "Paste from clipboard" "M-v" 'yank)))
 (map! :desc "Copy into clipboard" "M-c" 'copy-region-as-kill)
 #+end_src
+Source: https://github.com/doomemacs/doomemacs/issues/906#issuecomment-455279422
 
 - Mark paragraph
 Visually selects the paragraph. Execute multiple times to expand the selection or move the cursor.
