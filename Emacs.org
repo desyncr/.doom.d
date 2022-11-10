@@ -806,7 +806,6 @@ See mention [[https://takeonrules.com/2020/10/18/why-i-chose-emacs-as-my-new-tex
 #+begin_src emacs-lisp
 (modify-syntax-entry ?# "< b")
 (modify-syntax-entry ?\n "> b")
-(modify-syntax-entry ?# "< b")
 (modify-syntax-entry ?$ "w")
 (modify-syntax-entry ?_ "w")
 (modify-syntax-entry ?- "w")
