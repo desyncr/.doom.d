@@ -1548,7 +1548,7 @@ Configure volume, see github comment [[https://github.com/marcinkoziej/org-pomod
 #+end_src
 
 * Terminal integration
-There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell=, =term=, =shell=. I'll be using =vterm= and I'll referring to this package for the rest of this section.
+There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell= and =term=. I'll be using =vterm= and I'll referring to this package for the rest of this section.
 
 =vterm= offers a fully featured terminal emulation layer for Emacs. It works by leveraging ~libvterm~ library, which powers xterm. Check [[https://www.youtube.com/watch?v=8oNycFLwKfE][this presentation]] for an introduction and walkthrough. Find more in [[https://emacsconf.org/2020/talks/30/][this talk]]. Find the main repository [[https://github.com/akermu/emacs-libvterm][here]].
 
@@ -1566,18 +1566,7 @@ Since it leverages ~libvterm~ it requires a extra steps for the installation. Ch
   (map! :map vterm-mode-map "M-w" '+workspace/close-window-or-workspace))
 #+end_src
 
-I'm using ~vterm~ with [[https://github.com/tmux/tmux/wiki][tmux]] for multiplexing and [[fishshell.com/][fish]] as the shell. Down below I'll describe the configurations I use.
-
-*WARNING*: I'm currently moving away from Tmux-in-Emacs workflow. Preferring instead using the Emacs provided window/pane management. While this is not as powerful as Tmux it does reduces the setup complexity.
-
-Daily workflow:
-
-1. Create a new workspace for the shell (~SPC TAB n~)
-   (ideally save and re-open a workspace for the shell with ~SPC TAB s~ / ~SPC TAB l~)
-2. Use tmux with resurrect plugin to load pre-configured panels (~C-A C-R~ to reload panels, ~C-A C-S~ to save panels)
-   Essential [[https://github.com/tmux-plugins/tmux-resurrect][Tmux resurrect]] plugin. [[https://github.com/desyncr/tmux][My tmux config]] with keybindings, theme and plugins.
-3. Hack away!
-
+Open termina in vsplit window:
 #+begin_src emacs-lisp
 (defun me/vterm-split-right ()
   "Create a new vterm window to the right of the current one."
