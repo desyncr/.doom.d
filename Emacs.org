@@ -190,7 +190,6 @@ This determines the style of line numbers in effect. If set to ~nil~, line numbe
 Configure emacs to turn fullscreen/maximized on startup:
 
 #+begin_src emacs-lisp
-;(add-to-list 'initial-frame-alist '(fullscreen . maximized)) ;; only starting frame
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
