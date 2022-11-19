@@ -992,6 +992,13 @@ Better jump (remember jump list).
 #+end_src
 
 Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
+** avy
+#+begin_src emacs-lisp
+(with-eval-after-load 'evil-maps
+    (define-key evil-normal-state-map "f" 'avy-goto-char-timer))
+(setq avy-timeout-seconds 1
+      avy-single-candidate-jump t)
+#+end_src
 ** evil-mc
 #+begin_src emacs-lisp
 (global-evil-mc-mode  1)
