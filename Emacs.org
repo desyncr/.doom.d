@@ -269,6 +269,19 @@ Emacs plus build supports OS integration for [[https://github.com/d12frosted/hom
 (add-hook 'ns-system-appearance-change-functions #'me/sync-os-appareance)
 #+end_src
 
+Add an interactive command to change appearance:
+#+begin_src emacs-lisp
+(defun me/switch-dark-appearance ()
+    "Swith to current theme's dark appearance."
+    (interactive)
+    (me/sync-os-appearance 'dark))
+
+(defun me/switch-light-appearance ()
+    "Swith to current theme's light appearance."
+    (interactive)
+    (me/sync-os-appearance 'light))
+#+end_src
+
 This will not work on non-Mac OSes. But [[https://github.com/doomemacs/doomemacs/issues/6424#issue-1251604264][here's]] way to do it.
 ** Splash image
 Configure Doom Emacs splash image. Taken from [[https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash][zzamboni/dot-doom]]. Alternative splash images can be found at [[https://github.com/jeetelongname/doom-banners][jeetelongname/doom-banners]] repository.
