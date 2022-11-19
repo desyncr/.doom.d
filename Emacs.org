@@ -452,6 +452,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 
 (map! :leader "w ]" #'me/window-resize-main-pane)
 (map! "M-z" #'+evil/window-move-left)
+(map! "M-Z" #'me/toggle-window-maximize)
 #+end_src
 
 TODO: Doesn't work with treemacs enabled.
