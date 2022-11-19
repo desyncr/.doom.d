@@ -469,6 +469,24 @@ Source: https://stackoverflow.com/a/7623081
 #+end_src
 
 Package [[https://github.com/Malabarba/beacon][here]].
+
+** Toggle maximize
+#+begin_src emacs-lisp :tangle yes
+(defun me/toggle-window-maximize ()
+  (interactive)
+  (require 'treemacs)
+  ;; forcibly close treemacs (if open)
+  (pcase (treemacs-current-visibility)
+    (`visible (delete-window (treemacs-get-local-window)))
+    (_ (message "")))
+
+  (if (= 1 (length (window-list)))
+      ;; winner-undo undoes the last change you made to the state of your widnows.
+      ;; This isn't an exact inverse of "delete-other-windows", but it works OK for me in practice.
+      (winner-undo)
+      (delete-other-windows)))
+#+end_src
+
 ** highlight-indent-guides
 On a fresh Emacs 28.1 install I started to see the highlight indent guides changing colour when a new frame is open (!). The following seems to correct the issue:
 
