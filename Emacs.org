@@ -540,6 +540,31 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 (setq doom-modeline-buffer-file-name-style 'file-name)
 #+end_src
 * Keybindings
+|------------------------+-------------------------------------|
+| Keybinding             | Description                         |
+|------------------------+-------------------------------------|
+| Consult projectile     |                                     |
+|------------------------+-------------------------------------|
+| M-p                    | +consult-projectile                 |
+| M-P                    | Repeat last +consult-projectile     |
+| M-C-p                  | Repeat last +projectile-find-file   |
+|------------------------+-------------------------------------|
+| Search (file contents) |                                     |
+|------------------------+-------------------------------------|
+| M-f                    | +default/search-buffer              |
+| M-F                    | Repeat last +default/search-buffer  |
+| M-C-f                  | Repeat last +default/search-project |
+|------------------------+-------------------------------------|
+| Buffers                |                                     |
+|------------------------+-------------------------------------|
+| M-b                    | consult-project-buffer              |
+| M-B                    | Repeat last consult-project-buffer  |
+| M-C-b                  | Repeat last consult-buffer          |
+|------------------------+-------------------------------------|
+| Bookmarks              |                                     |
+|------------------------+-------------------------------------|
+| SPC SPC                | consult-bookmark                    |
+|------------------------+-------------------------------------|
 ** Navigation and files
 *** General
 - Shortcut for opening the Doom's dashboard
