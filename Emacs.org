@@ -40,6 +40,7 @@
   - [[#yasnippets][yasnippets]]
   - [[#devdocs][devdocs]]
   - [[#better-jumper][better-jumper]]
+  - [[#avy][avy]]
   - [[#evil-mc][evil-mc]]
 - [[#version-control][Version control]]
   - [[#git][Git]]
@@ -65,7 +66,8 @@
 - [[#terminal-integration][Terminal integration]]
 - [[#other][Other]]
   - [[#elfeed][elfeed]]
-  - [[#browser-url][browser-url]]
+  - [[#browse-url][browse-url]]
+  - [[#keyfreq][keyfreq]]
 
 * General
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
