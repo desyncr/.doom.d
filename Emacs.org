@@ -257,7 +257,7 @@ You can install other fonts with a similar command following [[https://github.co
     '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 #+end_src
 
-** Dark/light theme sync
+** OS theme sync
 Emacs plus build supports OS integration for [[https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change][light/dark theme switching]].
 
 #+begin_src emacs-lisp
