@@ -351,7 +351,7 @@ Vertico-repeat but for last command in category, e.g. last =+default/search-proj
   (setq vertico-posframe-border-width 8
         vertico-posframe-width 120
         vertico-posframe-height 20
-        vertico-posframe-min-height 10
+        vertico-posframe-min-height 20
         vertico-posframe-parameters
         '((left-fringe . 2)
           (right-fringe . 2))))
