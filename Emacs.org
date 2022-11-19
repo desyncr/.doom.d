@@ -485,11 +485,13 @@ Split to the right and below! Source: [[https://tecosaur.github.io/emacs-config/
       evil-split-window-below t)
 #+end_src
 
+Switch to default doom's dashboard on new vsplit/split:
+
 #+begin_src emacs-lisp
 (defadvice! prompt-for-buffer (&rest _)
-  :after 'evil-window-split (consult-projectile))
+  :after 'evil-window-split (switch-to-buffer (get-buffer "*doom*")))
 (defadvice! prompt-for-vbuffer (&rest _)
-  :after 'evil-window-vsplit (consult-projectile))
+  :after 'evil-window-vsplit (switch-to-buffer (get-buffer "*doom*")))
 #+end_src
 
 Use =M-n= to create a new empty buffer. The following advices will automatically move the buffer window to the right and invoice =consult-projectile=.
