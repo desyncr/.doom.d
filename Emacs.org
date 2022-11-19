@@ -458,7 +458,9 @@ Source: https://stackoverflow.com/a/7623081
 ** Split windows
 #+begin_src emacs-lisp
 (map! :leader "w \\" #'evil-window-vsplit)
+(map! "M-\\" #'evil-window-vsplit)
 (map! :leader "w -" #'evil-window-split)
+(map! "M--" #'evil-window-split)
 
 (map! :leader "w <" (lambda() (interactive) (evil-window-decrease-width 10)))
 (map! :leader "w >" (lambda() (interactive) (evil-window-increase-width 10)))
