@@ -1630,7 +1630,7 @@ Source: https://stackoverflow.com/a/26137517
 
 #+begin_src emacs-lisp
 (setq browse-url-browser-function 'browse-url-generic)
-(map! :leader "c B" :desc "Browse at remote" 'browse-at-remote)
+(map! :leader :desc "Browse at remote" "c B" 'browse-at-remote)
 #+end_src
 
 Use different browsers depending on theme (similar to modus operandi / modus vivendi themes):
