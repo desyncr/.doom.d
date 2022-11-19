@@ -505,24 +505,6 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 (package! consult-projectile)
 #+end_src
 
-Sort buffers MRU:
-#+begin_src emacs-lisp
-(after! consult
-    (consult-customize consult-project-buffer :sort 'mru :add-history)
-    (consult-customize consult-projectile :sort 'mru :add-history)
-)
-
-(defun consult--buffer-sort-mru(xs)
-    (append (cdr xs) (list (car xs)))
-)
-
-;(plist-put consult--source-buffer :items
-;    (lambda()
-;        (consult--buffer-query :sort 'mru :as #'buffer-name)
-;    )
-;)
-#+end_src
-
 =consult-projectile= is a consult source to integrate with projectile.
 ** TODO Display time
 #+begin_src emacs-lisp
