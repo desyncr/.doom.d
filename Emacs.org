@@ -130,8 +130,8 @@ This package is activated via =:emacs (undo +tree)=.
 (use-package undo-tree
     :init
     (setq undo-limit 80)
-    (setq undo-outer-limit 100)
-    (setq undo-strong-limit 150)
+    (setq undo-outer-limit 1000)
+    (setq undo-strong-limit 1500)
     (setq undo-tree-mode-lighter " UN")
     (setq undo-tree-auto-save-history t)
     (setq undo-tree-enable-undo-in-region nil)
