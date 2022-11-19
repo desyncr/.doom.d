@@ -554,9 +554,8 @@ Quickly save buffer with ~M-s~ (save).
 *** Search
 - Search buffer:
 #+begin_src emacs-lisp
-;(map! "M-f" #'+default/search-buffer)
-(map! "M-f" (lambda() (interactive) (me/vertico-repeat-last-command #'+default/search-buffer)))
-(map! "M-f" (lambda() (interactive) (me/vertico-repeat-last-command #'+default/search-buffer)))
+(map! "M-f" #'+default/search-buffer)
+(map! "M-F" (lambda() (interactive) (me/vertico-repeat-last-command #'+default/search-buffer)))
 #+end_src
 
 - Search project:
@@ -564,7 +563,7 @@ Search project's contents with ~M-F~.
 
 #+begin_src emacs-lisp
 ;(map! "M-r" #'+default/search-project)
-(map! "M-F" (lambda() (interactive) (me/vertico-repeat-last-command #'+default/search-project)))
+(map! "M-C-f" (lambda() (interactive) (me/vertico-repeat-last-command #'+default/search-project)))
 #+end_src
 
 Also use ~SPC s s~ to search matching characters on the current buffer.
@@ -584,17 +583,18 @@ Use =M-m= for jump into a menu item (section in the buffer).
 ~M-p~: find file in project, also ~SPC SPC~. Prefer consult for everything.
 
 #+begin_src emacs-lisp
-;(map! "M-p" #'consult-projectile)
-(map! "M-p" (lambda() (interactive) (me/vertico-repeat-last-command #'consult-projectile)))
-(map! :leader "SPC" 'consult-projectile)
+(map! "M-p" #'consult-projectile)
+(map! "M-P" (lambda() (interactive) (me/vertico-repeat-last-command #'consult-projectile)))
+(map! "M-C-p" (lambda() (interactive) (me/vertico-repeat-last-command #'projectile-find-file)))
 
-(map! "M-P" (lambda() (interactive) (me/vertico-repeat-last-command #'projectile-find-file)))
+(map! :leader "SPC" 'consult-bookmark)
 #+end_src
 
 - Find buffers
 #+begin_src emacs-lisp
 (map! "M-b" #'consult-project-buffer)
-(map! "M-B" #'consult-buffer)
+(map! "M-B" (lambda() (interactive) (me/vertico-repeat-last-command #'consult-project-buffer)))
+(map! "M-C-b" (lambda() (interactive) (me/vertico-repeat-last-command #'consult-buffer)))
 #+end_src
 
 - Search in buffer
