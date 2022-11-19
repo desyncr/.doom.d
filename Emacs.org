@@ -1685,4 +1685,11 @@ Automatically switch browser depending on OS appearance:
 This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
 #+begin_src emacs-lisp :tangle packages.el
 (package! keyfreq)
- #+end_src
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package keyfreq
+  :config
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
+#+end_src
