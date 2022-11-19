@@ -321,8 +321,8 @@ Vertico-repeat but for last command in category, e.g. last =+default/search-proj
 (setq vertico-repeat-history '())
 
 ; Remember empty completions
-(setq vertico-repeat-transformers
-    (list #'vertico-repeat--filter-commands))
+;(setq vertico-repeat-transformers
+;    (list #'vertico-repeat--filter-commands #'vertico-repeat--filter-empty))
 
 (defun me/vertico-filter-repeat-command (command)
   (-filter (lambda (x) (eq (car x) command)) vertico-repeat-history))
