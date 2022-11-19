@@ -259,14 +259,14 @@ You can install other fonts with a similar command following [[https://github.co
 Emacs plus build supports OS integration for [[https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change][light/dark theme switching]].
 
 #+begin_src emacs-lisp
-(defun my/apply-theme (appearance)
+(defun me/sync-os-appearance (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
   (mapc #'disable-theme custom-enabled-themes)
   (pcase appearance
     ('light (load-theme 'doom-nord-light t))
     ('dark (load-theme 'doom-nord t))))
 
-(add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
+(add-hook 'ns-system-appearance-change-functions #'me/sync-os-appareance)
 #+end_src
 
 This will not work on non-Mac OSes. But [[https://github.com/doomemacs/doomemacs/issues/6424#issue-1251604264][here's]] way to do it.
