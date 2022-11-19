@@ -1618,7 +1618,7 @@ Open termina in vsplit window:
         )))
 #+end_src
 
-** browser-url
+** browse-url
 #+begin_src emacs-lisp
 (defmacro with-system (type &rest body)
   "Evaluate BODY if `system-type' equals TYPE."
