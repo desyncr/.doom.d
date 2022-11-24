@@ -593,6 +593,7 @@ Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
 - Toggle treemacs with M-t (tree)
 #+begin_src emacs-lisp
 (map! "M-t" #'+treemacs/toggle)
+(map! "M-u" #'ranger)
 #+end_src
 
 - Save buffer:
