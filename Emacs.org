@@ -1072,9 +1072,9 @@ Use with C-o to jump out of the last item and C-i to jump in to the next item in
 (global-evil-mc-mode  1)
 ; (global-set-key (kbd "M-d") 'evil-mc-make-and-goto-next-match)
 
-(with-eval-after-load 'evil-maps
-  (define-key evil-visual-state-map (kbd "M-d") 'evil-mc-make-and-goto-next-match)
-  (define-key evil-normal-state-map (kbd "M-d") 'evil-mc-make-and-goto-next-match))
+;(with-eval-after-load 'evil-maps
+;  (define-key evil-visual-state-map (kbd "M-d") 'evil-mc-make-and-goto-next-match)
+;  (define-key evil-normal-state-map (kbd "M-d") 'evil-mc-make-and-goto-next-match))
 #+end_src
 
 
