@@ -531,14 +531,33 @@ Switch to default doom's dashboard on new vsplit/split:
 
 Use =M-n= to create a new empty buffer. The following advices will automatically move the buffer window to the right and invoke =consult-projectile=.
 
-** TODO consult-projectile
-Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
+** consult
+I'm using ~consult~ + ~consult-projectile~ to jump around buffers, recent files and project files. Package repository: [[https://github.com/minad/consult][consult]], [[https://gitlab.com/OlMon/consult-projectile][consult-projectile]]. =consult-projectile= is a consult source to integrate with projectile.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! consult-projectile)
 #+end_src
 
-=consult-projectile= is a consult source to integrate with projectile.
+Usually I'm using ~lsp~ with PHP, which seems to be quite slow at times and I'm also using ~vertico-posframe~ so buffer previews are actually not to useful for me:
+
+#+begin_src emacs-lisp
+(setq consult-preview-key nil)
+#+end_src
+
+Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but I usually do [[kbd:][M-p]] to find anything.
+
+#+begin_src emacs-lisp
+(setq consult-projectile-sources
+  '(consult-projectile--source-projectile-buffer   ;; buffers in projectile
+    consult-projectile--source-projectile-recentf  ;; recent files in projectile
+    consult-projectile--source-projectile-file     ;; projectile files
+    consult--source-project-recent-file            ;; project's recent files
+    consult-projectile--source-projectile-project  ;; projectile projects
+    consult--source-bookmark))                     ;; bookmarks
+#+end_src
+
+By default ~projectile-buffer~ source order's items in MRU (putting current opened entries last, mind). Other sources do not do MRU.
+
 ** TODO Display time
 #+begin_src emacs-lisp
 (setq
