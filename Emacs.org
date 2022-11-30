@@ -529,7 +529,7 @@ Switch to default doom's dashboard on new vsplit/split:
   :after 'evil-window-vsplit (switch-to-buffer (get-buffer "*doom*")))
 #+end_src
 
-Use =M-n= to create a new empty buffer. The following advices will automatically move the buffer window to the right and invoice =consult-projectile=.
+Use =M-n= to create a new empty buffer. The following advices will automatically move the buffer window to the right and invoke =consult-projectile=.
 
 ** TODO consult-projectile
 Package repository: [[https://gitlab.com/OlMon/consult-projectile][gitlab]].
