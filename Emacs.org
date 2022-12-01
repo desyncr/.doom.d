@@ -367,7 +367,7 @@ Vertico-repeat but for last command in category, e.g. last =+default/search-proj
           (right-fringe . 2))))
 #+end_src
 
-Function to quickly reset vertico-posframe when it gets offset for some reason and text gets cut off:
+Function to quickly reset ~vertico-posframe~ when it gets offset for some reason and text gets cut off:
 #+begin_src emacs-lisp
 (defun me/vertico-posframe-reset ()
   "Reset vertico-posframe when it get's offset due to long lines."
