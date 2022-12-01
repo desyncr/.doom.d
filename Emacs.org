@@ -352,11 +352,7 @@ Vertico-repeat but for last command in category, e.g. last =+default/search-proj
     (command-execute (setq this-command (car session)))))
 #+end_src
 ** vertico-posframe
-=Ctrl+P= / command launcher-like for =M-x=.
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! vertico-posframe)
-#+end_src
+=Ctrl+P= / command launcher-like for =M-x=. This package is installed via [[doom-module:vertico +childframe]].
 
 #+begin_src emacs-lisp
 (use-package vertico-posframe
