@@ -1280,6 +1280,18 @@ Quickly switch to workspace 1, 2, 3, 4 with ~SPC 1, 2, 3, 4~:
     :desc "Switch workspace 5"
     "5" #'+workspace/switch-to-4)
 #+end_src
+** TODO ranger
+#+begin_src emacs-lisp :tangle packages.el
+(package! ranger)
+#+end_src
+
+Here's some custom configuration options, take a look at the [[https://github.com/punassuming/ranger.el#configuration][configuration section]] in the package documentation for more options.
+#+begin_src emacs-lisp
+(setq ranger-preview-delay 0 ;; delay preview (seconds)
+      ranger-show-literal t  ;; do not highlight preview (prevents lsp from running)
+      ranger-parent-depth 3) ;; number of parent directories windows
+#+end_src
+
 * Org everything
 ** org-mode
 If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
