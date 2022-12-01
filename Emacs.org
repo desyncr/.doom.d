@@ -548,8 +548,8 @@ Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but
     consult-projectile--source-projectile-recentf  ;; recent files in projectile
     consult-projectile--source-projectile-file     ;; projectile files
     consult--source-project-recent-file            ;; project's recent files
-    consult-projectile--source-projectile-project  ;; projectile projects
-    consult--source-bookmark))                     ;; bookmarks
+    consult--source-bookmark                       ;; bookmarks
+    consult-projectile--source-projectile-project));; projectile projects
 #+end_src
 
 By default ~projectile-buffer~ source order's items in MRU (putting current opened entries last, mind). Other sources do not do MRU.
