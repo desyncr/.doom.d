@@ -980,7 +980,7 @@ So I'm forced to top up the default threshold via this variable:
  #+end_src
 
  #+begin_src emacs-lisp
-(map! "M-x" 'lsp-ui-peek-find-references)
+(map! "M-C-x" 'lsp-ui-peek-find-references)
 (map! "M-M" 'consult-lsp-symbols)
 (map! "M-C-f" 'lsp-format-region)
  #+end_src
