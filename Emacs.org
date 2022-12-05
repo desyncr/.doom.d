@@ -1281,6 +1281,12 @@ Here's some custom configuration options, take a look at the [[https://github.co
         ranger-parent-depth 3  ;; number of parent directories windows
         ranger-max-preview-size 1))
 #+end_src
+** TODO Bookmarks
+Preserving bookmarks out of the Emacs installation:
+
+#+begin_src emacs-lisp
+(setq bookmark-file "~/.doom.d/Bookmarks.lisp")
+#+end_src
 
 * Org everything
 ** org-mode
