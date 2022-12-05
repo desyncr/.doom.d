@@ -75,6 +75,9 @@
 * General
 This section contains custom packages and package configurations. Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
 
+But first let's start with an obligatory screenshot:
+[[./resources/preview.png]]
+
 Since this is a literate configuration I'm making sure no body edits the resulting tangled configuration manually:
 #+name: org-babel-warning-message
 #+begin_src emacs-lisp
