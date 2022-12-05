@@ -1003,7 +1003,7 @@ Remove snippets from company backends (use ~consult-yasnippets)~:
 
 (use-package lsp-treemacs
   :defer t)
- #+end_src
+#+end_src
 
  #+begin_src emacs-lisp
 (setq lsp-headerline-breadcrumb-enable t)
