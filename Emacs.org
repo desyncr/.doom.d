@@ -423,32 +423,13 @@ Resize-window package actually supports a transient.el-like flow (it's older tha
 
 There are only a few commands to learn, and they mimic the normal motions in emacs.
 
-|---------+------------------------------------------------------------------------------------------------------|
-| Command | Description                                                                                          |
-|---------+------------------------------------------------------------------------------------------------------|
-| n, N    | Makes the window vertically bigger, think scrolling down. Use N to enlarge 5 lines at once.          |
-| p, P    | Makes the window vertically smaller, again, like scrolling. Use P to shrink 5 lines at once.         |
-| f, F    | Makes the window horizontally bigger, like scrolling forward; F for five lines at once.              |
-| b, B    | window horizontally smaller, B for five lines at once.                                               |
-| r       | reset window layout to standard                                                                      |
-| w       | cycle through windows so that you can adjust other window panes. W cycles in the opposite direction. |
-| 2       | create a new horizontal split                                                                        |
-| 3       | create a new vertical split                                                                          |
-| 0       | delete the current window                                                                            |
-| k       | kill all buffers and put window config on the stack                                                  |
-| y       | make the window configuration according to the last config pushed onto the stack                     |
-| ?       | Display menu listing commands                                                                        |
-|---------+------------------------------------------------------------------------------------------------------|
-
 #+begin_src emacs-lisp
-(map! "M-±" #'resize-window)
+(map! :leader "w z" :desc "Activate interactive window resize" #'resize-window)
 #+end_src
-
-That's it: M-S-§ on the mac keyboard.
 
 Package repository [[https://github.com/dpsutton/resize-window][here]].
 
-Also available: ~SPC w <~ and ~SPC w >~ to increase and decrease width.
+Also available: [[kbd:][SPC w <]] and [[kbd:][SPC w >]] to increase and decrease width.
 
 Resize main/secondary window into an ideal aspect ratio (60/40):
 
@@ -463,22 +444,9 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 (map! "M-Z" #'me/toggle-window-maximize)
 #+end_src
 
-TODO: Doesn't work with treemacs enabled.
+=TODO=: Doesn't work with Treemacs enabled.
 
 Source: https://stackoverflow.com/a/7623081
-
-** Split windows
-#+begin_src emacs-lisp
-(map! :leader "w \\" #'evil-window-vsplit)
-(map! "M-\\" #'evil-window-vsplit)
-(map! :leader "w -" #'evil-window-split)
-(map! "M--" #'evil-window-split)
-
-(map! :leader "w <" (lambda() (interactive) (evil-window-decrease-width 10)))
-(map! :leader "w >" (lambda() (interactive) (evil-window-increase-width 10)))
-#+end_src
-
-Package [[https://github.com/Malabarba/beacon][here]].
 
 ** Toggle maximize
 #+begin_src emacs-lisp :tangle yes
@@ -568,31 +536,6 @@ By default ~projectile-buffer~ source order's items in MRU (putting current open
 (setq doom-modeline-buffer-file-name-style 'file-name)
 #+end_src
 * Keybindings
-|------------------------+-------------------------------------|
-| Keybinding             | Description                         |
-|------------------------+-------------------------------------|
-| Consult projectile     |                                     |
-|------------------------+-------------------------------------|
-| M-p                    | +consult-projectile                 |
-| M-P                    | Repeat last +consult-projectile     |
-| M-C-p                  | Repeat last +projectile-find-file   |
-|------------------------+-------------------------------------|
-| Search (file contents) |                                     |
-|------------------------+-------------------------------------|
-| M-f                    | +default/search-buffer              |
-| M-F                    | Repeat last +default/search-buffer  |
-| M-C-f                  | Repeat last +default/search-project |
-|------------------------+-------------------------------------|
-| Buffers                |                                     |
-|------------------------+-------------------------------------|
-| M-b                    | consult-project-buffer              |
-| M-B                    | Repeat last consult-project-buffer  |
-| M-C-b                  | Repeat last consult-buffer          |
-|------------------------+-------------------------------------|
-| Bookmarks              |                                     |
-|------------------------+-------------------------------------|
-| SPC SPC                | consult-bookmark                    |
-|------------------------+-------------------------------------|
 ** Navigation and files
 *** General
 - Shortcut for opening the Doom's dashboard
@@ -775,8 +718,7 @@ Use ~SPC v p~ to *v*isual select a *p*aragraph and ~SPC v w~ to select a word un
 
 Worth checking out [[https://www.johndcook.com/blog/2017/08/09/selecting-things-in-emacs/][this]] article.
 
-- Insert snippet
-Triggers consult posframe to select a yasnippet. It also previsualies it in the buffer.
+Triggers consult posframe to select a yasnippet. It also previsualies it in the buffer:
 
 #+begin_src emacs-lisp
 (map! "M-i" #'consult-yasnippet)
