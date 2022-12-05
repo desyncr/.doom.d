@@ -1275,7 +1275,8 @@ Here's some custom configuration options, take a look at the [[https://github.co
 
 #+begin_src emacs-lisp
 (use-package ranger
-  :init
+  :defer t
+  :config
   (setq ranger-preview-delay 0 ;; delay preview (seconds)
         ranger-show-literal t  ;; do not highlight preview (prevents lsp from running)
         ranger-parent-depth 3  ;; number of parent directories windows
