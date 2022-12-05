@@ -1255,9 +1255,12 @@ Quickly switch to workspace 1, 2, 3, 4 with ~SPC 1, 2, 3, 4~:
 Here's some custom configuration options, take a look at the [[https://github.com/punassuming/ranger.el#configuration][configuration section]] in the package documentation for more options.
 
 #+begin_src emacs-lisp
-(setq ranger-preview-delay 0 ;; delay preview (seconds)
-      ranger-show-literal t  ;; do not highlight preview (prevents lsp from running)
-      ranger-parent-depth 3) ;; number of parent directories windows
+(use-package ranger
+  :init
+  (setq ranger-preview-delay 0 ;; delay preview (seconds)
+        ranger-show-literal t  ;; do not highlight preview (prevents lsp from running)
+        ranger-parent-depth 3  ;; number of parent directories windows
+        ranger-max-preview-size 1))
 #+end_src
 
 * Org everything
