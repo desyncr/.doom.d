@@ -870,6 +870,11 @@ Configure language:
 *** Writegood
 Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/][original article]] for writegood.
 * Coding
+
+#+begin_src emacs-lisp
+(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+#+end_src
+
 ** smart-parens
 #+begin_src emacs-lisp
 (after! smartparens
