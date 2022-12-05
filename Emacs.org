@@ -326,7 +326,18 @@ Function to quickly reset ~vertico-posframe~ when it gets offset for some reason
 #+end_src
 
 This package also works for selecting files and other similar components.
-** center-isearch
+** TODO vertico-multiform
+#+begin_src emacs-lisp
+;; Enable vertico-multiform
+(vertico-multiform-mode)
+
+(setq vertico-multiform-commands
+      '((+default/search-project buffer)
+        (+default/search-buffer posframe)
+        (t posframe)))
+#+end_src
+
+** TODO center-isearch
 source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]].
 
 #+begin_src emacs-lisp
