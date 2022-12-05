@@ -466,7 +466,7 @@ I'm using ~consult~ + ~consult-projectile~ to jump around buffers, recent files 
 Usually I'm using ~lsp~ with PHP, which seems to be quite slow at times and I'm also using ~vertico-posframe~ so buffer previews are actually not to useful for me:
 
 #+begin_src emacs-lisp
-(setq consult-preview-key nil)
+(setq consult-preview-key (kbd "M-."))
 (use-package! consult
   :config
     (consult-customize consult-goto-line :preview-key 'any))
