@@ -539,65 +539,81 @@ By default ~projectile-buffer~ source order's items in MRU (putting current open
 #+attr_html: :style margin-left: auto; margin-right: auto;
 [[./resources/keybindings-cheatsheet.png][Keybindings Cheatsheet]]
 
+** General
+Shortcut for opening the Doom's dashboard:
 
 #+begin_src emacs-lisp
-(map! "M-s" #'save-buffer)
+(map! :leader :desc "Doom Dashboard" "d" #'+doom-dashboard/open)
 #+end_src
-
-- ielm
-
-#+begin_src emacs-lisp
-(map! :leader ";" 'ielm)
-(map! "M-:" 'ielm)
-#+end_src
-
+** Navigation and files
 *** Search
-- Search buffer:
+|------------------------+-------------------------|
+| Search (file contents) |                         |
+|------------------------+-------------------------|
+| M-f                    | +default/search-buffer  |
+| M-F                    | +default/search-project |
+| M-m                    | consult-imenu           |
+|------------------------+-------------------------|
+
+Search buffer:
 #+begin_src emacs-lisp
 (map! "M-f" #'+default/search-buffer)
-(map! "M-F" (lambda() (interactive) (me/vertico-repeat-last-command #'+default/search-buffer)))
-#+end_src
-
-- Search project:
-Search project's contents with ~M-F~.
-
-#+begin_src emacs-lisp
-;(map! "M-r" #'+default/search-project)
-(map! "M-C-f" (lambda() (interactive) (me/vertico-repeat-last-command #'+default/search-project)))
+(map! "M-F" #'+default/search-project)
 #+end_src
 
 Also use ~SPC s s~ to search matching characters on the current buffer.
 
-- Go to item:
-Use =M-m= for jump into a menu item (section in the buffer).
+Use =M-m= for jump into a menu item (section in the buffer):
 
 #+begin_src emacs-lisp
 (map! "M-m" #'consult-imenu)
-(defadvice! expand-folds-imenu(&rest _)
-  :before 'consult-imenu (+org/open-all-folds))
-(defadvice! expand-folds-imenu(&rest _)
-  :before '+default/search-buffer (+org/open-all-folds))
+;(defadvice! expand-folds-imenu(&rest _)
+;  :before 'consult-imenu (+org/open-all-folds))
+;(defadvice! expand-folds-imenu(&rest _)
+;  :before '+default/search-buffer (+org/open-all-folds))
 #+end_src
+*** Navigation
+|------------+------------------------|
+| Navigation |                        |
+|------------+------------------------|
+| M-p        | +consult-projectile    |
+| M-P        | projectile-find-file  |
+| SPC SPC    | consult-bookmark       |
+|------------+------------------------|
+| Buffers    |                        |
+|------------+------------------------|
+| M-b        | consult-project-buffer |
+| M-B        | consult-buffer         |
+|------------+------------------------|
 
-- Find project files
-~M-p~: find file in project, also ~SPC SPC~. Prefer consult for everything.
+~M-p~: find file in project. Prefer consult for everything:
 
 #+begin_src emacs-lisp
 (map! "M-p" #'consult-projectile)
-(map! "M-P" (lambda() (interactive) (me/vertico-repeat-last-command #'consult-projectile)))
-(map! "M-C-p" (lambda() (interactive) (me/vertico-repeat-last-command #'projectile-find-file)))
+(map! "M-P" #'projectile-find-file)
 
 (map! :leader "SPC" 'consult-bookmark)
 #+end_src
 
-- Find buffers
+Find buffers:
 #+begin_src emacs-lisp
 (map! "M-b" #'consult-project-buffer)
-(map! "M-B" (lambda() (interactive) (me/vertico-repeat-last-command #'consult-project-buffer)))
-(map! "M-C-b" (lambda() (interactive) (me/vertico-repeat-last-command #'consult-buffer)))
+(map! "M-B" #'consult-buffer)
 #+end_src
 
-- Search in buffer
+*** Movements
+|------------+--------------------------------------|
+| Movements  |                                      |
+|------------+--------------------------------------|
+| h, j, k, l | Left, Up, Down, Right                |
+| 0, $, £    | Column 0, end of line, begining line |
+| w, W       | Forward word, backward word          |
+| s, S       | Snipe search forward, backward       |
+| f          | Avy go to any char                   |
+| M-k, M-j   | Page up, down                        |
+|------------+--------------------------------------|
+
+Search in buffer:
 #+begin_src emacs-lisp :tangle packages.el
 (package! evil-snipe :disable t)
 #+end_src
