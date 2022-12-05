@@ -994,6 +994,10 @@ So I'm forced to top up the default threshold via this variable:
   ;;(map! :map company-active-map "<tab>" #'company-complete-common))
 #+end_src
 
+Remove snippets from company backends (use ~consult-yasnippets)~:
+#+begin_src emacs-lisp
+(setq +lsp-company-backends '(:separate company-capf company-dabbrev-code company-dabbrev))
+
 (use-package lsp-treemacs
   :defer t)
  #+end_src
