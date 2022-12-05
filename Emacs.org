@@ -1713,6 +1713,7 @@ Since it leverages ~libvterm~ it requires a extra steps for the installation. Ch
 
 (after! vterm
   (map! :map vterm-mode-map "M-v" 'vterm-yank)
+  (map! :map vterm-mode-map "M-t" '+vterm/toggle)
   (map! :map vterm-mode-map "M-w" '+workspace/close-window-or-workspace))
 #+end_src
 
