@@ -1190,24 +1190,6 @@ Enable treemacs and never move to treemacs with other-window as well as disablin
 
 Take a look at more configuration options in [[https://github.com/Alexander-Miller/treemacs#configuration][github]].
 
-#+begin_src text :tangle no
- * Perspective main
- ** Notes
- - path :: ~/org
- ** Doom Emacs
- - path :: ~/.doom.d
- ** .emacs.d
- - path :: ~/.emacs.d
- * Perspective code
- ** Code
-  - path :: ~/sys-vagrant/code
- * Perspective exads-core
- ** exads-core
-  - path :: ~/sys-vagrant/code/exads-core
-#+end_src
-
-Run =treemacs-edit-workspaces=.
-
 Ensure treemacs-projectile integration:
 
 #+begin_src emacs-lisp :tangle packages.el
