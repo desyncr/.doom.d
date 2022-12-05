@@ -538,7 +538,7 @@ By default ~projectile-buffer~ source order's items in MRU (putting current open
 #+end_src
 * Keybindings
 #+attr_html: :style margin-left: auto; margin-right: auto;
-[[./resources/keybindings-cheatsheet.png][Keybindings Cheatsheet]]
+[[./resources/keybindings-cheatsheet.png]]
 
 ** General
 Shortcut for opening the Doom's dashboard:
