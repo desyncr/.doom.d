@@ -741,6 +741,11 @@ Move-text:
 #+begin_src emacs-lisp
 (map! "M-K" 'move-text-up)
 (map! "M-J" 'move-text-down)
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<visual-state> M-K") 'move-text-up)
+  (define-key evil-org-mode-map (kbd "<visual-state> M-J") 'move-text-down)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-K") 'move-text-up)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-J") 'move-text-down))
 #+end_src
 ** TODO Tools
  |-------+--------------------------|
