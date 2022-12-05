@@ -3,7 +3,7 @@
 #+PROPERTY: header-args :tangle config.el :cache yes :results silent :auto_tangle yes
 #+STARTUP: inlineimages
 
-#+ATTR_HTML: :style margin-left: auto; margin-right: auto;
+#+attr_html: :style margin-left: auto; margin-right: auto;
 [[./splash/doom-emacs-bw-light.svg]]
 * Table of Contents :TOC:
 - [[#general][General]]
@@ -19,7 +19,6 @@
   - [[#center-isearch][center-isearch]]
   - [[#centered-cursor-mode][centered-cursor-mode]]
   - [[#resize-window][resize-window]]
-  - [[#split-windows][Split windows]]
   - [[#toggle-maximize][Toggle maximize]]
   - [[#highlight-indent-guides][highlight-indent-guides]]
   - [[#prompt-for-buffer][prompt-for-buffer]]
@@ -27,11 +26,13 @@
   - [[#display-time][Display time]]
   - [[#doom-modeline][Doom modeline]]
 - [[#keybindings][Keybindings]]
+  - [[#general-1][General]]
   - [[#navigation-and-files][Navigation and files]]
-  - [[#buffers-and-edition][Buffers and Edition]]
+  - [[#coding][Coding]]
+  - [[#tools][Tools]]
 - [[#writing][Writing]]
   - [[#spell-checking][Spell checking]]
-- [[#coding][Coding]]
+- [[#coding-1][Coding]]
   - [[#smart-parens][smart-parens]]
   - [[#expand-region][expand-region]]
   - [[#syntax-entry][syntax-entry]]
