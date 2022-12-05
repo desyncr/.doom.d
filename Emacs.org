@@ -1031,7 +1031,7 @@ In the code above I'm actually requiring the package via lisp, which should inst
 There's an additional package with extra snippets maintained by the Doom Emacs' github organization: [[https://github.com/doomemacs/snippets][doomemacs/snippets]]
 I'm also imported several snippets from [[https://github.com/cartolari/yasnippet-vim-snippets][cartolari/yasnippet-vim-snippets]] repository, primarily [[https://github.com/cartolari/yasnippet-vim-snippets/tree/master/snippets/php-mode][php-mode]].
 
-Tip: Use M-x yas-describe-tables to see the list of snippets and edit them.
+Tip: Use ~M-x yas-describe-tables~ to see the list of snippets and edit them.
 
 Consult integration with yasnippet:
 #+begin_src emacs-lisp :tangle packages.el
@@ -1159,6 +1159,7 @@ This configuration applies to the repository the command is running on (--local)
 (after! magit
     (setq git-commit-summary-max-length 100))
 #+end_src
+
 Anyway, in the above code setting the commit's summary max length to 100 so I'm not bothered with auto-formattig in commit's title/descriptions.
 
 #+begin_src emacs-lisp
