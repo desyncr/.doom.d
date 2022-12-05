@@ -399,7 +399,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
   (setq me/main-window (frame-first-window))
   (window-resize me/main-window (- (truncate (* 0.6 (frame-width))) (window-width me/main-window)) t))
 
-(map! :leader "w ]" #'me/window-resize-main-pane)
+(map! "M-|" #'me/window-resize-main-pane)
 (map! "M-z" #'+evil/window-move-left)
 (map! "M-Z" #'me/toggle-window-maximize)
 #+end_src
