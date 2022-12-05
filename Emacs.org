@@ -982,8 +982,7 @@ So I'm forced to top up the default threshold via this variable:
  #+begin_src emacs-lisp
 (map! "M-x" 'lsp-ui-peek-find-references)
 (map! "M-M" 'consult-lsp-symbols)
-(map! "C-l" 'lsp-format-region)
-
+(map! "M-C-f" 'lsp-format-region)
  #+end_src
 ** rainbow-delimiters-mode
 Rainbow colouring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
