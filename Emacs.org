@@ -1749,7 +1749,6 @@ Open termina in vsplit window:
   :config
   (add-hook 'elfeed-show-mode-hook #'elfeed-update)
   (add-hook  'elfeed-show-mode-hook 'variable-pitch-mode)
-  (map! "M-e" 'me/elfeed-view)
   (setq elfeed-feeds
       '(
         ("https://sachachua.com/blog/category/emacs-news/feed/" emacs)
