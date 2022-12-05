@@ -987,6 +987,12 @@ So I'm forced to top up the default threshold via this variable:
     lsp-signature-auto-activate t
     lsp-enable-snippet nil
     lsp-signature-function 'lsp-signature-posframe)
+(after! company
+  (map! :map company-active-map "<tab>" #'company-complete-selection)
+  (map! :map lsp-mode-map "<tab>" #'company-indent-or-complete-common))
+  ;;(map! :i "<tab>" #'company-complete-selection)
+  ;;(map! :map company-active-map "<tab>" #'company-complete-common))
+#+end_src
 
 (use-package lsp-treemacs
   :defer t)
