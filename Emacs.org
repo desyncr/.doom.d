@@ -543,7 +543,7 @@ Use =M-m= for jump into a menu item (section in the buffer):
 | Navigation |                        |
 |------------+------------------------|
 | M-p        | +consult-projectile    |
-| M-P        | projectile-find-file  |
+| M-P        | projectile-find-file   |
 | SPC SPC    | consult-bookmark       |
 |------------+------------------------|
 | Buffers    |                        |
@@ -616,7 +616,7 @@ Note: by default ~^~ is bound to =evil-first-non-black=, but for me it's in an a
  | M-\, M--         | Split vertically, horizontally   |
  | M-], M-[         | Next, previous window            |
  | M-w              | Delete window                    |
- | SPC w ]          | Ideal distribution               |
+ | M-<pipe>         | Ideal distribution               |
  | SPC w =          | Balance windows                  |
  | SPC w <, >       | Increase, decrease width         |
  | SPC w h, j, k, l | Switch to h, j, k, l window      |
