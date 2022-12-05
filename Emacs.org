@@ -536,27 +536,9 @@ By default ~projectile-buffer~ source order's items in MRU (putting current open
 (setq doom-modeline-buffer-file-name-style 'file-name)
 #+end_src
 * Keybindings
-** Navigation and files
-*** General
-- Shortcut for opening the Doom's dashboard
-#+begin_src emacs-lisp
-(map! :leader :desc "Open Dashboard" "d" #'+doom-dashboard/open)
-#+end_src
+#+attr_html: :style margin-left: auto; margin-right: auto;
+[[./resources/keybindings-cheatsheet.png][Keybindings Cheatsheet]]
 
-- Setting up this keybinding for the "command palette". I'm still unsure which keybinding is the most commonly used for me.
-#+begin_src emacs-lisp
-(map! "M-;" 'execute-extended-command)
-(map! "M-<return>" 'execute-extended-command)
-#+end_src
-
-- Toggle treemacs with M-t (tree)
-#+begin_src emacs-lisp
-(map! "M-t" #'+treemacs/toggle)
-(map! "M-u" #'ranger)
-#+end_src
-
-- Save buffer:
-Quickly save buffer with ~M-s~ (save).
 
 #+begin_src emacs-lisp
 (map! "M-s" #'save-buffer)
