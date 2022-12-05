@@ -1,7 +1,7 @@
-#+TITLE: Emacs doom configuration
-#+LANGUAGE: en
-#+PROPERTY: header-args :tangle config.el :cache yes :results silent :auto_tangle yes
-#+STARTUP: inlineimages
+#+title: Emacs doom configuration
+#+language: en
+#+property: header-args :tangle config.el :cache yes :results silent :auto_tangle yes
+#+startup: inlineimages
 
 #+attr_html: :style margin-left: auto; margin-right: auto;
 [[./splash/doom-emacs-bw-light.svg]]
@@ -190,9 +190,9 @@ You can install other fonts with a similar command following [[https://github.co
 #+begin_src emacs-lisp tangle:yes
 (custom-set-faces
     '(line-number ((t (:foreground "#6f7787" :weight normal :slant normal))))
-    '(line-number-current-line ((t (:foreground "#AEBACF" :weight normal :slant normal))))
-    '(consult-separator ((t (:foreground "#AEBACF" :weight normal :slant normal))))
-    '(consult-grep-context ((t (:foreground "#AEBACF" :weight normal :slant normal))))
+    '(line-number-current-line ((t (:foreground "#aebacf" :weight normal :slant normal))))
+    '(consult-separator ((t (:foreground "#aebacf" :weight normal :slant normal))))
+    '(consult-grep-context ((t (:foreground "#aebacf" :weight normal :slant normal))))
 
     '(org-block ((t (:inherit fixed-pitch))))
     '(org-code ((t (:inherit (shadow fixed-pitch)))))
@@ -335,7 +335,7 @@ source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_so
 (advice-add 'evil-ex-search-previous :after
             (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
 #+end_src
-** centered-cursor-mode
+** TODO centered-cursor-mode
 source: https://github.com/andre-r/centered-cursor-mode.el
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -397,7 +397,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 
 Source: https://stackoverflow.com/a/7623081
 
-** Toggle maximize
+** TODO Toggle maximize
 #+begin_src emacs-lisp :tangle yes
 (defun me/toggle-window-maximize ()
   (interactive)
@@ -696,6 +696,7 @@ Support yanking/killing via =M-v=, =M-c=:
 Source: https://github.com/doomemacs/doomemacs/issues/906#issuecomment-455279422
 
 Yank from kill ring:
+
 #+begin_src emacs-lisp
 (map! :ne (kbd "M-y") 'consult-yank-from-kill-ring)
 #+end_src
@@ -848,9 +849,11 @@ Source: https://github.com/doomemacs/doomemacs/blob/develop/docs/faq.org#how-to-
 
 ** expand-region
 Visually select text regions with ~M-=~:
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! expand-region)
 #+end_src
+
 See repository [[https://github.com/magnars/expand-region.el][here]].
 
 #+begin_src emacs-lisp
@@ -1148,7 +1151,6 @@ Anyway, in the above code setting the commit's summary max length to 100 so I'm 
   (insert (concat (magit-get-current-branch) ": ")))
 
 (add-hook 'git-commit-setup-hook 'me/magit-commit-setup)
-
 #+end_src
 
 * Project management
@@ -1251,6 +1253,7 @@ Quickly switch to workspace 1, 2, 3, 4 with ~SPC 1, 2, 3, 4~:
 #+end_src
 
 Here's some custom configuration options, take a look at the [[https://github.com/punassuming/ranger.el#configuration][configuration section]] in the package documentation for more options.
+
 #+begin_src emacs-lisp
 (setq ranger-preview-delay 0 ;; delay preview (seconds)
       ranger-show-literal t  ;; do not highlight preview (prevents lsp from running)
@@ -1342,8 +1345,7 @@ Custom agenda commands! \o/
 
 #+begin_src emacs-lisp
 (setq org-agenda-custom-commands
-      '(
-        ("w" "List :work: TODO/WAITING|INPROGRESS|NEXT"
+      '(("w" "List :work: TODO/WAITING|INPROGRESS|NEXT"
           ((tags "work/TODO|WAITING|INPROGRESS|NEXT")))
         ("d" "List :docs: TODO/WAITING|INPROGRESS|NEXT"
           ((tags "docs/TODO|WAITING|INPROGRESS|NEXT")))
@@ -1354,8 +1356,7 @@ Custom agenda commands! \o/
         ("e" "List :emacs: TODO/INPROGRESS/NEXT"
             ((tags "emacs/TODO|INPROGRESS|NEXT")))
         ("l" "List :learning:"
-            ((tags "learning")))
-    ))
+            ((tags "learning")))))
 #+end_src
 
 Source: [[https://stackoverflow.com/a/34660219][stackoverflow]].
@@ -1403,16 +1404,16 @@ It's overkill but I'm using =org-modern= to prettify symbols such as +title and 
 #+begin_src emacs-lisp
 (use-package org-modern
   :config
-  (setq org-modern-star nil)
-  (setq org-modern-timestamp nil)
-  (setq org-modern-todo nil)
-  (setq org-modern-tag nil)
-  (setq org-modern-statistics nil)
-  (setq org-modern-table nil)
-  (setq org-modern-hide-stars nil)
-  (custom-set-faces
-   '(org-modern-block-name ((t nil))))
-  (global-org-modern-mode))
+    (setq org-modern-star nil
+        org-modern-timestamp nil
+        org-modern-todo nil
+        org-modern-tag nil
+        org-modern-statistics nil
+        org-modern-table nil
+        org-modern-hide-stars nil)
+    (custom-set-faces
+    '(org-modern-block-name ((t nil))))
+    (global-org-modern-mode))
 #+end_src
 ** TODO org-babel
 Using =org-babel-tangle= each time you make an edition to an org file gets old very quickly. With =org-auto-tangle= you can define an auto-tangling option for the org file you're working with, so each time you save the buffer =org-babel= kicks in.
@@ -1432,6 +1433,7 @@ We don't usually tangle every org-file we work with, so I'm setting =org-auto-ta
 #+end_src
 
 I'm working with =org-babel= primarly in ruby. While =org-babel= works pretty well out of the box in order to support =:session= we need this package:
+
 #+begin_src emacs-lisp :tangle packages.el
 (package! inf-ruby)
 #+end_src
@@ -1462,7 +1464,6 @@ org-babel support for PlantUML:
 #+begin_src emacs-lisp
 (setq plantuml-jar-path "/usr/local/bin/plantuml.jar")
 (setq plantuml-default-exec-mode 'jar)
-
 #+end_src
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -1472,10 +1473,10 @@ org-babel support for PlantUML:
 #+begin_src emacs-lisp
 (use-package! ob-http
   :commands org-babel-execute:http)
-
 #+end_src
 
 This is required to have ob-http be properly loaded in Doom Emacs. See response [[https://discord.com/channels/406534637242810369/1027578581032915045/1027589113257414708][here]].
+
 #+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-src-lang-modes '("http" . ob-http))
@@ -1516,26 +1517,21 @@ Search org-roam notes via consult (source: [[https://github.com/jgru/consult-org
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! consult-org-roam)
-
 #+end_src
+
 #+begin_src emacs-lisp
 (use-package consult-org-roam
   :defer t
-   :init
-   (require 'consult-org-roam)
-   ;; Activate the minor-mode
-   (consult-org-roam-mode 1)
-   :custom
-   (consult-org-roam-grep-func #'consult-ripgrep)
-   :config
-   ;; Eventually suppress previewing for certain functions
-   (consult-customize
-    consult-org-roam-forward-links
-    :preview-key (kbd "M-.")))
+  :init
+    (require 'consult-org-roam)
+    ;; Activate the minor-mode
+    (consult-org-roam-mode 1)
+  :custom
+    (consult-org-roam-grep-func #'consult-ripgrep)
+  :config
+    (consult-customize consult-org-roam-forward-links :preview-key (kbd "M-.")))
 
-(map! :leader
-      :desc "Search via consult"
-      "n r S" #'consult-org-roam-search)
+(map! :leader :desc "Search via consult" "n r S" #'consult-org-roam-search)
 #+end_src
 
 Keybinding example (see this [[https://rameezkhan.me/adding-keybindings-to-doom-emacs/][blog]]).
@@ -1546,8 +1542,7 @@ Custom ~org-todo-keywords~. It needs to be wrapper in (~after! ..~) block to app
 (after! org
     (setq org-todo-keywords
         '((sequence  "REPEAT(r)" "PROJ(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
-    (setq org-tag-alist '(("personal" . ?p) ("projects" . ?P) ("learning" . ?l) ("@home" . ?h) ("work" . ?w) ("@computer" . ?c) ("errands" . ?e)))
-    )
+    (setq org-tag-alist '(("personal" . ?p) ("projects" . ?P) ("learning" . ?l) ("@home" . ?h) ("work" . ?w) ("@computer" . ?c) ("errands" . ?e))))
 #+end_src
 
 I'm also configuring a few tags to classify items under.
@@ -1564,8 +1559,7 @@ I opted for this package rather than org-modern since the latter was rather inva
 (use-package org-bullets
   :defer t
   :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  )
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 
 In the above block I'm enabling the org-bullets-mode after ~org-mode~ is enabled (see documentation [[https://orgmode.org/worg/doc.html][here]].)
@@ -1575,8 +1569,7 @@ Disable log lines on repeat tasks.
 #+begin_src emacs-lisp
 (use-package org
   :config
-    (setq org-log-repeat nil)
-)
+    (setq org-log-repeat nil))
 #+end_src
 
 This code disables logging status changes on TODO and agenda entries.
@@ -1625,7 +1618,9 @@ Basic configuration:
 | frame-title | displays only in frame title               |
 | nil         | current clock is not displayed             |
 |-------------+--------------------------------------------|
+
 I'm only showing the first 8 characters from the task. In most cases this is enough to show the JIRA ticket I'm working on.
+
 #+begin_src emacs-lisp
 (setq org-clock-heading-function
       (lambda ()
@@ -1636,6 +1631,7 @@ I'm only showing the first 8 characters from the task. In most cases this is eno
 Source: [[https://stackoverflow.com/a/14527487][here]].
 
 Configure bell sound for break and finish:
+
 #+begin_src emacs-lisp
 (setq me/org-pomodoro-bell-sound "~/.doom.d/resources/bell-ring-01.wav")
 (setq org-pomodoro-finished-sound me/org-pomodoro-bell-sound
@@ -1648,6 +1644,7 @@ Configure bell sound for break and finish:
 #+end_src
 
 Configure volume, see github comment [[https://github.com/marcinkoziej/org-pomodoro/issues/29#issuecomment-129608240][here]]:
+
 #+begin_src emacs-lisp
 (setq me/org-pomodoro-sound-args "-volume 1.0")
 (setq org-pomodoro-finished-sound-args me/org-pomodoro-sound-args
