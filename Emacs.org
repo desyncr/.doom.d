@@ -469,7 +469,10 @@ Usually I'm using ~lsp~ with PHP, which seems to be quite slow at times and I'm 
 (setq consult-preview-key (kbd "M-."))
 (use-package! consult
   :config
-    (consult-customize consult-goto-line :preview-key 'any))
+    (consult-customize
+        +default/search-buffer
+        consult-goto-line
+       :preview-key 'any))
 #+end_src
 
 Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but I usually do [[kbd:][M-p]] to find anything.
