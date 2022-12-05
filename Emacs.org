@@ -213,7 +213,7 @@ You can install other fonts with a similar command following [[https://github.co
 Emacs plus build supports OS integration for [[https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change][light/dark theme switching]].
 
 #+begin_src emacs-lisp
-(setq me/appearance-dark 'doom-nord)
+(setq me/appearance-dark 'doom-nord-aurora)
 (setq me/appearance-light 'doom-nord-light)
 #+end_src
 
