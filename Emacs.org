@@ -1224,7 +1224,7 @@ Ensure treemacs-persp integration:
   (select-frame (make-frame))
   (toggle-frame-maximized)
   (call-interactively #'+workspace/load))
-(map! "M-." #'me/switch-workspace-in-new-frame)
+(map! "M-±" #'me/switch-workspace-in-new-frame)
 #+end_src
 
 Overwrite default =SPC TAB TAB= with a consult base selection:
