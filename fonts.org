@@ -1,0 +1,62 @@
+#+title: Doom Emacs > Fonts
+#+language: en
+#+property: header-args :tangle .elisp/fonts.el :cache yes :results silent :auto_tangle t
+
+Doom exposes five (optional) variables for controlling fonts in Doom:
+
+- ~doom-font~ -- the primary font to use
+- ~doom-variable-pitch-font~ -- a non-monospace font (where applicable)
+- ~doom-big-font~ -- used for ~doom-big-font-mode~; use this for presentations or streaming.
+- ~doom-unicode-font~ -- for unicode glyphs
+- ~doom-serif-font~ -- for the ~fixed-pitch-serif~ face
+
+See ~C-h v doom-font~ for documentation and more examples of what they accept. For example:
+
+If you or Emacs can't find your font, use ~M-x describe-font~ to look them up, ~M-x eval-region~ to execute elisp code, and ~M-x doom/reload-font~ to refresh your font settings. If Emacs still can't find your font, it likely wasn't installed correctly. Font issues are rarely Doom issues!
+
+I'm using the following fonts at the moment. Nothing in particular about these fonts, only that they support glyphs and ligatures.
+
+#+begin_src emacs-lisp
+(setq doom-font-increment 1)
+(setq me/doom-font-size 12)
+(setq me/doom-variable-font-size 13)
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size me/doom-font-size)) ;; Fira Code,  :weight 'medium, :size 12
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size me/doom-font-size))
+(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size me/doom-variable-font-size))
+#+end_src
+
+Instructions to install ~Fira Code~ can be found [[https://github.com/tonsky/FiraCode/wiki/Installing][here]]. Install =Fira Sans= via brew:
+#+begin_example bash
+brew tap homebrew/cask-fonts
+brew install --cask font-fira-sans
+#+end_example
+Source: [[https://gist.github.com/muammar/a5ffb635eb7f532346a8e777b847f8a7?permalink_comment_id=3609035#gistcomment-3609035][gist comment]].
+
+Run the following command to install ~JetBrains Mono Nerd Font~:
+#+begin_example
+brew install --cask font-jetbrains-mono-nerd-font
+#+end_example
+
+You can install other fonts with a similar command following [[https://github.com/ryanoasis/nerd-fonts#option-4-homebrew-fonts][these]] instructions. See comment [[https://www.reddit.com/r/DoomEmacs/comments/qqqbon/comment/hrlhkzn/?utm_source=share&utm_medium=web2x&context=3][here]] and more info can be found [[https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/font-info.md][here]] as well.
+* Font faces
+#+begin_src emacs-lisp tangle:yes
+(custom-set-faces
+    '(line-number ((t (:foreground "#6f7787" :weight normal :slant normal))))
+    '(line-number-current-line ((t (:foreground "#aebacf" :weight normal :slant normal))))
+    '(consult-separator ((t (:foreground "#aebacf" :weight normal :slant normal))))
+    '(consult-grep-context ((t (:foreground "#aebacf" :weight normal :slant normal))))
+
+    '(org-block ((t (:inherit fixed-pitch))))
+    '(org-code ((t (:inherit (shadow fixed-pitch)))))
+    '(org-document-info ((t (:foreground "dark orange"))))
+    '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+    '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+    ;;'(org-link ((t (:foreground "royal blue" :underline t))))
+    '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+    '(org-property-value ((t (:inherit fixed-pitch))) t)
+    '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+    '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+    '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold))))
+
+    '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+#+end_src

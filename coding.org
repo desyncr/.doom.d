@@ -1,0 +1,267 @@
+#+title: Doom Emacs > Coding
+#+language: en
+#+property: header-args :tangle .elisp/coding.el :cache yes :results silent :auto_tangle t
+
+#+begin_src emacs-lisp
+(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+#+end_src
+
+* smart-parens
+#+begin_src emacs-lisp
+(after! smartparens
+  (smartparens-global-mode -1))
+#+end_src
+Source: https://github.com/doomemacs/doomemacs/blob/develop/docs/faq.org#how-to-disable-smartparensautomatic-parentheses-completion
+
+* expand-region
+Visually select text regions with ~M-=~:
+
+#+begin_src emacs-lisp
+(use-package expand-region
+  :bind ("M-=" . er/expand-region))
+#+end_src
+
+See mention [[https://takeonrules.com/2020/10/18/why-i-chose-emacs-as-my-new-text-editor/][here]].
+* syntax-entry
+#+begin_src emacs-lisp
+(modify-syntax-entry ?# "< b")
+(modify-syntax-entry ?\n "> b")
+(modify-syntax-entry ?$ "w")
+(modify-syntax-entry ?_ "w")
+(modify-syntax-entry ?- "w")
+(modify-syntax-entry ?+ "w")
+
+(add-hook 'php-mode-hook '(lambda ( )
+    ;(modify-syntax-entry ?> "." php-mode-syntax-table)
+    ;(modify-syntax-entry ?- "." php-mode-syntax-table)
+    ;(modify-syntax-entry ?_ "w" php-mode-syntax-table)
+    (modify-syntax-entry ?$ "w" php-mode-syntax-table)
+))
+#+end_src
+* flycheck
+Most classes/php files I'm working with are quite large and cause a large number of errors to popup. I'm topping up the error threshold to avoid a warning during start up:
+
+#+begin_src emacs-lisp
+(setq flycheck-checker-error-threshold 5000)
+#+end_src
+
+Most projects I work with are somewhat following the PSR12 standard, so let's configure flycheck to respect that:
+#+begin_src emacs-lisp
+(setq flycheck-phpcs-standard "PSR12"
+      flycheck-php-phpcs-executable "/usr/local/bin/phpcs")
+(setq php-project-root 'git
+    phpstan-executable 'docker
+    phpstan-working-dir "~/code/exads-code"
+    phpstan-config-file "~/code/exads-code/phpstan.local.neon"
+    phpstan-level 4)
+#+end_src
+* lsp
+I'm working on a large series of interrelated projects which work well under the same directory structure (code/{project1, project2, project3}).
+The downside is that this causes LSP to complain about the large number of files and file descriptors it uses.
+
+So I'm forced to top up the default threshold via this variable:
+
+#+begin_src emacs-lisp
+(setq lsp-file-watch-threshold 5000)
+#+end_src
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc-dev-contrib\\~")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]misc\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]push-notifications\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]main\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]kantox-sdk-guzzle5\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]ecadmin\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]docs-api-swagger\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]docs-network-api-swagger\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]dbmigration\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]admin-v2\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]static\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]sandbox\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]rtb\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]management\'")
+  ;; or
+  (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'"))
+  #+end_src
+
+#+begin_src emacs-lisp
+(use-package lsp-ui
+  :after lsp-mode
+  :defer t)
+
+(setq lsp-idle-delay 1
+    company-minimum-prefix-length 1
+    company-idle-delay 0.0
+    company-tooltip-minimum-width 50
+    company-tooltip-maximum-width 120
+    lsp-ui-doc-include-signature t
+    lsp-ui-doc-max-width 120
+    lsp-ui-doc-max-height 20
+    lsp-ui-doc-enable nil
+    lsp-signature-render-documentation t
+    lsp-signature-auto-activate t
+    lsp-enable-snippet nil
+    lsp-enable-symbol-highlighting nil
+    lsp-enable-links nil
+    lsp-restart 'auto-restart
+    lsp-signature-function 'lsp-signature-posframe)
+(after! company
+  (map! :map company-active-map "<tab>" #'company-complete-selection)
+  (map! :map lsp-mode-map "<tab>" #'company-indent-or-complete-common))
+  ;;(map! :i "<tab>" #'company-complete-selection)
+  ;;(map! :map company-active-map "<tab>" #'company-complete-common))
+#+end_src
+
+Remove snippets from company backends (use ~consult-yasnippets)~:
+#+begin_src emacs-lisp
+(setq +lsp-company-backends '(:separate company-capf company-dabbrev-code company-dabbrev))
+
+(use-package lsp-treemacs
+  :defer t)
+#+end_src
+
+ #+begin_src emacs-lisp
+(setq lsp-headerline-breadcrumb-enable t)
+(setq lsp-headerline-breadcrumb-segments '(symbols))
+(setq lsp-headerline-breadcrumb-icons-enable t)
+(setq lsp-headerline-breadcrumb-enable-diagnostics nil)
+ #+end_src
+
+ #+begin_src emacs-lisp
+(map! "M-C-x" 'lsp-ui-peek-find-references)
+(map! "M-M" 'consult-lsp-symbols)
+(map! "M-C-f" 'lsp-format-region)
+ #+end_src
+* rainbow-delimiters-mode
+Rainbow colouring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
+
+#+begin_src emacs-lisp
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+#+end_src
+* yasnippets
+I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to manage code snippets. As per the instructions:
+
+#+begin_src emacs-lisp :tangle no
+(use-package yasnippet
+  :defer t
+  :config (yas-global-mode 1))
+#+end_src
+
+*Warning*: I had to disable (:tangle no) yas-global-mode since it interfered with LSP/company-mode. Throwing errors trying to display completions on PHP-mode.
+With this settings disabled now both company mode and yas-snippets work just fine.
+
+Note: I'm disabling the following due to poor performance:
+#+begin_src emacs-lisp :tangle no
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+#+end_src
+
+Additionally I'm installing pre-defined snippets with the package [[The above instructions also setup the package][Yasnippets-snippets]]:
+#+begin_src emacs-lisp
+(use-package yasnippet-snippets
+  :defer t)
+#+end_src
+
+As per the [[package-refresh-contents][instructions]] I'm configuring melpa archive repositories. After that the command ~package-refresh-contents~ must be ran to be able to pull updates from it:
+
+- ~M-x package-refresh-contents~
+- ~M-x package-install yasnippet-snippets~
+
+In the code above I'm actually requiring the package via lisp, which should install and load it.
+
+There's an additional package with extra snippets maintained by the Doom Emacs' github organization: [[https://github.com/doomemacs/snippets][doomemacs/snippets]]
+I'm also imported several snippets from [[https://github.com/cartolari/yasnippet-vim-snippets][cartolari/yasnippet-vim-snippets]] repository, primarily [[https://github.com/cartolari/yasnippet-vim-snippets/tree/master/snippets/php-mode][php-mode]].
+
+Tip: Use ~M-x yas-describe-tables~ to see the list of snippets and edit them.
+
+Tip: Use =consult-yasnippet=.
+* devdocs
+This package somewhat expands on Doom Emacs' [[https://docs.doomemacs.org/latest/modules/tools/lookup/][lookup]] functionality.
+
+The ~SPC s o~ opens up documentation for the current symbol under cursor in the default browser. I didn't like to require a browser to navigate documentation as I don't want to leave the code I'm working on to check on something.
+
+Alternatively it can be configured to use ~eww~ instead. Which is way better. But the problem is devdocs require javascript to work correctly (it can work offline, but still requires a browser and javascript enabled).
+
+This package uses devdocs generated documentation (downloads it) and queries it offline, showing it on a separate window/buffer.
+
+#+begin_src emacs-lisp
+(use-package devdocs
+  :defer t)
+
+(global-set-key (kbd "C-h D") 'devdocs-lookup)
+#+end_src
+
+Use ~C-h D~ or ~SPC h D~ to search for the symbol under cursor. Note: The documentation will not be displayed right away, you'll need to press RET on the given symbol.
+* better-jumper
+Better jump (remember jump list).
+
+#+begin_src emacs-lisp
+(use-package better-jumper
+  :defer t
+  :config
+  (better-jumper-mode +1))
+(with-eval-after-load 'evil-maps
+  (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
+  (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
+#+end_src
+
+Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
+* avy
+#+begin_src emacs-lisp
+(with-eval-after-load 'evil-maps
+    (define-key evil-normal-state-map "f" 'avy-goto-char-timer))
+(setq avy-timeout-seconds 1
+      avy-single-candidate-jump t)
+#+end_src
+* multiple-cursors
+Doom Emacs supports 2 multi-cursor packages out of the box: doom-package:evil-mc and doom-package:evil-multiedit. These packages can be enabled via doom-module:multiple-cursors module.
+
+The packages approach to multiple cursors is different. [[doom-package:evil-mc]] work similar to other multiple-cursor implementations, that's it: you enable cursors in multiple places. On the other hand [[doom-package:evil-multiedit]] works by regions: you visually select selections and work on them.
+
+By default [[kbd:][M-d]]  and [[kbd:][M-S-d]] creates [[doom-package:evil-multiedit]] sections. Use ~R~ in visual mode to create selections across the whole buffer. Use ~:iedit/REGEX~ to create sections via ex command.
+
+- [[kbd:][M-d]] to iedit the symbol at point. Again to iedit its next match.
+- [[kbd:][M-S-d]] to do it backwards.
+- [[kbd:][R]] (in visual mode) to iedit all matches of the selection at point in the  buffer.
+- Or ~:iedit/REGEX~ to iedit all matches of REGEX.
+
+[[doom-package:evil-mc]] is bounded to [[kbd:][gz ]]prefix keys and has several keybindings.
+- [[kbd:][gzz]] to toggle new (frozen) cursors at point.
+- [[kbd:][gzt]] to toggle mirroring on and off (or switch to insert mode to activate them).
+- [[kbd:][gzA]] to place cursors at the end of each selected line.
+- [[kbd:][gzI]] will place them at the beginning.
+- There's also the ex command ~:mc/REGEXP/FLAGS~, for laying down cursors by  regex.
+
+I don't like these keybindings so I create these down below to work with [[doom-package:evil-mc]]:
+
+- [[kbd:][C-d]] create cursor and go to next match.
+- [[kbd:][C-j]] create cursor and move next line.
+- [[kbd:][C-k]] create cursor and move previous line.
+
+#+begin_src emacs-lisp
+(global-evil-mc-mode  1)
+
+(with-eval-after-load 'evil-maps
+  (global-set-key (kbd "C-d") 'evil-mc-make-and-goto-next-match)
+  (define-key evil-normal-state-map (kbd "C-j") 'evil-mc-make-cursor-move-next-line)
+  (define-key evil-normal-state-map (kbd "C-k") 'evil-mc-make-cursor-move-prev-line)
+
+  (define-key evil-visual-state-map (kbd "C-d") 'evil-mc-make-and-goto-next-match)
+  (define-key evil-normal-state-map (kbd "C-d") 'evil-mc-make-and-goto-next-match))
+#+end_src
+
+[[doom-package:evil-multiedit]] seems to be case-insensitive by default, this snippet forces it to be case-sensitive in matches:
+#+begin_src emacs-lisp
+(defun me/make-evil-multiedit-case-sensitive (fn &rest args)
+  (let ((case-fold-search (not iedit-case-sensitive)))
+    (apply fn args)))
+
+(advice-add #'evil-multiedit-match-and-next :around #'me/make-evil-multiedit-case-sensitive)
+#+end_src
+
+Source: https://github.com/hlissner/evil-multiedit/issues/48#issuecomment-1011418580
+

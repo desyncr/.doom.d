@@ -1,0 +1,111 @@
+#+title: Doom Emacs > Project Management
+#+language: en
+#+property: header-args :tangle .elisp/project-management.el :cache yes :results silent :auto_tangle t
+
+* projectile
+#+begin_src emacs-lisp
+(after! projectile
+   (setq projectile-project-search-path '("~/sys-vagrant/code")))
+#+end_src
+* treemacs
+Enable treemacs and never move to treemacs with other-window as well as disabling wrap around:
+
+#+begin_src emacs-lisp
+(use-package treemacs
+  :defer t
+  :config
+  (setq treemacs-is-never-other-window t
+        treemacs-wrap-around nil
+        treemacs-display-current-project-exclusively t
+        treemacs-follow-mode t))
+#+end_src
+
+Take a look at more configuration options in [[https://github.com/Alexander-Miller/treemacs#configuration][github]].
+
+Ensure treemacs-projectile integration:
+
+#+begin_src emacs-lisp
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+#+end_src
+
+Ensure treemacs-magit integration:
+
+#+begin_src emacs-lisp
+(use-package treemacs-magit
+  :defer t
+  :after (treemacs magit))
+
+#+end_src
+
+Ensure treemacs-persp integration:
+
+#+begin_src emacs-lisp
+(use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
+  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
+  :config (treemacs-set-scope-type 'Perspectives))
+#+end_src
+* TODO workspaces
+#+begin_src emacs-lisp :tangle no
+(defun me/switch-workspace-in-new-frame ()
+  (interactive)
+  (select-frame (make-frame))
+  (toggle-frame-maximized)
+  (call-interactively #'+workspace/load))
+(map! "M-±" #'me/switch-workspace-in-new-frame)
+#+end_src
+
+Overwrite default =SPC TAB TAB= with a consult base selection:
+
+#+begin_src emacs-lisp
+(defun me/switch-workspace ()
+  (interactive)
+  (call-interactively #'+workspace/switch-to))
+
+(map! "M-§" 'me/switch-workspace)
+#+end_src
+
+Switch to next workspace with ~SPC TAB TAB~:
+
+#+begin_src emacs-lisp
+(map! :leader
+    :desc "Switch workspace"
+    "TAB TAB" #'+workspace:switch-next)
+#+end_src
+
+Quickly switch to workspace 1, 2, 3, 4 with ~SPC 1, 2, 3, 4~:
+#+begin_src emacs-lisp
+(map! :leader
+    :desc "Switch workspace 0"
+    "1" #'+workspace/switch-to-0)
+(map! :leader
+    :desc "Switch workspace 1"
+    "2" #'+workspace/switch-to-1)
+(map! :leader
+    :desc "Switch workspace 2"
+    "3" #'+workspace/switch-to-2)
+(map! :leader
+    :desc "Switch workspace 3"
+    "4" #'+workspace/switch-to-3)
+(map! :leader
+    :desc "Switch workspace 5"
+    "5" #'+workspace/switch-to-4)
+#+end_src
+* TODO ranger
+Here's some custom configuration options, take a look at the [[https://github.com/punassuming/ranger.el#configuration][configuration section]] in the package documentation for more options.
+
+#+begin_src emacs-lisp
+(use-package ranger
+  :defer t
+  :config
+  (setq ranger-preview-delay 0 ;; delay preview (seconds)
+        ranger-show-literal t  ;; do not highlight preview (prevents lsp from running)
+        ranger-parent-depth 3  ;; number of parent directories windows
+        ranger-max-preview-size 1))
+#+end_src
+* TODO Bookmarks
+Preserving bookmarks out of the Emacs installation:
+
+#+begin_src emacs-lisp
+(setq bookmark-file "~/.doom.d/Bookmarks.lisp")
+#+end_src

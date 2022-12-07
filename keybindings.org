@@ -1,0 +1,397 @@
+#+title: Doom Emacs > Keybindings
+#+language: en
+#+property: header-args :tangle .elisp/keybindings.el
+
+#+attr_html: :style margin-left: auto; margin-right: auto;
+#+attr_org: :width 800
+[[./resources/keybindings-cheatsheet.png]]
+
+* General
+Explicitly define the Mac modifiers:
+
+#+begin_src emacs-lisp
+(setq mac-command-modifier 'meta) ; make cmd key do Meta
+(setq mac-option-modifier 'super) ; make opt key do Super
+(setq mac-control-modifier 'control) ; make Control key do Control
+#+end_src
+
+Source: [[http://xahlee.info/emacs/emacs/emacs_hyper_super_keys.html][here]].
+
+Shortcut for opening the Doom's dashboard:
+
+#+begin_src emacs-lisp
+(map! :leader :desc "Doom Dashboard" "d" #'+doom-dashboard/open)
+#+end_src
+* Navigation and files
+** Search
+|------------------------+-------------------------|
+| Search (file contents) |                         |
+|------------------------+-------------------------|
+| M-f                    | +default/search-buffer  |
+| M-F                    | +default/search-project |
+| M-m                    | consult-imenu           |
+|------------------------+-------------------------|
+
+Search buffer:
+#+begin_src emacs-lisp
+(map! "M-f" #'+default/search-buffer)
+(map! "M-F" #'+default/search-project)
+#+end_src
+
+Also use ~SPC s s~ to search matching characters on the current buffer.
+
+Use =M-m= for jump into a menu item (section in the buffer):
+
+#+begin_src emacs-lisp
+(map! "M-m" #'consult-imenu)
+;(defadvice! expand-folds-imenu(&rest _)
+;  :before 'consult-imenu (+org/open-all-folds))
+;(defadvice! expand-folds-imenu(&rest _)
+;  :before '+default/search-buffer (+org/open-all-folds))
+#+end_src
+** Navigation
+|------------+------------------------|
+| Navigation |                        |
+|------------+------------------------|
+| M-p        | +consult-projectile    |
+| M-P        | projectile-find-file   |
+| SPC SPC    | consult-bookmark       |
+|------------+------------------------|
+| Buffers    |                        |
+|------------+------------------------|
+| M-b        | consult-project-buffer |
+| M-B        | consult-buffer         |
+|------------+------------------------|
+
+~M-p~: find file in project. Prefer consult for everything:
+
+#+begin_src emacs-lisp
+(map! "M-p" #'consult-projectile)
+(map! "M-P" #'projectile-find-file)
+
+(map! :leader "SPC" 'consult-bookmark)
+#+end_src
+
+Find buffers:
+#+begin_src emacs-lisp
+(map! "M-b" #'consult-project-buffer)
+(map! "M-B" #'consult-buffer)
+#+end_src
+
+** Movements
+|------------+--------------------------------------|
+| Movements  |                                      |
+|------------+--------------------------------------|
+| h, j, k, l | Left, Up, Down, Right                |
+| 0, $, £    | Column 0, end of line, begining line |
+| w, W       | Forward word, backward word          |
+| s, S       | Snipe search forward, backward       |
+| f          | Avy go to any char                   |
+| M-k, M-j   | Page up, down                        |
+|------------+--------------------------------------|
+
+Search in buffer:
+#+begin_src emacs-lisp
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+(with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "s") 'evil-ex-search-forward)
+  (define-key evil-normal-state-map (kbd "S") 'evil-ex-search-backward))
+#+end_src
+
+Page up / down:
+#+begin_src emacs-lisp
+(map! "M-k" 'evil-scroll-up)
+(map! "M-j" 'evil-scroll-down)
+#+end_src
+
+#+begin_src emacs-lisp
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
+#+end_src
+The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "W") 'evil-backward-word-begin)
+  (define-key evil-normal-state-map (kbd "£") 'evil-first-non-blank))
+#+end_src
+
+Note: by default ~^~ is bound to =evil-first-non-black=, but for me it's in an awkward position.
+
+** Windows
+ |------------------+----------------------------------|
+ | Windows          |                                  |
+ |------------------+----------------------------------|
+ | M-<pipe>, M--    | Split vertically, horizontally   |
+ | M-l, M-h         | Next, previous window            |
+ | M-]              | Ideal distribution               |
+ | M-w              | Delete window                    |
+ | SPC w =          | Balance windows                  |
+ | SPC w <, >       | Increase, decrease window width  |
+ | SPC w h, j, k, l | Switch to h, j, k, l window      |
+ | SPC w H, J, K, L | Move window to h, j, k, l window |
+ |------------------+----------------------------------|
+
+#+begin_src emacs-lisp
+(map! "M-|" #'evil-window-vsplit)
+(map! "M--" #'evil-window-split)
+
+(map! :leader "w <" (lambda() (interactive) (evil-window-decrease-width 10)))
+(map! :leader "w >" (lambda() (interactive) (evil-window-increase-width 10)))
+#+end_src
+
+Next/previous window:
+
+#+begin_src emacs-lisp
+(map! "M-l" 'next-window-any-frame)
+(map! "M-h" 'previous-window-any-frame)
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<normal-state> M-l") 'next-window-any-frame)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-h") 'previous-window-any-frame))
+#+end_src
+
+Use =M-w= to delete window or workspace (last window is preserved):
+
+#+begin_src emacs-lisp
+(map! "M-w" 'delete-window)
+#+end_src
+* TODO Coding
+ |----------+-------------------------------|
+ | Coding   |                               |
+ |----------+-------------------------------|
+ | M-s      | Save current buffer           |
+ | M-g      | Go to definition              |
+ | M-G      | Search references             |
+ | M-C-g    | Go to definition other window |
+ | M-., M-, | Go to last change, reverse    |
+ | M-<, M-> | Go to previous, next hunk     |
+ | M-/      | Nerd commenter                |
+ | M-y      | Yank from kill ring           |
+ | M-i      | Consult yasnippet             |
+ | M-K, M-J | Move text up, down            |
+ |----------+-------------------------------|
+
+Quickly save buffer with ~M-s~ (save):
+
+#+begin_src emacs-lisp
+(map! "M-s" #'save-buffer)
+#+end_src
+
+Go to definition and go to definition other window:
+
+#+begin_src emacs-lisp
+(map! "M-g" #'xref-find-definitions)
+(map! "M-G" #'lsp-find-references)
+(map! "M-C-G" #'xref-find-definitions-other-window)
+#+end_src
+
+=g d= changes my context when I just want to peek at the definition of a method. So quickly jumping in other-window work just fine for me.
+
+Go to last change:
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'evil-maps
+  (define-key evil-normal-state-map (kbd "M-,") 'goto-last-change-reverse)
+  (define-key evil-normal-state-map (kbd "M-.") 'goto-last-change))
+#+end_src
+
+Go to line:
+
+#+begin_src emacs-lisp
+(map! "M-L" 'consult-goto-line)
+#+end_src
+
+New empty buffer:
+#+begin_src emacs-lisp
+(map! :ne "M-n" #'evil-buffer-new)
+#+end_src
+
+Comment or uncomment region:
+#+begin_src emacs-lisp
+(map! :ne "M-/" 'evilnc-comment-or-uncomment-lines)
+#+end_src
+
+Support yanking/killing via =M-v=, =M-c=:
+
+#+begin_src emacs-lisp
+(map! (:when IS-MAC (:map general-override-mode-map :gi :desc "Paste from clipboard" "M-v" 'yank)))
+(map! :desc "Copy into clipboard" "M-c" 'copy-region-as-kill)
+#+end_src
+Source: https://github.com/doomemacs/doomemacs/issues/906#issuecomment-455279422
+
+Yank from kill ring:
+
+#+begin_src emacs-lisp
+(map! :ne (kbd "M-y") 'consult-yank-from-kill-ring)
+#+end_src
+
+Visually selects the paragraph. Execute multiple times to expand the selection or move the cursor:
+
+#+begin_src emacs-lisp
+(map! :leader :desc "Visually mark paragraph" "v p" 'er/mark-paragraph)
+(map! :leader :desc "Visually mark word" "v w" 'er/mark-word)
+#+end_src
+
+Use ~SPC v p~ to *v*isual select a *p*aragraph and ~SPC v w~ to select a word under cursor.
+
+Worth checking out [[https://www.johndcook.com/blog/2017/08/09/selecting-things-in-emacs/][this]] article.
+
+Triggers consult posframe to select a yasnippet. It also previsualies it in the buffer:
+
+#+begin_src emacs-lisp
+(map! "M-i" #'consult-yasnippet)
+#+end_src
+
+There's also =SPC i s= keybinding which doesn't uses consult.
+
+Create link:
+
+#+begin_src emacs-lisp
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<visual-state> M-l") 'org-insert-link))
+#+end_src
+
+Move-text:
+#+begin_src emacs-lisp
+(use-package move-text
+  :config)
+#+end_src
+
+#+begin_src emacs-lisp
+(map! "M-K" 'move-text-up)
+(map! "M-J" 'move-text-down)
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<visual-state> M-K") 'move-text-up)
+  (define-key evil-org-mode-map (kbd "<visual-state> M-J") 'move-text-down)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-K") 'move-text-up)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-J") 'move-text-down))
+#+end_src
+* TODO Tools
+ |-------+--------------------------|
+ | Tools |                          |
+ |-------+--------------------------|
+ | M-;   | Execute extended command |
+ | M-t   | Toggle vterm popup       |
+ | M-r   | Open ranger              |
+ | M-T   | Neotree toggle           |
+ | M-'   | Toggle ielm popup        |
+ |-------+--------------------------|
+ | Other |                          |
+ |-------+--------------------------|
+ | M-e   | Eval line or buffer      |
+ | M-E   | Edit src block           |
+ |-------+--------------------------|
+
+Treemacs toggle, vterm toggle and Ranger:
+
+#+begin_src emacs-lisp
+(map! "M-t" :desc "Toggle vterm" '+vterm/toggle)
+(map! "M-r" :desc "Open ranger" #'ranger)
+(map! "M-T" :desc "Toggle Treemacs" #'+treemacs/toggle)
+#+end_src
+
+Setting up this keybinding for the "command palette" and =ielm=:
+
+#+begin_src emacs-lisp
+(map! "M-;" :desc "Execute command" 'execute-extended-command)
+(map! "M-'" :desc "Toggle ielm popup" 'ielm)
+#+end_src
+
+Evaluate line or region and edit source block in capture buffer:
+
+#+begin_src emacs-lisp
+(map! "M-e" :desc "Eval line or regio" #'+eval/line-or-region)
+(map! "M-E" :desc "Edit src bock" 'org-edit-src-code)
+#+end_src
+
+* Mad scientist mode
+These tweaks down below aim to improve my over all work with Evil mode keybindings. Note that these tweaks are highly optimised for _my_ personal use (and miss use) of Evil mode.
+
+#+begin_quote
+Disclaimer: I'm trying these settings out and figuring out exactly what's my best workflow with them. Plus a period of getting used to it and storing this in muscle memory. So, don't use this.
+#+end_quote
+
+Note that I'm configuring (via OS settings) CapsLock to ESC.
+
+Easing use of common programming symbols:
+
+#+begin_src emacs-lisp
+(define-key key-translation-map (kbd "4") (kbd "$"))
+(define-key key-translation-map (kbd "$") (kbd "4"))
+
+(define-key key-translation-map (kbd "3") (kbd "#"))
+(define-key key-translation-map (kbd "#") (kbd "3"))
+
+(define-key key-translation-map (kbd "9") (kbd "("))
+(define-key key-translation-map (kbd "(") (kbd "9"))
+
+(define-key key-translation-map (kbd "0") (kbd ")"))
+(define-key key-translation-map (kbd ")") (kbd "0"))
+#+end_src
+
+=TODO=: Create a toggle function to swap the entere numeric strip.
+
+I'm currenly using a inverted-L type keyboard. For me the distance between the row keys and the enter key is too much. As a workaround for these type of keyboards I'm remapping these keys:
+
+|-----------+---------|
+| Character | Mapping |
+|-----------+---------|
+| '         | Enter   |
+| "         | '       |
+| M-'       | "       |
+|-----------+---------|
+
+#+begin_src emacs-lisp
+(define-key key-translation-map (kbd "'") (kbd "<RET>"))
+(define-key key-translation-map (kbd "\"") (kbd "'"))
+
+;(map! "M-\'" (lambda () (interactive) (insert "\"")))
+#+end_src
+
+The result should be less strain from moving the hand to reach the enter key repetedly.
+
+Quick access to append-line and first-non-black functions:
+
+I notificed that I make quite a usage of these two (in one way or another) so I should have quick access to it.
+
+I generally use 'i' for inserting and 'A' for appending at the end of the line.
+
+#+begin_src emacs-lisp
+(define-key evil-normal-state-map (kbd "A") 'evil-append)
+(define-key evil-normal-state-map (kbd "a") 'evil-append-line)
+#+end_src
+
+Mapping =0= (or =)=) to jump to first non blank character, which is quite useful for programmer mode with indented code.
+
+#+begin_src emacs-lisp
+(define-key evil-normal-state-map (kbd ")") 'evil-first-non-blank)
+(define-key evil-visual-state-map (kbd ")") 'evil-first-non-blank)
+(define-key evil-normal-state-map (kbd "0") (lambda () (interactive) (evil-goto-column 0))) ;; also C-u
+(define-key evil-visual-state-map (kbd "0") (lambda () (interactive) (evil-goto-column 0))) ;; also C-u
+
+; Note: Doesn't work with smart parens / electric
+;(define-key evil-insert-state-map (kbd "0") (lambda () (interactive) (insert ")")))
+;(define-key evil-insert-state-map (kbd ")") (lambda () (interactive) (insert "0")))
+#+end_src
+
+Avoid use of hard to reach =DEL= key. Here I'm replacing this key usafge with a bit more accessible =M-u= and =M-U=:
+
+#+begin_src emacs-lisp
+(map! "M-u" (kbd "<DEL>"))
+(map! "M-U" 'evil-delete-backward-word) ;; also C-u
+;; src: https://stackoverflow.com/a/9953097
+#+end_src
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'evil-maps
+  (define-key evil-insert-state-map (kbd "M-o") 'evil-open-below)
+  (define-key evil-insert-state-map (kbd "M-O") 'evil-open-above))
+#+end_src
+
+PHP specific typing improvements:
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'php-mode
+    (define-key php-mode-map (kbd "-") (lambda () (interactive) (insert "->"))))
+#+end_src

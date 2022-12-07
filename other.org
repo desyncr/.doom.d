@@ -1,0 +1,114 @@
+#+title: Doom Emacs > Other
+#+language: en
+#+property: header-args :tangle .elisp/other.el :cache yes :results silent :auto_tangle t
+
+* Terminal integration
+There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell= and =term=. I'll be using =vterm= and I'll referring to this package for the rest of this section.
+
+=vterm= offers a fully featured terminal emulation layer for Emacs. It works by leveraging ~libvterm~ library, which powers xterm. Check [[https://www.youtube.com/watch?v=8oNycFLwKfE][this presentation]] for an introduction and walkthrough. Find more in [[https://emacsconf.org/2020/talks/30/][this talk]]. Find the main repository [[https://github.com/akermu/emacs-libvterm][here]].
+
+Since it leverages ~libvterm~ it requires a extra steps for the installation. Check out the Doom Emacs' [[https://docs.doomemacs.org/latest/modules/term/vterm/][instructions]].
+
+#+begin_src emacs-lisp
+(use-package vterm
+  :defer t
+  :custom
+  (vterm-shell "fish")
+  (setq vterm-timer-delay 0))
+
+(after! vterm
+  (map! :map vterm-mode-map "M-v" 'vterm-yank)
+  (map! :map vterm-mode-map "M-t" '+vterm/toggle)
+  (map! :map vterm-mode-map "M-w" '+workspace/close-window-or-workspace))
+#+end_src
+
+Open termina in vsplit window:
+#+begin_src emacs-lisp
+(defun me/vterm-split-right ()
+  "Create a new vterm window to the right of the current one."
+  (interactive)
+  (let* ((ignore-window-parameters t)
+         (dedicated-p (window-dedicated-p)))
+    (split-window-horizontally)
+    (other-window 1)
+    (+vterm/here default-directory)))
+
+(map! :leader :desc "Open vterm vsplit" "o T" #'me/vterm-split-right)
+#+end_src
+
+* TODO elfeed
+#+begin_src emacs-lisp
+(defun me/elfeed-view ()
+  (interactive)
+  (elfeed-update)
+  (elfeed-goodies/setup)
+  (elfeed))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package elfeed
+  :defer t
+  :config
+  (add-hook 'elfeed-show-mode-hook #'elfeed-update)
+  (add-hook  'elfeed-show-mode-hook 'variable-pitch-mode)
+  (setq elfeed-feeds
+      '(
+        ("https://sachachua.com/blog/category/emacs-news/feed/" emacs)
+        ("https://planet.emacslife.com/atom.xml" emacs)
+        ("http://nedroid.com/feed/" webcomic)
+        ("https://hnrss.org/frontpage" news)
+        )))
+#+end_src
+
+* browse-url
+#+begin_src emacs-lisp
+(defmacro with-system (type &rest body)
+  "Evaluate BODY if `system-type' equals TYPE."
+  (declare (indent defun))
+  `(when (eq system-type ',type)
+     ,@body))
+#+end_src
+Source: https://stackoverflow.com/a/26137517
+
+#+begin_src emacs-lisp
+(setq browse-url-browser-function 'browse-url-generic)
+(map! :leader :desc "Browse at remote" "c B" 'browse-at-remote)
+#+end_src
+
+Use different browsers depending on theme (similar to modus operandi / modus vivendi themes):
+#+begin_src emacs-lisp
+(with-system gnu/linux
+    (setq me/chrome-bin-path "chrome")
+    (setq me/firefox-bin-path "firefox"))
+
+(with-system darwin
+    (setq me/chrome-bin-path "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
+    (setq me/firefox-bin-path "/Applications/Firefox.app/Contents/MacOS/firefox"))
+#+end_src
+
+In the above code I'm using the =system-type= variable to determine what to assigned to the me/chrome / me/firefox variables. The =system-type= variable is described [[https://www.gnu.org/software/emacs/manual/html_node/elisp/System-Environment.html#index-system_002dtype][here]] together with this great snippet:
+
+#+begin_quote
+gnu/linux
+A GNU/Linux system—that is, a variant GNU system, using the Linux kernel. (These systems are the ones people often call “Linux”, but actually Linux is just the kernel, not the whole system.)
+#+end_quote
+
+Automatically switch browser depending on OS appearance:
+#+begin_src emacs-lisp
+(defun me/switch-browser (appearance)
+  "Switch browser, taking current system APPEARANCE into consideration."
+  (pcase appearance
+    ('light (setq browse-url-generic-program me/chrome-bin-path))
+    ('dark (setq browse-url-generic-program me/firefox-bin-path))))
+
+(add-hook 'ns-system-appearance-change-functions #'me/switch-browser)
+#+end_src
+* keyfreq
+This package records the command frequency. I'm installing this since I want to improve the keybindings usage to have less typing.
+
+#+begin_src emacs-lisp
+(use-package keyfreq
+  :config
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
+#+end_src

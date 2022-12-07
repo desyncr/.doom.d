@@ -1,0 +1,37 @@
+#+title: Doom Emacs > Version Control
+#+language: en
+#+property: header-args :tangle .elisp/version-control.el :cache yes :results silent :auto_tangle t
+
+Often times it's useful to see the local file in the browser, for example to share the exact code you're looking into. =browse-at-remove= does exactly that.
+
+* Git
+Configure user and email address:
+#+begin_src bash :tangle no
+git config --local user.email "des@riseup.net"
+git config --local user.name "DC*"
+#+end_src
+
+This configuration applies to the repository the command is running on (--local). You can apply global (i.e. to all repositories) replacing --local with the flag --global.
+
+#+begin_src emacs-lisp
+(map! "M->" 'git-gutter:next-hunk)
+(map! "M-<" 'git-gutter:previous-hunk)
+#+end_src
+
+* Magit
+[[https://magit.vc/][Magit]] is a deal-breaker type of package for Emacs. It forever changes the way you interact with Git (Goodbye cli!).
+
+#+begin_src emacs-lisp
+(after! magit
+    (setq git-commit-summary-max-length 100))
+#+end_src
+
+Anyway, in the above code setting the commit's summary max length to 100 so I'm not bothered with auto-formattig in commit's title/descriptions.
+
+#+begin_src emacs-lisp
+(defun me/magit-commit-setup ()
+  (insert (concat (magit-get-current-branch) ": ")))
+
+(add-hook 'git-commit-setup-hook 'me/magit-commit-setup)
+#+end_src
+

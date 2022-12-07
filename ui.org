@@ -1,0 +1,306 @@
+#+title: Doom Emacs > UI
+#+language: en
+#+property: header-args :tangle .elisp/ui.el :cache yes :results silent :auto_tangle t
+
+There are two ways to load a theme. Both assume the theme is installed and available. You can either set ~doom-theme~ or manually load a theme with the ~load-theme~ function. This is the default:
+
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-nord-light)
+#+end_src
+
+*NOTE*: Under the UI section you'll see a configuration for synchronising Emacs theme (dark/light) with the OS.
+
+This determines the style of line numbers in effect. If set to ~nil~, line numbers are disabled. For relative line numbers, set this to ~relative~.
+
+#+begin_src emacs-lisp
+(setq display-line-numbers-type t)
+#+end_src
+
+Configure emacs to turn fullscreen/maximized on startup:
+
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
+Add word count to status/modeline. Useful for org documents and writing in general.
+
+#+begin_src emacs-lisp
+(setq doom-modeline-enable-word-count t)
+#+end_src
+
+* OS theme sync
+Emacs plus build supports OS integration for [[https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change][light/dark theme switching]].
+
+#+begin_src emacs-lisp
+(setq me/appearance-dark 'doom-nord-aurora)
+(setq me/appearance-light 'doom-nord-light)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package auto-dark
+  :init
+    (auto-dark-mode t)
+  :config
+    (setq
+      auto-dark-dark-theme me/appearance-dark
+      auto-dark-light-theme me/appearance-light))
+#+end_src
+
+Add an interactive command to change appearance:
+#+begin_src emacs-lisp
+(defun me/switch-dark-appearance ()
+    "Swith to current theme's dark appearance."
+    (interactive)
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme me/appearance-dark t))
+
+(defun me/switch-light-appearance ()
+    "Swith to current theme's light appearance."
+    (interactive)
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme me/appearance-light t))
+#+end_src
+
+This will not work on non-Mac OSes. But [[https://github.com/doomemacs/doomemacs/issues/6424#issue-1251604264][here's]] way to do it.
+* Splash image
+Configure Doom Emacs splash image. Taken from [[https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash][zzamboni/dot-doom]]. Alternative splash images can be found at [[https://github.com/jeetelongname/doom-banners][jeetelongname/doom-banners]] repository.
+
+#+begin_src emacs-lisp
+(setq fancy-splash-image "~/.doom.d/splash/code.png")
+#+end_src
+
+You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the top of this document for an example.
+* TODO vertico
+#+begin_src emacs-lisp
+(use-package vertico
+  :init
+  (vertico-mode))
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :defer t
+  :init
+  (savehist-mode))
+
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+  :defer t
+  :init
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
+  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+#+end_src
+
+The above snippet configures orderless, which enabled searching by keywords in whatever order.
+* vertico-repeat
+Vertico-repeat but for last command in category, e.g. last =+default/search-project= or last =consult-projectile=:
+#+begin_src emacs-lisp
+(setq vertico-repeat-history '())
+
+; Remember empty completions
+;(setq vertico-repeat-transformers
+;    (list #'vertico-repeat--filter-commands #'vertico-repeat--filter-empty))
+
+(defun me/vertico-filter-repeat-command (command)
+  (-filter (lambda (x) (eq (car x) command)) vertico-repeat-history))
+
+(defun me/vertico-repeat-last-command (cmd)
+  (interactive)
+
+  (setq session (car (me/vertico-filter-repeat-command cmd)))
+  (if (eq session nil) (setq session (list cmd "")))
+
+  (minibuffer-with-setup-hook
+    (apply-partially #'vertico-repeat--restore session)
+    (command-execute (setq this-command (car session)))))
+#+end_src
+* vertico-posframe
+=Ctrl+P= / command launcher-like for =M-x=. This package is installed via [[doom-module:vertico +childframe]].
+
+#+begin_src emacs-lisp
+(use-package vertico-posframe
+  :config
+  (vertico-posframe-mode 1)
+  (setq vertico-posframe-border-width 8
+        vertico-posframe-width 120
+        vertico-posframe-height 20
+        vertico-posframe-min-height 20
+        vertico-posframe-parameters
+        '((left-fringe . 2)
+          (right-fringe . 2))))
+#+end_src
+
+Function to quickly reset ~vertico-posframe~ when it gets offset for some reason and text gets cut off:
+#+begin_src emacs-lisp
+(defun me/vertico-posframe-reset ()
+  "Reset vertico-posframe when it get's offset due to long lines."
+  (interactive)
+  (posframe-delete-all))
+#+end_src
+
+This package also works for selecting files and other similar components.
+* TODO vertico-multiform
+#+begin_src emacs-lisp
+;; Enable vertico-multiform
+(vertico-multiform-mode)
+
+(setq vertico-multiform-commands
+      '((+default/search-project buffer)
+        (+default/search-buffer posframe)
+        (t posframe)))
+#+end_src
+
+* TODO center-isearch
+source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]].
+
+#+begin_src emacs-lisp
+(advice-add 'evil-ex-search-next :after
+            (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+(advice-add 'evil-ex-search-previous :after
+            (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+#+end_src
+* TODO centered-cursor-mode
+source: https://github.com/andre-r/centered-cursor-mode.el
+
+#+begin_src emacs-lisp
+(use-package centered-cursor-mode
+  :defer t
+  :config
+  ;; Optional, enables centered-cursor-mode in all buffers.
+  ;;(global-centered-cursor-mode)
+)
+#+end_src
+
+Note: ~global-centered-cursor-mode~ causes line jumps while typing on vterm. Disabling for the moment.
+
+#+begin_src emacs-lisp
+(add-hook 'prog-mode-hook 'centered-cursor-mode)
+(add-hook 'org-mode-hook 'centered-cursor-mode)
+#+end_src
+
+Examples: https://emacsredux.com/blog/2020/11/21/disable-global-hl-line-mode-for-specific-modes/
+
+* resize-window
+Easier window management with resize-window package. Currently I'm using some quite obnoxious keybindings for window resizing (I use windows a lot):
+~M-`~, ~M-~~, ~M->~, ~M-<~ etc.
+
+Resize-window package actually supports a transient.el-like flow (it's older than transient.el though) where after invoking the command ~M-x resize-window~ you can add a series of commands and apply them: make vertial window larger, create new split etc.
+
+There are only a few commands to learn, and they mimic the normal motions in emacs.
+
+#+begin_src emacs-lisp
+(map! :leader "w z" :desc "Activate interactive window resize" #'resize-window)
+#+end_src
+
+Package repository [[https://github.com/dpsutton/resize-window][here]].
+
+Also available: [[kbd:][SPC w <]] and [[kbd:][SPC w >]] to increase and decrease width.
+
+Resize main/secondary window into an ideal aspect ratio (60/40):
+
+#+begin_src emacs-lisp
+(defun me/window-resize-main-pane ()
+  (interactive)
+  (setq me/main-window (frame-first-window))
+  (window-resize me/main-window (- (truncate (* 0.6 (frame-width))) (window-width me/main-window)) t))
+
+(map! "M-]" #'me/window-resize-main-pane)
+(map! "M-z" #'+evil/window-move-left)
+(map! "M-Z" #'me/toggle-window-maximize)
+#+end_src
+
+=TODO=: Doesn't work with Treemacs enabled.
+
+Source: https://stackoverflow.com/a/7623081
+
+* TODO Toggle maximize
+#+begin_src emacs-lisp
+(defun me/toggle-window-maximize ()
+  (interactive)
+  (require 'treemacs)
+  ;; forcibly close treemacs (if open)
+  (pcase (treemacs-current-visibility)
+    (`visible (delete-window (treemacs-get-local-window)))
+    (_ (message "")))
+
+  (if (= 1 (length (window-list)))
+      ;; winner-undo undoes the last change you made to the state of your widnows.
+      ;; This isn't an exact inverse of "delete-other-windows", but it works OK for me in practice.
+      (winner-undo)
+      (delete-other-windows)))
+#+end_src
+
+* highlight-indent-guides
+On a fresh Emacs 28.1 install I started to see the highlight indent guides changing colour when a new frame is open (!). The following seems to correct the issue:
+
+#+begin_src emacs-lisp
+(after! highlight-indent-guides
+  (highlight-indent-guides-auto-set-faces))
+#+end_src
+
+Source: [[https://github.com/doomemacs/doomemacs/issues/2666#issuecomment-596700175][github]]
+* prompt-for-buffer
+Use =SPC w V= (vertical split + follow) or =SPC w S= (horizontal split + follow).
+
+Split to the right and below! Source: [[https://tecosaur.github.io/emacs-config/config.html#windows][here]].
+
+#+begin_src emacs-lisp
+(setq split-width-threshold 1)
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+#+end_src
+
+Switch to default doom's dashboard on new vsplit/split:
+
+#+begin_src emacs-lisp :tangle no
+(defadvice! prompt-for-buffer (&rest _)
+  :after 'evil-window-split (switch-to-buffer (get-buffer "*doom*")))
+(defadvice! prompt-for-vbuffer (&rest _)
+  :after 'evil-window-vsplit (switch-to-buffer (get-buffer "*doom*")))
+#+end_src
+
+Use =M-n= to create a new empty buffer. The following advices will automatically move the buffer window to the right and invoke =consult-projectile=.
+
+* consult
+I'm using ~consult~ + ~consult-projectile~ to jump around buffers, recent files and project files. Package repository: [[https://github.com/minad/consult][consult]], [[https://gitlab.com/OlMon/consult-projectile][consult-projectile]]. =consult-projectile= is a consult source to integrate with projectile.
+
+Usually I'm using ~lsp~ with PHP, which seems to be quite slow at times and I'm also using ~vertico-posframe~ so buffer previews are actually not to useful for me:
+
+#+begin_src emacs-lisp
+(setq consult-preview-key (kbd "M-."))
+(use-package! consult
+  :config
+    (consult-customize
+        +default/search-buffer
+        consult-goto-line
+       :preview-key 'any))
+#+end_src
+
+Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but I usually do [[kbd:][M-p]] to find anything.
+
+#+begin_src emacs-lisp
+(setq consult-projectile-sources
+  '(consult-projectile--source-projectile-buffer   ;; buffers in projectile
+    consult-projectile--source-projectile-recentf  ;; recent files in projectile
+    consult-projectile--source-projectile-file     ;; projectile files
+    consult--source-project-recent-file            ;; project's recent files
+    consult--source-bookmark                       ;; bookmarks
+    consult-projectile--source-projectile-project));; projectile projects
+#+end_src
+
+By default ~projectile-buffer~ source order's items in MRU (putting current opened entries last, mind). Other sources do not do MRU.
+
+* TODO Display time
+#+begin_src emacs-lisp
+(setq
+ display-time-format "w%U"
+ display-time-default-load-average nil
+ doom-modeline-time-icon nil)
+(display-time)
+#+end_src
+* TODO Doom modeline
+#+begin_src emacs-lisp
+(setq doom-modeline-buffer-file-name-style 'file-name)
+#+end_src

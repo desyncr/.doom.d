@@ -1,0 +1,56 @@
+#+title: Doom Emacs > General
+#+language: en
+#+property: header-args :tangle .elisp/general.el :cache yes :results silent :auto_tangle t
+
+Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets. It is optional.
+
+#+begin_src emacs-lisp
+(setq user-full-name "DC*"
+      user-mail-address "des@riseup.net")
+#+end_src
+
+Switch to normal mode on save:
+#+begin_src emacs-lisp
+(add-hook 'after-save-hook #'evil-normal-state)
+#+end_src
+
+Disable this warning message that appears from time to time:
+
+#+begin_src emacs-lisp
+(setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
+#+end_src
+
+See [[https://github.com/nobiot/org-transclusion/issues/105][this]] github issue for a possible cause of the warning.
+
+* Deleting files
+Allow deleting files in OSX. Source: [[https://emacs.stackexchange.com/a/15012][Emacs' StackExchange]]
+
+#+begin_src emacs-lisp
+(setq delete-by-moving-to-trash t)
+(setq trash-directory "~/.Trash")
+#+end_src
+
+*Also required*: Go to Settings -> Security & Privacy -> Privacy -> Automation and Allow Emacs -> Finder. Source: [[https://ajar.freshdesk.com/support/solutions/articles/26000045119-install-error-not-authorized-to-send-apple-events-to-system-events-][freshdesk.com]]
+
+Archive entries in sub-directory. Source: [[https://emacs.stackexchange.com/a/25020][Emacs' StackExchange]]
+* Auto-save
+Automatically save open buffers on certain events.
+
+#+begin_src emacs-lisp
+(use-package super-save
+  :defer t
+  :config
+  (super-save-mode +1))
+#+end_src
+
+Super-save/lsp-mode were causing issues while typing. When a function call was typed (e.g. =call-to-func(=), lsp-mode would show the signature in the echo area, this will in turn cause super-save to save the file - as it lost focus - and switch to normal mode via the ~after-save-hook~ configured in the General section.
+
+#+begin_src emacs-lisp
+(defun me/super-save-disable-advice (orig-fun &rest args)
+  "Dont auto-save under these conditions."
+  (unless (equal (car args) " *LV*")
+	(apply orig-fun args)))
+(advice-add 'super-save-command-advice :around #'me/super-save-disable-advice)
+#+end_src
+
+Source: [[https://github.com/bbatsov/super-save/issues/38#issuecomment-1229537100][github comment]].

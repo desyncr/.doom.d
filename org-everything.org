@@ -1,0 +1,360 @@
+#+title: Doom Emacs > Org Everything
+#+language: en
+#+property: header-args :tangle .elisp/org-everything.el :cache yes :results silent
+
+* org-mode
+If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
+
+#+begin_src emacs-lisp
+(setq org-directory "~/org/")
+(after! org
+  (setq
+    org-startup-folded nil
+    org-hide-emphasis-markers t))
+
+(defun me/org-disable-line-numbers-mode()
+  (display-line-numbers-mode -1))
+
+; File mode specification error: (void-function me/org-disable-hl-indent-mode)
+(defun me/org-disable-indent-mode()
+  (setq org-indent-mode -1))
+
+;(defun me/org-disable-git-gutter-mode()
+;  (git-gutter-mode -1))
+
+(defun me/org-enable-literate-calc-minor-mode()
+  (literate-calc-minor-mode 1))
+
+;(defun me/org-disable-hl-indent-guides()
+;  (highlight-indent-guides-mode -1))
+
+(add-hook 'org-mode-hook 'visual-line-mode)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook 'me/org-disable-indent-mode)
+(add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
+;(add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
+
+; Disabling as it causes errors when buffers as killed before the result is computed,
+; usually while switching quickly between org files
+;(add-hook 'org-mode-hook 'me/org-enable-literate-calc-minor-mode)
+
+;; see https://github.com/doomemacs/doomemacs/issues/4815#issue-834176237
+;(add-to-list 'git-gutter:disabled-modes 'org-mode)
+#+end_src
+
+Disable company-mode (autocompletions) on org-mode (i.e. prose):
+#+begin_src emacs-lisp
+(setq company-global-modes '(not org-mode))
+#+end_src
+
+#+begin_src emacs-lisp
+(setq org-archive-location (concat "archive/archive-"
+                                   (format-time-string "%Y%m" (current-time)) ".org_archive::"))
+#+end_src
+
+Do not create bookmarks on last org-capture:
+#+begin_src emacs-lisp
+(setq org-capture-bookmark nil)
+#+end_src
+* TODO org-capture
+#+begin_src emacs-lisp
+(setq org-capture-templates
+    '(("t" "TODO" entry (file+headline +org-capture-todo-file "Inbox")
+       "* TODO %? %U\n%i\n%a" :prepend t)
+      ("n" "Notes" entry (file+headline +org-capture-notes-file "Inbox")
+       "* %u %?\n%i\n%a" :prepend t)
+      ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
+       "* %U %?\n%i\n%a" :prepend t)))
+#+end_src
+
+Keybinding to specific org-capture:
+#+begin_src emacs-lisp
+(defun me/org-capture-todo (type &optional arg)
+  (interactive "P")
+  (org-capture arg type))
+
+(map! :leader :desc "Capture a TODO item" "c t" (lambda() (interactive) (me/org-capture-todo "t")))
+(map! :leader :desc "Capture a new note" "c n" (lambda() (interactive) (me/org-capture-todo "n")))
+(map! :leader :desc "Capture a new journal entry" "c j" (lambda() (interactive) (me/org-capture-todo "j")))
+#+end_src
+
+* TODO org-agenda
+#+begin_src emacs-lisp
+(map! "M-o" 'org-agenda)
+#+end_src
+Custom agenda commands! \o/
+
+#+begin_src emacs-lisp
+(setq org-agenda-custom-commands
+      '(("w" "List :work: TODO/WAITING|INPROGRESS|NEXT"
+          ((tags "work/TODO|WAITING|INPROGRESS|NEXT")))
+        ("d" "List :docs: TODO/WAITING|INPROGRESS|NEXT"
+          ((tags "docs/TODO|WAITING|INPROGRESS|NEXT")))
+        ("p" "List :personal: TODO/INPROGRESS/NEXT"
+            ((tags "personal/TODO|INPROGRESS|NEXT")))
+        ("P" "List :projects: TODO/INPROGRESS/NEXT"
+            ((tags "projects/TODO|INPROGRESS|NEXT")))
+        ("e" "List :emacs: TODO/INPROGRESS/NEXT"
+            ((tags "emacs/TODO|INPROGRESS|NEXT")))
+        ("l" "List :learning:"
+            ((tags "learning")))))
+#+end_src
+
+Source: [[https://stackoverflow.com/a/34660219][stackoverflow]].
+
+Sorting strategy:
+
+#+begin_src emacs-lisp
+(setq org-agenda-sorting-strategy '((agenda priority-down todo-state-down)
+                                    (todo priority-down todo-state-down)
+                                    (tags priority-down todo-state-down)
+                                    (search priority-down todo-state-down category-keep)))
+#+end_src
+
+See documentation [[https://orgmode.org/org.html#Sorting-of-agenda-items][here]].
+
+Keybinding to specific org-agenda views:
+#+begin_src emacs-lisp
+(defun me/org-agenda-view (type &optional arg)
+  (interactive "P")
+  (split-window-horizontally)
+  (other-window 1)
+  (org-agenda arg type))
+
+(map! :leader :desc "Work view" "o a w" (lambda() (interactive) (me/org-agenda-view "w")))
+(map! :leader :desc "Docs view" "o a d" (lambda() (interactive) (me/org-agenda-view "d")))
+(map! :leader :desc "Personal view" "o a p" (lambda() (interactive) (me/org-agenda-view "p")))
+(map! :leader :desc "Projects view" "o a P" (lambda() (interactive) (me/org-agenda-view "P")))
+(map! :leader :desc "Emacs view" "o a e" (lambda() (interactive) (me/org-agenda-view "e")))
+(map! :leader :desc "Learning view" "o a l" (lambda() (interactive) (me/org-agenda-view "l")))
+#+end_src
+Source: [[https://emacs.stackexchange.com/a/868][Stackoverflow]].
+
+Remove file names on agenda views:
+#+begin_src emacs-lisp
+(setq org-agenda-prefix-format "%t %s")
+#+end_src
+Source: [[https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00743.html][here]].
+* TODO org-modern
+It's overkill but I'm using =org-modern= to prettify symbols such as +title and +begin_src. I'm actually happy with =org-bullets=.
+
+#+begin_src emacs-lisp
+(use-package org-modern
+  :config
+    (setq org-modern-star nil
+        org-modern-timestamp nil
+        org-modern-todo nil
+        org-modern-tag nil
+        org-modern-statistics nil
+        org-modern-table nil
+        org-modern-hide-stars nil)
+    (custom-set-faces
+    '(org-modern-block-name ((t nil))))
+    (global-org-modern-mode))
+#+end_src
+* TODO org-babel
+Using =org-babel-tangle= each time you make an edition to an org file gets old very quickly. With =org-auto-tangle= you can define an auto-tangling option for the org file you're working with, so each time you save the buffer =org-babel= kicks in.
+
+We don't usually tangle every org-file we work with, so I'm setting =org-auto-tangle-default= to =nil= to disable this functionality. Use =:auto_tangle yes= to automatically tangle the org file you're editing:
+
+#+begin_src emacs-lisp
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default nil))
+#+end_src
+
+I'm working with =org-babel= primarly in ruby. While =org-babel= works pretty well out of the box in order to support =:session= we need this package:
+
+=:session= help us to evaluate code blocks as a whole. Meaning that different code blocks can interact as a whole unit.
+
+For example: I can create a funcion in a given code block as follows:
+#+begin_src ruby :tangle no :session example
+def hello_world
+  "Hello world!"
+end
+#+end_src
+
+In a different code block I can call this function:
+#+begin_src ruby :tangle no :resuts output :session example
+hello_world
+#+end_src
+
+All code blocks are ran synchronously. This means the Emacs UI is blocked until the process is done. Unless you use =ob-async= package.
+
+Add =:async= to the source block and the process should run asynchronously. Repository [[https://github.com/astahlman/ob-async][here]].
+
+org-babel support for PlantUML:
+#+begin_src emacs-lisp
+(setq plantuml-jar-path "/usr/local/bin/plantuml.jar")
+(setq plantuml-default-exec-mode 'jar)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! ob-http
+  :commands org-babel-execute:http)
+#+end_src
+
+This is required to have ob-http be properly loaded in Doom Emacs. See response [[https://discord.com/channels/406534637242810369/1027578581032915045/1027589113257414708][here]].
+
+#+begin_src emacs-lisp
+(after! org
+  (add-to-list 'org-src-lang-modes '("http" . ob-http))
+  (autoload 'ob-http-mode "ob-http-mode" nil t))
+#+end_src
+
+Alternatively you can use:
+#+begin_example emacs-lisp
+(use-package! ob-http
+  :commands (ob-http-mode org-babel-execute:http))
+
+(after! org
+  (add-to-list 'org-src-lang-modes '("http" . ob-http)))
+#+end_example
+
+* org-roam
+Org-roam is a package to create a non-hierarchical knowledge base. The package is meant to be used as a Zettelkasten note taking tool.
+
+#+begin_src emacs-lisp
+(use-package org-roam
+  :defer t
+  :custom
+  (org-roam-directory "~/org/roam")
+  (org-roam-index-file "~/org/roam/index.org")
+  )
+#+end_src
+
+We're making only a few configurations only since Doom Emacs already integrates the package via ~:editor (org +roam)~.
+
+#+begin_src emacs-lisp
+(defun me/counsel-ag-roam ()
+ "Do counsel-ag on the org roam directory"
+ (interactive)
+ (counsel-ag nil org-roam-directory))
+#+end_src
+
+Search org-roam notes via consult (source: [[https://github.com/jgru/consult-org-roam#installation][here]]):
+
+#+begin_src emacs-lisp
+(use-package consult-org-roam
+  :defer t
+  :init
+    (require 'consult-org-roam)
+    ;; Activate the minor-mode
+    (consult-org-roam-mode 1)
+  :custom
+    (consult-org-roam-grep-func #'consult-ripgrep)
+  :config
+    (consult-customize consult-org-roam-forward-links :preview-key (kbd "M-.")))
+
+(map! :leader :desc "Search via consult" "n r S" #'consult-org-roam-search)
+#+end_src
+
+Keybinding example (see this [[https://rameezkhan.me/adding-keybindings-to-doom-emacs/][blog]]).
+* org-todo-keywords
+Custom ~org-todo-keywords~. It needs to be wrapper in (~after! ..~) block to apply correctly (see [[https://github.com/doomemacs/doomemacs/issues/2913#issuecomment-614773557][comment]]).
+
+#+begin_src emacs-lisp
+(after! org
+    (setq org-todo-keywords
+        '((sequence  "REPEAT(r)" "PROJ(p)" "TODO(t)" "NEXT(n)" "WAITING(w)" "INPROGRESS(i)" "|" "DONE(d)" "CANCELED(c)")))
+    (setq org-tag-alist '(("personal" . ?p) ("projects" . ?P) ("learning" . ?l) ("@home" . ?h) ("work" . ?w) ("@computer" . ?c) ("errands" . ?e))))
+#+end_src
+
+I'm also configuring a few tags to classify items under.
+* org-bullets
+This package is a lightweight alternative to [[https://github.com/minad/org-modern][org-modern]]. Project page [[https://github.com/sabof/org-bullets][here]].
+
+I opted for this package rather than org-modern since the latter was rather invasive changing for example the look of dates, tags etc.
+
+#+begin_src emacs-lisp
+(use-package org-bullets
+  :defer t
+  :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
+In the above block I'm enabling the org-bullets-mode after ~org-mode~ is enabled (see documentation [[https://orgmode.org/worg/doc.html][here]].)
+* org-log-repeat
+Disable log lines on repeat tasks.
+
+#+begin_src emacs-lisp
+(use-package org
+  :config
+    (setq org-log-repeat nil))
+#+end_src
+
+This code disables logging status changes on TODO and agenda entries.
+* toc-org
+This package automatically generates and maintains a Table of Contents for Org and Markdown files.
+
+Package repository [[https://github.com/snosov1/toc-org][here]]. See configuration options and usage [[https://github.com/snosov1/toc-org#use][here]].
+* TODO literate-calc-mode
+Enable with ~literate-calc-minor-mode~. Use ~literate-calc-insert-results~ to copy results into buffer.
+
+Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
+
+#+begin_src emacs-lisp
+(use-package literate-calc-mode
+  :defer t)
+#+end_src
+
+See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]] and repository [[https://github.com/sulami/literate-calc-mode.el][here]] in github.
+* TODO org-pomodoro
+Basic configuration:
+#+begin_src emacs-lisp
+(setq org-pomodoro-format "%s"
+      org-pomodoro-start-sound-p t
+      org-pomodoro-short-break-length 10)
+#+end_src
+
+=org-pomodoro= package uses =org-clock=. This latter shows the task title in the modeline, sometimes this title is lengthy making it hard to see the Pomodoro's timer.
+
+#+begin_src emacs-lisp
+(setq org-clock-clocked-in-display 'mode-line)
+#+end_src
+
+|-------------+--------------------------------------------|
+| Value       | Description                                |
+|-------------+--------------------------------------------|
+| both        | displays in both mode line and frame title |
+| mode-line   | displays only in mode line (default)       |
+| frame-title | displays only in frame title               |
+| nil         | current clock is not displayed             |
+|-------------+--------------------------------------------|
+
+I'm only showing the first 8 characters from the task. In most cases this is enough to show the JIRA ticket I'm working on.
+
+#+begin_src emacs-lisp
+(setq org-clock-heading-function
+      (lambda ()
+        (let ((str (nth 4 (org-heading-components))))
+          (if (> (length str) 8)
+              (substring str 0 8)))))
+#+end_src
+Source: [[https://stackoverflow.com/a/14527487][here]].
+
+Configure bell sound for break and finish:
+
+#+begin_src emacs-lisp
+(setq me/org-pomodoro-bell-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq org-pomodoro-finished-sound me/org-pomodoro-bell-sound
+      org-pomodoro-start-sound me/org-pomodoro-bell-sound
+      org-pomodoro-long-break-sound me/org-pomodoro-bell-sound
+      org-pomodoro-short-break-sound me/org-pomodoro-bell-sound
+      org-pomodoro-ticking-sound me/org-pomodoro-bell-sound
+      org-pomodoro-overtime-sound me/org-pomodoro-bell-sound)
+
+#+end_src
+
+Configure volume, see github comment [[https://github.com/marcinkoziej/org-pomodoro/issues/29#issuecomment-129608240][here]]:
+
+#+begin_src emacs-lisp
+(setq me/org-pomodoro-sound-args "-volume 1.0")
+(setq org-pomodoro-finished-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-long-break-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-start-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-short-break-sound-args me/org-pomodoro-sound-args
+      org-pomodoro-ticking-sound-args me/org-pomodoro-sound-args)
+#+end_src

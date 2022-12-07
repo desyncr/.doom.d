@@ -1,0 +1,57 @@
+#+title: Doom Emacs > Writing
+#+language: en
+#+property: header-args :tangle .elisp/writing.el :cache yes :results silent :auto_tangle t
+
+* Spell checking
+Change dictionary with the following:
+
+#+begin_src emacs-lisp
+(use-package ispell
+  :defer t)
+(use-package flyspell
+  :defer t)
+#+end_src
+
+#+begin_example
+ispell-change-dictionary
+#+end_example
+
+Or use the following configuration:
+
+#+begin_src emacs-lisp
+(setq ispell-dictionary "british")
+(setq company-ispell-available nil)
+#+end_src
+
+Use ~z-=~ to get spelling corrections while under a word.
+
+Doom Emacs also come with these 2 packages for grammar checking:
+
+- [[https://github.com/mhayashi1120/Emacs-langtool][Langtool]]
+- [[https://github.com/bnbeckwith/writegood-mode][Writegood-mode]]
+
+* Langtool
+For langtool package you need to install the underlying tool languagetool, which is a java package. See instructions [[https://docs.doomemacs.org/latest/#/prerequisites][here]].
+
+Configure language:
+
+#+begin_src emacs-lisp
+(setq langtool-default-language "en-GB")
+#+end_src
+
+#+begin_src emacs-lisp
+(defun langtool-autoshow-detail-popup (overlays)
+  (when (require 'popup nil t)
+    ;; Do not interrupt current popup
+    (unless (or popup-instances
+                ;; suppress popup after type `C-g` .
+                (memq last-command '(keyboard-quit)))
+      (let ((msg (langtool-details-error-message overlays)))
+        (popup-tip msg)))))
+
+(setq langtool-autoshow-message-function
+      'langtool-autoshow-detail-popup)
+#+end_src
+
+* Writegood
+Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/][original article]] for writegood.

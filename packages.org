@@ -1,25 +1,47 @@
-(package! super-save) ;; Package repository: [[https://github.com/bbatsov/super-save][here]].
+#+title: Doom Emacs > Packages
+#+language: en
+#+property: header-args :tangle packages.el :cache yes :results silent :auto_tangle yes
 
+* General
+#+begin_src emacs-lisp
+(package! super-save) ;; Package repository: [[https://github.com/bbatsov/super-save][here]].
+#+end_src
+* Look and Feel
+#+begin_src emacs-lisp
 (package! auto-dark)
 (package! resize-window)
 (package! centered-cursor-mode)
-
+#+end_src
+* Project Management
+#+begin_src emacs-lisp
 (package! consult-projectile)
 (package! treemacs-projectile)
 (package! ranger)
+#+end_src
 
+* Version Control
+#+begin_src emacs-lisp
 (package! browse-at-remote)
+#+end_src
 
+* Coding
+#+begin_src emacs-lisp
 (package! expand-region) ;; See repository [[https://github.com/magnars/expand-region.el][here]].
 (package! rainbow-delimiters)
 (package! consult-yasnippet) ;; Consult integration with yasnippet:
 (package! devdocs)
 (package! better-jumper)
+#+end_src
 
+* Keybindings
+#+begin_src emacs-lisp
 (package! evil-snipe :disable t) ;; Search in buffer:
 (package! evil-nerd-commenter)
 (package! move-text)
+#+end_src
 
+* Org Everything
+#+begin_src emacs-lisp
 (package! org-modern)
 (package! org-auto-tangle)
 (package! inf-ruby)
@@ -30,7 +52,11 @@
 (package! toc-org)
 (package! literate-calc-mode)
 (package! ox-slack)
+#+end_src
 
+* Other
+#+begin_src emacs-lisp
 (package! keyfreq)
 (package! elfeed)
 (package! elfeed-goodies)
+#+end_src
