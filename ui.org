@@ -254,7 +254,7 @@ Split to the right and below! Source: [[https://tecosaur.github.io/emacs-config/
 
 Switch to default doom's dashboard on new vsplit/split:
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (defadvice! prompt-for-buffer (&rest _)
   :after 'evil-window-split (switch-to-buffer (get-buffer "*doom*")))
 (defadvice! prompt-for-vbuffer (&rest _)
