@@ -12,7 +12,7 @@
 - [[#organisation][Organisation]]
   - [[#look-and-feel][Look and Feel]]
   - [[#workflow][Workflow]]
-  - [[#organisation-1][Organisation]]
+  - [[#projects][Projects]]
   - [[#packages][Packages]]
   - [[#general][General]]
 - [[#feedback][Feedback]]
@@ -69,6 +69,7 @@ The command above will tangle the Org files in the user's directory. The section
 WARNING: Each category file has property headers indicating the tangle's output file. Using =:tangle yes= in src blocks inside the files will cause the output file to be overwritten by the single block.
 Instead simply use begin_src / end_src without =:tangle=.
 #+end_quote
+
 ** Prerequisites
 This is a list of applications that need to be installed previously to enjoy all the goodies of this configuration.
 
@@ -99,7 +100,7 @@ Keybindings for common commands and shortcuts for different operations as well a
 *** [[file:coding.org][Doom Emacs > Coding]]
 Programming related packages and configuration settings go here. Primarly sorrounding LSP-mode and related.
 
-** Organisation
+** Projects
 *** [[file:version-control.org][Doom Emacs > Version Control]]
 Section sorrounding Git and Magit configuration and options. Nothing else is required anyways.
 
@@ -111,6 +112,7 @@ Org related configuration, including a miriad of org-related packages such as or
 
 ** Packages
 *** [[file:packages.org][Doom Emacs > Packages]]
+
 ** General
 *** [[file:general.org][Doom Emacs > General]]
 *** [[file:other.org][Doom Emacs > Other]]
