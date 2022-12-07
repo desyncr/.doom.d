@@ -2,6 +2,35 @@
 #+language: en
 #+property: header-args :tangle .elisp/project-management.el :cache yes :results silent :auto_tangle t
 
+* consult
+I'm using ~consult~ + ~consult-projectile~ to jump around buffers, recent files and project files. Package repository: [[https://github.com/minad/consult][consult]], [[https://gitlab.com/OlMon/consult-projectile][consult-projectile]]. =consult-projectile= is a consult source to integrate with projectile.
+
+Usually I'm using ~lsp~ with PHP, which seems to be quite slow at times and I'm also using ~vertico-posframe~ so buffer previews are actually not to useful for me:
+
+#+begin_src emacs-lisp
+(setq consult-preview-key (kbd "M-."))
+(use-package! consult
+  :config
+    (consult-customize
+        +default/search-buffer
+        consult-goto-line
+       :preview-key 'any))
+#+end_src
+
+Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but I usually do [[kbd:][M-p]] to find anything.
+
+#+begin_src emacs-lisp
+(setq consult-projectile-sources
+  '(consult-projectile--source-projectile-buffer   ;; buffers in projectile
+    consult-projectile--source-projectile-recentf  ;; recent files in projectile
+    consult-projectile--source-projectile-file     ;; projectile files
+    consult--source-project-recent-file            ;; project's recent files
+    consult--source-bookmark                       ;; bookmarks
+    consult-projectile--source-projectile-project));; projectile projects
+#+end_src
+
+By default ~projectile-buffer~ source order's items in MRU (putting current opened entries last, mind). Other sources do not do MRU.
+
 * projectile
 #+begin_src emacs-lisp
 (after! projectile
