@@ -143,7 +143,7 @@ Rainbow colouring for brackets and other delimiters in prog mode. Package: [[htt
 * yasnippets
 I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to manage code snippets. As per the instructions:
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package yasnippet
   :defer t
   :config (yas-global-mode 1))
