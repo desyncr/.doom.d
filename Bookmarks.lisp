@@ -17,7 +17,7 @@
  (front-context-string . "box\n** [2022-10-")
  (rear-context-string . "~SPC n n~.\n\n* In")
  (position . 119))
-("Doom"
+("Doom Emacs"
  (filename . "~/.doom.d/Emacs.org")
  (front-context-string . "* General\nThis s")
  (rear-context-string . "[browser-url]]\n\n")
