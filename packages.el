@@ -8,6 +8,7 @@
 (package! consult-projectile)
 (package! treemacs-projectile)
 (package! ranger)
+(package! run-command)
 
 (package! browse-at-remote)
 

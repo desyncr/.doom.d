@@ -126,12 +126,42 @@ Here's some custom configuration options, take a look at the [[https://github.co
 #+begin_src emacs-lisp
 (use-package ranger
   :defer t
-  :config
+  :init
   (setq ranger-preview-delay 0 ;; delay preview (seconds)
         ranger-show-literal t  ;; do not highlight preview (prevents lsp from running)
         ranger-parent-depth 3  ;; number of parent directories windows
         ranger-max-preview-size 1))
 #+end_src
+
+* TODO Command runner
+#+begin_src emacs-lisp
+(defun run-command-recipe-example ()
+  (list
+   ;; Arbitrary command
+   (list :command-name "say-hello"
+         :command-line "echo Hello, World!")
+   ;; Do something with current directory
+   (list :command-name "serve-http-dir"
+         :command-line "python3 -m http.server 8000"
+         :display "Serve current directory over HTTP")
+   (list :command-name "org-tangle-doom"
+         :command-line "cd ~/.doom.d && ~/.emacs.d/bin/org-tangle coding.org fonts.org general.org keybindings.org org-everything.org other.org packages.org project-management.org ui.org version-control.org writing.org"
+         :display "Tangle Doom Emacs configuration")
+  ))
+
+(use-package run-command
+  :config
+  (add-to-list 'run-command-recipes 'run-command-recipe-example))
+#+end_src
+
+
+#+begin_src emacs-lisp
+(defun org-tangle-doom ()
+  "Tangle Doom Emacs configuration."
+  (interactive)
+(call-process-shell-command "cd ~/.doom.d && ~/.emacs.d/bin/org-tangle coding.org fonts.org general.org keybindings.org org-everything.org other.org packages.org project-management.org ui.org version-control.org writing.org" nil "*Org-babel output*" t))
+#+end_src
+
 * TODO Bookmarks
 Preserving bookmarks out of the Emacs installation:
 
