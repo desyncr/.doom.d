@@ -360,7 +360,7 @@ Avoid use of hard to reach =DEL= key. Here I'm replacing this key usage with a b
 
 #+begin_src emacs-lisp
 (with-eval-after-load 'evil-maps
-  (define-key evil-insert-state-map (kbd "M-o") 'evil-open-below)
+  (define-key evil-insert-state-map (kbd "M-o") '(lambda () (interactive) (kbd "<RET>")))
   (define-key evil-insert-state-map (kbd "M-O") 'evil-open-above))
 #+end_src
 
