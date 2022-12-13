@@ -318,9 +318,7 @@ I'm currenly using a inverted-L type keyboard. For me the distance between the r
 |-----------+---------|
 
 #+begin_src emacs-lisp
-(define-key key-translation-map (kbd "'") (kbd "<RET>"))
-(define-key key-translation-map (kbd "\"") (kbd "'"))
-
+(define-key key-translation-map (kbd "\\") (kbd "<RET>"))
 ;(map! "M-\'" (lambda () (interactive) (insert "\"")))
 #+end_src
 
