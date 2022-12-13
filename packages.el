@@ -3,6 +3,7 @@
 (package! auto-dark)
 (package! resize-window)
 (package! centered-cursor-mode)
+(package! defrepeater)
 
 (package! consult-projectile)
 (package! treemacs-projectile)

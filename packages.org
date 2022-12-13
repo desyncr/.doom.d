@@ -11,6 +11,7 @@
 (package! auto-dark)
 (package! resize-window)
 (package! centered-cursor-mode)
+(package! defrepeater)
 #+end_src
 * Project Management
 #+begin_src emacs-lisp
