@@ -119,8 +119,6 @@ Keybinding to specific org-agenda views:
 #+begin_src emacs-lisp
 (defun me/org-agenda-view (type &optional arg)
   (interactive "P")
-  (split-window-horizontally)
-  (other-window 1)
   (org-agenda arg type))
 
 (map! :leader :desc "Work view" "o a w" (lambda() (interactive) (me/org-agenda-view "w")))

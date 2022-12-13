@@ -275,3 +275,35 @@ Use =M-n= to create a new empty buffer. The following advices will automatically
 #+begin_src emacs-lisp
 (setq doom-modeline-buffer-file-name-style 'file-name)
 #+end_src
+
+* Popup
+#+begin_src emacs-lisp
+(set-popup-rules!
+ '(
+     ("^\\*doom eval\\*" :side bottom :height 0.1 :ttl 0 :quit t)
+
+     ("^\\*Org Agenda" :slot -2 :side right :size 0.3 :select t)
+     ("^\\*help" :slot -3 :side right :size 0.3 :select t)
+     ("^\\*Search" :slot -4 :side right :size 0.3 :select t)
+
+     ("^\\*ielm" :slot -2 :side bottom :size 0.2 :select t)
+     ("^\\*doom:vterm" :slot -3 :side bottom :size 0.2 :select t)
+     ("org-tangle-doom" :slot -4 :side bottom :size 0.2 :select t)
+     ("^\\*Async Shell" :slot -5 :side bottom :size 0.2 :select t)
+     ;; ("^\\*" :slot -1 :side bottom :size 0.3) ; fallback rule for special buffers
+  )
+)
+#+end_src
+
+#+begin_example emacs-lisp
+   ("^\\*Org todo" :slot -3 :side right :size 0.3 :select t)
+   ("^\\*Org Agenda" :slot -2 :side right :size 0.3 :select t)
+   ("^\\*doom eval" :ignore t :slot -3 :side bottom :size 0.1 :select nil)
+   ("^\\*" :select t)
+   ("^\\*Completions" :slot -1 :ttl 0)
+   ("^\\*\\(?:scratch\\|Messages\\)" :ttl t)
+   ("^\\*Help" :slot -1 :size 0.2 :select t)
+   ("^\\*doom:"
+    :size 0.35 :select t :modeline t :quit t :ttl t)
+#+end_example
+
