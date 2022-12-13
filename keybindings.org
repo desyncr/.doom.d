@@ -22,6 +22,7 @@ Shortcut for opening the Doom's dashboard:
 #+begin_src emacs-lisp
 (map! :leader :desc "Doom Dashboard" "d" #'+doom-dashboard/open)
 #+end_src
+
 * Navigation and files
 ** Search
 |------------------------+-------------------------|
@@ -375,7 +376,7 @@ Mapping =0= (or =)=) to jump to first non blank character, which is quite useful
 ;(define-key evil-insert-state-map (kbd ")") (lambda () (interactive) (insert "0")))
 #+end_src
 
-Avoid use of hard to reach =DEL= key. Here I'm replacing this key usafge with a bit more accessible =M-u= and =M-U=:
+Avoid use of hard to reach =DEL= key. Here I'm replacing this key usage with a bit more accessible =M-u= and =M-U=:
 
 #+begin_src emacs-lisp
 (map! "M-u" (kbd "<DEL>"))
