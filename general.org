@@ -54,3 +54,10 @@ Super-save/lsp-mode were causing issues while typing. When a function call was t
 #+end_src
 
 Source: [[https://github.com/bbatsov/super-save/issues/38#issuecomment-1229537100][github comment]].
+* Aliases
+
+#+begin_src emacs-lisp
+(defalias 'tangle 'org-babel-tangle)
+(defalias 'view-in-browser 'browse-at-remote)
+(defalias 'project-reset-cache 'projectile-invalidate-cache)
+#+end_src
