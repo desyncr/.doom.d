@@ -19,7 +19,7 @@
  (position . 119))
 ("Doom Emacs"
  (filename . "~/.doom.d/Emacs.org")
- (front-context-string . "* General\nThis s")
- (rear-context-string . "[browser-url]]\n\n")
- (position . 2480))
+ (front-context-string . "* Forewords\nThis")
+ (rear-context-string . "nse][License]]\n\n")
+ (position . 580))
 )
