@@ -134,14 +134,6 @@ Note: by default ~^~ is bound to =evil-first-non-black=, but for me it's in an a
  | SPC w H, J, K, L | Move window to h, j, k, l window |
  |------------------+----------------------------------|
 
-#+begin_src emacs-lisp
-(map! "M-|" #'evil-window-vsplit)
-(map! "M--" #'evil-window-split)
-
-(map! :leader "w <" (lambda() (interactive) (evil-window-decrease-width 10)))
-(map! :leader "w >" (lambda() (interactive) (evil-window-increase-width 10)))
-#+end_src
-
 Next/previous window:
 
 #+begin_src emacs-lisp
@@ -315,24 +307,6 @@ Disclaimer: I'm trying these settings out and figuring out exactly what's my bes
 
 Note that I'm configuring (via OS settings) CapsLock to ESC.
 
-Easing use of common programming symbols:
-
-#+begin_src emacs-lisp
-(define-key key-translation-map (kbd "4") (kbd "$"))
-(define-key key-translation-map (kbd "$") (kbd "4"))
-
-(define-key key-translation-map (kbd "3") (kbd "#"))
-(define-key key-translation-map (kbd "#") (kbd "3"))
-
-(define-key key-translation-map (kbd "9") (kbd "("))
-(define-key key-translation-map (kbd "(") (kbd "9"))
-
-(define-key key-translation-map (kbd "0") (kbd ")"))
-(define-key key-translation-map (kbd ")") (kbd "0"))
-#+end_src
-
-=TODO=: Create a toggle function to swap the entere numeric strip.
-
 I'm currenly using a inverted-L type keyboard. For me the distance between the row keys and the enter key is too much. As a workaround for these type of keyboards I'm remapping these keys:
 
 |-----------+---------|
@@ -394,5 +368,8 @@ PHP specific typing improvements:
 
 #+begin_src emacs-lisp
 (with-eval-after-load 'php-mode
-    (define-key php-mode-map (kbd "-") (lambda () (interactive) (insert "->"))))
+    (define-key php-mode-map (kbd "-") (lambda () (interactive) (insert "->")))
+    (define-key key-translation-map (kbd "4") (kbd "$"))
+    (define-key key-translation-map (kbd "$") (kbd "4"))
+)
 #+end_src
