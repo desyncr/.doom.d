@@ -345,6 +345,8 @@ Mapping =0= (or =)=) to jump to first non blank character, which is quite useful
 (define-key evil-normal-state-map (kbd "0") (lambda () (interactive) (evil-goto-column 0))) ;; also C-u
 (define-key evil-visual-state-map (kbd "0") (lambda () (interactive) (evil-goto-column 0))) ;; also C-u
 
+(define-key evil-normal-state-map (kbd "3") 'evil-ex-search-word-backward)
+
 ; Note: Doesn't work with smart parens / electric
 ;(define-key evil-insert-state-map (kbd "0") (lambda () (interactive) (insert ")")))
 ;(define-key evil-insert-state-map (kbd ")") (lambda () (interactive) (insert "0")))
