@@ -275,7 +275,7 @@ Move-text:
  | M-t   | Toggle vterm popup       |
  | M-r   | Open ranger              |
  | M-T   | Neotree toggle           |
- | M-'   | Toggle ielm popup        |
+ | M-:   | Toggle ielm popup        |
  |-------+--------------------------|
  | Other |                          |
  |-------+--------------------------|
@@ -295,7 +295,7 @@ Setting up this keybinding for the "command palette" and =ielm=:
 
 #+begin_src emacs-lisp
 (map! "M-;" :desc "Execute command" 'execute-extended-command)
-(map! "M-'" :desc "Toggle ielm popup" 'ielm)
+(map! "M-:" :desc "Toggle ielm popup" 'ielm)
 #+end_src
 
 Evaluate line or region and edit source block in capture buffer:
