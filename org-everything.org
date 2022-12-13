@@ -306,6 +306,7 @@ Basic configuration:
 #+begin_src emacs-lisp
 (setq org-pomodoro-format "%s"
       org-pomodoro-start-sound-p t
+      org-pomodoro-keep-killed-pomodoro-time t
       org-pomodoro-short-break-length 10)
 #+end_src
 
