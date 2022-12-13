@@ -216,6 +216,8 @@ Use with C-o to jump out of the last item and C-i to jump in to the next item in
     (define-key evil-normal-state-map "f" 'avy-goto-char-timer))
 (setq avy-timeout-seconds 1
       avy-single-candidate-jump t)
+(setq avy-orders-alist
+      '((evil-avy-goto-char-timer . avy-order-closest)))
 #+end_src
 * multiple-cursors
 Doom Emacs supports 2 multi-cursor packages out of the box: doom-package:evil-mc and doom-package:evil-multiedit. These packages can be enabled via doom-module:multiple-cursors module.
