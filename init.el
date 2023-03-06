@@ -52,7 +52,7 @@
        zen                ; distraction-free coding or writing
 
        :editor
-       (evil +everywhere)  ; come to the dark side, we have cookies
+       (evil)  ; come to the dark side, we have cookies
        ;file-templates     ; auto-snippets for empty files
        fold                ; (nigh) universal code folding
        format              ; automated prettiness
@@ -139,7 +139,7 @@
        ;;(haskell +lsp)    ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
-       json                ; At least it ain't XML
+       ;json                ; At least it ain't XML
        ;(java +lsp)         ; the poster child for carpal tunnel syndrome
        ;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
@@ -152,7 +152,7 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +roam2 +pretty +pomodoro)        ; organize your plain life in plain text
+       (org +roam2 +pretty)        ; organize your plain life in plain text
        (php +lsp)          ; perl's insecure younger brother
        plantuml            ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
