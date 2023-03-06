@@ -250,13 +250,13 @@ Use =M-n= to create a new empty buffer. The following advices will automatically
 
      ("^\\*Org Agenda" :slot -2 :side right :size 0.3 :select t)
      ("^\\*help" :slot -3 :side right :size 0.3 :select t)
-     ("^\\*Search" :slot -4 :side right :size 0.3 :select t)
 
      ("^\\*ielm" :slot -2 :side bottom :size 0.2 :select t)
      ("^\\*doom:vterm" :slot -3 :side bottom :size 0.2 :select t)
      ("org-tangle-doom" :slot -4 :side bottom :size 0.2 :select t)
      ("^\\*Async Shell" :slot -5 :side bottom :size 0.2 :select t)
-     ;; ("^\\*" :slot -1 :side bottom :size 0.3) ; fallback rule for special buffers
+     ("^\\*Search" :slot -6 :side bottom :size 0.3 :select t)
+     ("^\\*" :slot -1 :side bottom :size 0.3) ; fallback rule for special buffers
   )
 )
 #+end_src
