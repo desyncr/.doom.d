@@ -171,7 +171,7 @@ Note: I'm disabling the following due to poor performance:
 #+end_src
 
 Additionally I'm installing pre-defined snippets with the package [[The above instructions also setup the package][Yasnippets-snippets]]:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package yasnippet-snippets
   :defer t)
 #+end_src
