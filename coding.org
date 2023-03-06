@@ -24,19 +24,19 @@ Visually select text regions with ~M-=~:
 See mention [[https://takeonrules.com/2020/10/18/why-i-chose-emacs-as-my-new-text-editor/][here]].
 * syntax-entry
 #+begin_src emacs-lisp
-(modify-syntax-entry ?# "< b")
-(modify-syntax-entry ?\n "> b")
-(modify-syntax-entry ?$ "w")
-(modify-syntax-entry ?_ "w")
-(modify-syntax-entry ?- "w")
-(modify-syntax-entry ?+ "w")
+;(modify-syntax-entry ?# "< b")
+;(modify-syntax-entry ?\n "> b")
+;(modify-syntax-entry ?$ "w")
+;(modify-syntax-entry ?_ "w")
+;(modify-syntax-entry ?- "w")
+;(modify-syntax-entry ?+ "w")
 
-(add-hook 'php-mode-hook '(lambda ( )
+;(add-hook 'php-mode-hook '(lambda ( )
     ;(modify-syntax-entry ?> "." php-mode-syntax-table)
     ;(modify-syntax-entry ?- "." php-mode-syntax-table)
     ;(modify-syntax-entry ?_ "w" php-mode-syntax-table)
-    (modify-syntax-entry ?$ "w" php-mode-syntax-table)
-))
+    ;(modify-syntax-entry ?$ "w" php-mode-syntax-table)
+;))
 #+end_src
 * flycheck
 Most classes/php files I'm working with are quite large and cause a large number of errors to popup. I'm topping up the error threshold to avoid a warning during start up:
