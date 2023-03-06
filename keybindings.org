@@ -126,8 +126,8 @@ Note: by default ~^~ is bound to =evil-first-non-black=, but for me it's in an a
  |------------------+----------------------------------|
  | M-<pipe>, M--    | Split vertically, horizontally   |
  | M-l, M-h         | Next, previous window            |
- | M-]              | Ideal distribution               |
  | M-w              | Delete window                    |
+ | SPC w i          | Ideal distribution               |
  | SPC w =          | Balance windows                  |
  | SPC w <, >       | Increase, decrease window width  |
  | SPC w h, j, k, l | Switch to h, j, k, l window      |
@@ -279,9 +279,9 @@ Move-text:
 Treemacs toggle, vterm toggle and Ranger:
 
 #+begin_src emacs-lisp
-(map! "M-t" :desc "Toggle vterm" '+vterm/toggle)
 (map! "M-r" :desc "Open ranger" #'ranger)
-(map! "M-T" :desc "Toggle Treemacs" #'+treemacs/toggle)
+(map! "M-t" :desc "Toggle Treemacs" #'+treemacs/toggle)
+(map! "M-T" :desc "Toggle vterm" '+vterm/toggle)
 #+end_src
 
 Setting up this keybinding for the "command palette" and =ielm=:
@@ -318,7 +318,7 @@ I'm currenly using a inverted-L type keyboard. For me the distance between the r
 |-----------+---------|
 
 #+begin_src emacs-lisp
-(define-key key-translation-map (kbd "\\") (kbd "<RET>"))
+;(define-key key-translation-map (kbd "\\") (kbd "<RET>"))
 ;(map! "M-\'" (lambda () (interactive) (insert "\"")))
 #+end_src
 
@@ -331,8 +331,8 @@ I notificed that I make quite a usage of these two (in one way or another) so I 
 I generally use 'i' for inserting and 'A' for appending at the end of the line.
 
 #+begin_src emacs-lisp
-(define-key evil-normal-state-map (kbd "A") 'evil-append)
-(define-key evil-normal-state-map (kbd "a") 'evil-append-line)
+;(define-key evil-normal-state-map (kbd "A") 'evil-append)
+;(define-key evil-normal-state-map (kbd "a") 'evil-append-line)
 #+end_src
 
 Mapping =0= (or =)=) to jump to first non blank character, which is quite useful for programmer mode with indented code.
@@ -340,10 +340,10 @@ Mapping =0= (or =)=) to jump to first non blank character, which is quite useful
 #+begin_src emacs-lisp
 (define-key evil-normal-state-map (kbd ")") 'evil-first-non-blank)
 (define-key evil-visual-state-map (kbd ")") 'evil-first-non-blank)
-(define-key evil-normal-state-map (kbd "0") (lambda () (interactive) (evil-goto-column 0))) ;; also C-u
-(define-key evil-visual-state-map (kbd "0") (lambda () (interactive) (evil-goto-column 0))) ;; also C-u
-
-(define-key evil-normal-state-map (kbd "3") 'evil-ex-search-word-backward)
+;(define-key evil-normal-state-map (kbd "0") (lambda () (interactive) (evil-goto-column 0))) ;; also C-u
+;(define-key evil-visual-state-map (kbd "0") (lambda () (interactive) (evil-goto-column 0))) ;; also C-u
+;
+;(define-key evil-normal-state-map (kbd "3") 'evil-ex-search-word-backward)
 
 ; Note: Doesn't work with smart parens / electric
 ;(define-key evil-insert-state-map (kbd "0") (lambda () (interactive) (insert ")")))
@@ -359,17 +359,17 @@ Avoid use of hard to reach =DEL= key. Here I'm replacing this key usage with a b
 #+end_src
 
 #+begin_src emacs-lisp
-(with-eval-after-load 'evil-maps
-  (define-key evil-insert-state-map (kbd "M-o") '(lambda () (interactive) (kbd "<RET>")))
-  (define-key evil-insert-state-map (kbd "M-O") 'evil-open-above))
+;(with-eval-after-load 'evil-maps
+;  (define-key evil-insert-state-map (kbd "M-o") '(lambda () (interactive) (kbd "<RET>")))
+;  (define-key evil-insert-state-map (kbd "M-O") 'evil-open-above))
 #+end_src
 
 PHP specific typing improvements:
 
 #+begin_src emacs-lisp
-(with-eval-after-load 'php-mode
-    (define-key php-mode-map (kbd "-") (lambda () (interactive) (insert "->")))
-    (define-key key-translation-map (kbd "4") (kbd "$"))
-    (define-key key-translation-map (kbd "$") (kbd "4"))
-)
+;(with-eval-after-load 'php-mode
+;    (define-key php-mode-map (kbd "-") (lambda () (interactive) (insert "->")))
+;    (define-key key-translation-map (kbd "4") (kbd "$"))
+;    (define-key key-translation-map (kbd "$") (kbd "4"))
+;)
 #+end_src
