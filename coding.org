@@ -42,19 +42,29 @@ See mention [[https://takeonrules.com/2020/10/18/why-i-chose-emacs-as-my-new-tex
 Most classes/php files I'm working with are quite large and cause a large number of errors to popup. I'm topping up the error threshold to avoid a warning during start up:
 
 #+begin_src emacs-lisp
-(setq flycheck-checker-error-threshold 5000)
+(setq flycheck-checker-error-threshold 100)
 #+end_src
 
 Most projects I work with are somewhat following the PSR12 standard, so let's configure flycheck to respect that:
 #+begin_src emacs-lisp
 (setq flycheck-phpcs-standard "PSR12"
+      flycheck-phpstan-executable "/Users/dario/.composer/vendor/bin/phpstan"
       flycheck-php-phpcs-executable "/usr/local/bin/phpcs")
-(setq php-project-root 'git
-    phpstan-executable 'docker
-    phpstan-working-dir "~/code/exads-code"
-    phpstan-config-file "~/code/exads-code/phpstan.local.neon"
-    phpstan-level 4)
+
+(defun my-php-mode-setup ()
+    "My PHP-mode hook."
+    (require 'flycheck-phpstan)
+    (setq php-project-root 'git
+        phpstan-executable "/Users/dario/.composer/vendor/bin/phpstan"
+        phpstan-working-dir "/Users/dario/code/exads-core"
+        phpstan-config-file "/Users/dario/code/exads-core/phpstan.local.neon
+        phpstan-memory-limit "1G"
+        phpstan-level 4)
+    (flycheck-mode t))
+
+(add-hook 'php-mode-hook 'my-php-mode-setup)
 #+end_src
+
 * lsp
 I'm working on a large series of interrelated projects which work well under the same directory structure (code/{project1, project2, project3}).
 The downside is that this causes LSP to complain about the large number of files and file descriptors it uses.
