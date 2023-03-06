@@ -359,3 +359,20 @@ Configure volume, see github comment [[https://github.com/marcinkoziej/org-pomod
       org-pomodoro-short-break-sound-args me/org-pomodoro-sound-args
       org-pomodoro-ticking-sound-args me/org-pomodoro-sound-args)
 #+end_src
+
+Automatically updated org-clocktable on buffer save:
+
+#+begin_src emacs-lisp
+(defun autocalc-clocktable ()
+    (when (derived-mode-p 'org-mode)
+    (save-excursion
+        (goto-char 0)
+        (if (string-equal (car
+                (cdr
+                (car
+                (org-collect-keywords '("AUTOCALC_CLOCKTABLES")))))
+            "t")
+        (progn
+        (goto-char (search-forward "clocktable"))
+        (org-clock-report))))))
+#+end_src
