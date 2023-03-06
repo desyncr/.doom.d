@@ -101,22 +101,26 @@ So I'm forced to top up the default threshold via this variable:
   :after lsp-mode
   :defer t)
 
-(setq lsp-idle-delay 1
-    company-minimum-prefix-length 1
+(setq lsp-idle-delay 0.1
     company-idle-delay 0.0
+    gc-cons-threshold (* 100 1024 1024)
+    company-minimum-prefix-length 1
+    company-idle-delay nil
+    company-tooltip-limit 10
     company-tooltip-minimum-width 50
     company-tooltip-maximum-width 120
     lsp-ui-doc-include-signature t
     lsp-ui-doc-max-width 120
     lsp-ui-doc-max-height 20
     lsp-ui-doc-enable nil
-    lsp-signature-render-documentation t
-    lsp-signature-auto-activate t
+    lsp-signature-render-documentation nil
+    lsp-signature-auto-activate nil
     lsp-enable-snippet nil
     lsp-enable-symbol-highlighting nil
     lsp-enable-links nil
     lsp-restart 'auto-restart
     lsp-signature-function 'lsp-signature-posframe)
+
 (after! company
   (map! :map company-active-map "<tab>" #'company-complete-selection)
   (map! :map lsp-mode-map "<tab>" #'company-indent-or-complete-common))
