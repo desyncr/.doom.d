@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(nov fancy-narrow defrepeater run-command major-mode-hydra pretty-hydra iwindow evil-nerd-commenter yascroll valign shell-pop ranger psysh ox-slack ob-sql-mode nano-theme move-text mixed-pitch minibar goto-line-preview flymake-phpstan flycheck-projectile flycheck-phpstan flycheck-php-noverify consult-lsp company-quickhelp company-php))
+   '(diff-hl nov fancy-narrow defrepeater run-command major-mode-hydra pretty-hydra iwindow evil-nerd-commenter yascroll valign shell-pop ranger psysh ox-slack ob-sql-mode nano-theme move-text mixed-pitch minibar goto-line-preview flymake-phpstan flycheck-projectile flycheck-phpstan flycheck-php-noverify consult-lsp company-quickhelp company-php))
  '(warning-suppress-types '((initialization) (defvaralias) (org-element-cache))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
