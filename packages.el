@@ -17,6 +17,7 @@
 (package! consult-yasnippet) ;; Consult integration with yasnippet:
 (package! devdocs)
 (package! better-jumper)
+(package! flycheck-phpstan)
 
 (package! evil-snipe :disable t) ;; Search in buffer:
 (package! evil-nerd-commenter)
