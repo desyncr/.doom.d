@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: php prolog
+# key: prolog
+# group: structure
+# --
+<?php
+
+declare(strict_types=1);
+
+namespace ${1:};
+
+class ${2:}
+{
+    public function __construct(${3:})
+    {
+    }
+}
