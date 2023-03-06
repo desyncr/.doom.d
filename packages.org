@@ -33,6 +33,7 @@
 (package! consult-yasnippet) ;; Consult integration with yasnippet:
 (package! devdocs)
 (package! better-jumper)
+(package! flycheck-phpstan)
 #+end_src
 
 * Keybindings
