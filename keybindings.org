@@ -192,7 +192,7 @@ Go to last change:
 Go to line:
 
 #+begin_src emacs-lisp
-(map! "M-L" 'consult-goto-line)
+(map! :ne "M-l" #'consult-goto-line)
 #+end_src
 
 New empty buffer:
