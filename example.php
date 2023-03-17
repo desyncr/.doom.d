@@ -5,7 +5,9 @@
  */
 class Example
 {
-    /** @var string */
+    /**
+     * @var string Too short a description
+     */
     private $var;
 
     /**
@@ -18,7 +20,8 @@ class Example
     /**
      * Returns an array of randomly generated integers.
      *
-     * @param int $count
+     * @param int $count missing parameter comment
+     *
      * @return array
      */
     public function getRandomNumbersIterative(int $count): array
@@ -28,14 +31,32 @@ class Example
             array_push($result, chr(rand(48, 56)));
         }
 
+        for (; $count >= 0; $count--) {
+            array_push($result, chr(rand(48, 56)));
+        }
+
         return $result;
     }
 
+    /**
+     * Example
+     *
+     * @return void
+     */
     public function printRandomNumbers(): void
     {
         echo join(', ', $this->getRandomNumbersIterative(10)) . PHP_EOL;
     }
 
+    /**
+     * Hello world
+     *
+     * @return bool
+     */
+    private function example(): bool
+    {
+        return false;
+    }
 }
 
 
