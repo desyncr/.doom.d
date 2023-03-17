@@ -3,21 +3,26 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("Weekly"
- (filename . "~/org/weekly.org")
+ (filename . "~/Notes/weekly.org")
  (front-context-string . "* Tasks [2/10] :")
  (rear-context-string . "| 0:25 |\n#+END:\n")
  (position . 1300))
-("Queries"
- (filename . "~/org/docs/queries/exads.org")
- (front-context-string . ":PROPERTIES:\n:he")
- (rear-context-string)
- (position . 1))
+("Commands"
+ (filename . "~/Notes/docs/commands.org")
+ (front-context-string . "")
+ (rear-context-string . "")
+ (position . 0))
 ("Notes"
- (filename . "~/org/notes.org")
+ (filename . "~/Personal/notes.org")
  (front-context-string . "box\n** [2022-10-")
  (rear-context-string . "~SPC n n~.\n\n* In")
  (position . 119))
-("Doom Emacs"
+("Journal"
+ (filename . "~/Personal/journal.org")
+ (front-context-string . "")
+ (rear-context-string . "")
+ (position . 0))
+("Config"
  (filename . "~/.doom.d/Emacs.org")
  (front-context-string . "* Forewords\nThis")
  (rear-context-string . "nse][License]]\n\n")
