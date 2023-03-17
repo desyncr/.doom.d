@@ -57,7 +57,7 @@ Most projects I work with are somewhat following the PSR12 standard, so let's co
     (setq php-project-root 'git
         phpstan-executable "/Users/dario/.composer/vendor/bin/phpstan"
         phpstan-working-dir "/Users/dario/code/exads-core"
-        phpstan-config-file "/Users/dario/code/exads-core/phpstan.local.neon
+        phpstan-config-file "/Users/dario/code/exads-core/phpstan.local.neon"
         phpstan-memory-limit "1G"
         phpstan-level 4)
     (flycheck-mode t))
