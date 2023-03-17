@@ -14,14 +14,6 @@ Switch to normal mode on save:
 (add-hook 'after-save-hook #'evil-normal-state)
 #+end_src
 
-Disable this warning message that appears from time to time:
-
-#+begin_src emacs-lisp
-(setq warning-suppress-types (append warning-suppress-types '((org-element-cache))))
-#+end_src
-
-See [[https://github.com/nobiot/org-transclusion/issues/105][this]] github issue for a possible cause of the warning.
-
 * Deleting files
 Allow deleting files in OSX. Source: [[https://emacs.stackexchange.com/a/15012][Emacs' StackExchange]]
 
