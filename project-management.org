@@ -8,12 +8,16 @@ I'm using ~consult~ + ~consult-projectile~ to jump around buffers, recent files 
 Usually I'm using ~lsp~ with PHP, which seems to be quite slow at times and I'm also using ~vertico-posframe~ so buffer previews are actually not to useful for me:
 
 #+begin_src emacs-lisp
-(setq consult-preview-key (kbd "M-."))
+;(setq consult-preview-key (kbd "C-."))
 (use-package! consult
   :config
     (consult-customize
+        consult-projectile
+        :preview-key "C-."
         +default/search-buffer
         consult-goto-line
+        consult-lsp-file-symbols
+        consult-lsp-symbols
        :preview-key 'any))
 #+end_src
 
