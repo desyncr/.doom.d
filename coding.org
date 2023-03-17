@@ -146,8 +146,9 @@ Remove snippets from company backends (use ~consult-yasnippets)~:
  #+begin_src emacs-lisp
 (map! "M-C-x" 'lsp-ui-peek-find-references)
 (map! "M-M" 'consult-lsp-symbols)
+(map! "M-m" 'consult-lsp-file-symbols)
 (map! "M-C-f" 'lsp-format-region)
- #+end_src
+#+end_src
 * rainbow-delimiters-mode
 Rainbow colouring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
 
