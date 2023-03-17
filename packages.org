@@ -8,7 +8,7 @@
 #+end_src
 * Look and Feel
 #+begin_src emacs-lisp
-(package! auto-dark)
+;(package! auto-dark)
 (package! resize-window)
 (package! centered-cursor-mode)
 (package! defrepeater)

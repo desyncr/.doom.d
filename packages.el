@@ -1,6 +1,6 @@
 (package! super-save) ;; Package repository: [[https://github.com/bbatsov/super-save][here]].
 
-(package! auto-dark)
+;(package! auto-dark)
 (package! resize-window)
 (package! centered-cursor-mode)
 (package! defrepeater)
