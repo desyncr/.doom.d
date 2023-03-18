@@ -28,17 +28,17 @@
 
 * Coding
 #+begin_src emacs-lisp
-(package! expand-region) ;; See repository [[https://github.com/magnars/expand-region.el][here]].
+;(package! expand-region) ;; See repository [[https://github.com/magnars/expand-region.el][here]].
 (package! rainbow-delimiters)
 (package! consult-yasnippet) ;; Consult integration with yasnippet:
 (package! devdocs)
-(package! better-jumper)
+;(package! better-jumper)
 (package! flycheck-phpstan)
 #+end_src
 
 * Keybindings
 #+begin_src emacs-lisp
-(package! evil-snipe :disable t) ;; Search in buffer:
+;(package! evil-snipe :disable t) ;; Search in buffer:
 (package! evil-nerd-commenter)
 (package! move-text)
 #+end_src
@@ -46,14 +46,14 @@
 * Org Everything
 #+begin_src emacs-lisp
 (package! org-modern)
-(package! org-auto-tangle)
+;(package! org-auto-tangle)
 (package! inf-ruby)
-(package! ob-async)
-(package! ob-http)
+;(package! ob-async)
+;(package! ob-http)
 (package! consult-org-roam)
 (package! org-bullets)
 (package! toc-org)
-(package! literate-calc-mode)
+;(package! literate-calc-mode)
 (package! ox-slack)
 #+end_src
 
