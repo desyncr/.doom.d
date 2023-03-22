@@ -149,7 +149,7 @@ Here's some custom configuration options, take a look at the [[https://github.co
          :command-line "python3 -m http.server 8000"
          :display "Serve current directory over HTTP")
    (list :command-name "org-tangle-doom"
-         :command-line "cd ~/.doom.d && ~/.emacs.d/bin/org-tangle coding.org fonts.org general.org keybindings.org org-everything.org other.org packages.org project-management.org ui.org version-control.org writing.org"
+         :command-line "cd ~/.config/doom && ~/.emacs.d/bin/org-tangle coding.org fonts.org general.org keybindings.org org-everything.org other.org packages.org project-management.org ui.org version-control.org writing.org"
          :display "Tangle Doom Emacs configuration")
   ))
 
@@ -163,12 +163,12 @@ Here's some custom configuration options, take a look at the [[https://github.co
 (defun org-tangle-doom ()
   "Tangle Doom Emacs configuration."
   (interactive)
-(call-process-shell-command "cd ~/.doom.d && ~/.emacs.d/bin/org-tangle coding.org fonts.org general.org keybindings.org org-everything.org other.org packages.org project-management.org ui.org version-control.org writing.org" nil "*Org-babel output*" t))
+(call-process-shell-command "cd ~/.config/doom && ~/.emacs.d/bin/org-tangle coding.org fonts.org general.org keybindings.org org-everything.org other.org packages.org project-management.org ui.org version-control.org writing.org" nil "*Org-babel output*" t))
 #+end_src
 
 * TODO Bookmarks
 Preserving bookmarks out of the Emacs installation:
 
 #+begin_src emacs-lisp
-(setq bookmark-file "~/.doom.d/bookmarks.el")
+(setq bookmark-file "~/.config/doom/bookmarks.el")
 #+end_src

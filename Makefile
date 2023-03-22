@@ -1,5 +1,5 @@
 tangle:
-	~/.emacs.d/bin/org-tangle \
+	~/.config/emacs/bin/org-tangle \
 		Emacs.org \
 		coding.org \
 		fonts.org \

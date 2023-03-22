@@ -339,7 +339,7 @@ Source: [[https://stackoverflow.com/a/14527487][here]].
 Configure bell sound for break and finish:
 
 #+begin_src emacs-lisp
-(setq me/org-pomodoro-bell-sound "~/.doom.d/resources/bell-ring-01.wav")
+(setq me/org-pomodoro-bell-sound "~/.config/doom/resources/bell-ring-01.wav")
 (setq org-pomodoro-finished-sound me/org-pomodoro-bell-sound
       org-pomodoro-start-sound me/org-pomodoro-bell-sound
       org-pomodoro-long-break-sound me/org-pomodoro-bell-sound

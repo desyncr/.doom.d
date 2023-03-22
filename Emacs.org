@@ -36,25 +36,25 @@ This configuration is organised in a variety categories (see Organisation for de
 The current file you're reading (=Emacs.org=) is tangled into =config.el=, this file is loaded by Doom Emacs on start up. The section down below is responsable for loading the individual section's tangled file, in turns this loads the entire configuration.
 
 #+begin_src emacs-lisp
-(load "~/.doom.d/.elisp/general.el")
-(load "~/.doom.d/.elisp/ui.el")
-(load "~/.doom.d/.elisp/fonts.el")
-(load "~/.doom.d/.elisp/keybindings.el")
-(load "~/.doom.d/.elisp/writing.el")
-(load "~/.doom.d/.elisp/coding.el")
-(load "~/.doom.d/.elisp/version-control.el")
-(load "~/.doom.d/.elisp/project-management.el")
-(load "~/.doom.d/.elisp/org-everything.el")
-(load "~/.doom.d/.elisp/other.el")
+(load "~/.config/doom/.elisp/general.el")
+(load "~/.config/doom/.elisp/ui.el")
+(load "~/.config/doom/.elisp/fonts.el")
+(load "~/.config/doom/.elisp/keybindings.el")
+(load "~/.config/doom/.elisp/writing.el")
+(load "~/.config/doom/.elisp/coding.el")
+(load "~/.config/doom/.elisp/version-control.el")
+(load "~/.config/doom/.elisp/project-management.el")
+(load "~/.config/doom/.elisp/org-everything.el")
+(load "~/.config/doom/.elisp/other.el")
 #+end_src
 =TODO=: Test loading =.el= files [[https://emacs.stackexchange.com/a/7605][via glob]]. Ideally it should not cause any problem, /but/ some keybindings might be overwritten here and there.
 
-Doom Emacs loads =init.el= from the user's configuration directory (=~/.doom.d=). This file is responsable for activating the various Doom Emacs modules.
+Doom Emacs loads =init.el= from the user's configuration directory (=~/.config/doom/=). This file is responsable for activating the various Doom Emacs modules.
 
 In order to tangle the different sections you'll need to run the following command:
 
 #+begin_src sh :tangle no
-$ ~/.emacs.d/bin/org-tangle ~/.doom.d/
+$ ~/.emacs.d/bin/org-tangle ~/.config/doom/
 #+end_src
 
 The command above will tangle the Org files in the user's directory. The sections define the output's location via property headers such as:

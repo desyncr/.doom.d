@@ -23,7 +23,7 @@
  (rear-context-string . "")
  (position . 0))
 ("Config"
- (filename . "~/.doom.d/Emacs.org")
+ (filename . "~/.config/doom/Emacs.org")
  (front-context-string . "* Forewords\nThis")
  (rear-context-string . "nse][License]]\n\n")
  (position . 580))
