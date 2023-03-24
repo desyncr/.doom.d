@@ -1,4 +1,5 @@
 tangle:
+	mkdir -p ~/.config/doom/.elisp/
 	~/.config/emacs/bin/org-tangle \
 		Emacs.org \
 		coding.org \
