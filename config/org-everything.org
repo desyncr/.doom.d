@@ -1,6 +1,6 @@
 #+title: Doom Emacs > Org Everything
 #+language: en
-#+property: header-args :tangle .elisp/org-everything.el :cache yes :results silent
+#+property: header-args :tangle ../.elisp/org-everything.el :cache yes :results silent
 
 * org-mode
 If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!

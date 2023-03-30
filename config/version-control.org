@@ -1,6 +1,6 @@
 #+title: Doom Emacs > Version Control
 #+language: en
-#+property: header-args :tangle .elisp/version-control.el :cache yes :results silent :auto_tangle t
+#+property: header-args :tangle ../.elisp/version-control.el :cache yes :results silent :auto_tangle t
 
 Often times it's useful to see the local file in the browser, for example to share the exact code you're looking into. =browse-at-remove= does exactly that.
 

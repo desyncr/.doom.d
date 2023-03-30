@@ -1,6 +1,6 @@
 #+title: Doom Emacs > UI
 #+language: en
-#+property: header-args :tangle .elisp/ui.el :cache yes :results silent :auto_tangle t
+#+property: header-args :tangle ../.elisp/ui.el :cache yes :results silent :auto_tangle t
 
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set ~doom-theme~ or manually load a theme with the ~load-theme~ function. This is the default:
 

@@ -1,6 +1,6 @@
 #+title: Doom Emacs > General
 #+language: en
-#+property: header-args :tangle .elisp/general.el :cache yes :results silent :auto_tangle t
+#+property: header-args :tangle ../.elisp/general.el :cache yes :results silent :auto_tangle t
 
 Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets. It is optional.
 
