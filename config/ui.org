@@ -272,21 +272,3 @@ Use =M-n= to create a new empty buffer. The following advices will automatically
    ("^\\*doom:"
     :size 0.35 :select t :modeline t :quit t :ttl t)
 #+end_example
-
-* Repeater
-#+begin_src emacs-lisp
-(defrepeater #'evil-window-increase-height)
-
-(defrepeater #'evil-window-decrease-height)
-(general-def
-  [remap evil-window-increase-height] #'evil-window-increase-height-repeat
-  [remap evil-window-decrease-height] #'evil-window-decrease-height-repeat
-)
-
-(defrepeater #'evil-window-increase-width)
-(defrepeater #'evil-window-decrease-width)
-(general-def
-  [remap evil-window-increase-width] #'evil-window-increase-width-repeat
-  [remap evil-window-decrease-width] #'evil-window-decrease-width-repeat
-)
-#+end_src
