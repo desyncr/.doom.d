@@ -297,3 +297,52 @@ Source: https://github.com/hlissner/evil-multiedit/issues/48#issuecomment-101141
             (global-set-key (kbd "<C-tab>") 'php-doc-block)))
 #+end_src
 
+* Multiline
+#+begin_src emacs-lisp
+(defun me/php-array-multiline (b e)
+  "Turn oneline php array to multiline."
+  (interactive "*r")
+  (insert
+   (replace-regexp-in-string
+    (rx (in "[,]"))
+    (lambda (s)
+      (pcase (match-string 0 s)
+        ("[" "[\n")
+        ("," ",\n")
+        ("]" "\n]")))
+    (delete-and-extract-region b e)))
+  (indent-region b (point)))
+
+  ;; Improvements:
+  ;; - Assign to keybinding
+  ;; - Work on the current line (search next '(' and position there)
+  (defun me/php-call-multiline (b e)
+    "Turn oneline php call to multiline."
+    (interactive "*r")
+    (insert
+     (replace-regexp-in-string
+      (rx (in "(,)"))
+      (lambda (s)
+        (pcase (match-string 0 s)
+          ("(" "(\n")
+          ("," ",\n")
+          (")" "\n)")))
+      (delete-and-extract-region b e)))
+    (indent-region b (point)))
+
+  (defun me/php-array-oneline (b e)
+    "Turn multiline php array to oneline."
+    (interactive "*r")
+    (insert
+     (replace-regexp-in-string
+      "\n\s*"
+      ""
+      (delete-and-extract-region b e))))
+
+  (defun me/php-array-toggle (b e)
+    "Toggle php array between oneline and multiline."
+    (interactive "*r")
+    (if (string-match-p "\n" (buffer-substring b e))
+        (me/php-array-oneline b e)
+    (me/php-array-multiline b e)))
+#+end_src
