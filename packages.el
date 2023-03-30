@@ -24,7 +24,7 @@
 (package! move-text)
 
 (package! org-modern)
-;(package! org-auto-tangle)
+(package! org-auto-tangle)
 (package! inf-ruby)
 ;(package! ob-async)
 ;(package! ob-http)
