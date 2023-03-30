@@ -285,3 +285,15 @@ I don't like these keybindings so I create these down below to work with [[doom-
 
 Source: https://github.com/hlissner/evil-multiedit/issues/48#issuecomment-1011418580
 
+* php doc generator
+#+begin_src emacs-lisp
+(add-to-list 'load-path "~/.config/doom/site-elisp/emacs-php-doc-block")
+(require 'php-doc-block)
+#+end_src
+
+#+begin_src emacs-lisp
+(add-hook 'php-mode-hook
+          (lambda ()
+            (global-set-key (kbd "<C-tab>") 'php-doc-block)))
+#+end_src
+
