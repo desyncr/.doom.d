@@ -103,11 +103,11 @@ So I'm forced to top up the default threshold via this variable:
   :after lsp-mode
   :defer t)
 
-(setq lsp-idle-delay 0.1
-    company-idle-delay 0.0
+(setq lsp-idle-delay 1
+    company-idle-delay 1
+    company-tooltip-idle-delay 1
     gc-cons-threshold (* 100 1024 1024)
     company-minimum-prefix-length 1
-    company-idle-delay nil
     company-tooltip-limit 10
     company-tooltip-minimum-width 50
     company-tooltip-maximum-width 120
