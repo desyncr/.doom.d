@@ -11,10 +11,15 @@ class Example
     private $var;
 
     /**
+     * __construct
      *
+     * @param Exception $e
+     *
+     * @return self
      */
-    public function __construct()
+    public function __construct(Exception $e): self
     {
+        $a = [-1,2,3,4];
     }
 
     /**
@@ -28,31 +33,44 @@ class Example
     {
         $result = [];
         for (; $count >= 0; $count--) {
-            array_push($result, chr(rand(48, 56)));
+            array_push(
+                $result,
+                chr(
+                    rand(
+                        48,
+                        56
+                    )
+                )
+            );
         }
 
-        for (; $count >= 0; $count--) {
-            array_push($result, chr(rand(48, 56)));
+        for (
+            ; $count >= 0; $count--
+        ) {
+            array_push(
+                $result,
+                chr(
+                    rand(
+                        48,
+                        56
+                    )
+                )
+            );
         }
 
         return $result;
     }
 
-    /**
-     * Example
-     *
-     * @return void
-     */
     public function printRandomNumbers(): void
     {
-        echo join(', ', $this->getRandomNumbersIterative(10)) . PHP_EOL;
+        echo join(
+            ', ',
+            $this->getRandomNumbersIterative(
+                10
+            )
+        ) . PHP_EOL;
     }
 
-    /**
-     * Hello world
-     *
-     * @return bool
-     */
     private function example(): bool
     {
         return false;
