@@ -54,7 +54,7 @@ Doom Emacs loads =init.el= from the user's configuration directory (=~/.config/d
 In order to tangle the different sections you'll need to run the following command:
 
 #+begin_src sh :tangle no
-$ ~/.emacs.d/bin/org-tangle ~/.config/doom/
+$ ~/.emacs.d/bin/org-tangle ~/.config/doom/config
 #+end_src
 
 The command above will tangle the Org files in the user's directory. The sections define the output's location via property headers such as:
@@ -74,13 +74,13 @@ This is a list of applications that need to be installed previously to enjoy all
 - ag (Silver Searcher) or rg (ripgrep)
 - git
 
-See [[file:version-control.org][Doom Emacs > Version Control]].
+See [[file:config/version-control.org][Doom Emacs > Version Control]].
 
 This configuration also requires two fonts that will require to be installed in the system to properly load the Look and Feel:
 - JetBrains Nerd Font
 - Fira Sans
 
-See installation instructions in [[file:fonts.org][Doom Emacs > Fonts]].
+See installation instructions in [[file:config/fonts.org][Doom Emacs > Fonts]].
 
 * Organisation
 ** Look and Feel
@@ -88,35 +88,35 @@ Fonts, Themes, Icons and such. This section (and subsections) are related to loo
 
 Ideally if this configuration doesn't load or I intentionally disable it the overall Emacs workflow should remain intact. Meaning that I could work almost as normal.
 
-*** [[file:ui.org][Doom Emacs > UI]]
-*** [[file:fonts.org][Doom Emacs > Fonts]]
+*** [[file:config/ui.org][Doom Emacs > UI]]
+*** [[file:config/fonts.org][Doom Emacs > Fonts]]
 
 ** Workflow
-*** [[file:keybindings.org][Doom Emacs > Keybindings]]
+*** [[file:config/keybindings.org][Doom Emacs > Keybindings]]
 Keybindings for common commands and shortcuts for different operations as well and bindings for specific packages should be here.
 
-*** [[file:coding.org][Doom Emacs > Coding]]
+*** [[file:config/coding.org][Doom Emacs > Coding]]
 Programming related packages and configuration settings go here. Primarly sorrounding LSP-mode and related.
 
 ** Projects
-*** [[file:version-control.org][Doom Emacs > Version Control]]
+*** [[file:config/version-control.org][Doom Emacs > Version Control]]
 Section sorrounding Git and Magit configuration and options. Nothing else is required anyways.
 
-*** [[file:project-management.org][Doom Emacs > Project Management]]
+*** [[file:config/project-management.org][Doom Emacs > Project Management]]
 Configuration related to how to work around projects, workspaces, bookmarks and moving around the file system.
 
-*** [[file:org-everything.org][Doom Emacs > Org Everything]]
+*** [[file:config/org-everything.org][Doom Emacs > Org Everything]]
 Org related configuration, including a miriad of org-related packages such as org-roam, org-agenda, org-tasks etc.
 
 ** Packages
-*** [[file:packages.org][Doom Emacs > Packages]]
+*** [[file:config/packages.org][Doom Emacs > Packages]]
 
 ** General
-*** [[file:general.org][Doom Emacs > General]]
-*** [[file:other.org][Doom Emacs > Other]]
+*** [[file:config/general.org][Doom Emacs > General]]
+*** [[file:config/other.org][Doom Emacs > Other]]
 General purpose  section for tools I'm trying out or doesn't fit any other category.
 
-*** [[file:writing.org][Doom Emacs > Writing]]
+*** [[file:config/writing.org][Doom Emacs > Writing]]
 Section for prose writing related configurations. This section is rarely updated.
 
 * Feedback
