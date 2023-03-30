@@ -4,3 +4,7 @@
 tmp/
 *.el
 .elisp/*
+config.el
+custom.el
+packages.el
+config.org

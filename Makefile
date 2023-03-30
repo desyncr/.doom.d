@@ -14,12 +14,17 @@ packages.el: config/packages.org
 config.el: Emacs.org
 	$(TANGLE) $<
 
-build: $(BUILD) config.el packages.el $(ELISP)
+config.org: Emacs.org
+	ln -s ./Emacs.org config.org
+
+build: $(BUILD) config.el config.org packages.el $(ELISP)
+	~/.config/emacs/bin/doom sync
 
 $(BUILD):
 	mkdir -p $(BUILD)
 
 clean:
+	rm config.el packages.el config.org
 	rm -rf $(BUILD)
 
 .PHONY: build clean
