@@ -55,6 +55,7 @@ Most projects I work with are somewhat following the PSR12 standard, so let's co
 (defun my-php-mode-setup ()
     "My PHP-mode hook."
     (require 'flycheck-phpstan)
+    (php-enable-psr2-coding-style)
     (setq php-project-root 'git
         phpstan-executable "/Users/dario/.composer/vendor/bin/phpstan"
         phpstan-working-dir "/Users/dario/code/exads-core"
