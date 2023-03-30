@@ -49,7 +49,8 @@ Most projects I work with are somewhat following the PSR12 standard, so let's co
 #+begin_src emacs-lisp
 (setq flycheck-phpcs-standard "PSR12"
       flycheck-phpstan-executable "/Users/dario/.composer/vendor/bin/phpstan"
-      flycheck-php-phpcs-executable "/usr/local/bin/phpcs")
+      flycheck-php-phpcs-executable "/usr/local/bin/phpcs"
+      flycheck-check-syntax-automatically '(save mode-enable))
 
 (defun my-php-mode-setup ()
     "My PHP-mode hook."
