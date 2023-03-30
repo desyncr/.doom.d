@@ -46,7 +46,7 @@
 * Org Everything
 #+begin_src emacs-lisp
 (package! org-modern)
-;(package! org-auto-tangle)
+(package! org-auto-tangle)
 (package! inf-ruby)
 ;(package! ob-async)
 ;(package! ob-http)
