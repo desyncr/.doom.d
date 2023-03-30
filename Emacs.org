@@ -3,7 +3,7 @@
 #+property: header-args :tangle config.el :cache yes :results silent :auto_tangle yes
 
 #+attr_html: :style margin-left: auto; margin-right: auto;
-[[./splash/doom-emacs-bw-light.svg]]
+[[./resources/splash/doom-emacs-bw-light.svg]]
 * Table of Contents :TOC:
 - [[#forewords][Forewords]]
   - [[#how-it-works][How it works]]
