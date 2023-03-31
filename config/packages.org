@@ -18,7 +18,6 @@
 (package! consult-projectile)
 (package! treemacs-projectile)
 (package! ranger)
-(package! run-command)
 #+end_src
 
 * Version Control

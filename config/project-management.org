@@ -145,33 +145,16 @@ Here's some custom configuration options, take a look at the [[https://github.co
         ranger-max-preview-size 1))
 #+end_src
 
-* TODO Command runner
+* Tangle configuration
 #+begin_src emacs-lisp
-(defun run-command-recipe-example ()
-  (list
-   ;; Arbitrary command
-   (list :command-name "say-hello"
-         :command-line "echo Hello, World!")
-   ;; Do something with current directory
-   (list :command-name "serve-http-dir"
-         :command-line "python3 -m http.server 8000"
-         :display "Serve current directory over HTTP")
-   (list :command-name "org-tangle-doom"
-         :command-line "cd ~/.config/doom && ~/.emacs.d/bin/org-tangle coding.org fonts.org general.org keybindings.org org-everything.org other.org packages.org project-management.org ui.org version-control.org writing.org"
-         :display "Tangle Doom Emacs configuration")
-  ))
-
-(use-package run-command
-  :config
-  (add-to-list 'run-command-recipes 'run-command-recipe-example))
-#+end_src
-
-
-#+begin_src emacs-lisp
-(defun org-tangle-doom ()
+(defun me/org-tangle-doom ()
   "Tangle Doom Emacs configuration."
   (interactive)
-(call-process-shell-command "cd ~/.config/doom && ~/.emacs.d/bin/org-tangle coding.org fonts.org general.org keybindings.org org-everything.org other.org packages.org project-management.org ui.org version-control.org writing.org" nil "*Org-babel output*" t))
+  (async-shell-command "cd ~/.config/doom.personal && make"))
+#+end_src
+
+#+begin_src emacs-lisp
+(map! :leader :desc "Tangle doom emacs configuration" "h r r" 'me/org-tangle-doom)
 #+end_src
 
 * TODO Bookmarks
