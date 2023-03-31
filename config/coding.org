@@ -149,6 +149,7 @@ Remove snippets from company backends (use ~consult-yasnippets)~:
  #+begin_src emacs-lisp
 (map! "M-G" 'lsp-ui-peek-find-references)
 (map! "M-M" 'consult-lsp-symbols)
+(map! "M-[" '+company/complete)
 (map! "M-m" 'consult-lsp-file-symbols)
 (map! "C-f" 'lsp-format-region)
 #+end_src
