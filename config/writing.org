@@ -9,7 +9,9 @@ Change dictionary with the following:
 (use-package ispell
   :defer t)
 (use-package flyspell
-  :defer t)
+  :defer t
+  :config
+  (flyspell-mode +1))
 #+end_src
 
 #+begin_example
