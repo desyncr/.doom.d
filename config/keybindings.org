@@ -125,7 +125,6 @@ Note: by default ~^~ is bound to =evil-first-non-black=, but for me it's in an a
  | Windows          |                                  |
  |------------------+----------------------------------|
  | M-<pipe>, M--    | Split vertically, horizontally   |
- | M-l, M-h         | Next, previous window            |
  | M-w              | Delete window                    |
  | SPC w i          | Ideal distribution               |
  | SPC w =          | Balance windows                  |
@@ -134,14 +133,21 @@ Note: by default ~^~ is bound to =evil-first-non-black=, but for me it's in an a
  | SPC w H, J, K, L | Move window to h, j, k, l window |
  |------------------+----------------------------------|
 
+I don't like the default ~SPC w s~ and ~SPC w v~ keybindings. So for quickly creating split windows I created the following keybindings:
+
+#+begin_src emacs-lisp
+(map! "M-\\" 'evil-window-vsplit)
+(map! "M--" 'evil-window-split)
+#+end_src
+
 Next/previous window:
 
 #+begin_src emacs-lisp
-(map! "M-l" 'next-window-any-frame)
-(map! "M-h" 'previous-window-any-frame)
-(after! evil-org
-  (define-key evil-org-mode-map (kbd "<normal-state> M-l") 'next-window-any-frame)
-  (define-key evil-org-mode-map (kbd "<normal-state> M-h") 'previous-window-any-frame))
+;; (map! "M-l" 'next-window-any-frame)
+;; (map! "M-h" 'previous-window-any-frame)
+;; (after! evil-org
+;;   (define-key evil-org-mode-map (kbd "<normal-state> M-l") 'next-window-any-frame)
+;;   (define-key evil-org-mode-map (kbd "<normal-state> M-h") 'previous-window-any-frame))
 #+end_src
 
 Use =M-w= to delete window or workspace (last window is preserved):
