@@ -174,6 +174,11 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
   (window-resize me/main-window (- (truncate (* 0.6 (frame-width))) (window-width me/main-window)) t)
   (me/treemacs-restore))
 
+(defun me/maybe-window-resize-main-pane ()
+  (interactive)
+  (if (< (length (mapcar #'window-buffer (window-list))) 3)
+      (me/window-resize-main-pane)))
+
 (defun me/treemacs-restore ()
   (interactive)
   (require 'treemacs)
@@ -191,7 +196,6 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
   (require 'treemacs)
   "Save treemacs visibility and close it"
   (setq me/treemacs-restore (treemacs-current-visibility))
-
   ;; forcibly close treemacs (if open)
   (pcase (treemacs-current-visibility)
     (`visible (delete-window (treemacs-get-local-window)))
@@ -199,7 +203,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 #+end_src
 
 #+begin_src emacs-lisp
-(map! :leader "w i" #'me/window-resize-main-pane)
+(map! :leader "w i" #'me/maybe-window-resize-main-pane)
 (map! "M-z" #'+evil/window-move-left)
 (map! "M-Z" #'me/toggle-window-maximize)
 #+end_src
@@ -251,7 +255,7 @@ Switch to default doom's dashboard on new vsplit/split:
 (defadvice! empty-buffer-split-default (&rest _)
   :after 'evil-window-split (switch-to-buffer (get-buffer "*doom*")))
 (defadvice! empty-buffer-vsplit-default (&rest _)
-  :after 'evil-window-vsplit (switch-to-buffer (get-buffer "*doom*")) (me/window-resize-main-pane))
+  :after 'evil-window-vsplit (switch-to-buffer (get-buffer "*doom*")) (me/maybe-window-resize-main-pane))
 #+end_src
 
 Use =M-n= to create a new empty buffer. The following advices will automatically move the buffer window to the right and invoke =consult-projectile=.
