@@ -206,6 +206,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 (map! :leader "w i" #'me/maybe-window-resize-main-pane)
 (map! "M-z" #'+evil/window-move-left)
 (map! "M-Z" #'me/toggle-window-maximize)
+(map! :leader :desc "Toggle treemacs follow mode" "t t f" #'treemacs-follow-mode)
 #+end_src
 
 =TODO=: Doesn't work with Treemacs enabled.
