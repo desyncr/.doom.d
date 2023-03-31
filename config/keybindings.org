@@ -125,6 +125,7 @@ Note: by default ~^~ is bound to =evil-first-non-black=, but for me it's in an a
  | Windows          |                                  |
  |------------------+----------------------------------|
  | M-<pipe>, M--    | Split vertically, horizontally   |
+ | M-H, M-L         | Move to window left, right       |
  | M-w              | Delete window                    |
  | SPC w i          | Ideal distribution               |
  | SPC w =          | Balance windows                  |
@@ -143,11 +144,11 @@ I don't like the default ~SPC w s~ and ~SPC w v~ keybindings. So for quickly cre
 Next/previous window:
 
 #+begin_src emacs-lisp
-;; (map! "M-l" 'next-window-any-frame)
-;; (map! "M-h" 'previous-window-any-frame)
-;; (after! evil-org
-;;   (define-key evil-org-mode-map (kbd "<normal-state> M-l") 'next-window-any-frame)
-;;   (define-key evil-org-mode-map (kbd "<normal-state> M-h") 'previous-window-any-frame))
+(map! "M-L" 'next-window-any-frame)
+(map! "M-H" 'previous-window-any-frame)
+(after! evil-org
+  (define-key evil-org-mode-map (kbd "<normal-state> M-L") 'next-window-any-frame)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-H") 'previous-window-any-frame))
 #+end_src
 
 Use =M-w= to delete window or workspace (last window is preserved):
