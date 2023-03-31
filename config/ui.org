@@ -251,7 +251,7 @@ Switch to default doom's dashboard on new vsplit/split:
 (defadvice! empty-buffer-split-default (&rest _)
   :after 'evil-window-split (switch-to-buffer (get-buffer "*doom*")))
 (defadvice! empty-buffer-vsplit-default (&rest _)
-  :after 'evil-window-vsplit (switch-to-buffer (get-buffer "*doom*")))
+  :after 'evil-window-vsplit (switch-to-buffer (get-buffer "*doom*")) (me/window-resize-main-pane))
 #+end_src
 
 Use =M-n= to create a new empty buffer. The following advices will automatically move the buffer window to the right and invoke =consult-projectile=.
