@@ -25,13 +25,20 @@ Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but
 
 #+begin_src emacs-lisp
 (setq consult-projectile-sources
-  '(consult-projectile--source-projectile-buffer   ;; buffers in projectile
+  '(
+    ;; projectile
+    consult-projectile--source-projectile-buffer   ;; buffers in projectile
     consult-projectile--source-projectile-recentf  ;; recent files in projectile
     consult-projectile--source-projectile-file     ;; projectile files
+    ;; project
     consult--source-project-recent-file            ;; project's recent files
+    ;; global
     consult--source-bookmark                       ;; bookmarks
-    consult--source-buffer                         ;; buffer
-    consult-projectile--source-projectile-project));; projectile projects
+    consult--source-buffer                         ;; open buffers
+    consult--source-recent-file                    ;; recent files
+    ;; projectile projects
+    consult-projectile--source-projectile-project
+))
 #+end_src
 
 By default ~projectile-buffer~ source order's items in MRU (putting current opened entries last, mind). Other sources do not do MRU.
