@@ -30,6 +30,7 @@ Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but
     consult-projectile--source-projectile-file     ;; projectile files
     consult--source-project-recent-file            ;; project's recent files
     consult--source-bookmark                       ;; bookmarks
+    consult--source-buffer                         ;; buffer
     consult-projectile--source-projectile-project));; projectile projects
 #+end_src
 
