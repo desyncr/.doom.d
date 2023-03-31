@@ -139,11 +139,26 @@ Here's some custom configuration options, take a look at the [[https://github.co
 (use-package ranger
   :defer t
   :init
-  (setq ranger-preview-delay 0 ;; delay preview (seconds)
+  (setq ranger-preview-delay 1 ;; delay preview (seconds)
         ranger-show-literal t  ;; do not highlight preview (prevents lsp from running)
-        ranger-parent-depth 3  ;; number of parent directories windows
+        ranger-parent-depth 2  ;; number of parent directories windows
         ranger-max-preview-size 1))
 #+end_src
+
+Keybindings:
++-----+-----------------------------------+
+| Key | Description                       |
+|-----+-----------------------------------|
+| t   | Toggle file mark                  |
+| i   | Toggle preview window             |
+| zh  | Toggle hidden files               |
+| z-  | Decrease number of parent windows |
+| z+  | Increase number of parent windows |
+| R   | Rename file                       |
+| D   | Delete file                       |
+| ;C  | Copy file                         |
+| f   | Search                            |
+|-----+-----------------------------------|
 
 * Tangle configuration
 #+begin_src emacs-lisp
