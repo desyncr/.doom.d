@@ -63,6 +63,16 @@ Enable treemacs and never move to treemacs with other-window as well as disablin
 
 Take a look at more configuration options in [[https://github.com/Alexander-Miller/treemacs#configuration][github]].
 
+Keybindings:
++-----+-------------+
+| Key | Description |
+| m   | Move file   |
+| R   | Rename file |
+| d   | Delete file |
+|-----+-------------|
+
+Use ~SPC t t f~ to toggle treemacs follow mode.
+
 Ensure treemacs-projectile integration:
 
 #+begin_src emacs-lisp
