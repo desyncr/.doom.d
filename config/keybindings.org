@@ -85,8 +85,8 @@ Find buffers:
 |------------+--------------------------------------|
 | h, j, k, l | Left, Up, Down, Right                |
 | 0, $, £    | Column 0, end of line, begining line |
-| w, W       | Forward word, backward word          |
-| s, S       | Snipe search forward, backward       |
+| w, b       | Forward word, backward word          |
+| s, S       | Evil search forward, backward        |
 | f          | Avy go to any char                   |
 | M-k, M-j   | Page up, down                        |
 |------------+--------------------------------------|
@@ -114,7 +114,7 @@ The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
 
 #+begin_src emacs-lisp
 (with-eval-after-load 'evil-maps
-  (define-key evil-normal-state-map (kbd "W") 'evil-backward-word-begin)
+  ;(define-key evil-normal-state-map (kbd "W") 'evil-backward-word-begin)
   (define-key evil-normal-state-map (kbd "£") 'evil-first-non-blank))
 #+end_src
 
