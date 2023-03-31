@@ -169,9 +169,36 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 #+begin_src emacs-lisp
 (defun me/window-resize-main-pane ()
   (interactive)
+  (me/treemacs-snapshot)
   (setq me/main-window (frame-first-window))
-  (window-resize me/main-window (- (truncate (* 0.6 (frame-width))) (window-width me/main-window)) t))
+  (window-resize me/main-window (- (truncate (* 0.6 (frame-width))) (window-width me/main-window)) t)
+  (me/treemacs-restore))
 
+(defun me/treemacs-restore ()
+  (interactive)
+  (require 'treemacs)
+  "Restore treemacs if it was visible"
+  (pcase me/treemacs-restore
+    (`visible (if (doom-project-p)
+                  (treemacs-add-and-display-current-project)
+                (treemacs)))
+    (_ (message "No need to restore Treemacs")))
+  (pcase (treemacs-current-visibility)
+    (`visible (evil-window-mru))))
+
+(defun me/treemacs-snapshot ()
+  (interactive)
+  (require 'treemacs)
+  "Save treemacs visibility and close it"
+  (setq me/treemacs-restore (treemacs-current-visibility))
+
+  ;; forcibly close treemacs (if open)
+  (pcase (treemacs-current-visibility)
+    (`visible (delete-window (treemacs-get-local-window)))
+    (_ (message "Treemacs is not visible or open"))))
+#+end_src
+
+#+begin_src emacs-lisp
 (map! :leader "w i" #'me/window-resize-main-pane)
 (map! "M-z" #'+evil/window-move-left)
 (map! "M-Z" #'me/toggle-window-maximize)
