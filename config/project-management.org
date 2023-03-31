@@ -8,7 +8,6 @@ I'm using ~consult~ + ~consult-projectile~ to jump around buffers, recent files 
 Usually I'm using ~lsp~ with PHP, which seems to be quite slow at times and I'm also using ~vertico-posframe~ so buffer previews are actually not to useful for me:
 
 #+begin_src emacs-lisp
-;(setq consult-preview-key (kbd "C-."))
 (use-package! consult
   :config
     (consult-customize
@@ -46,7 +45,7 @@ By default ~projectile-buffer~ source order's items in MRU (putting current open
 * projectile
 #+begin_src emacs-lisp
 (after! projectile
-   (setq projectile-project-search-path '("~/sys-vagrant/code")))
+   (setq projectile-project-search-path '("~/code")))
 #+end_src
 * treemacs
 Enable treemacs and never move to treemacs with other-window as well as disabling wrap around:
@@ -86,7 +85,6 @@ Ensure treemacs-magit integration:
 (use-package treemacs-magit
   :defer t
   :after (treemacs magit))
-
 #+end_src
 
 Ensure treemacs-persp integration:
