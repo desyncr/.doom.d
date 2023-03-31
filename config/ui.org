@@ -157,7 +157,7 @@ Resize-window package actually supports a transient.el-like flow (it's older tha
 There are only a few commands to learn, and they mimic the normal motions in emacs.
 
 #+begin_src emacs-lisp
-(map! :leader "w z" :desc "Activate interactive window resize" #'resize-window)
+(map! :leader "w z" #'resize-window)
 #+end_src
 
 Package repository [[https://github.com/dpsutton/resize-window][here]].
