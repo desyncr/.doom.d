@@ -175,6 +175,13 @@ I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to man
 (use-package yasnippet
   :defer t
   :config (yas-global-mode 1))
+
+(defun yas-php-get-class-name-by-file-name ()
+  "Return name of class-like construct by `file-name'.
+\"class-like\" contains class, trait and interface."
+  (file-name-nondirectory
+   (file-name-sans-extension (or (buffer-file-name)
+                                 (buffer-name (current-buffer))))))
 #+end_src
 
 *Warning*: I had to disable (:tangle no) yas-global-mode since it interfered with LSP/company-mode. Throwing errors trying to display completions on PHP-mode.

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: map
+# key: map
+# --
+(map! ${1::leader} :desc "${2:Description}" "$3" #'$0)
