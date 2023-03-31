@@ -109,17 +109,17 @@ So I'm forced to top up the default threshold via this variable:
     gc-cons-threshold (* 100 1024 1024)
     company-minimum-prefix-length 1
     company-tooltip-limit 10
-    company-tooltip-minimum-width 50
-    company-tooltip-maximum-width 120
+    company-tooltip-minimum-width 100
+    company-tooltip-maximum-width 200
+    lsp-ui-doc-max-width 150
+    lsp-ui-doc-max-height 100
     lsp-ui-doc-include-signature t
-    lsp-ui-doc-max-width 120
-    lsp-ui-doc-max-height 20
-    lsp-ui-doc-enable nil
-    lsp-signature-render-documentation nil
-    lsp-signature-auto-activate nil
-    lsp-enable-snippet nil
+    lsp-ui-doc-enable t
+    lsp-signature-render-documentation t
+    lsp-signature-auto-activate t
+    lsp-enable-snippet t
     lsp-enable-symbol-highlighting nil
-    lsp-enable-links nil
+    lsp-enable-links t
     lsp-restart 'auto-restart
     lsp-signature-function 'lsp-signature-posframe)
 
@@ -139,19 +139,28 @@ Remove snippets from company backends (use ~consult-yasnippets)~:
   :defer t)
 #+end_src
 
- #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (setq lsp-headerline-breadcrumb-enable t)
 (setq lsp-headerline-breadcrumb-segments '(symbols))
 (setq lsp-headerline-breadcrumb-icons-enable t)
 (setq lsp-headerline-breadcrumb-enable-diagnostics nil)
- #+end_src
+#+end_src
 
- #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 (map! "M-G" 'lsp-ui-peek-find-references)
 (map! "M-M" 'consult-lsp-symbols)
 (map! "M-[" '+company/complete)
-(map! "M-m" 'consult-lsp-file-symbols)
+(defun me/consult-lsp-file-symbols ()
+  (interactive)
+  (consult-lsp-file-symbols t))
+(map! "M-m" 'me/consult-lsp-file-symbols)
 (map! "C-f" 'lsp-format-region)
+
+;; lsp doc show
+(map! "M-h" 'lsp-ui-doc-show)
+
+;; lsp signature show
+(map! "M-H" 'lsp-signature-toggle-full-docs)
 #+end_src
 * rainbow-delimiters-mode
 Rainbow colouring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
