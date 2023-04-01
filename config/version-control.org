@@ -35,6 +35,11 @@ Anyway, in the above code setting the commit's summary max length to 100 so I'm 
 (add-hook 'git-commit-setup-hook 'me/magit-commit-setup)
 #+end_src
 
+#+begin_src emacs-lisp
+(map! :leader :desc "Magit push" "g P" #'magit-push)
+(map! :leader :desc "Magit pull" "g p" #'magit-pull)
+#+end_src
+
 * Diff-hl
 #+begin_src emacs-lisp
 (after! diff-hl
