@@ -35,6 +35,14 @@ Anyway, in the above code setting the commit's summary max length to 100 so I'm 
 (add-hook 'git-commit-setup-hook 'me/magit-commit-setup)
 #+end_src
 
+* Diff-hl
+#+begin_src emacs-lisp
+(after! diff-hl
+  (setq diff-hl-show-hunk-function 'diff-hl-show-hunk-posframe))
+
+(map! :leader :desc "Diff hl show hunk" "g h" #'diff-hl-show-hunk)
+#+end_src
+
 * Difftastic
 https://tsdh.org/posts/2022-08-01-difftastic-diffing-with-magit.html
 

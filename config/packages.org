@@ -23,6 +23,7 @@
 * Version Control
 #+begin_src emacs-lisp
 (package! browse-at-remote)
+(package! diff-hl)
 #+end_src
 
 * Coding
