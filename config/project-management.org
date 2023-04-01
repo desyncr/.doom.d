@@ -173,7 +173,7 @@ Keybindings:
 (defun me/org-tangle-doom ()
   "Tangle Doom Emacs configuration."
   (interactive)
-  (async-shell-command "cd ~/.config/doom.personal && make"))
+  (async-shell-command "cd ~/.config/doom && make"))
 #+end_src
 
 #+begin_src emacs-lisp
