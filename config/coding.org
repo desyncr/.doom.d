@@ -315,6 +315,74 @@ Source: https://github.com/hlissner/evil-multiedit/issues/48#issuecomment-101141
 #+end_src
 
 * Multiline
+Turn a method call from a single line argument list into a multi line one. Example:
+
+#+begin_src php
+function example(string $a, int $b, float $c): void
+{
+    echo "$a : $c / $b";
+}
+
+// =>
+function example(
+    string $a,
+    int $b,
+    float $c
+): void {
+    echo "$a : $c / $b";
+}
+#+end_src
+
+Note: You've to visually select the enclosing ~(~ ~)~ characters, use ~v a (~.
+
+Similarly:
+
+#+begin_src php
+$this->method("string", 123, 4.5);
+
+// =>
+$this->method(
+    "string",
+    123,
+    4.5
+);
+
+#+end_src
+
+Posible improvements:
+- Assign to keybinding
+- Work on the current line (search next '(' and position there)
+
+#+begin_src emacs-lisp
+(defun me/php-call-multiline (b e)
+  "Turn oneline php call to multiline."
+  (interactive "*r")
+  (insert
+   (replace-regexp-in-string
+    (rx (in "(,)"))
+    (lambda (s)
+      (pcase (match-string 0 s)
+        ("(" "(\n")
+        ("," ",\n")
+        (")" "\n)")))
+    (delete-and-extract-region b e)))
+  (indent-region b (point)))
+#+end_src
+
+Toggle single line array into multi line and vice-versa, example:
+
+#+begin_src php
+$array = [1, 2, 3, 4];
+// =>
+$array = [
+    1,
+    2,
+    3,
+    4];
+#+end_src
+
+Not perfect, but it's a start.
+
 #+begin_src emacs-lisp
 (defun me/php-array-multiline (b e)
   "Turn oneline php array to multiline."
@@ -330,36 +398,19 @@ Source: https://github.com/hlissner/evil-multiedit/issues/48#issuecomment-101141
     (delete-and-extract-region b e)))
   (indent-region b (point)))
 
-  ;; Improvements:
-  ;; - Assign to keybinding
-  ;; - Work on the current line (search next '(' and position there)
-  (defun me/php-call-multiline (b e)
-    "Turn oneline php call to multiline."
-    (interactive "*r")
-    (insert
-     (replace-regexp-in-string
-      (rx (in "(,)"))
-      (lambda (s)
-        (pcase (match-string 0 s)
-          ("(" "(\n")
-          ("," ",\n")
-          (")" "\n)")))
-      (delete-and-extract-region b e)))
-    (indent-region b (point)))
+(defun me/php-array-oneline (b e)
+  "Turn multiline php array to oneline."
+  (interactive "*r")
+  (insert
+   (replace-regexp-in-string
+    "\n\s*"
+    ""
+    (delete-and-extract-region b e))))
 
-  (defun me/php-array-oneline (b e)
-    "Turn multiline php array to oneline."
-    (interactive "*r")
-    (insert
-     (replace-regexp-in-string
-      "\n\s*"
-      ""
-      (delete-and-extract-region b e))))
-
-  (defun me/php-array-toggle (b e)
-    "Toggle php array between oneline and multiline."
-    (interactive "*r")
-    (if (string-match-p "\n" (buffer-substring b e))
-        (me/php-array-oneline b e)
+(defun me/php-array-toggle (b e)
+  "Toggle php array between oneline and multiline."
+  (interactive "*r")
+  (if (string-match-p "\n" (buffer-substring b e))
+      (me/php-array-oneline b e)
     (me/php-array-multiline b e)))
 #+end_src
