@@ -317,7 +317,7 @@ Source: https://github.com/hlissner/evil-multiedit/issues/48#issuecomment-101141
 * Multiline
 Turn a method call from a single line argument list into a multi line one. Example:
 
-#+begin_src php
+#+begin_example php
 function example(string $a, int $b, float $c): void
 {
     echo "$a : $c / $b";
@@ -331,13 +331,13 @@ function example(
 ): void {
     echo "$a : $c / $b";
 }
-#+end_src
+#+end_example
 
 Note: You've to visually select the enclosing ~(~ ~)~ characters, use ~v a (~.
 
 Similarly:
 
-#+begin_src php
+#+begin_example php
 $this->method("string", 123, 4.5);
 
 // =>
@@ -347,7 +347,7 @@ $this->method(
     4.5
 );
 
-#+end_src
+#+end_example
 
 Posible improvements:
 - Assign to keybinding
@@ -371,7 +371,7 @@ Posible improvements:
 
 Toggle single line array into multi line and vice-versa, example:
 
-#+begin_src php
+#+begin_example php
 $array = [1, 2, 3, 4];
 // =>
 $array = [
@@ -379,7 +379,7 @@ $array = [
     2,
     3,
     4];
-#+end_src
+#+end_example
 
 Not perfect, but it's a start.
 
