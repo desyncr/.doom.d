@@ -8,6 +8,7 @@
 - [[#forewords][Forewords]]
   - [[#how-it-works][How it works]]
   - [[#prerequisites][Prerequisites]]
+  - [[#installation][Installation]]
 - [[#organisation][Organisation]]
   - [[#look-and-feel][Look and Feel]]
   - [[#workflow][Workflow]]
