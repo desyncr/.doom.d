@@ -162,9 +162,9 @@ Keybindings:
 | zh  | Toggle hidden files               |
 | z-  | Decrease number of parent windows |
 | z+  | Increase number of parent windows |
-| R   | Rename file                       |
-| D   | Delete file                       |
-| ;C  | Copy file                         |
+| R   | Rename file(s) (current/marked)   |
+| D   | Delete file(s) (current/marked)   |
+| ;C  | Copy file(s) (current/marked)     |
 | f   | Search                            |
 |-----+-----------------------------------|
 
