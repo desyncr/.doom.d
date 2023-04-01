@@ -1,0 +1,3 @@
+[submodule "site-elisp/emacs-php-doc-block"]
+	path = site-elisp/emacs-php-doc-block
+	url = https://github.com/moskalyovd/emacs-php-doc-block.git
