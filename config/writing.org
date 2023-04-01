@@ -25,7 +25,7 @@ Or use the following configuration:
 (setq company-ispell-available nil)
 #+end_src
 
-Use ~z-=~ to get spelling corrections while under a word.
+Use ~z-=~ to get spelling corrections while under a word. Or use ~C-M-i~.
 
 Doom Emacs also come with these 2 packages for grammar checking:
 
