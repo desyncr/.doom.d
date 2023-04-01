@@ -124,7 +124,8 @@ Note: by default ~^~ is bound to =evil-first-non-black=, but for me it's in an a
  |------------------+----------------------------------|
  | Windows          |                                  |
  |------------------+----------------------------------|
- | M-<pipe>, M--    | Split vertically, horizontally   |
+ | M-\, M--         | Split vertically, horizontally   |
+ | SPC w -, SPC w \ | Split vertically, horizontally   |
  | M-H, M-L         | Move to window left, right       |
  | M-w              | Delete window                    |
  | SPC w i          | Ideal distribution               |
@@ -138,7 +139,9 @@ I don't like the default ~SPC w s~ and ~SPC w v~ keybindings. So for quickly cre
 
 #+begin_src emacs-lisp
 (map! "M-\\" 'evil-window-vsplit)
+(map! :leader :desc "Split vertical window" "w \\" #'evil-window-vsplit)
 (map! "M--" 'evil-window-split)
+(map! :leader :desc "Split horizontal window" "w -" #'evil-window-split)
 #+end_src
 
 Next/previous window:
