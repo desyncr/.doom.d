@@ -18,7 +18,7 @@
 - [[#license][License]]
 
 * Forewords
-This [[http://en.wikipedia.org/wiki/Literate_programming][literate]] Emacs configuration is based off [[https://github.com/doomemacs/doomemacs][Doom Emacs]]. It differs in how the configuration is organised. Most literate configurations are composed of a single [[http://orgmode.org/][Org]] file that is tangled into a =.el= file. I quickly found that approach difficult to maintain and work with, quickly approaching Emacs Bankrupcy.
+This [[http://en.wikipedia.org/wiki/Literate_programming][literate]] Emacs configuration is based off [[https://github.com/doomemacs/doomemacs][Doom Emacs]]. It differs in how the configuration is organised. Most literate configurations are composed of a single [[http://orgmode.org/][Org]] file that is tangled into a =.el= file. I quickly found that approach difficult to maintain and work with, quickly approaching Emacs Bankruptcy.
 
 #+begin_quote
 Note: Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
@@ -73,6 +73,7 @@ This is a list of applications that need to be installed previously to enjoy all
 
 - ag (Silver Searcher) or rg (ripgrep)
 - git
+- make
 
 See [[file:config/version-control.org][Doom Emacs > Version Control]].
 
