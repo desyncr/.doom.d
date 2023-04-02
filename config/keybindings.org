@@ -305,9 +305,9 @@ Move-text:
  | Tools |                          |
  |-------+--------------------------|
  | M-;   | Execute extended command |
- | M-t   | Toggle vterm popup       |
+ | M-T   | Toggle vterm popup       |
  | M-r   | Open ranger              |
- | M-T   | Neotree toggle           |
+ | M-t   | Neotree toggle           |
  | M-:   | Toggle ielm popup        |
  |-------+--------------------------|
  | Other |                          |
