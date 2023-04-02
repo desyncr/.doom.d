@@ -235,10 +235,29 @@ Visually selects the paragraph. Execute multiple times to expand the selection o
 (map! :leader :desc "Visually mark paragraph" "v p" 'er/mark-paragraph)
 (map! :leader :desc "Visually mark word" "v w" 'er/mark-word)
 #+end_src
-
 Use ~SPC v p~ to *v*isual select a *p*aragraph and ~SPC v w~ to select a word under cursor.
 
 Worth checking out [[https://www.johndcook.com/blog/2017/08/09/selecting-things-in-emacs/][this]] article.
+
+Keybindings for marking up in org mode:
+
+#+begin_src emacs-lisp
+(defun me/emphasize-word-or-selection (emphasis)
+  (interactive)
+  (if (evil-visual-state-p)
+      (org-emphasize emphasis)
+    (er/mark-word))
+  (org-emphasize emphasis))
+#+end_src
+
+#+begin_src emacs-lisp
+(general-define-key :states '(visual normal insert) :keymaps 'org-mode-map
+                    "C-M-b" (lambda () (interactive) (me/emphasize-word-or-selection ?\*)) ;; bold
+                    "C-M-i" (lambda () (interactive) (me/emphasize-word-or-selection ?\/)) ;; italics
+                    "C-M-e" (lambda () (interactive) (me/emphasize-word-or-selection ?\=))) ;; code
+#+end_src
+
+Source: https://emacs.stackexchange.com/a/63881
 
 Triggers consult posframe to select a yasnippet. It also previsualies it in the buffer:
 
