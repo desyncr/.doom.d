@@ -323,8 +323,9 @@ Setting up this keybinding for the "command palette" and =ielm=:
 Evaluate line or region and edit source block in capture buffer:
 
 #+begin_src emacs-lisp
-(map! "M-e" :desc "Eval line or regio" #'+eval/line-or-region)
-(map! "M-E" :desc "Edit src bock" 'org-edit-src-code)
+(map! "M-e" :desc "Eval line or region" #'+eval/line-or-region)
+(map! "C-M-x" :desc "Eval block or region" '+eval/buffer-or-region)
+(map! "M-E" :desc "Edit src block" 'org-edit-src-code)
 #+end_src
 
 * Mad scientist mode
