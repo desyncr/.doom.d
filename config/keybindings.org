@@ -268,13 +268,22 @@ Triggers consult posframe to select a yasnippet. It also previsualies it in the 
 There's also =SPC i s= keybinding which doesn't uses consult.
 
 Create link:
+#+begin_src emacs-lisp
+(defun me/link-word-or-selection ()
+  (interactive)
+  (if (evil-visual-state-p)
+      (org-insert-link)
+    (er/mark-word))
+  (org-insert-link))
+#+end_src
 
 #+begin_src emacs-lisp
 (after! evil-org
-  (define-key evil-org-mode-map (kbd "<visual-state> M-l") 'org-insert-link))
+  (define-key evil-org-mode-map (kbd "C-M-l") 'me/link-word-or-selection))
 #+end_src
 
 Move-text:
+
 #+begin_src emacs-lisp
 (use-package move-text
   :config)
