@@ -14,11 +14,13 @@ class Example
      * __construct
      *
      * @param Exception $e
-     *
-     * @return self
      */
-    public function __construct(Exception $e): self
+    public function __construct(Exception $e)
     {
+        $result = array_map(function () {
+            return 'asd';
+        });
+
         $a = [-1,2,3,4];
     }
 
