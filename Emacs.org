@@ -1,6 +1,6 @@
 #+title: Doom Emacs
 #+language: en
-#+property: header-args :tangle config.el :cache yes :results silent :auto_tangle yes
+#+property: header-args :tangle config.el
 
 #+attr_html: :style margin-left: auto; margin-right: auto;
 [[./resources/splash/doom-emacs-bw-light.svg]]
