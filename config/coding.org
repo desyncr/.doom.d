@@ -90,9 +90,9 @@ So I'm forced to top up the default threshold via this variable:
   :after lsp-mode
   :defer t)
 
-(setq lsp-idle-delay 1
-    company-idle-delay 1
-    company-tooltip-idle-delay 1
+(setq lsp-idle-delay 0.1
+    company-idle-delay 0.1
+    company-tooltip-idle-delay 0.1
     gc-cons-threshold (* 100 1024 1024)
     company-minimum-prefix-length 1
     company-tooltip-limit 10
@@ -104,10 +104,12 @@ So I'm forced to top up the default threshold via this variable:
     lsp-ui-doc-enable t
     lsp-signature-render-documentation t
     lsp-signature-auto-activate t
-    lsp-enable-snippet t
+    lsp-enable-snippet nil
+    company-lsp-enable-snippet nil
     lsp-enable-symbol-highlighting nil
     lsp-enable-links t
     lsp-restart 'auto-restart
+    lsp-intelephense-completion-trigger-parameter-hints t
     lsp-signature-function 'lsp-signature-posframe)
 
 (after! company
@@ -120,10 +122,7 @@ So I'm forced to top up the default threshold via this variable:
 
 Remove snippets from company backends (use ~consult-yasnippets)~:
 #+begin_src emacs-lisp
-(setq +lsp-company-backends '(:separate company-capf company-dabbrev-code company-dabbrev))
-
-(use-package lsp-treemacs
-  :defer t)
+(use-package lsp-treemacs :defer t)
 #+end_src
 
 #+begin_src emacs-lisp
