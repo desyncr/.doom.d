@@ -139,7 +139,12 @@ Quickly switch to workspace 1, 2, 3, 4 with ~SPC 1, 2, 3, 4~:
 (map! :leader
     :desc "Switch workspace 5"
     "5" #'+workspace/switch-to-4)
+
+;; (defadvice! me/workaround-treemacs-resizing-vsplit-on-workspace-switch (&rest _)
+;;   :after '+workspace/switch-to (me/window-resize-main-pane))
+
 #+end_src
+
 * TODO ranger
 Here's some custom configuration options, take a look at the [[https://github.com/punassuming/ranger.el#configuration][configuration section]] in the package documentation for more options.
 
