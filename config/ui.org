@@ -176,7 +176,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 
 (defun me/maybe-window-resize-main-pane ()
   (interactive)
-  (if (< (length (mapcar #'window-buffer (window-list))) 3)
+  (if (< (length (mapcar #'window-buffer (window-list))) 4)
       (me/window-resize-main-pane)))
 
 (defun me/treemacs-restore ()
