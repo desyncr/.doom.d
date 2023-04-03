@@ -141,7 +141,7 @@ source: https://github.com/andre-r/centered-cursor-mode.el
 
 Note: ~global-centered-cursor-mode~ causes line jumps while typing on vterm. Disabling for the moment.
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (add-hook 'prog-mode-hook 'centered-cursor-mode)
 (add-hook 'org-mode-hook 'centered-cursor-mode)
 #+end_src
