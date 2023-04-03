@@ -2,4 +2,4 @@
 # name: date
 # key: date
 # --
-#+date: `(format-time-string "%Y-%m-%d")`
+[`(format-time-string "%Y-%m-%d %a")`]
