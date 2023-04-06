@@ -2,4 +2,4 @@
 # name: checklist item
 # key: todo
 # --
-- [ ]
+- [ ] ${0:TODO entry}
