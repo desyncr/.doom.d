@@ -258,3 +258,17 @@ Preserving bookmarks out of the Emacs installation:
   :config
   (add-to-list 'run-command-recipes 'run-command-recipe-exads))
 #+end_src
+
+* Config navigation
+Interactive function to get a list of headings in Doom's config.
+
+#+begin_src emacs-lisp
+(defun me/org-doom-config ()
+  "Jump to an Org headline in doom config."
+  (interactive)
+  (doom-completing-read-org-headings
+   "Jump to config: "
+   "~/.config/doom/config"
+   :depth 10
+   :include-files t))
+#+end_src
