@@ -23,6 +23,15 @@ Usually I'm using ~lsp~ with PHP, which seems to be quite slow at times and I'm 
 
 Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but I usually do [[kbd:][M-p]] to find anything.
 
+#+begin_src emacs-lisp
+(define-key evil-normal-state-map (kbd "N")
+  (lambda () (interactive) (search-backward (car consult--line-history))))
+
+(define-key evil-normal-state-map (kbd "n")
+  (lambda () (interactive) (search-forward (car consult--line-history))))
+#+end_src
+Source: https://github.com/minad/consult/issues/318#issuecomment-931481325
+
 * projectile
 #+begin_src emacs-lisp
 (setq
