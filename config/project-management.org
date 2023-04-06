@@ -280,4 +280,7 @@ Interactive function to get a list of headings in Doom's config.
    "~/.config/doom/config"
    :depth 10
    :include-files t))
+
+(map! :desc "Jump to configuration section" "M-c" #'me/org-doom-config)
+
 #+end_src
