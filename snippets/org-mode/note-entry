@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: note-entry
-# key:
+# key: note-entry
 # --
 * [`(format-time-string "%Y-%m-%d %a")`] ${0:Note}
