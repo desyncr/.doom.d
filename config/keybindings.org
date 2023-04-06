@@ -36,7 +36,10 @@ Shortcut for opening the Doom's dashboard:
 Search buffer:
 #+begin_src emacs-lisp
 (map! "M-f" #'+default/search-buffer)
+(map! :ne "/" '+default/search-buffer)
+
 (map! "M-F" #'+default/search-project)
+(map! :ne "?" '+default/search-project)
 #+end_src
 
 Also use ~SPC s s~ to search matching characters on the current buffer.
