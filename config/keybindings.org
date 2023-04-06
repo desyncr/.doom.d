@@ -70,8 +70,11 @@ Use =M-m= for jump into a menu item (section in the buffer):
 ~M-p~: find file in project. Prefer consult for everything:
 
 #+begin_src emacs-lisp
-(map! "M-p" #'consult-projectile)
-(map! "M-P" #'projectile-find-file)
+;; (map! "M-p" #'consult-projectile)
+;; (map! "M-P" #'projectile-find-file)
+
+(map! "M-p" #'consult-projectile-project)
+(map! "M-a" #'consult-projectile-anything)
 
 (map! :leader "SPC" 'consult-bookmark)
 #+end_src
