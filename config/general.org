@@ -53,3 +53,7 @@ Source: [[https://github.com/bbatsov/super-save/issues/38#issuecomment-122953710
 (defalias 'view-in-browser 'browse-at-remote)
 (defalias 'project-reset-cache 'projectile-invalidate-cache)
 #+end_src
+* Undo
+#+begin_src emacs-lisp
+(setq evil-want-fine-undo t)
+#+end_src
