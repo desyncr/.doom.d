@@ -27,7 +27,6 @@ Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but
   '(
     ;; projectile
     consult-projectile--source-projectile-buffer   ;; buffers in projectile
-    consult-projectile--source-projectile-recentf  ;; recent files in projectile
     consult-projectile--source-projectile-file     ;; projectile files
     ;; project
     consult--source-project-recent-file            ;; project's recent files
