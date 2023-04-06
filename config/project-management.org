@@ -10,6 +10,7 @@ Usually I'm using ~lsp~ with PHP, which seems to be quite slow at times and I'm 
 #+begin_src emacs-lisp
 (use-package! consult
   :config
+    (setq consult-preview-key "C-.")
     (consult-customize
         consult-projectile
         :preview-key "C-."
