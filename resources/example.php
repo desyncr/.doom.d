@@ -19,7 +19,7 @@ class Example
     {
         $result = array_map(function () {
             return 'asd';
-        });
+        }, [1, 2, 3]);
 
         $a = [-1,2,3,4];
     }
@@ -46,6 +46,8 @@ class Example
             );
         }
 
+        $this->getRandomNumbersIterative(1);
+
         for (
             ; $count >= 0; $count--
         ) {
@@ -71,6 +73,8 @@ class Example
                 10
             )
         ) . PHP_EOL;
+
+        echo join("", [1, 2, 3]);
     }
 
     private function example(): bool
