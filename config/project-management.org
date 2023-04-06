@@ -23,6 +23,14 @@ Usually I'm using ~lsp~ with PHP, which seems to be quite slow at times and I'm 
 
 Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but I usually do [[kbd:][M-p]] to find anything.
 
+* projectile
+#+begin_src emacs-lisp
+(setq
+ projectile-project-search-path '("~/code")
+ projectile-sort-order 'recently-active
+)
+#+end_src
+
 #+begin_src emacs-lisp
 (setq consult-projectile-sources
   '(
@@ -77,13 +85,6 @@ Anything sources:
 
 By default ~projectile-buffer~ source order's items in MRU (putting current opened entries last, mind). Other sources do not do MRU.
 
-* projectile
-#+begin_src emacs-lisp
-(setq
- projectile-project-search-path '("~/code")
- projectile-sort-order 'recently-active
-)
-#+end_src
 * treemacs
 Enable treemacs and never move to treemacs with other-window as well as disabling wrap around:
 
