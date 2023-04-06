@@ -40,12 +40,49 @@ Add ~consult--source-bookmark~ to ~consult-projectile~. Bookmarks are global but
 ))
 #+end_src
 
+=consult-projectile= supports multiple sources. This way you can fully customise what's displayed in the search. Here I'm creating two source configuration: one for a "project" context, searching only in project-related sources; and one for "anything" source, more broad, which search not only in the project but in any context.
+
+Project sources:
+#+begin_src emacs-lisp
+(setq consult-projectile-project-sources
+  '(
+    ;; projectile
+    consult-projectile--source-projectile-buffer   ;; buffers in projectile
+    consult-projectile--source-projectile-file     ;; projectile files
+    ;; consult--source-project-recent-file            ;; project's recent files
+))
+
+(defun consult-projectile-project ()
+  (interactive)
+  (consult-projectile consult-projectile-project-sources))
+#+end_src
+
+Anything sources:
+#+begin_src emacs-lisp
+(setq consult-projectile-anything-sources
+  '(
+    ;; bookmarks
+    consult--source-bookmark                       ;; bookmarks
+    ;; projectile projects
+    consult-projectile--source-projectile-project
+    ;; global
+    consult--source-buffer                         ;; open buffers
+    consult--source-recent-file                    ;; recent files
+))
+
+(defun consult-projectile-anything ()
+  (interactive)
+  (consult-projectile consult-projectile-anything-sources))
+#+end_src
+
 By default ~projectile-buffer~ source order's items in MRU (putting current opened entries last, mind). Other sources do not do MRU.
 
 * projectile
 #+begin_src emacs-lisp
-(after! projectile
-   (setq projectile-project-search-path '("~/code")))
+(setq
+ projectile-project-search-path '("~/code")
+ projectile-sort-order 'recently-active
+)
 #+end_src
 * treemacs
 Enable treemacs and never move to treemacs with other-window as well as disabling wrap around:
