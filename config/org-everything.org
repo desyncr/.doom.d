@@ -231,8 +231,8 @@ Org-roam is a package to create a non-hierarchical knowledge base. The package i
 (use-package org-roam
   :defer t
   :custom
-  (org-roam-directory "~/org/roam")
-  (org-roam-index-file "~/org/roam/index.org")
+  (setq org-roam-directory "~/Personal/roam")
+  (setq org-roam-index-file "~/Personal/roam/index.org")
   )
 #+end_src
 
