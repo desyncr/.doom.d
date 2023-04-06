@@ -187,7 +187,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
     (`visible (if (doom-project-p)
                   (treemacs-add-and-display-current-project)
                 (treemacs)))
-    (_ (message "No need to restore Treemacs")))
+    (_ (message "")))
   (pcase (treemacs-current-visibility)
     (`visible (evil-window-mru))))
 
@@ -199,7 +199,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
   ;; forcibly close treemacs (if open)
   (pcase (treemacs-current-visibility)
     (`visible (delete-window (treemacs-get-local-window)))
-    (_ (message "Treemacs is not visible or open"))))
+    (_ (message ""))))
 #+end_src
 
 #+begin_src emacs-lisp
