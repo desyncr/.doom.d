@@ -35,6 +35,7 @@
 (package! devdocs)
 ;(package! better-jumper)
 (package! flycheck-phpstan)
+(package! psysh)
 #+end_src
 
 * Keybindings
