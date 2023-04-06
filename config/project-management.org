@@ -228,3 +228,32 @@ Preserving bookmarks out of the Emacs installation:
 #+begin_src emacs-lisp
 (setq bookmark-file "~/.config/doom/bookmarks.el")
 #+end_src
+
+* TODO Command runner
+#+begin_src emacs-lisp
+(setq run-command-default-runner 'run-command-runner-vterm)
+(defun run-command-recipe-exads ()
+  (list
+   (list :command-name "exads-go"
+         :command-line "exads-go status"
+         :working-dir "~/code/"
+         :display "Check status")
+   (list :command-name "exads-go"
+         :command-line "exads-go checkout master"
+         :working-dir "~/code/"
+         :display "Checkout master")
+   (list :command-name "exads-go"
+         :command-line (lambda ()
+                         (setq branch
+                                (shell-quote-argument (read-string "Enter command: ")))
+                         (format "exads-go checkout '%s'"
+                                 branch))
+         :working-dir "~/code/"
+         :display "Checkout branch")
+   )
+  )
+
+(use-package run-command
+  :config
+  (add-to-list 'run-command-recipes 'run-command-recipe-exads))
+#+end_src
