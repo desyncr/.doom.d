@@ -51,13 +51,6 @@ Also use ~SPC s s~ to search matching characters on the current buffer.
 
 Use =M-m= for jump into a menu item (section in the buffer):
 
-#+begin_src emacs-lisp
-;(map! "M-m" #'consult-imenu)
-;(defadvice! expand-folds-imenu(&rest _)
-;  :before 'consult-imenu (+org/open-all-folds))
-;(defadvice! expand-folds-imenu(&rest _)
-;  :before '+default/search-buffer (+org/open-all-folds))
-#+end_src
 ** Navigation
 |------------+------------------------|
 | Navigation |                        |
