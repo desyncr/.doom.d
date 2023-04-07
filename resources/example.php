@@ -17,11 +17,17 @@ class Example
      */
     public function __construct(Exception $e)
     {
-        $result = array_map(function () {
-            return 'asd';
-        }, [1, 2, 3]);
+        foreach (explode("", $this->var) as $a) {
+            $this->getRandomNumbersIterative(2);
+        }
 
-        $a = [-1,2,3,4];
+        $array = [1, 2, 3, 4, 5];
+
+        foreach ([1,2,3] as $a) {
+            echo $a;
+        }
+
+        return $this->getRandomNumbersIterative(1);
     }
 
     /**
@@ -31,8 +37,9 @@ class Example
      *
      * @return array
      */
-    public function getRandomNumbersIterative(int $count): array
-    {
+    public function getRandomNumbersIterative(
+        int $count
+    ): array {
         $result = [];
         for (; $count >= 0; $count--) {
             array_push(
@@ -48,8 +55,9 @@ class Example
 
         $this->getRandomNumbersIterative(1);
 
-        for (
-            ; $count >= 0; $count--
+        for (;
+            $count >= 0;
+            $count--
         ) {
             array_push(
                 $result,
