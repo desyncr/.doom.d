@@ -23,6 +23,11 @@ Shortcut for opening the Doom's dashboard:
 (map! :leader :desc "Doom Dashboard" "d" #'+doom-dashboard/open)
 #+end_src
 
+Selecting (marking) whole buffer:
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-a") 'mark-whole-buffer)
+#+end_src
+
 * Navigation and files
 ** Search
 |------------------------+-------------------------|
