@@ -312,7 +312,7 @@ Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
 #+end_src
 
 See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]] and repository [[https://github.com/sulami/literate-calc-mode.el][here]] in github.
-* TODO org-pomodoro
+* DONE org-pomodoro
 Basic configuration:
 #+begin_src emacs-lisp
 (setq org-pomodoro-format "%s"
