@@ -85,15 +85,15 @@ This configuration also requires two fonts that will require to be installed in 
 See font installation instructions in [[file:config/fonts.org][Doom Emacs > Fonts]].
 
 ** Installation
-You'll need to execute two commands in order to get this configuration setup. Firstly you'll need to initialise the project's submodules and then run the make command in order to compile and execute ~doom sync~ for you:
+You'll need to execute two commands in order to get this configuration setup. Firstly you'll need to clone the project and then run the =make= command in order to compile and execute ~doom sync~.
+
+*Important*: Be sure to back up your previous configuration.
 
 #+begin_example sh
-$ git clone --recurse-submodules https://github.com/desyncr/.doom.d ~/.config/doom
+$ git clone https://github.com/desyncr/.doom.d ~/.config/doom
 $ cd ~/.config/doom
 $ make
 #+end_example
-
-Be sure to back up your previous configuration.
 
 * Organisation
 ** Look and Feel

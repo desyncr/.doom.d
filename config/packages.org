@@ -36,6 +36,7 @@
 ;(package! better-jumper)
 (package! flycheck-phpstan)
 (package! psysh)
+(package! php-doc-block :recipe (:host github :repo "moskalyovd/emacs-php-doc-block"))
 #+end_src
 
 * Keybindings
