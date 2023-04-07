@@ -90,7 +90,7 @@ Keybinding to specific org-capture:
 (map! :leader :desc "Capture a new note" "c n" (lambda() (interactive) (me/org-capture-todo "n")))
 (map! :leader :desc "Capture a new journal entry" "c j" (lambda() (interactive) (me/org-capture-todo "j")))
 #+end_src
-
+TODO: =SPC c= is used by code group. Maybe better to use =SPC n c ...= (i.e. note, capture, todo|note|journal).
 * TODO org-agenda
 #+begin_src emacs-lisp
 (map! "M-o" 'org-agenda)
