@@ -58,6 +58,8 @@ In order to tangle the different sections you'll need to run the following comma
 $ ~/.emacs.d/bin/org-tangle ~/.config/doom/config
 #+end_src
 
+Alternatively you can use the =make= command to tangle your configuration inteligently and additionally run =doom sync=.
+
 The command above will tangle the Org files in the user's directory. The sections define the output's location via property headers such as:
 
 #+begin_example
