@@ -39,17 +39,18 @@ Selecting (marking) whole buffer:
 |------------------------+-------------------------|
 
 Search buffer:
+
 #+begin_src emacs-lisp
 (map! "M-f" #'+default/search-buffer)
 (map! :ne "/" '+default/search-buffer)
 
-(map! "M-F" #'+default/search-project)
+(map! "M-F" '+default/search-project)
 (map! :ne "?" '+default/search-project)
 #+end_src
 
 Also use ~SPC s s~ to search matching characters on the current buffer.
 
-Use =M-m= for jump into a menu item (section in the buffer):
+Use =M-m= for jump into a menu item (section in the buffer) via =lsp-mode= or =imenu=.
 
 ** Navigation
 |------------+------------------------|
