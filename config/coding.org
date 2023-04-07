@@ -136,10 +136,14 @@ Remove snippets from company backends (use ~consult-yasnippets)~:
 (map! "M-G" 'lsp-ui-peek-find-references)
 (map! "M-M" 'consult-lsp-symbols)
 (map! "M-[" '+company/complete)
-(defun me/consult-lsp-file-symbols ()
+
+(defun me/consult-imenu-maybe-lsp ()
   (interactive)
-  (consult-lsp-file-symbols t))
-(map! "M-m" 'me/consult-lsp-file-symbols)
+  (if (bound-and-true-p lsp-mode)
+      (consult-lsp-file-symbols t)
+    (consult-imenu)))
+
+(map! "M-m" 'me/consult-imenu-maybe-lsp)
 (map! "C-f" 'lsp-format-region)
 
 ;; lsp doc show
