@@ -282,5 +282,15 @@ Interactive function to get a list of headings in Doom's config.
    :include-files t))
 
 (map! :desc "Jump to configuration section" "M-c" #'me/org-doom-config)
+#+end_src
 
+#+begin_src emacs-lisp
+(defun me/org-notes ()
+  "Jump to an Org headline in personal notes."
+  (interactive)
+  (doom-completing-read-org-headings
+   "Jump to note: "
+   "~/Personal/"
+   :depth 10
+   :include-files t))
 #+end_src
