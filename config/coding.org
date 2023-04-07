@@ -387,7 +387,9 @@ Not perfect, but it's a start.
         ("]" "\n]")))
     (delete-and-extract-region b e)))
   (indent-region b (point)))
+#+end_src
 
+#+begin_src emacs-lisp
 (defun me/php-array-oneline (b e)
   "Turn multiline php array to oneline."
   (interactive "*r")
@@ -396,11 +398,19 @@ Not perfect, but it's a start.
     "\n\s*"
     ""
     (delete-and-extract-region b e))))
+#+end_src
 
+#+begin_src emacs-lisp
 (defun me/php-array-toggle (b e)
   "Toggle php array between oneline and multiline."
   (interactive "*r")
   (if (string-match-p "\n" (buffer-substring b e))
       (me/php-array-oneline b e)
     (me/php-array-multiline b e)))
+#+end_src
+
+Defining keybinding for toggle command:
+
+#+begin_src emacs-lisp
+(map!  :desc "Toggle PHP array multiline" "M-C-f" #'me/php-array-toggle)
 #+end_src
