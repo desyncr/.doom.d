@@ -30,13 +30,13 @@ Selecting (marking) whole buffer:
 
 * Navigation and files
 ** Search
-|------------------------+-------------------------|
-| Search (file contents) |                         |
-|------------------------+-------------------------|
-| M-f                    | +default/search-buffer  |
-| M-F                    | +default/search-project |
-| M-m                    | consult-imenu           |
-|------------------------+-------------------------|
+|------------+-------------------------|
+| Keybinding | Command                 |
+|------------+-------------------------|
+| M-f        | +default/search-buffer  |
+| M-F        | +default/search-project |
+| M-m        | consult-imenu           |
+|------------+-------------------------|
 
 Search buffer:
 
@@ -54,7 +54,7 @@ Use =M-m= for jump into a menu item (section in the buffer) via =lsp-mode= or =i
 
 ** Navigation
 |------------+------------------------|
-| Navigation |                        |
+| Keybinding | Command                |
 |------------+------------------------|
 | M-p        | +consult-projectile    |
 | M-P        | projectile-find-file   |
@@ -86,7 +86,7 @@ Find buffers:
 
 ** Movements
 |------------+--------------------------------------|
-| Movements  |                                      |
+| Key        | Movement                             |
 |------------+--------------------------------------|
 | h, j, k, l | Left, Up, Down, Right                |
 | 0, $, £    | Column 0, end of line, begining line |
@@ -127,7 +127,7 @@ Note: by default ~^~ is bound to =evil-first-non-black=, but for me it's in an a
 
 ** Windows
  |------------------+----------------------------------|
- | Windows          |                                  |
+ | Keybinding       | Action                           |
  |------------------+----------------------------------|
  | M-\, M--         | Split vertically, horizontally   |
  | SPC w -, SPC w \ | Split vertically, horizontally   |
@@ -165,20 +165,20 @@ Use =M-w= to delete window or workspace (last window is preserved):
 (map! "M-w" 'delete-window)
 #+end_src
 * TODO Coding
- |----------+-------------------------------|
- | Coding   |                               |
- |----------+-------------------------------|
- | M-s      | Save current buffer           |
- | M-g      | Go to definition              |
- | M-G      | Search references             |
- | M-C-g    | Go to definition other window |
- | M-., M-, | Go to last change, reverse    |
- | M-<, M-> | Go to previous, next hunk     |
- | M-/      | Nerd commenter                |
- | M-y      | Yank from kill ring           |
- | M-i      | Consult yasnippet             |
- | M-K, M-J | Move text up, down            |
- |----------+-------------------------------|
+ |------------+-------------------------------|
+ | Keybinding | Action                        |
+ |------------+-------------------------------|
+ | M-s        | Save current buffer           |
+ | M-g        | Go to definition              |
+ | M-G        | Search references             |
+ | M-C-g      | Go to definition other window |
+ | M-., M-,   | Go to last change, reverse    |
+ | M-<, M->   | Go to previous, next hunk     |
+ | M-/        | Nerd commenter                |
+ | M-y        | Yank from kill ring           |
+ | M-i        | Consult yasnippet             |
+ | M-K, M-J   | Move text up, down            |
+ |------------+-------------------------------|
 
 Quickly save buffer with ~M-s~ (save):
 
@@ -306,20 +306,18 @@ Move-text:
 #+end_src
 
 * TODO Tools
- |-------+--------------------------|
- | Tools |                          |
- |-------+--------------------------|
- | M-;   | Execute extended command |
- | M-T   | Toggle vterm popup       |
- | M-r   | Open ranger              |
- | M-t   | Neotree toggle           |
- | M-:   | Toggle ielm popup        |
- |-------+--------------------------|
- | Other |                          |
- |-------+--------------------------|
- | M-e   | Eval line or buffer      |
- | M-E   | Edit src block           |
- |-------+--------------------------|
+ |------------+--------------------------|
+ | Keybinding | Action                   |
+ |------------+--------------------------|
+ | M-;        | Execute extended command |
+ | M-T        | Toggle vterm popup       |
+ | M-r        | Open ranger              |
+ | M-t        | Neotree toggle           |
+ | M-:        | Toggle ielm popup        |
+ |------------+--------------------------|
+ | M-e        | Eval line or buffer      |
+ | M-E        | Edit src block           |
+ |------------+--------------------------|
 
 Treemacs toggle, vterm toggle and Ranger:
 
