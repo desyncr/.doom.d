@@ -106,7 +106,7 @@ So I'm forced to top up the default threshold via this variable:
     lsp-signature-auto-activate t
     lsp-enable-snippet nil
     company-lsp-enable-snippet nil
-    lsp-enable-symbol-highlighting nil
+    lsp-enable-symbol-highlighting t
     lsp-enable-links t
     lsp-restart 'auto-restart
     lsp-intelephense-completion-trigger-parameter-hints t
