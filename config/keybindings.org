@@ -8,13 +8,11 @@
 
 * General
 Explicitly define the Mac OS modifiers:
-
 #+begin_src emacs-lisp
 (setq mac-command-modifier 'meta) ; make cmd key do Meta
 (setq mac-option-modifier 'super) ; make opt key do Super
 (setq mac-control-modifier 'control) ; make Control key do Control
 #+end_src
-
 Source: [[http://xahlee.info/emacs/emacs/emacs_hyper_super_keys.html][here]].
 
 Shortcut for opening the Doom's dashboard:
@@ -30,6 +28,7 @@ Selecting (marking) whole buffer:
 
 * Navigation and files
 ** TODO Navigation
+[[kbd:][M-p]]: find file in project. Prefer consult for everything:
 |------------+-----------------------------|
 | Keybinding | Command                     |
 |------------+-----------------------------|
@@ -42,8 +41,6 @@ Selecting (marking) whole buffer:
 | M-b        | consult-project-buffer      |
 | M-B        | consult-buffer              |
 |------------+-----------------------------|
-
-[[kbd:][M-p]]: find file in project. Prefer consult for everything:
 
 #+begin_src emacs-lisp
 (map! "M-p" #'consult-projectile-project)
