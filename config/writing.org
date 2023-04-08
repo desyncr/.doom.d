@@ -7,7 +7,17 @@ Change dictionary with the following:
 
 #+begin_src emacs-lisp
 (use-package ispell
-  :defer t)
+  :defer t
+  :config
+    (setq ispell-dictionary "british")
+    (setq ispell-silently-savep t)
+    (setq company-ispell-available t)
+    (add-hook 'org-mode-hook 'flyspell-mode)
+    (add-hook 'text-mode-hook 'company-mode)
+    (set-company-backend! 'org-mode
+        '(company-ispell company-capf))
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+
 (use-package flyspell
   :defer t
   :config
@@ -18,14 +28,7 @@ Change dictionary with the following:
 ispell-change-dictionary
 #+end_example
 
-Or use the following configuration:
-
-#+begin_src emacs-lisp
-(setq ispell-dictionary "british")
-(setq company-ispell-available nil)
-#+end_src
-
-Use ~z-=~ to get spelling corrections while under a word. Or use ~C-M-i~.
+Use ~z-=~ to get spelling corrections while under a word.
 
 Doom Emacs also come with these 2 packages for grammar checking:
 
