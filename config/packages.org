@@ -59,6 +59,10 @@
 ;(package! literate-calc-mode)
 (package! ox-slack)
 #+end_src
+* Writing
+#+begin_src emacs-lisp
+(package! spell-fu)
+#+end_src
 
 * Other
 #+begin_src emacs-lisp

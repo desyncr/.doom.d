@@ -9,15 +9,20 @@ Change dictionary with the following:
 (use-package ispell
   :defer t
   :config
-    (setq ispell-dictionary "british")
-    (setq ispell-silently-savep t)
-    (setq company-ispell-available t)
+    (setq ispell-dictionary "british"
+        ispell-silently-savep t
+        company-minimum-prefix-length 1
+        company-ispell-available t
+        company-transformers '(company-sort-by-occurrence))
     (add-hook 'org-mode-hook 'flyspell-mode)
     (add-hook 'text-mode-hook 'company-mode)
     (set-company-backend! 'org-mode
         '(company-ispell company-capf))
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+#+end_src
 
+
+#+begin_src emacs-lisp
 (use-package flyspell
   :defer t
   :config
@@ -29,6 +34,16 @@ ispell-change-dictionary
 #+end_example
 
 Use ~z-=~ to get spelling corrections while under a word.
+
+#+begin_src emacs-lisp
+(use-package company
+  :config
+  (setq
+    company-dabbrev-minimum-length 1
+    company-dabbrev-other-buffers t
+    company-dabbrev-ignore-case t
+    company-dabbrev-downcase t))
+#+end_src
 
 Doom Emacs also come with these 2 packages for grammar checking:
 
