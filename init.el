@@ -190,4 +190,4 @@
 
        :config
        literate
-       (default +bindings))
+       (default +bindings +smartparents))
