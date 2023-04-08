@@ -11,9 +11,15 @@ Explicitly define the Mac OS modifiers:
 #+begin_src emacs-lisp
 (setq mac-command-modifier 'meta) ; make cmd key do Meta
 (setq mac-option-modifier 'super) ; make opt key do Super
+(setq mac-right-option-modifier  'control)
+(setq mac-pass-control-to-system nil)
 (setq mac-control-modifier 'control) ; make Control key do Control
 #+end_src
 Source: [[http://xahlee.info/emacs/emacs/emacs_hyper_super_keys.html][here]].
+
+#+begin_src emacs-lisp
+(setq confirm-kill-emacs nil)
+#+end_src
 
 Shortcut for opening the Doom's dashboard:
 #+begin_src emacs-lisp
