@@ -7,7 +7,7 @@
 [[../resources/keybindings-cheatsheet.png]]
 
 * General
-Explicitly define the Mac modifiers:
+Explicitly define the Mac OS modifiers:
 
 #+begin_src emacs-lisp
 (setq mac-command-modifier 'meta) ; make cmd key do Meta
@@ -18,60 +18,34 @@ Explicitly define the Mac modifiers:
 Source: [[http://xahlee.info/emacs/emacs/emacs_hyper_super_keys.html][here]].
 
 Shortcut for opening the Doom's dashboard:
-
 #+begin_src emacs-lisp
 (map! :leader :desc "Doom Dashboard" "d" #'+doom-dashboard/open)
 #+end_src
 
 Selecting (marking) whole buffer:
+
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-a") 'mark-whole-buffer)
+(map! :desc "Mark whole buffer" "C-a" #'mark-whole-buffer)
 #+end_src
 
 * Navigation and files
-** Search
-|------------+-------------------------|
-| Keybinding | Command                 |
-|------------+-------------------------|
-| M-f        | +default/search-buffer  |
-| M-F        | +default/search-project |
-| M-m        | consult-imenu           |
-|------------+-------------------------|
+** TODO Navigation
+|------------+-----------------------------|
+| Keybinding | Command                     |
+|------------+-----------------------------|
+| M-p        | consult-projectile-project  |
+| M-a        | consult-projectile-anything |
+| SPC SPC    | consult-bookmark            |
+|------------+-----------------------------|
+| Buffers    |                             |
+|------------+-----------------------------|
+| M-b        | consult-project-buffer      |
+| M-B        | consult-buffer              |
+|------------+-----------------------------|
 
-Search buffer:
-
-#+begin_src emacs-lisp
-(map! "M-f" #'+default/search-buffer)
-(map! :ne "/" '+default/search-buffer)
-
-(map! "M-F" '+default/search-project)
-(map! :ne "?" '+default/search-project)
-#+end_src
-
-Also use ~SPC s s~ to search matching characters on the current buffer.
-
-Use =M-m= for jump into a menu item (section in the buffer) via =lsp-mode= or =imenu=.
-
-** Navigation
-|------------+------------------------|
-| Keybinding | Command                |
-|------------+------------------------|
-| M-p        | +consult-projectile    |
-| M-P        | projectile-find-file   |
-| SPC SPC    | consult-bookmark       |
-|------------+------------------------|
-| Buffers    |                        |
-|------------+------------------------|
-| M-b        | consult-project-buffer |
-| M-B        | consult-buffer         |
-|------------+------------------------|
-
-~M-p~: find file in project. Prefer consult for everything:
+[[kbd:][M-p]]: find file in project. Prefer consult for everything:
 
 #+begin_src emacs-lisp
-;; (map! "M-p" #'consult-projectile)
-;; (map! "M-P" #'projectile-find-file)
-
 (map! "M-p" #'consult-projectile-project)
 (map! "M-a" #'consult-projectile-anything)
 
@@ -84,19 +58,61 @@ Find buffers:
 (map! "M-B" #'consult-buffer)
 #+end_src
 
-** Movements
-|------------+--------------------------------------|
-| Key        | Movement                             |
-|------------+--------------------------------------|
-| h, j, k, l | Left, Up, Down, Right                |
-| 0, $, £    | Column 0, end of line, begining line |
-| w, b       | Forward word, backward word          |
-| s, S       | Evil search forward, backward        |
-| f          | Avy go to any char                   |
-| M-k, M-j   | Page up, down                        |
-|------------+--------------------------------------|
+** Search
+I often navigate files by jumping into the specific section I want to work with, rather than scrolling to the section. For this I use the following approach:
+1. I locate the file I'm working with via =consult-projectile-project= [[kbd:][M-p]]
+2. I jump to the specific section via =+default/search-buffer= [[kbd:][M-f]]
+
+For the first point =consult-projectile-project= [[kbd:][M-p]] let's me jump straight into any file withing a given project. When I'm not in a project I use =consult-projectile-anything= [[kbd:][M-a]] which does a broader search within buffers, bookmarks, known projects, recent files and so on.
+
+Finally I can jump into the section I'm looking for via =+default/search-buffer=. This command, integrated with =consult= gives me in buffer narrowing.
+Additionally, when working with structured files -most of the time- =me/consult-imenu-maybe-lsp= [[kbd:][M-m]] let's me jump into any section via title (or in case of =prog-mode=, function name).
+
+|------------+----------------------------+-------------------------------------|
+| Keybinding | Command                    | Description                         |
+|------------+----------------------------+-------------------------------------|
+| M-f        | +default/search-buffer     | Narrows content via consult         |
+| M-F        | +default/search-project    | Search content via consult (buffer) |
+| M-m        | me/consult-imenu-maybe-lsp | Narrows outline via lsp or imenu    |
+| \/         | +default/search-buffer     | Alias for M-f                       |
+|------------+----------------------------+-------------------------------------|
+
+Search buffer via =+default/search-buffer= [[kbd:][M-f]], this command integrated with =consult= gives you in buffer narrowing:
+
+#+begin_src emacs-lisp
+(map! "M-f" #'+default/search-buffer)
+(map! "M-F" '+default/search-project)
+#+end_src
+
+Use =me/consult-imenu-maybe-lsp= [[kbd:][M-m]] for jump into a menu item (section in the buffer) via =lsp-mode= or =imenu=. The interactive command checks if =lsp-mode= is active and uses =consult-lsp-file-symbols=, otherwise it uses =consult-imenu=.
+
+As a former vim user I'm used to these keys for searching within a buffer. So I'm mapping them to the same commands as =+default/search-buffer= [[kbd:][M-f]]:
+
+#+begin_src emacs-lisp
+(map! :ne "/" '+default/search-buffer)
+(map! :ne "?" '+default/search-project)
+#+end_src
+
+*Note*: =+default/search-buffer= [[kbd:][M-f]] supports multiple search and ordering functionalities, such as =orderless=, =grep= etc. Default =evil-ex-search-forward= and such not so much. For this reason searches with =+default/search-buffer= will not work /entirely/ using [[kbd:][n]] and [[kbd:][N]].
+
+** TODO Movements
+|------------+--------------------------------------------|
+| Key        | Movement                                   |
+|------------+--------------------------------------------|
+| h, j, k, l | Left, Up, Down, Right                      |
+| 0, $, £    | Column 0, end of line, beginning line      |
+| w, b       | Forward word, backward word                |
+| s, S       | Evil search forward, backward              |
+| f          | Avy go to any char                         |
+| M-k, M-j   | Page up, down                              |
+| M-l        | Go to line (prog mode)                     |
+| C-o        | Go back to previous position               |
+| C-i        | Go forward from a jump back                |
+| C-l        | Centre content in the middle of the screen |
+|------------+--------------------------------------------|
 
 Search in buffer:
+
 #+begin_src emacs-lisp
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 (with-eval-after-load 'evil-maps
@@ -115,7 +131,7 @@ Page up / down:
   (define-key evil-org-mode-map (kbd "<normal-state> M-k") 'evil-scroll-up)
   (define-key evil-org-mode-map (kbd "<normal-state> M-j") 'evil-scroll-down))
 #+end_src
-The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
+The ~after!~  block makes sure =M-j= and =M-k= are bound correctly on org mode.
 
 #+begin_src emacs-lisp
 (with-eval-after-load 'evil-maps
@@ -125,7 +141,7 @@ The ~after!~  block makes sure =M-j= and =M-k= are binded correctly on org mode.
 
 Note: by default ~^~ is bound to =evil-first-non-black=, but for me it's in an awkward position.
 
-** Windows
+* TODO Windows
  |------------------+----------------------------------|
  | Keybinding       | Action                           |
  |------------------+----------------------------------|
