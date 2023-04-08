@@ -1,6 +1,6 @@
 #+title: Doom Emacs > Project Management
 #+language: en
-#+property: header-args :tangle ../.elisp/project-management.el :cache yes :results silent :auto_tangle t
+#+property: header-args :tangle ../.elisp/project-management.el :cache yes :results silent
 
 * consult
 I'm using ~consult~ + ~consult-projectile~ to jump around buffers, recent files and project files. Package repository: [[https://github.com/minad/consult][consult]], [[https://gitlab.com/OlMon/consult-projectile][consult-projectile]]. =consult-projectile= is a consult source to integrate with projectile.

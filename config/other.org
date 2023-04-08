@@ -1,6 +1,6 @@
 #+title: Doom Emacs > Other
 #+language: en
-#+property: header-args :tangle ../.elisp/other.el :cache yes :results silent :auto_tangle t
+#+property: header-args :tangle ../.elisp/other.el :cache yes :results silent
 
 * Terminal integration
 There's several packages to integrate terminal-workflows into Emacs. Some of these are =shell= and =term=. I'll be using =vterm= and I'll referring to this package for the rest of this section.

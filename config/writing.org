@@ -1,6 +1,6 @@
 #+title: Doom Emacs > Writing
 #+language: en
-#+property: header-args :tangle ../.elisp/writing.el :cache yes :results silent :auto_tangle t
+#+property: header-args :tangle ../.elisp/writing.el :cache yes :results silent
 
 * Spell checking
 Change dictionary with the following:
