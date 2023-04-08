@@ -2,7 +2,7 @@
 #+language: en
 #+property: header-args :tangle ../.elisp/writing.el :cache yes :results silent
 
-* Spell checking
+* TODO Spell checking
 Change dictionary with the following:
 
 #+begin_src emacs-lisp
@@ -35,7 +35,7 @@ Doom Emacs also come with these 2 packages for grammar checking:
 - [[https://github.com/mhayashi1120/Emacs-langtool][Langtool]]
 - [[https://github.com/bnbeckwith/writegood-mode][Writegood-mode]]
 
-* Langtool
+* TODO Langtool
 For langtool package you need to install the underlying tool languagetool, which is a java package. See instructions [[https://docs.doomemacs.org/latest/#/prerequisites][here]].
 
 Configure language:
