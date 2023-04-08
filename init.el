@@ -96,7 +96,7 @@
        (lookup +docsets)   ; navigate your code and its documentation
        lsp                 ; M-x vscode
        (magit +forge)      ; a git porcelain for Emacs
-       make              ; run make tasks from Emacs
+       make                ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        ;;pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
@@ -104,7 +104,7 @@
        ;;taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
-       ;tree-sitter         ; syntax and parsing, sitting in a tree...
+       ;tree-sitter        ; syntax and parsing, sitting in a tree...
        ;;upload            ; map local to remote projects via ssh/ftp
 
        :os
@@ -166,13 +166,13 @@
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
-       (sh +lsp +fish)                  ; she sells {ba,z,fi}sh shells on the C xor
+       (sh +lsp +fish)     ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        ;;web               ; the tubes
-       (yaml +lsp)                ; JSON, but readable
+       (yaml +lsp)         ; JSON, but readable
        ;;zig               ; C, but simpler
 
        :email
