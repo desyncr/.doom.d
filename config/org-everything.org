@@ -388,3 +388,12 @@ Automatically updated org-clocktable on buffer save:
         (goto-char (search-forward "clocktable"))
         (org-clock-report))))))
 #+end_src
+
+* Config TODOs
+#+begin_src emacs-lisp
+(defun me/org-doom-config-todo (&optional arg)
+  (interactive "P")
+  (setq org-agenda-files '("~/.config/doom/config"))
+  (org-todo-list arg)
+  (setq org-agenda-files '("~/Personal")))
+#+end_src
