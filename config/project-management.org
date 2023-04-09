@@ -65,13 +65,13 @@ Project sources:
   '(
     ;; projectile
     consult-projectile--source-projectile-buffer   ;; buffers in projectile
-    consult-projectile--source-projectile-file     ;; projectile files
-    ;; consult--source-project-recent-file            ;; project's recent files
-))
+    consult-projectile--source-projectile-file))     ;; projectile files
 
 (defun consult-projectile-project ()
   (interactive)
-  (consult-projectile consult-projectile-project-sources))
+  (if (projectile-project-p)
+      (consult-projectile consult-projectile-project-sources)
+    (consult-projectile-anything)))
 #+end_src
 
 Anything sources:
