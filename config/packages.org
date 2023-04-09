@@ -71,4 +71,5 @@
 (package! keyfreq)
 (package! elfeed)
 (package! elfeed-goodies)
+(package! speed-type)
 #+end_src
