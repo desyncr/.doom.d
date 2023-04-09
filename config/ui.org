@@ -302,6 +302,8 @@ Use =M-n= to create a new empty buffer. The following advices will automatically
 Note: I had to disable the fallback rules because they interfered with Treemacs (showing Treemacs as a popup window at the bottom).
 https://docs.doomemacs.org/latest/modules/ui/popup/
 
+TODO: Review why these rules are not loaded at startup.
+
 #+begin_src emacs-lisp
 (set-popup-rules!
   '(;;("^ \\*" :size 0.3 :modeline t) ; fallback rule for special buffers
@@ -310,13 +312,13 @@ https://docs.doomemacs.org/latest/modules/ui/popup/
     ("^\\*Completions" :slot -1 :ttl 0)
     ("^\\*\\(?:scratch\\|Messages\\)" :ttl t)
     ("^\\*Help" :modeline t :size 0.4 :select t)
-    ("^\\*helpful.*" :modeline t :size 0.4 :select t)
+    ("^\\*helpful.*" :modeline t :slot 1 :size 0.4 :select t)
     ("^\\*Async.*" :modeline t :size 0.3 :select nil :quit t :ttl t)
     ("^\\*Search" :modeline t :size 0.5 :select t :quit nil :ttl t)
     ;; Right
     ("^\\*Org todo" :slot 1 :side right :size 0.3 :select t)
     ("^\\*Org Agenda" :slot 1 :side right :size 0.3 :select t)
-    ("^\\*Org Src" :slot 1 :side right :size 0.3 :select t :quit nil)
+    ("^\\*Org Src" :slot -1 :size 0.3 :select t :quit nil)
     ;; Other
     ("^\\*doom eval\\*" :size 0.1 :select t :modeline t :quit t :ttl t)
     ("^\\*doom:" :size 0.35 :select t :modeline t :quit t :ttl t)))
