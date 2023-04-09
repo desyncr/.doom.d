@@ -3,13 +3,13 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("Weekly"
- (filename . "~/Notes/weekly.org")
+ (filename . "~/Work/weekly.org")
  (position . 0))
 ("Commands"
- (filename . "~/Notes/docs/commands.org")
+ (filename . "~/Work/docs/commands.org")
  (position . 0))
-("Notes"
- (filename . "~/Notes/notes.org")
+("Work"
+ (filename . "~/Work/notes.org")
  (position . 0))
 ("Personal"
  (filename . "~/Personal/notes.org")
