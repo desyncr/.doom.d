@@ -71,14 +71,13 @@ Do not create bookmarks on last org-capture:
 #+end_src
 * TODO org-capture
 #+begin_src emacs-lisp
-(after! org
-  (setq org-capture-templates
+(setq org-capture-templates
       '(("t" "TODO" entry (file +org-capture-todo-file)
-        "* TODO %U %?\n%i\n%a" :prepen t)
+         (file "~/.config/doom/templates/capture/todo.org") :prepen t)
         ("n" "Notes" entry (file +org-capture-notes-file)
-        "* %u %?\n%i\n%a" :prepend t)
+         (file "~/.config/doom/templates/capture/notes.org") :prepend t)
         ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
-        "* %U %?\n%i\n%a" :prepend t))))
+         "* %U %?\n%i\n%a" :prepend t)))
 #+end_src
 
 TODO: Capture templates with files example [[https://www.reddit.com/r/emacs/comments/7zqc7b/comment/duqzj0r/?utm_source=share&utm_medium=web2x&context=3][here]].
