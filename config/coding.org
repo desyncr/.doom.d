@@ -129,10 +129,10 @@ So I'm forced to top up the default threshold via this variable:
 #+end_src
 
 #+begin_src emacs-lisp
-(setq lsp-headerline-breadcrumb-enable t)
-(setq lsp-headerline-breadcrumb-segments '(symbols))
-(setq lsp-headerline-breadcrumb-icons-enable t)
-(setq lsp-headerline-breadcrumb-enable-diagnostics nil)
+(setq lsp-headerline-breadcrumb-enable t
+      lsp-headerline-breadcrumb-segments '(symbols)
+      lsp-headerline-breadcrumb-icons-enable t
+      lsp-headerline-breadcrumb-enable-diagnostics nil)
 #+end_src
 
 #+begin_src emacs-lisp
