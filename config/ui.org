@@ -189,6 +189,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 
 #+begin_src emacs-lisp
 (defun me/window-resize-main-pane ()
+  "Resize windows in an ideal distribution"
   (interactive)
   (me/treemacs-snapshot)
   (setq me/main-window (frame-first-window))
@@ -197,7 +198,11 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 
 (defun me/maybe-window-resize-main-pane ()
   (interactive)
-  (if (< (length (mapcar #'window-buffer (window-list))) 4)
+  (setq me/window-limit
+    (pcase me/treemacs-restore
+      (`visible 3)
+      (_ 2)))
+  (if (< (length (mapcar #'window-buffer (window-list))) me/window-limit)
       (me/window-resize-main-pane)))
 
 (defun me/treemacs-restore ()
