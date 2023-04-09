@@ -121,10 +121,10 @@ This package also works for selecting files and other similar components.
 source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]].
 
 #+begin_src emacs-lisp
-(advice-add 'evil-ex-search-next :after
-            (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
-(advice-add 'evil-ex-search-previous :after
-            (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+;; (advice-add 'evil-ex-search-next :after
+            ;; (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+;; (advice-add 'evil-ex-search-previous :after
+            ;; (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
 #+end_src
 * TODO centered-cursor-mode
 Source: https://github.com/andre-r/centered-cursor-mode.el
