@@ -81,6 +81,8 @@ Do not create bookmarks on last org-capture:
         "* %U %?\n%i\n%a" :prepend t))))
 #+end_src
 
+TODO: Capture templates with files example [[https://www.reddit.com/r/emacs/comments/7zqc7b/comment/duqzj0r/?utm_source=share&utm_medium=web2x&context=3][here]].
+
 Keybinding to specific org-capture:
 #+begin_src emacs-lisp
 (defun me/org-capture-todo (type &optional arg)
