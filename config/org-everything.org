@@ -54,7 +54,7 @@ If you use ~org~ and don't want your org files in the default location below, ch
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
 #+end_src
 
-[[kbd:][SPC n s]] searchs contents in ~org-directory~ by default. I've separated work from personal notes so I have a "personal" org directory and a "work" one. Since ~org~ only allows a single ~org-directory~ I created the functions down below to quickly switch between org directories.
+[[kbd:][SPC n s]] search contents in ~org-directory~ by default. I've separated work from personal notes so I have a "personal" org directory and a "work" one. Since ~org~ only allows a single ~org-directory~ I created the functions down below to quickly switch between org directories.
 
 #+begin_src emacs-lisp
 (defun me/org-directory-personal ()
