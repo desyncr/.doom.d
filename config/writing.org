@@ -21,6 +21,11 @@ Change dictionary with the following:
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 #+end_src
 
+See more:
+- https://company-mode.github.io/manual/Customization.html
+- https://github.com/xenodium/company-org-block
+- https://www.reddit.com/r/emacs/comments/l0khyu/company_suggestions_from_the_recent_buffer/
+- https://codeberg.org/ideasman42/emacs-spell-fu
 
 #+begin_src emacs-lisp
 (use-package flyspell
@@ -34,6 +39,8 @@ ispell-change-dictionary
 #+end_example
 
 Use ~z-=~ to get spelling corrections while under a word.
+
+Company-mode page: http://company-mode.github.io/
 
 #+begin_src emacs-lisp
 (use-package company
