@@ -410,5 +410,5 @@ Not perfect, but it's a start.
 Defining keybinding for toggle command:
 
 #+begin_src emacs-lisp
-(map!  :desc "Toggle PHP array multiline" "M-C-f" #'me/php-array-toggle)
+(map! :desc "Toggle PHP array multiline" "M-C-f" #'me/php-array-toggle)
 #+end_src
