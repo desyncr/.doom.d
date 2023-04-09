@@ -44,20 +44,39 @@ Open termina in vsplit window:
   (elfeed-goodies/setup)
   (elfeed))
 #+end_src
-
+https://github.com/skeeto/elfeed
+https://github.com/jeetelongname/elfeed-goodies
 #+begin_src emacs-lisp
 (use-package elfeed
   :defer t
   :config
+  (setq-default elfeed-search-filter "@1-week-ago")
   (add-hook 'elfeed-show-mode-hook #'elfeed-update)
   (add-hook  'elfeed-show-mode-hook 'variable-pitch-mode)
   (setq elfeed-feeds
-      '(
-        ("https://sachachua.com/blog/category/emacs-news/feed/" emacs)
-        ("https://planet.emacslife.com/atom.xml" emacs)
-        ("http://nedroid.com/feed/" webcomic)
-        ("https://hnrss.org/frontpage" news)
-        )))
+        '(
+          ("https://sachachua.com/blog/category/emacs-news/feed/" emacs)
+          ("https://planet.emacslife.com/atom.xml" emacs)
+          ("http://nedroid.com/feed/" webcomic)
+          ("https://hnrss.org/frontpage" news)
+          ("https://www.reddit.com/r/linux.rss" reddit linux)
+          ("https://www.reddit.com/r/commandline.rss" reddit commandline)
+          ("https://www.reddit.com/r/distrotube.rss" reddit distrotube)
+          ("https://www.reddit.com/r/emacs.rss" reddit emacs)
+          ("https://www.gamingonlinux.com/article_rss.php" gaming linux)
+          ("https://hackaday.com/blog/feed/" hackaday linux)
+          ("https://opensource.com/feed" opensource linux)
+          ("https://linux.softpedia.com/backend.xml" softpedia linux)
+          ("https://itsfoss.com/feed/" itsfoss linux)
+          ("https://www.zdnet.com/topic/linux/rss.xml" zdnet linux)
+          ("https://www.phoronix.com/rss.php" phoronix linux)
+          ("http://feeds.feedburner.com/d0od" omgubuntu linux)
+          ("https://www.computerworld.com/index.rss" computerworld linux)
+          ("https://www.networkworld.com/category/linux/index.rss" networkworld linux)
+          ("https://www.techrepublic.com/rssfeeds/topic/open-source/" techrepublic linux)
+          ("https://betanews.com/feed" betanews linux)
+          ("http://lxer.com/module/newswire/headlines.rss" lxer linux))))
+
 #+end_src
 
 * browse-url
