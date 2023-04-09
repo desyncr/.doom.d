@@ -6,6 +6,7 @@
 #+begin_src emacs-lisp
 (package! super-save) ;; Package repository: [[https://github.com/bbatsov/super-save][here]].
 #+end_src
+
 * Look and Feel
 #+begin_src emacs-lisp
 ;(package! auto-dark)
@@ -13,6 +14,7 @@
 (package! centered-cursor-mode)
 (package! defrepeater)
 #+end_src
+
 * Project Management
 #+begin_src emacs-lisp
 (package! consult-projectile)
