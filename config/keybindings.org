@@ -361,6 +361,12 @@ Evaluate line or region and edit source block in capture buffer:
 (map! "M-E" :desc "Edit src block" 'org-edit-src-code)
 #+end_src
 
+Install packages:
+
+#+begin_src emacs-lisp
+(map! :leader :desc "Install package" "h P" #'package-install)
+#+end_src
+
 * Mad scientist mode
 These tweaks down below aim to improve my over all work with Evil mode keybindings. Note that these tweaks are highly optimised for _my_ personal use (and miss use) of Evil mode.
 
