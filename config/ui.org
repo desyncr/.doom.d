@@ -309,7 +309,7 @@ TODO: Review why these rules are not loaded at startup.
   '(;;("^ \\*" :size 0.3 :modeline t) ; fallback rule for special buffers
     ;; ("^\\*" :select t :modeline t :size 0.1)
     ;; Known windows
-    ("^\\*Completions" :slot -1 :ttl 0)
+    ("^\\*Completions" :slot 1 :ttl 0)
     ("^\\*\\(?:scratch\\|Messages\\)" :ttl t)
     ("^\\*Help" :modeline t :size 0.4 :select t)
     ("^\\*helpful.*" :modeline t :slot 1 :size 0.4 :select t)
@@ -320,6 +320,10 @@ TODO: Review why these rules are not loaded at startup.
     ("^\\*Org Agenda" :slot 1 :side right :size 0.3 :select t)
     ("^\\*Org Src" :slot -1 :size 0.3 :select t :quit nil)
     ;; Other
-    ("^\\*doom eval\\*" :size 0.1 :select t :modeline t :quit t :ttl t)
+    ("\\*doom eval\\*" :size 0.1 :select t :modeline t :quit t :ttl t)
     ("^\\*doom:" :size 0.35 :select t :modeline t :quit t :ttl t)))
+#+end_src
+
+#+begin_src emacs-lisp
+(plist-put +popup-defaults :modeline t)
 #+end_src
