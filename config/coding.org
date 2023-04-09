@@ -412,3 +412,18 @@ Defining keybinding for toggle command:
 #+begin_src emacs-lisp
 (map! :desc "Toggle PHP array multiline" "M-C-f" #'me/php-array-toggle)
 #+end_src
+
+* Rotate text
+To enable a set of items to cycle through globally:
+#+begin_src emacs-lisp
+(after! rotate-text
+  (add-to-list 'rotate-text-words '("t" "nil")))
+#+end_src
+
+To add a sequence to a specific mode:
+#+begin_src emacs-lisp
+(set-rotate-patterns! 'prog-mode
+    :words '(("t" "nil")))
+#+end_src
+
+When configuring a sequence of words or symbols that should be rotated through, it is important that all items are all lower case. The casing will be determined by the item that initiated the rotation. For example, ~Small~ will be replaced with ~Medium~ and ~SMALL~ will be replaced with ~MEDIUM~ using the example described above.
