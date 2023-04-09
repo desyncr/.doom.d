@@ -270,7 +270,7 @@ Preserving bookmarks out of the Emacs installation:
 #+end_src
 
 * Config navigation
-I'm often tweaking this configuration that I need a quick way to jump into an specific section or search quickly for a configuration. For this I created the command down below. This command makes use of =doom-completing-read-org-headings= function to read the headings from =org=  files in a given directory (passed as parameter). This function is also responsible for wiring the completion narrowing functions (=consult=, =vertico=).
+I'm often tweaking this configuration that I need a quick way to jump into an specific section or search quickly for a configuration. For this reason I created the command down below. This command makes use of =doom-completing-read-org-headings= function to read the headings from =org=  files in a given directory (passed as parameter). This function is also responsible for wiring the completion narrowing functions (=consult=, =vertico=).
 
 You can see the end result in the screenshot down below. The command is somewhat slow since it needs to parse a large number of configuration files and extract metadata from them, but it's not a problem since it's not a function you use constantly.
 
