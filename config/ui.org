@@ -155,8 +155,30 @@ Resize-window package actually supports a transient.el-like flow (it's older tha
 
 There are only a few commands to learn, and they mimic the normal motions in emacs.
 
+https://github.com/dpsutton/resize-window
+
 #+begin_src emacs-lisp
 (map! :leader "w z" #'resize-window)
+(setq resize-window-alias-list
+  '((right ?l)
+    (up ?k)
+    (left ?h)
+    (down ?j)))
+
+(setq resize-window-dispatch-alist
+  '((?j resize-window--enlarge-down          " Resize - Expand down" t)
+    (?k resize-window--enlarge-up            " Resize - Expand up" t)
+    (?l resize-window--enlarge-horizontally  " Resize - horizontally" t)
+    (?h resize-window--shrink-horizontally   " Resize - shrink horizontally" t)
+    (?r resize-window--reset-windows         " Resize - reset window layout" nil)
+    (?w resize-window--cycle-window-positive " Resize - cycle window" nil)
+    (?W resize-window--cycle-window-negative " Resize - cycle window" nil)
+    (?2 split-window-below " Split window horizontally" nil)
+    (?3 split-window-right " Slit window vertically" nil)
+    (?0 resize-window--delete-window " Delete window" nil)
+    (?x resize-window--kill-other-windows " Kill other windows (save state)" nil)
+    (?y resize-window--restore-windows " (when state) Restore window configuration" nil)
+    (?? resize-window--display-menu          " Resize - display menu" nil)))
 #+end_src
 
 Package repository [[https://github.com/dpsutton/resize-window][here]].
