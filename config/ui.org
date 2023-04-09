@@ -277,33 +277,26 @@ Use =M-n= to create a new empty buffer. The following advices will automatically
 (setq size-indication-mode nil)
 #+end_src
 
-* Popup
+* TODO Popup
+Note: I had to disable the fallback rules because they interfered with Treemacs (showing Treemacs as a popup window at the bottom).
+https://docs.doomemacs.org/latest/modules/ui/popup/
+
 #+begin_src emacs-lisp
 (set-popup-rules!
- '(
-     ("^\\*doom eval\\*" :side bottom :height 0.1 :ttl 0 :quit t)
-
-     ("^\\*Org Agenda" :slot -2 :side right :size 0.3 :select t)
-     ("^\\*help" :slot -3 :side right :size 0.3 :select t)
-
-     ("^\\*ielm" :slot -2 :side bottom :size 0.2 :select t)
-     ("^\\*doom:vterm" :slot -3 :side bottom :size 0.2 :select t)
-     ("org-tangle-doom" :slot -4 :side bottom :size 0.2 :select t)
-     ("^\\*Async Shell" :slot -5 :side bottom :size 0.2 :select t)
-     ("^\\*Search" :slot -6 :side bottom :size 0.3 :select t)
-     ("^\\*" :slot -1 :side bottom :size 0.3) ; fallback rule for special buffers
-  )
-)
+  '(;;("^ \\*" :size 0.3 :modeline t) ; fallback rule for special buffers
+    ;; ("^\\*" :select t :modeline t :size 0.1)
+    ;; Known windows
+    ("^\\*Completions" :slot -1 :ttl 0)
+    ("^\\*\\(?:scratch\\|Messages\\)" :ttl t)
+    ("^\\*Help" :modeline t :size 0.4 :select t)
+    ("^\\*helpful.*" :modeline t :size 0.4 :select t)
+    ("^\\*Async.*" :modeline t :size 0.3 :select nil :quit t :ttl t)
+    ("^\\*Search" :modeline t :size 0.5 :select t :quit nil :ttl t)
+    ;; Right
+    ("^\\*Org todo" :slot 1 :side right :size 0.3 :select t)
+    ("^\\*Org Agenda" :slot 1 :side right :size 0.3 :select t)
+    ("^\\*Org Src" :slot 1 :side right :size 0.3 :select t :quit nil)
+    ;; Other
+    ("^\\*doom eval\\*" :size 0.1 :select t :modeline t :quit t :ttl t)
+    ("^\\*doom:" :size 0.35 :select t :modeline t :quit t :ttl t)))
 #+end_src
-
-#+begin_example emacs-lisp
-   ("^\\*Org todo" :slot -3 :side right :size 0.3 :select t)
-   ("^\\*Org Agenda" :slot -2 :side right :size 0.3 :select t)
-   ("^\\*doom eval" :ignore t :slot -3 :side bottom :size 0.1 :select nil)
-   ("^\\*" :select t)
-   ("^\\*Completions" :slot -1 :ttl 0)
-   ("^\\*\\(?:scratch\\|Messages\\)" :ttl t)
-   ("^\\*Help" :slot -1 :size 0.2 :select t)
-   ("^\\*doom:"
-    :size 0.35 :select t :modeline t :quit t :ttl t)
-#+end_example
