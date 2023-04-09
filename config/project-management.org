@@ -226,6 +226,7 @@ Keybindings:
   "Tangle Doom Emacs configuration."
   (interactive)
   (async-shell-command "cd ~/.config/doom && make"))
+(setq org-auto-tangle-mode nil)
 #+end_src
 
 #+begin_src emacs-lisp
