@@ -39,6 +39,12 @@ Anyway, in the above code setting the commit's summary max length to 100 so I'm 
 (map! :leader :desc "Magit push" "g p" #'magit-push-current-to-upstream)
 (map! :leader :desc "Magit pull" "g f" #'magit-pull-from-upstream)
 #+end_src
+** Magit-todo
+https://github.com/alphapapa/magit-todos
+#+begin_src emacs-lisp
+(after! magit
+    (magit-todos-mode))
+#+end_src
 
 * Diff-hl
 #+begin_src emacs-lisp

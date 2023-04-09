@@ -27,6 +27,7 @@
 #+begin_src emacs-lisp
 (package! browse-at-remote)
 (package! diff-hl)
+(package! magit-todos)
 #+end_src
 
 * Coding
