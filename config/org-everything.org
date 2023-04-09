@@ -62,7 +62,7 @@ If you use ~org~ and don't want your org files in the default location below, ch
   (setq org-directory "~/Personal/"))
 (defun me/org-directory-work ()
   (interactive)
-  (setq org-directory "~/Notes/"))
+  (setq org-directory "~/Work/"))
 #+end_src
 
 Do not create bookmarks on last org-capture:
@@ -131,11 +131,13 @@ See documentation [[https://orgmode.org/org.html#Sorting-of-agenda-items][here]]
 
 Keybinding to specific org-agenda views:
 #+begin_src emacs-lisp
-(defun me/org-agenda-view (type &optional arg)
+(defun me/org-agenda-view (type &optional notebook arg)
   (interactive "P")
+  (if (eql notebook 'work) (setq org-agenda-files '("~/Work"))
+    (setq org-agenda-files '("~/Personal")))
   (org-agenda arg type))
 
-(map! :leader :desc "Work view" "o a w" (lambda() (interactive) (me/org-agenda-view "w")))
+(map! :leader :desc "Work view" "o a w" (lambda() (interactive) (me/org-agenda-view "w" 'work)))
 (map! :leader :desc "Docs view" "o a d" (lambda() (interactive) (me/org-agenda-view "d")))
 (map! :leader :desc "Personal view" "o a p" (lambda() (interactive) (me/org-agenda-view "p")))
 (map! :leader :desc "Projects view" "o a P" (lambda() (interactive) (me/org-agenda-view "P")))
