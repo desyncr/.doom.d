@@ -270,7 +270,16 @@ Preserving bookmarks out of the Emacs installation:
 #+end_src
 
 * Config navigation
-Interactive function to get a list of headings in Doom's config.
+I'm often tweaking this configuration that I need a quick way to jump into an specific section or search quickly for a configuration. For this I created the command down below. This command makes use of =doom-completing-read-org-headings= function to read the headings from =org=  files in a given directory (passed as parameter). This function is also responsible for wiring the completion narrowing functions (=consult=, =vertico=).
+
+You can see the end result in the screenshot down below. The command is somewhat slow since it needs to parse a large number of configuration files and extract metadata from them, but it's not a problem since it's not a function you use constantly.
+
+The integration with =consult= and =vertico= (plus =vertico-posframe=) makes it easy to jump into different section of the configuration structure. An additional bonus is that this command pushes myself to build a better configuration structure.
+
+#+attr_html: :alt :align center :class img
+[[../resources/consult-vertico-doom-org.png]]
+
+Interactive function to get a list of headings in Doom's config:
 
 #+begin_src emacs-lisp
 (defun me/org-doom-config ()
@@ -284,6 +293,8 @@ Interactive function to get a list of headings in Doom's config.
 
 (map! :desc "Jump to configuration section" "M-c" #'me/org-doom-config)
 #+end_src
+
+An additional -not so useful- narrowing command for personal notes:
 
 #+begin_src emacs-lisp
 (defun me/org-notes ()
