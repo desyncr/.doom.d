@@ -291,37 +291,65 @@ Triggers consult posframe to select a yasnippet. It also previsualies it in the 
 
 There's also =SPC i s= keybinding which doesn't uses consult.
 
-Create link:
+Inserts a link for either the selected text or the current word under cursor.If there is a visual selection, inserts an Org-mode link with the selected text as the description.
+Otherwise, selects the current word and inserts an Org-mode link with the selected word as the description.
+The cursor will be positioned inside the link after it is inserted.
+
 #+begin_src emacs-lisp
 (defun me/link-word-or-selection ()
-  (interactive)
-  (if (evil-visual-state-p)
-      (org-insert-link)
-    (er/mark-word))
-  (org-insert-link))
+(interactive)
+(if (evil-visual-state-p) ; Check if in visual state (i.e., text is selected)
+    (org-insert-link)     ; Insert Org-mode link with selected text as description
+  (er/mark-word))         ; Select current word
+(org-insert-link)         ; Insert Org-mode link with selected text/word as description
 #+end_src
+
+This function allows the user to insert an Org-mode link with either the selected text or the current word under the cursor as the description. If there is a visual selection, the selected text will be used as the link description. If there is no selection, the current word under the cursor will be selected and used as the link description.
+
+The cursor will be positioned inside the link after it is inserted. This function is interactive and can be bound to a key binding for quick access.
 
 #+begin_src emacs-lisp
 (after! evil-org
   (define-key evil-org-mode-map (kbd "C-M-l") 'me/link-word-or-selection))
 #+end_src
 
-Move-text:
+The =move-text= package is a minor mode that allows users to move lines or regions of text up or down within a buffer using simple keybindings.
+
+Once the package is installed and enabled, users can move a single line up or down using the following keybindings:
+
+- =M-up= or =C-S-up=: Move the current line or the region of text containing the cursor up by one line.
+- =M-down= or =C-S-down=: Move the current line or the region of text containing the cursor down by one line.
+
+The package also provides keybindings for moving a region of text up or down:
+
+- =C-M-up=: Move the region of text containing the cursor up by one line.
+- =C-M-down=: Move the region of text containing the cursor down by one line.
+
+Additionally, the package provides the =move-text-default-bindings=  function, which can be used to bind the above keybindings to a different keymap. For example, to bind the =move-text= commands to the =C-c m= prefix keymap, you could add the following to your Emacs configuration file:
+
+#+begin_example elisp
+(require 'move-text)
+(define-key my-prefix-map (kbd "m u") 'move-text-up)
+(define-key my-prefix-map (kbd "m d") 'move-text-down)
+(define-key my-prefix-map (kbd "m U") 'move-text-region-up)
+(define-key my-prefix-map (kbd "m D") 'move-text-region-down)
+#+end_example
+
+With these bindings, you can move text up or down within a buffer by pressing =C-c m u= or =C-c m d=, respectively. To move a region of text up or down, select the text and press =C-c m U= or =C-c m D=, respectively.
+
+The move-text package is useful for quickly rearranging lines or regions of code within a buffer, making it a useful tool for code editing and refactoring.
 
 #+begin_src emacs-lisp
 (use-package move-text
-  :config)
-#+end_src
-
-#+begin_src emacs-lisp
-(map! "C-M-k" 'move-text-up)
-(map! "C-M-j" 'move-text-down)
-
-(after! evil-org
-  (define-key evil-org-mode-map (kbd "<visual-state> C-M-k") 'move-text-up)
-  (define-key evil-org-mode-map (kbd "<visual-state> C-M-j") 'move-text-down)
-  (define-key evil-org-mode-map (kbd "<normal-state> C-M-k") 'move-text-up)
-  (define-key evil-org-mode-map (kbd "<normal-state> C-M-j") 'move-text-down))
+  :config
+  (map! "C-M-k" 'move-text-up)
+  (map! "C-M-j" 'move-text-down)
+  (after! evil-org
+    (define-key evil-org-mode-map (kbd "<visual-state> C-M-k") 'move-text-up)
+    (define-key evil-org-mode-map (kbd "<visual-state> C-M-j") 'move-text-down)
+    (define-key evil-org-mode-map (kbd "<normal-state> C-M-k") 'move-text-up)
+    (define-key evil-org-mode-map (kbd "<normal-state> C-M-j") 'move-text-down))
+  )
 #+end_src
 
 * TODO Tools
