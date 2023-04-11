@@ -297,11 +297,12 @@ The cursor will be positioned inside the link after it is inserted.
 
 #+begin_src emacs-lisp
 (defun me/link-word-or-selection ()
-(interactive)
-(if (evil-visual-state-p) ; Check if in visual state (i.e., text is selected)
-    (org-insert-link)     ; Insert Org-mode link with selected text as description
-  (er/mark-word))         ; Select current word
-(org-insert-link)         ; Insert Org-mode link with selected text/word as description
+    (interactive)
+    (if (evil-visual-state-p) ; Check if in visual state (i.e., text is selected)
+        (org-insert-link)     ; Insert Org-mode link with selected text as description
+    (er/mark-word))         ; Select current word
+    (org-insert-link)         ; Insert Org-mode link with selected text/word as description
+)
 #+end_src
 
 This function allows the user to insert an Org-mode link with either the selected text or the current word under the cursor as the description. If there is a visual selection, the selected text will be used as the link description. If there is no selection, the current word under the cursor will be selected and used as the link description.
