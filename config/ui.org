@@ -196,8 +196,8 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
   (interactive)
   (setq me/window-limit
     (pcase (treemacs-current-visibility)
-      (`visible 3)
-      (_ 2)))
+      (`visible 4)
+      (_ 3)))
   (if (< (length (mapcar #'window-buffer (window-list))) me/window-limit)
       (me/window-resize-main-pane)))
 
@@ -209,7 +209,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
     (if (doom-project-p)
        (treemacs-add-and-display-current-project)
     (treemacs)))
-  (when (eq `visible treemacs-current-visibility)
+  (when (eq `visible (treemacs-current-visibility))
     (evil-window-mru)))
 
 (defun me/treemacs-snapshot ()
