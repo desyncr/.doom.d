@@ -6,7 +6,15 @@
 (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
 #+end_src
 
-* smart-parens
+* Smart parens
+The =smartparens= package is a minor mode that provides advanced matching and manipulation of paired delimiters, such as parentheses, brackets, and quotes. The package offers various features to make working with pairs of delimiters more efficient and intuitive.
+
+One of the main features of =smartparens= is its ability to automatically insert paired delimiters as the user types. For example, if the user types an open parenthesis, =smartparens= will automatically insert a closing parenthesis and place the cursor between the two. This behaviour can be customised for different types of delimiters.
+
+The package also provides advanced commands for manipulating paired delimiters. For example, the =sp-kill-sexp= command can be used to delete the entire expression enclosed by the nearest pair of delimiters, while the =sp-join-sexp= command can be used to join the current expression with the following one.
+
+In addition, =smartparens= provides customisable highlighting of paired delimiters, making it easy to see which pairs of delimiters correspond to each other. The package also provides functions for navigating between pairs of delimiters, as well as for selecting and manipulating nested expressions.
+
 #+begin_src emacs-lisp
 (after! smartparens
   (smartparens-global-mode -1))
@@ -14,8 +22,12 @@
 
 Source: [[https://github.com/doomemacs/doomemacs/blob/develop/docs/faq.org#how-to-disable-smartparensautomatic-parentheses-completion][Doom emacs FAQ]].
 
-* expand-region
-Visually select text regions with ~M-=~:
+* Expand region
+=expand-region= is an Emacs package that provides a convenient way to incrementally expand the region of text being selected. With each successive invocation of the =expand-region= command, the selected region is extended to the next logical unit of code, such as a word, expression, or entire function. The =expand-region= package can save time and effort by simplifying the selection of code for various operations.
+
+The =expand-region= package works by defining a command that extends the region of text being selected. The default key binding for the command is [[kbd:][C-\=]], which can be customised as per user preference. Each time the command is invoked, the region expands to the next logical unit of code, such as a word, expression, or entire function. The =expand-region= package also includes commands to contract the region, shrink it, or reset it to its original state.
+
+Here I'm binding [[kbd:][M-\=]] to =er/expand-region=:
 
 #+begin_src emacs-lisp
 (use-package expand-region
@@ -23,7 +35,51 @@ Visually select text regions with ~M-=~:
 #+end_src
 
 See mention [[https://takeonrules.com/2020/10/18/why-i-chose-emacs-as-my-new-text-editor/][here]].
-* syntax-entry
+
+* Syntax entry
+The =modify-syntax-entry= function is an Emacs Lisp function that allows you to modify the syntax table of a buffer. The syntax table is used by Emacs to determine how to parse and highlight text in the buffer.
+
+The =modify-syntax-entry= function takes two arguments: a character and a syntax descriptor. The syntax descriptor is a string that describes the syntax of the character. The most common syntax descriptors are:
+
+- .: The character is a punctuation character.
+- =w=: The character is part of a word.
+- =_=: The character is part of a word, but is considered a symbol rather than a letter.
+- =(= or =)=: The character is an opening or closing parenthesis.
+- ="=: The character is a string delimiter.
+
+Here are some examples of using =modify-syntax-entry=:
+
+#+begin_src emacs-lisp
+(modify-syntax-entry ?_ "w") ;; Treat underscores as part of words.
+(modify-syntax-entry ?- "w") ;; Treat hyphens as part of words.
+(modify-syntax-entry ?# "<") ;; Treat hashtags as starting a comment.
+(modify-syntax-entry ?\n ">") ;; Treat newlines as ending a comment.
+#+end_src
+
+In the above example, we have modified the syntax table to treat underscores and hyphens as part of words, hashtags as starting a comment, and newlines as ending a comment.
+
+You can also use `modify-syntax-entry` to modify the syntax of entire character classes. For example, to treat all uppercase letters as part of words, you can do:
+
+#+begin_src emacs-lisp
+(modify-syntax-entry ?A "w")
+(modify-syntax-entry ?Z "w")
+#+end_src
+
+This will modify the syntax table to treat all uppercase letters as part of words.
+
+One common use of `modify-syntax-entry` is to modify the syntax of programming languages to make syntax highlighting more accurate. For example, to make Emacs treat `.` and `:` as punctuation in Ruby code, you can add the following to your Emacs configuration file:
+
+#+begin_src emacs-lisp
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (modify-syntax-entry ?. ".")
+            (modify-syntax-entry ?: ".")
+            ))
+#+end_src
+
+This will modify the syntax table for Ruby buffers so that `.` and `:` are treated as punctuation characters.
+
+
 #+begin_src emacs-lisp
 ;(modify-syntax-entry ?# "< b")
 ;(modify-syntax-entry ?\n "> b")
@@ -39,14 +95,17 @@ See mention [[https://takeonrules.com/2020/10/18/why-i-chose-emacs-as-my-new-tex
     ;(modify-syntax-entry ?$ "w" php-mode-syntax-table)
 ;))
 #+end_src
-* flycheck
+* Flycheck
+Flycheck is a package that provides on-the-fly syntax checking for programming languages. It integrates with various programming language-specific syntax checkers and linters to provide real-time feedback on code errors and warnings. The package supports many programming languages and can be customised to suit individual preferences.
+
 Most classes/php files I'm working with are quite large and cause a large number of errors to popup. I'm topping up the error threshold to avoid a warning during start up:
 
 #+begin_src emacs-lisp
 (setq flycheck-checker-error-threshold 100)
 #+end_src
 
-Most projects I work with are somewhat following the PSR12 standard, so let's configure flycheck to respect that:
+Most projects I work with are somewhat following the =PSR12= standard, so let's configure Flycheck to respect that:
+
 #+begin_src emacs-lisp
 (setq flycheck-phpcs-standard "PSR12"
       flycheck-phpstan-executable "/Users/dario/.composer/vendor/bin/phpstan"
@@ -68,8 +127,10 @@ Most projects I work with are somewhat following the PSR12 standard, so let's co
 (add-hook 'php-mode-hook 'my-php-mode-setup)
 #+end_src
 
-* lsp
-I'm working on a large series of interrelated projects which work well under the same directory structure (code/{project1, project2, project3}).
+* LSP
+LSP (Language Server Protocol) is a package that provides integration with language servers, allowing for advanced code analysis, completion, and navigation features. With LSP, Emacs can connect to language servers provided by various programming languages and provide real-time feedback on code errors, hints, and suggestions.
+
+I'm working on a large series of interrelated projects which work well under the same directory structure (=code/{project1, project2, project3}=).
 The downside is that this causes LSP to complain about the large number of files and file descriptors it uses.
 
 So I'm forced to top up the default threshold via this variable:
@@ -78,18 +139,45 @@ So I'm forced to top up the default threshold via this variable:
 (setq lsp-file-watch-threshold 5000)
 #+end_src
 
+Configure LSP to ignore specific directories or files when watching for changes in project files. Specifically, the =with-eval-after-load= macro to ensure that these configurations are only applied after =lsp-mode= is loaded. It then uses the =add-to-list= function to add a regular expression pattern to the =lsp-file-watch-ignored-directories= or =lsp-file-watch-ignored-files= lists. These lists are used by LSP to determine which files to watch and which to ignore.
+
 #+begin_src emacs-lisp
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
   ;; or
   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'"))
-  #+end_src
+#+end_src
 
 #+begin_src emacs-lisp
 (use-package lsp-ui
   :after lsp-mode
   :defer t)
 #+end_src
+
+| Option                                              | Description                                                          |
+|-----------------------------------------------------+----------------------------------------------------------------------|
+| =lsp-idle-delay=                                      | Delay before activating the LSP server.                              |
+| =company-idle-delay=                                  | Delay before showing Company completion.                             |
+| =company-tooltip-idle-delay=                          | Delay in seconds until tooltip is shown.                            |
+| =gc-cons-thresh=                                      | Value at which Emacs garbage collection is triggered.                |
+| =company-minimum-prefix-length=                       | Minimum number of characters required to trigger Company completion. |
+| =company-tooltip-limit=                               | Maximum number of candidates to show in the Company tooltip.         |
+| =company-tooltip-minimum-width=                       | Minimum width of the Company tooltip.                                |
+| =company-tooltip-maximum-width=                       | Maximum width of the Company tooltip.                                |
+| =lsp-ui-doc-max-width=                                | Maximum width of the LSP documentation.                              |
+| =lsp-ui-doc-max-height=                               | Maximum height of the LSP documentation.                             |
+| =lsp-ui-doc-include-signature=                        | Whether to include function signatures in the LSP documentation.     |
+| =lsp-ui-doc-enable=                                   | Whether to enable the LSP documentation.                             |
+| =lsp-signature-render-documentation=                  | Whether to render documentation in LSP signatures.                   |
+| =lsp-signature-auto-activate=                         | Whether to automatically activate LSP signatures.                    |
+| =lsp-enable-snippet=                                  | Whether to enable LSP snippets.                                      |
+| =company-lsp-enable-snippet=                          | Whether to enable Company LSP snippets.                              |
+| =lsp-enable-symbol-highlighting=                      | Whether to enable symbol highlighting in LSP.                        |
+| =lsp-enable-links=                                    | Whether to enable links in LSP.                                      |
+| =lsp-restart=                                         | Restart LSP server.                                                  |
+| =lsp-intelephense-completion-trigger-parameter-hints= | Whether to show parameter hints in Intelephense completion.          |
+| =lsp-signature-function=                              | Function used to create the LSP signature.                           |
+
 
 #+begin_src emacs-lisp
 (setq lsp-idle-delay 0.0
@@ -124,6 +212,8 @@ So I'm forced to top up the default threshold via this variable:
 ;;(map! :map company-active-map "<tab>" #'company-complete-common))
 #+end_src
 
+The =lsp-treemacs= package provides an integration between the LSP and the Treemacs file explorer. It allows users to easily navigate and explore the codebase of their project using the Treemacs interface, while also providing quick access to LSP features like code navigation and code actions.
+
 #+begin_src emacs-lisp
 (use-package lsp-treemacs :defer t)
 #+end_src
@@ -155,13 +245,16 @@ So I'm forced to top up the default threshold via this variable:
 ;; lsp signature show
 (map! "M-H" 'lsp-signature-toggle-full-docs)
 #+end_src
-* rainbow-delimiters-mode
+* Rainbow delimiters
 Rainbow colouring for brackets and other delimiters in prog mode. Package: [[https://elpa.nongnu.org/nongnu/rainbow-delimiters.html][nongnu elpa]].
 
 #+begin_src emacs-lisp
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 #+end_src
-* yasnippets
+
+* Yasnippets
+The =yasnippet= Emacs package is a highly customisable system for defining and using text snippets. With this package, users can define custom snippets for frequently used code or text, and easily insert them using intuitive shortcuts. The package supports templates with placeholders, tab stops, and multiple fields, making it easy to customise and reuse code snippets in a variety of contexts.
+
 I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to manage code snippets. As per the instructions:
 
 #+begin_src emacs-lisp
@@ -177,40 +270,30 @@ I'm using [[https://github.com/joaotavora/yasnippet][Yasnippets]] package to man
                                  (buffer-name (current-buffer))))))
 #+end_src
 
-*Warning*: I had to disable (:tangle no) yas-global-mode since it interfered with LSP/company-mode. Throwing errors trying to display completions on PHP-mode.
-With this settings disabled now both company mode and yas-snippets work just fine.
+Additionally I'm installing predefined snippets with the package [[The above instructions also setup the package][Yasnippets-snippets]]:
 
-Note: I'm disabling the following due to poor performance:
-#+begin_src emacs-lisp :tangle no
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
-#+end_src
-
-Additionally I'm installing pre-defined snippets with the package [[The above instructions also setup the package][Yasnippets-snippets]]:
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package yasnippet-snippets
   :defer t)
 #+end_src
 
-As per the [[package-refresh-contents][instructions]] I'm configuring melpa archive repositories. After that the command ~package-refresh-contents~ must be ran to be able to pull updates from it:
+As per the [[package-refresh-contents][instructions]] I'm configuring MELPA archive repositories. After that the command ~package-refresh-contents~ must be ran to be able to pull updates from it:
 
 - ~M-x package-refresh-contents~
 - ~M-x package-install yasnippet-snippets~
 
 In the code above I'm actually requiring the package via lisp, which should install and load it.
 
-There's an additional package with extra snippets maintained by the Doom Emacs' github organization: [[https://github.com/doomemacs/snippets][doomemacs/snippets]]
-I'm also imported several snippets from [[https://github.com/cartolari/yasnippet-vim-snippets][cartolari/yasnippet-vim-snippets]] repository, primarily [[https://github.com/cartolari/yasnippet-vim-snippets/tree/master/snippets/php-mode][php-mode]].
+There's an additional package with extra snippets maintained by the Doom Emacs' Github organisation: [[https://github.com/doomemacs/snippets][doomemacs/snippets]].
+I'm also imported snippets from [[https://github.com/cartolari/yasnippet-vim-snippets][cartolari/yasnippet-vim-snippets]] repository, primarily [[https://github.com/cartolari/yasnippet-vim-snippets/tree/master/snippets/php-mode][php-mode]].
 
 Tip: Use ~M-x yas-describe-tables~ to see the list of snippets and edit them.
+Tip: Use =consult-yasnippet= via [[kbd:][M-i]].
 
-Tip: Use =consult-yasnippet=.
-* devdocs
+* Devdocs
 This package somewhat expands on Doom Emacs' [[https://docs.doomemacs.org/latest/modules/tools/lookup/][lookup]] functionality.
 
-The ~SPC s o~ opens up documentation for the current symbol under cursor in the default browser. I didn't like to require a browser to navigate documentation as I don't want to leave the code I'm working on to check on something.
+The [[kbd:][SPC s o]] opens up documentation for the current symbol under cursor in the default browser. I didn't like to require a browser to navigate documentation as I don't want to leave the code I'm working on to check on something.
 
 Alternatively it can be configured to use ~eww~ instead. Which is way better. But the problem is devdocs require javascript to work correctly (it can work offline, but still requires a browser and javascript enabled).
 
@@ -224,30 +307,36 @@ This package uses devdocs generated documentation (downloads it) and queries it 
 #+end_src
 
 Use ~C-h D~ or ~SPC h D~ to search for the symbol under cursor. Note: The documentation will not be displayed right away, you'll need to press RET on the given symbol.
-* better-jumper
-Better jump (remember jump list).
+
+* Better jumper
+The =better-jumper= package provides an enhanced jumping mechanism that allows users to easily move between arbitrary locations in a buffer. The package replaces the built-in Emacs marker ring with a more flexible and configurable jump list that can store multiple jump points and be shared between buffers. This enables users to jump back and forth between locations within a buffer or across multiple buffers, even after performing actions such as searches, replacements, or other modifications that would normally invalidate the marker ring. The package also provides additional commands for navigating the jump list and allows users to customise the behaviour of the jump list to suit their needs.
 
 #+begin_src emacs-lisp
 (use-package better-jumper
   :defer t
   :config
-  (better-jumper-mode +1))
-(with-eval-after-load 'evil-maps
-  (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
-  (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward))
+    (better-jumper-mode +1))
+    (with-eval-after-load 'evil-maps
+        (define-key evil-motion-state-map (kbd "C-o") 'better-jumper-jump-backward)
+        (define-key evil-motion-state-map (kbd "C-i") 'better-jumper-jump-forward)
+)
 #+end_src
 
-Use with C-o to jump out of the last item and C-i to jump in to the next item in the list.
-* avy
+Use with [[kbd:][C-o]] to jump out of the last item and [[kbd:][C-i ]]to jump in to the next item in the list.
+
+* Avy
+Avy is a package that provides quick and efficient navigation within buffers. It allows the user to jump to any visible character in the buffer with just a few keystrokes.
+
 #+begin_src emacs-lisp
 (with-eval-after-load 'evil-maps
     (define-key evil-normal-state-map "f" 'avy-goto-char-timer))
+
 (setq avy-timeout-seconds 1
-      avy-single-candidate-jump t)
-(setq avy-orders-alist
-      '((evil-avy-goto-char-timer . avy-order-closest)))
+      avy-single-candidate-jump t
+      avy-orders-alist '((evil-avy-goto-char-timer . avy-order-closest)))
 #+end_src
-* multiple-cursors
+
+* Multiple cursors
 Doom Emacs supports 2 multi-cursor packages out of the box: doom-package:evil-mc and doom-package:evil-multiedit. These packages can be enabled via doom-module:multiple-cursors module.
 
 The packages approach to multiple cursors is different. [[doom-package:evil-mc]] work similar to other multiple-cursor implementations, that's it: you enable cursors in multiple places. On the other hand [[doom-package:evil-multiedit]] works by regions: you visually select selections and work on them.
@@ -296,6 +385,9 @@ I don't like these keybindings so I create these down below to work with [[doom-
 Source: https://github.com/hlissner/evil-multiedit/issues/48#issuecomment-1011418580
 
 * php doc generator
+
+The =php-doc-block= package is used to help insert documentation blocks according to the PHPDoc standard. It provides a customisable template for generating the block and can be configured to include or exclude specific tags as needed.
+
 #+begin_src emacs-lisp
 (add-hook 'php-mode-hook
           (lambda ()
@@ -414,6 +506,8 @@ Defining keybinding for toggle command:
 #+end_src
 
 * Rotate text
+The =rotate-text= package provides a convenient way to rotate the text in a buffer by changing the order of the words or phrases. This can be useful for quickly converting a list of items from one format to another, or for generating permutations of text.
+
 To enable a set of items to cycle through globally:
 #+begin_src emacs-lisp
 (after! rotate-text
@@ -421,9 +515,32 @@ To enable a set of items to cycle through globally:
 #+end_src
 
 To add a sequence to a specific mode:
+
 #+begin_src emacs-lisp
 (set-rotate-patterns! 'prog-mode
     :words '(("t" "nil")))
 #+end_src
 
 When configuring a sequence of words or symbols that should be rotated through, it is important that all items are all lower case. The casing will be determined by the item that initiated the rotation. For example, ~Small~ will be replaced with ~Medium~ and ~SMALL~ will be replaced with ~MEDIUM~ using the example described above.
+
+Example configuration:
+
+#+begin_example elisp
+;; Define custom rotations for words and phrases
+(setq rotate-text-words
+      '(("yes" "Yes" "YES" "yea")
+        ("no" "No" "NO" "nah")))
+
+;; Customize the separator in the tooltip
+(setq rotate-text-separator " -> ")
+
+;; Highlight the original word in the buffer
+(setq rotate-text-font-lock-keywords
+      `((,(rx word-start (or "yes" "no") word-end)
+       (0 '(face bold)))))
+
+;; Bind the `rotate-text` command to a key
+(global-set-key (kbd "C-c r") 'rotate-text)
+#+end_example
+
+With these configurations, when you call `rotate-text` on the word "yes", the tooltip will show "yes -> Yes -> YES -> yea", and the word "yes" in the buffer will be highlighted in bold.
