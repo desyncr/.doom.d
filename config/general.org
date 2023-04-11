@@ -57,3 +57,11 @@ Source: [[https://github.com/bbatsov/super-save/issues/38#issuecomment-122953710
 #+begin_src emacs-lisp
 (setq evil-want-fine-undo t)
 #+end_src
+* Save history
+Persist history over Emacs restarts. Vertico sorts by history position:
+#+begin_src emacs-lisp
+(use-package savehist
+  :defer t
+  :init
+  (savehist-mode))
+#+end_src

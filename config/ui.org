@@ -36,18 +36,12 @@ Configure Doom Emacs splash image. Taken from [[https://gitlab.com/zzamboni/dot-
 #+end_src
 
 You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the top of this document for an example.
-* TODO vertico
+* TODO Vertico
 #+begin_src emacs-lisp
 (use-package vertico
   :init
   (vertico-mode))
-;; Persist history over Emacs restarts. Vertico sorts by history position.
-(use-package savehist
-  :defer t
-  :init
-  (savehist-mode))
 
-;; Optionally use the `orderless' completion style.
 (use-package orderless
   :defer t
   :init
@@ -59,8 +53,8 @@ You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the t
         completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 
-The above snippet configures orderless, which enabled searching by keywords in whatever order.
-* vertico-repeat
+The above snippet configures Orderless, which enabled searching by keywords in whatever order.
+* TODO Vertico repeat
 Vertico-repeat but for last command in category, e.g. last =+default/search-project= or last =consult-projectile=:
 #+begin_src emacs-lisp
 (setq vertico-repeat-history '())
@@ -82,7 +76,7 @@ Vertico-repeat but for last command in category, e.g. last =+default/search-proj
     (apply-partially #'vertico-repeat--restore session)
     (command-execute (setq this-command (car session)))))
 #+end_src
-* vertico-posframe
+* TODO Vertico posframe
 =Ctrl+P= / command launcher-like for =M-x=. This package is installed via [[doom-module:vertico +childframe]].
 
 #+begin_src emacs-lisp
@@ -107,7 +101,7 @@ Function to quickly reset ~vertico-posframe~ when it gets offset for some reason
 #+end_src
 
 This package also works for selecting files and other similar components.
-* TODO vertico-multiform
+* TODO Vertico multiform
 #+begin_src emacs-lisp
 (setq vertico-multiform-commands
       '((+default/search-project buffer)
@@ -117,7 +111,7 @@ This package also works for selecting files and other similar components.
 (vertico-multiform-mode)
 #+end_src
 
-* TODO center-isearch
+* TODO Center isearch
 source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_source=share&utm_medium=web2x&context=3][reddit comment]].
 
 #+begin_src emacs-lisp
@@ -126,7 +120,7 @@ source: [[https://www.reddit.com/r/emacs/comments/6ewd0h/comment/dieb3dc/?utm_so
 ;; (advice-add 'evil-ex-search-previous :after
             ;; (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
 #+end_src
-* TODO centered-cursor-mode
+* TODO Centered cursor
 Source: https://github.com/andre-r/centered-cursor-mode.el
 
 #+begin_src emacs-lisp :tangle no
@@ -147,7 +141,7 @@ Note: ~global-centered-cursor-mode~ causes line jumps while typing on vterm. Dis
 
 Examples: https://emacsredux.com/blog/2020/11/21/disable-global-hl-line-mode-for-specific-modes/
 
-* resize-window
+* Resize window
 Easier window management with resize-window package. Currently I'm using some quite obnoxious keybindings for window resizing (I use windows a lot):
 ~M-`~, ~M-~~, ~M->~, ~M-<~ etc.
 
@@ -199,7 +193,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 (defun me/maybe-window-resize-main-pane ()
   (interactive)
   (setq me/window-limit
-    (pcase me/treemacs-restore
+    (pcase (treemacs-current-visibility)
       (`visible 3)
       (_ 2)))
   (if (< (length (mapcar #'window-buffer (window-list))) me/window-limit)
@@ -209,13 +203,12 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
   (interactive)
   (require 'treemacs)
   "Restore treemacs if it was visible"
-  (pcase me/treemacs-restore
-    (`visible (if (doom-project-p)
-                  (treemacs-add-and-display-current-project)
-                (treemacs)))
-    (_ (message "")))
-  (pcase (treemacs-current-visibility)
-    (`visible (evil-window-mru))))
+  (when (eq `visible me/treemacs-restore)
+    (if (doom-project-p)
+       (treemacs-add-and-display-current-project)
+    (treemacs)))
+  (when (eq `visible treemacs-current-visibility)
+    (evil-window-mru)))
 
 (defun me/treemacs-snapshot ()
   (interactive)
@@ -234,8 +227,6 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 (map! "M-Z" #'me/toggle-window-maximize)
 (map! :leader :desc "Toggle treemacs follow mode" "t t f" #'treemacs-follow-mode)
 #+end_src
-
-=TODO=: Doesn't work with Treemacs enabled.
 
 Source: https://stackoverflow.com/a/7623081
 
@@ -256,7 +247,7 @@ Source: https://stackoverflow.com/a/7623081
       (delete-other-windows)))
 #+end_src
 
-* highlight-indent-guides
+* Highlight indent guides
 On a fresh Emacs 28.1 install I started to see the highlight indent guides changing colour when a new frame is open (!). The following seems to correct the issue:
 
 #+begin_src emacs-lisp
@@ -265,7 +256,7 @@ On a fresh Emacs 28.1 install I started to see the highlight indent guides chang
 #+end_src
 
 Source: [[https://github.com/doomemacs/doomemacs/issues/2666#issuecomment-596700175][github]]
-* prompt-for-buffer
+* Prompt for buffer
 Use =SPC w V= (vertical split + follow) or =SPC w S= (horizontal split + follow).
 
 Split to the right and below! Source: [[https://tecosaur.github.io/emacs-config/config.html#windows][here]].
