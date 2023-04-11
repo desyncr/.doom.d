@@ -32,10 +32,12 @@ Add word count to status/modeline. Useful for org documents and writing in gener
 Configure Doom Emacs splash image. Taken from [[https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash][zzamboni/dot-doom]]. Alternative splash images can be found at [[https://github.com/jeetelongname/doom-banners][jeetelongname/doom-banners]] repository.
 
 #+begin_src emacs-lisp
-(setq fancy-splash-image "~/.config/doom/resources/splash/code.png")
+(setq fancy-splash-image "~/.config/doom/resources/splash/hjkl.png"
+      +doom-dashboard-banner-padding '(4 . 6))
 #+end_src
 
 You can have Emacs display image inline via ~#+STARTUP: inlineimages~. See the top of this document for an example.
+
 * TODO Vertico
 #+begin_src emacs-lisp
 (use-package vertico
