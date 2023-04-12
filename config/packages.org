@@ -77,4 +77,5 @@
 (package! elfeed-goodies)
 (package! speed-type)
 (package! shut-up)
+(package! hide-mode-line)
 #+end_src
