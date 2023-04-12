@@ -76,4 +76,5 @@
 (package! elfeed)
 (package! elfeed-goodies)
 (package! speed-type)
+(package! shut-up)
 #+end_src

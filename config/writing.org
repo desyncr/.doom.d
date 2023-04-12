@@ -27,6 +27,14 @@ See more:
 - https://www.reddit.com/r/emacs/comments/l0khyu/company_suggestions_from_the_recent_buffer/
 - https://codeberg.org/ideasman42/emacs-spell-fu
 
+
+#+begin_src emacs-lisp
+(advice-add 'ispell-lookup-words :around
+            (lambda (orig &rest args)
+              (shut-up (apply orig args))))
+#+end_src
+Source: https://github.com/company-mode/company-mode/issues/912#issuecomment-532016905
+
 #+begin_src emacs-lisp
 (use-package flyspell
   :defer t
