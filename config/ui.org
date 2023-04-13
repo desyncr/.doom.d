@@ -189,6 +189,7 @@ Package repository [[https://github.com/dpsutton/resize-window][here]].
 
 Also available: [[kbd:][SPC w <]] and [[kbd:][SPC w >]] to increase and decrease width.
 
+* Ideal distribution
 Resize main/secondary window into an ideal aspect ratio (60/40):
 
 #+begin_src emacs-lisp
