@@ -78,4 +78,6 @@
 (package! speed-type)
 (package! shut-up)
 (package! hide-mode-line)
+(package! affe)
+
 #+end_src
