@@ -194,6 +194,7 @@ Resize main/secondary window into an ideal aspect ratio (60/40):
 
 (defun me/maybe-window-resize-main-pane ()
   (interactive)
+  (require 'treemacs)
   (setq me/window-limit
     (pcase (treemacs-current-visibility)
       (`visible 4)
