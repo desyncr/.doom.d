@@ -60,7 +60,7 @@
        ;;lispy             ; vim for lisp, for people who don't like vim
        multiple-cursors    ; editing in many places at once
        ;;objed             ; text object editing for the innocent
-       parinfer            ; turn lisp into python, sort of
+       ;parinfer            ; turn lisp into python, sort of
        rotate-text         ; cycle region at point between text candidates
        snippets            ; my elves. They type so I don't have to
        word-wrap         ; soft wrapping with language-aware indent
@@ -152,7 +152,7 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +roam2 +pretty)        ; organize your plain life in plain text
+       (org +roam2)        ; organize your plain life in plain text
        (php +lsp)          ; perl's insecure younger brother
        plantuml            ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
