@@ -28,6 +28,14 @@ Add word count to status/modeline. Useful for org documents and writing in gener
 (setq doom-modeline-enable-word-count t)
 #+end_src
 
+* Global modeline hide mode
+#+begin_src emacs-lisp
+(global-hide-mode-line-mode +1)
+(map! :leader :desc "Toggle hide mode line" "t m" #'hide-mode-line-mode)
+(add-hook 'prog-mode-hook 'hide-mode-line-mode)
+#+end_src
+
+
 * Splash image
 Configure Doom Emacs splash image. Taken from [[https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash][zzamboni/dot-doom]]. Alternative splash images can be found at [[https://github.com/jeetelongname/doom-banners][jeetelongname/doom-banners]] repository.
 
