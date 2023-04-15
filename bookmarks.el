@@ -27,5 +27,7 @@
   (filename . "~/.config/doom/Emacs.org"))
 ("Doom > Bookmarks"
   (filename . "~/.config/doom/bookmarks.el"))
+("Doom > Packages"
+  (filename . "~/.config/doom/config/packages.org"))
 ("Doom > Init.el"
   (filename . "~/.config/doom/init.el")))
