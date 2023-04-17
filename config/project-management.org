@@ -100,11 +100,10 @@ Enable treemacs and never move to treemacs with other-window as well as disablin
 #+begin_src emacs-lisp
 (use-package treemacs
   :defer t
-  :config
-  (setq treemacs-is-never-other-window t
-        treemacs-wrap-around nil
-        treemacs-display-current-project-exclusively t
-        treemacs-follow-mode t))
+  :config (setq treemacs-is-never-other-window nil
+                treemacs-wrap-around nil
+                treemacs-display-current-project-exclusively t
+                treemacs-follow-mode t))
 #+end_src
 
 Take a look at more configuration options in [[https://github.com/Alexander-Miller/treemacs#configuration][github]].
