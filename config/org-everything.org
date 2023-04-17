@@ -176,8 +176,7 @@ We don't usually tangle every org-file we work with, so I'm setting =org-auto-ta
 #+begin_src emacs-lisp
 (use-package org-auto-tangle
   :defer t
-  :config
-    (setq org-auto-tangle-mode -1))
+  :config (setq org-auto-tangle-mode -1))
 #+end_src
 
 I'm working with =org-babel= primarly in ruby. While =org-babel= works pretty well out of the box in order to support =:session= we need this package:
