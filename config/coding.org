@@ -544,3 +544,31 @@ Example configuration:
 #+end_example
 
 With these configurations, when you call `rotate-text` on the word "yes", the tooltip will show "yes -> Yes -> YES -> yea", and the word "yes" in the buffer will be highlighted in bold.
+
+* Evil mode
+
+This module provides a couple extra text objects, along with the built-in ones.
+For posterity, here are the built-in ones:
+
+- [[kbd:][w W]] words
+- [[kbd:][s]] sentences
+- [[kbd:][p]] paragraphs
+- [[kbd:][b]] parenthesized blocks
+- [[kbd:][b ( ) { } [ ] < >]] braces, parentheses and brackets
+- [[kbd:][' " `]] quotes
+- [[kbd:][t]] tags
+- [[kbd:][o]] symbols
+
+And these are text objects added by this module:
+
+- [[kbd:][a]] C-style function arguments (provided by ~evil-args~)
+- [[kbd:][B]] any block delimited by braces, parentheses or brackets (provided by ~evil-textobj-anyblock~)
+- [[kbd:][c]] Comments
+- [[kbd:][f]] For functions (but relies on the major mode to have sane definitions for ~beginning-of-defun-function~ and ~end-of-defun-function~)
+- [[kbd:][g]] The entire buffer
+- [[kbd:][i j k]] by indentation ([[kbd:][k]] includes one line above; [[kbd:][j]] includes one line above and below) (provided by ~evil-indent-plus~)
+- [[kbd:][q]] For quotes (any kind)
+- [[kbd:][u]] For URLs
+- [[kbd:][x]] XML attributes (provided by ~exato~)
+
+interesting package to explore: https://github.com/wcsmith/evil-args
