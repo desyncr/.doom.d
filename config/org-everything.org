@@ -2,7 +2,7 @@
 #+language: en
 #+property: header-args :tangle ../.elisp/org-everything.el :cache yes :results silent
 
-* org-mode
+* Org-mode
 If you use ~org~ and don't want your org files in the default location below, change ~org-directory~. It must be set before org loads!
 
 #+begin_src emacs-lisp
@@ -33,8 +33,6 @@ If you use ~org~ and don't want your org files in the default location below, ch
 (add-hook 'org-mode-hook 'me/org-disable-indent-mode)
 (add-hook 'org-mode-hook 'me/org-disable-line-numbers-mode)
 
-(add-hook 'org-mode-hook (lambda () (setq company-minimum-prefix-length 3 company-idle-delay 0.3)))
-
 ;(add-hook 'org-mode-hook 'me/org-disable-hl-indent-guides)
 
 ; Disabling as it causes errors when buffers as killed before the result is computed,
@@ -54,22 +52,12 @@ If you use ~org~ and don't want your org files in the default location below, ch
                                    (format-time-string "%Y%m" (current-time)) ".org_archive::"))
 #+end_src
 
-[[kbd:][SPC n s]] search contents in ~org-directory~ by default. I've separated work from personal notes so I have a "personal" org directory and a "work" one. Since ~org~ only allows a single ~org-directory~ I created the functions down below to quickly switch between org directories.
-
-#+begin_src emacs-lisp
-(defun me/org-directory-personal ()
-  (interactive)
-  (setq org-directory "~/Personal/"))
-(defun me/org-directory-work ()
-  (interactive)
-  (setq org-directory "~/Work/"))
-#+end_src
-
 Do not create bookmarks on last org-capture:
 #+begin_src emacs-lisp
 (setq org-capture-bookmark nil)
 #+end_src
-* TODO org-capture
+
+* TODO Org-capture
 #+begin_src emacs-lisp
 (setq org-capture-templates
       '(("t" "TODO" entry (file +org-capture-todo-file)
@@ -93,7 +81,7 @@ Keybinding to specific org-capture:
 (map! :leader :desc "Capture a new journal entry" "c j" (lambda() (interactive) (me/org-capture-todo "j")))
 #+end_src
 TODO: =SPC c= is used by code group. Maybe better to use =SPC n c ...= (i.e. note, capture, todo|note|journal).
-* TODO org-agenda
+* TODO Org-agenda
 #+begin_src emacs-lisp
 (map! "M-o" 'org-agenda)
 #+end_src
@@ -130,27 +118,38 @@ See documentation [[https://orgmode.org/org.html#Sorting-of-agenda-items][here]]
 
 Keybinding to specific org-agenda views:
 #+begin_src emacs-lisp
-(defun me/org-agenda-view (type &optional notebook arg)
+(defun me/org-agenda-view (type &optional arg)
   (interactive "P")
-  (if (eql notebook 'work) (setq org-agenda-files '("~/Work"))
-    (setq org-agenda-files '("~/Personal")))
-  (org-agenda arg type))
+  (setq org-agenda-files '("~/Personal" "~/Personal/notes"))
+  ;; special case for agenda view which depends on project
+  (pcase (projectile-project-name)
+      ("Work" (setq org-agenda-files '("~/Work" "~/Work/notes"))))
+  (pcase type
+         ("w" (setq org-agenda-files '("~/Work" "~/Work/notes")) (org-todo-list))
+         ("d" (setq org-agenda-files '("~/.config/doom/config")) (org-todo-list))
+         (_ (org-agenda arg type))))
 
-(map! :leader :desc "Work view" "o a w" (lambda() (interactive) (me/org-agenda-view "w" 'work)))
+(map! :leader :desc "Work view" "o a w" (lambda() (interactive) (me/org-agenda-view "w")))
 (map! :leader :desc "Docs view" "o a d" (lambda() (interactive) (me/org-agenda-view "d")))
 (map! :leader :desc "Personal view" "o a p" (lambda() (interactive) (me/org-agenda-view "p")))
 (map! :leader :desc "Projects view" "o a P" (lambda() (interactive) (me/org-agenda-view "P")))
 (map! :leader :desc "Emacs view" "o a e" (lambda() (interactive) (me/org-agenda-view "e")))
 (map! :leader :desc "Learning view" "o a l" (lambda() (interactive) (me/org-agenda-view "l")))
+
+;; agenda view depends on project
+(map! :leader :desc "Org agenda week view" "o a a" (lambda() (interactive) (me/org-agenda-view "a")))
 #+end_src
+
 Source: [[https://emacs.stackexchange.com/a/868][Stackoverflow]].
 
 Remove file names on agenda views:
 #+begin_src emacs-lisp
 (setq org-agenda-prefix-format "%t %s")
 #+end_src
+
 Source: [[https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00743.html][here]].
-* TODO org-modern
+
+* TODO Org-modern
 It's overkill but I'm using =org-modern= to prettify symbols such as +title and +begin_src. I'm actually happy with =org-bullets=.
 
 #+begin_src emacs-lisp
@@ -168,7 +167,7 @@ It's overkill but I'm using =org-modern= to prettify symbols such as +title and 
     (global-org-modern-mode))
 #+end_src
 
-* TODO org-babel
+* TODO Org-babel
 Using =org-babel-tangle= each time you make an edition to an org file gets old very quickly. With =org-auto-tangle= you can define an auto-tangling option for the org file you're working with, so each time you save the buffer =org-babel= kicks in.
 
 We don't usually tangle every org-file we work with, so I'm setting =org-auto-tangle-default= to =nil= to disable this functionality. Use =:auto_tangle yes= to automatically tangle the org file you're editing:
@@ -227,7 +226,7 @@ Alternatively you can use:
   (add-to-list 'org-src-lang-modes '("http" . ob-http)))
 #+end_example
 
-* org-roam
+* Org-roam
 Org-roam is a package to create a non-hierarchical knowledge base. The package is meant to be used as a Zettelkasten note taking tool.
 
 #+begin_src emacs-lisp
@@ -266,7 +265,7 @@ Search org-roam notes via consult (source: [[https://github.com/jgru/consult-org
 #+end_src
 
 Keybinding example (see this [[https://rameezkhan.me/adding-keybindings-to-doom-emacs/][blog]]).
-* org-todo-keywords
+* Org-todo-keywords
 Custom ~org-todo-keywords~. It needs to be wrapper in (~after! ..~) block to apply correctly (see [[https://github.com/doomemacs/doomemacs/issues/2913#issuecomment-614773557][comment]]).
 
 #+begin_src emacs-lisp
@@ -277,7 +276,7 @@ Custom ~org-todo-keywords~. It needs to be wrapper in (~after! ..~) block to app
 #+end_src
 
 I'm also configuring a few tags to classify items under.
-* org-bullets
+* Org-bullets
 This package is a lightweight alternative to [[https://github.com/minad/org-modern][org-modern]]. Project page [[https://github.com/sabof/org-bullets][here]].
 
 I opted for this package rather than org-modern since the latter was rather invasive changing for example the look of dates, tags etc.
@@ -290,7 +289,7 @@ I opted for this package rather than org-modern since the latter was rather inva
 #+end_src
 
 In the above block I'm enabling the org-bullets-mode after ~org-mode~ is enabled (see documentation [[https://orgmode.org/worg/doc.html][here]].)
-* org-log-repeat
+* Org-log-repeat
 Disable log lines on repeat tasks.
 
 #+begin_src emacs-lisp
@@ -300,11 +299,11 @@ Disable log lines on repeat tasks.
 #+end_src
 
 This code disables logging status changes on TODO and agenda entries.
-* toc-org
+* Toc-org
 This package automatically generates and maintains a Table of Contents for Org and Markdown files.
 
 Package repository [[https://github.com/snosov1/toc-org][here]]. See configuration options and usage [[https://github.com/snosov1/toc-org#use][here]].
-* TODO literate-calc-mode
+* TODO Literate-calc-mode
 Enable with ~literate-calc-minor-mode~. Use ~literate-calc-insert-results~ to copy results into buffer.
 
 Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
@@ -315,7 +314,7 @@ Package repository: [[https://github.com/sulami/literate-calc-mode.el][github]].
 #+end_src
 
 See article [[https://blog.sulami.xyz/posts/literate-calc-mode/][here]] and repository [[https://github.com/sulami/literate-calc-mode.el][here]] in github.
-* DONE org-pomodoro
+* Org-pomodoro
 Basic configuration:
 #+begin_src emacs-lisp
 (setq org-pomodoro-format "%s"
@@ -389,13 +388,4 @@ Automatically updated org-clocktable on buffer save:
         (progn
         (goto-char (search-forward "clocktable"))
         (org-clock-report))))))
-#+end_src
-
-* Config TODOs
-#+begin_src emacs-lisp
-(defun me/org-doom-config-todo (&optional arg)
-  (interactive "P")
-  (setq org-agenda-files '("~/.config/doom/config"))
-  (org-todo-list arg)
-  (setq org-agenda-files '("~/Personal")))
 #+end_src
