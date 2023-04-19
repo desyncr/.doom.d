@@ -131,3 +131,12 @@ Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weas
 
 (map! :leader :desc "Deft" "n d" #'me/deft-projectile)
 #+end_src
+
+* Dictionary
+
+#+begin_src emacs-lisp
+(setq dictionary-server "dict.org")
+(map! "C-M-h" #'dictionary-lookup-definition)
+#+end_src
+
+Source: https://emacsredux.com/blog/2023/04/11/looking-up-words-in-a-dictionary/
