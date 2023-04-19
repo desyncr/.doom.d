@@ -10,6 +10,7 @@ If you use ~org~ and don't want your org files in the default location below, ch
 (after! org
   (setq
     org-startup-folded nil
+    company-minimum-prefix-length 3
     org-hide-emphasis-markers t))
 
 (defun me/org-disable-line-numbers-mode()

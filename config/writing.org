@@ -11,7 +11,7 @@ Change dictionary with the following:
   :config
     (setq ispell-dictionary "british"
         ispell-silently-savep t
-        company-minimum-prefix-length 1
+        company-minimum-prefix-length 3
         company-ispell-available t
         company-transformers '(company-sort-by-occurrence))
     (add-hook 'org-mode-hook 'flyspell-mode)
