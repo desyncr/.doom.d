@@ -68,7 +68,6 @@
 * Writing
 #+begin_src emacs-lisp
 (package! spell-fu)
-(package! consult-notes)
 #+end_src
 
 * Other

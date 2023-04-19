@@ -92,13 +92,6 @@ Configure language:
 Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/][original article]] for writegood.
 
 * Deft
-
-#+begin_src emacs-lisp
-(setq consult-notes-file-dir-sources
-      '(("Org"             ?o "~/Personal/notes/")))
-(map! :leader :desc "Consult notes" "n S" #'consult-notes)
-#+end_src
-
 #+begin_src emacs-lisp
 (use-package deft
   :commands (deft deft-open-file deft-new-file-named)
