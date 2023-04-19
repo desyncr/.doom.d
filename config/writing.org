@@ -96,7 +96,7 @@ Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weas
 (use-package deft
   :commands (deft deft-open-file deft-new-file-named)
   :config (setq deft-extensions '("org")
-                deft-directory "~/Personal/notes"
+                deft-directory (me/deft-projectile)
                 deft-auto-save-interval 0
                 deft-recursive t
                 deft-current-sort-method 'title
@@ -124,8 +124,9 @@ Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weas
 (defun me/deft-projectile ()
   "Checks if directory is projectile-project and updates DEFT directory to the projects root folder."
   (interactive)
-  (if (projectile-project-p)
-      (setq deft-directory (expand-file-name (concat (doom-project-root) "/notes"))))
+  (pcase (projectile-project-name)
+        ("Work" (setq deft-directory "~/Work/notes"))
+        (_ (setq deft-directory "~/Personal/notes")))
   (deft))
 
 (map! :leader :desc "Deft" "n d" #'me/deft-projectile)
