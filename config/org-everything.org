@@ -83,8 +83,11 @@ Keybinding to specific org-capture:
 TODO: =SPC c= is used by code group. Maybe better to use =SPC n c ...= (i.e. note, capture, todo|note|journal).
 * TODO Org-agenda
 #+begin_src emacs-lisp
-(map! "M-o" 'org-agenda)
+(setq org-agenda-start-with-log-mode nil
+      org-log-done t
+      org-log-into-drawer t)
 #+end_src
+
 Custom agenda commands! \o/
 
 #+begin_src emacs-lisp
@@ -116,7 +119,8 @@ Sorting strategy:
 
 See documentation [[https://orgmode.org/org.html#Sorting-of-agenda-items][here]].
 
-Keybinding to specific org-agenda views:
+Command to open an specific agenda view with their corresponding org-agenda-files:
+
 #+begin_src emacs-lisp
 (defun me/org-agenda-view (type &optional arg)
   (interactive "P")
@@ -128,7 +132,11 @@ Keybinding to specific org-agenda views:
          ("w" (setq org-agenda-files '("~/Work" "~/Work/notes")) (org-todo-list))
          ("d" (setq org-agenda-files '("~/.config/doom/config")) (org-todo-list))
          (_ (org-agenda arg type))))
+#+end_src
 
+Keybinding to specific org-agenda views:
+
+#+begin_src emacs-lisp
 (map! :leader :desc "Work view" "o a w" (lambda() (interactive) (me/org-agenda-view "w")))
 (map! :leader :desc "Docs view" "o a d" (lambda() (interactive) (me/org-agenda-view "d")))
 (map! :leader :desc "Personal view" "o a p" (lambda() (interactive) (me/org-agenda-view "p")))
