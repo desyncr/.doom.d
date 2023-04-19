@@ -320,9 +320,6 @@ Use =M-n= to create a new empty buffer. The following advices will automatically
    ("\\*Org Agenda\\*"
     display-buffer-in-side-window
     (side . right) (slot . 0) (window-width . 0.3))
-   ("\\*Search.*"
-    display-buffer-in-side-window
-    (side . right) (slot . 0) (window-width . 0.3))
    ("\\*Org todo\\*"
     display-buffer-in-side-window
     (side . right) (slot . 0) (window-width . 0.3))
@@ -330,6 +327,26 @@ Use =M-n= to create a new empty buffer. The following advices will automatically
    ("\\*Agenda Commands\\*"
     display-buffer-pop-up-window
     (side . bottom) (slot . 0) (window-width . 0.3))
+   ("^\\*Search.*"
+    (+popup-buffer) (actions)
+    (side . bottom) (slot . -5) (window-width . 0.3))
+   ("^\\*doom:\\(?:v?term\\|e?shell\\)-popup"
+    (+popup-buffer)
+    (actions)
+    (side . bottom)
+    (size . 0.3)
+    (window-width . 40)
+    (window-height . 0.35)
+    (slot)
+    (vslot . -5)
+    (window-parameters
+        (ttl)
+        (quit)
+        (select . t)
+        (modeline)
+        (autosave)
+        (transient . t)
+        (no-other-window . t)))
    ("^\\*ielm.*"
     display-buffer-in-side-window
     (side . bottom) (slot . 0) (window-width . 0.3))
@@ -349,3 +366,4 @@ Use =M-n= to create a new empty buffer. The following advices will automatically
 ;; Fallback
 (setq display-buffer-base-action nil)
 #+end_src
+
