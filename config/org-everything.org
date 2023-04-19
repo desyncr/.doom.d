@@ -138,6 +138,9 @@ Keybinding to specific org-agenda views:
 
 ;; agenda view depends on project
 (map! :leader :desc "Org agenda week view" "o a a" (lambda() (interactive) (me/org-agenda-view "a")))
+
+;; Use SPC o A to access the agenda dispatcher
+(map! "M-o" (lambda() (interactive) (me/org-agenda-view "a")))
 #+end_src
 
 Source: [[https://emacs.stackexchange.com/a/868][Stackoverflow]].
