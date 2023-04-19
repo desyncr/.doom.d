@@ -53,9 +53,19 @@ If you use ~org~ and don't want your org files in the default location below, ch
 #+end_src
 
 Do not create bookmarks on last org-capture:
+
 #+begin_src emacs-lisp
 (setq org-capture-bookmark nil)
 #+end_src
+
+Disable log lines on repeat tasks. This code disables logging status changes on TODO and agenda entries:
+
+#+begin_src emacs-lisp
+(setq org-log-repeat nil
+      org-log-done t
+      org-log-into-drawer t)
+#+end_src
+
 
 * TODO Org-capture
 #+begin_src emacs-lisp
@@ -82,10 +92,9 @@ Keybinding to specific org-capture:
 #+end_src
 TODO: =SPC c= is used by code group. Maybe better to use =SPC n c ...= (i.e. note, capture, todo|note|journal).
 * TODO Org-agenda
+
 #+begin_src emacs-lisp
-(setq org-agenda-start-with-log-mode nil
-      org-log-done t
-      org-log-into-drawer t)
+(setq org-agenda-start-with-log-mode nil)
 #+end_src
 
 Custom agenda commands! \o/
@@ -313,16 +322,7 @@ I opted for this package rather than org-modern since the latter was rather inva
 #+end_src
 
 In the above block I'm enabling the org-bullets-mode after ~org-mode~ is enabled (see documentation [[https://orgmode.org/worg/doc.html][here]].)
-* Org-log-repeat
-Disable log lines on repeat tasks.
 
-#+begin_src emacs-lisp
-(use-package org
-  :config
-    (setq org-log-repeat nil))
-#+end_src
-
-This code disables logging status changes on TODO and agenda entries.
 * Toc-org
 This package automatically generates and maintains a Table of Contents for Org and Markdown files.
 
