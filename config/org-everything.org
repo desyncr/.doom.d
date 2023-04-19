@@ -402,3 +402,12 @@ Automatically updated org-clocktable on buffer save:
         (goto-char (search-forward "clocktable"))
         (org-clock-report))))))
 #+end_src
+
+* Org-journal
+
+#+begin_src emacs-lisp
+(setq org-journal-date-prefix "#+title: "
+      org-journal-time-prefix "* "
+      org-journal-date-format "%a, %Y-%m-%d"
+      org-journal-file-format "%Y-%m-%d.org")
+#+end_src
