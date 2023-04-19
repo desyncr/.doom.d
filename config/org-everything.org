@@ -149,6 +149,19 @@ Remove file names on agenda views:
 
 Source: [[https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00743.html][here]].
 
+Archive entries in "DONE":
+
+#+begin_src emacs-lisp
+(defun me/org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries
+      (lambda () (org-archive-subtree) (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+      "/DONE|CANCELED"
+      'file))
+#+end_src
+
+Source: [[https://stackoverflow.com/questions/6997387/how-to-archive-all-the-done-tasks-using-a-single-command/71374607#71374607][Stackoverflow]].
+
 * TODO Org-modern
 It's overkill but I'm using =org-modern= to prettify symbols such as +title and +begin_src. I'm actually happy with =org-bullets=.
 
