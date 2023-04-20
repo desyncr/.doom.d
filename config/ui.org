@@ -311,16 +311,17 @@ Use =M-n= to create a new empty buffer. The following advices will automatically
 ;; This is required for org-agenda and org-todo: https://emacs.stackexchange.com/a/69927
 (setq org-use-fast-todo-selection 'expert)
 
-(set-popup-rules!
-  '(("^\\*Completions" :ttl 0)
-    ("^\\*\\(?:scratch\\|Messages\\)" :ttl t)
-    ("^\\*Help" :size 0.4 :select t)
-    ("^\\*helpful.*" :slot 1 :size 0.4 :select t)
-    ("^\\*Async.*" :size 0.3 :select nil :quit t :ttl t)
-    ("^\\*Search" :size 0.3 :select t :quit nil :ttl t)
-    ;; Right
-    ("^\\*Org todo" :slot 1 :side right :size 0.3 :select t)
-    ("^\\*Org Agenda" :slot 1 :side right :size 0.3 :select t)
-    ("\\*doom eval\\*" :side bottom :actions (display-buffer-no-window))
-    ("^\\*Org Src" :slot -1 :size 0.3 :select t :quit nil)))
+(after! org
+    (set-popup-rules! '(("^\\*Completions" :ttl 0)
+            ("^\\*\\(?:scratch\\|Messages\\)" :ttl t)
+            ("^\\*Help" :size 0.4 :select t)
+            ("^\\*helpful.*" :slot 1 :size 0.4 :select t)
+            ("^\\*Async.*" :size 0.3 :select nil :quit t :ttl t)
+            ("^\\*Search" :size 0.3 :select t :quit nil :ttl t)
+            ("^\\*Org Agenda" :slot 1 :side right :size 0.3 :select t)
+            ;; Right
+            ("^\\*Org todo" :slot 1 :side right :size 0.3 :select t)
+            ("^\\*Org Agenda" :slot 1 :side right :size 0.3 :select t)
+            ("\\*doom eval\\*" :side bottom :actions (display-buffer-no-window))
+            ("^\\*Org Src" :slot -1 :size 0.3 :select t :quit nil))))
 #+end_src
