@@ -102,6 +102,7 @@ Enable treemacs and never move to treemacs with other-window as well as disablin
   :defer t
   :config (setq treemacs-is-never-other-window nil
                 treemacs-wrap-around nil
+                treemacs-show-hidden-files nil
                 treemacs-display-current-project-exclusively t
                 treemacs-follow-mode t))
 #+end_src
