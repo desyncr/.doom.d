@@ -134,7 +134,7 @@ Command to open an specific agenda view with their corresponding org-agenda-file
 #+begin_src emacs-lisp
 (defun me/org-agenda-view (type &optional arg)
   (interactive "P")
-  (setq org-agenda-files '("~/Personal" "~/Personal/notes"))
+  (setq org-agenda-files '("~/Personal"))
   ;; special case for agenda view which depends on project
   (pcase (projectile-project-name)
       ("Work" (setq org-agenda-files '("~/Work" "~/Work/notes"))))
