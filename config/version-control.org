@@ -49,10 +49,12 @@ Use [[kbd:][M-q]] or [[kbd:][M-k]] to cancel an "editor", for example, magit com
   ('normal with-editor-mode-map
    "M-q" 'with-editor-cancel
    "M-k" 'with-editor-cancel
+   "M-;" 'with-editor-finish
    "M-RET" 'with-editor-finish)
   ('insert with-editor-mode-map
    "M-q" 'with-editor-cancel
    "M-k" 'with-editor-cancel
+   "M-;" 'with-editor-finish
    "M-RET" 'with-editor-finish))
 #+end_src
 
