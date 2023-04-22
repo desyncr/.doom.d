@@ -410,36 +410,47 @@ I'm currently using a inverted-L type keyboard. For me the distance between the 
 #+attr_html: :alt  :align left :class img
 [[../resources/remappings.png][Mad scientist remappings]]
 
-This can also be achieved using Karabiner Elements or similar software.
+Here's a Karabiner Elements configuration using https://github.com/yqrashawn/GokuRakuJoudo:
 
-#+begin_src emacs-lisp
-(define-key key-translation-map (kbd ":") (kbd "<RET>"))
-(define-key key-translation-map (kbd ";") (kbd "<RET>"))
+#+begin_example
+{
+ :main
+ [
+   {:des "Capslock to ESC" :rules [[:caps_lock :escape]]}
 
-(define-key key-translation-map (kbd "C-;") (kbd "C-RET"))
+   ;; mad scientist mode - extended home row
 
-(define-key key-translation-map (kbd "'") (kbd ";")) ; double quotes is colon (S-; is colon)
-(define-key key-translation-map (kbd "\"") (kbd ":")) ; single quote is semi colon
+   ;; semicolon to enter
+   {:des "Semicolon to ENTER" :rules [[:semicolon :return_or_enter]]}
+   {:des "Shift semicolon to ENTER" :rules [[{:key :semicolon :modi :left_shift} {:key :return_or_enter}]]}
+   {:des "Control semicolon to C-ENTER" :rules [[{:key :semicolon :modi :control} {:key :return_or_enter :modi :control}]]}
 
-(define-key key-translation-map (kbd "|") (kbd "\"")) ; pipe is double quotes ""
-(define-key key-translation-map (kbd "\\") (kbd "'")) ; backslash is single quote ''
+   ;; quote to semicolon
+   {:des "Shift quote to semicolon" :rules [[{:key :quote :modi :left_shift} {:key :semicolon :modi :left_shift}]]}
+   {:des "Quote to semicolon" :rules [[{:key :quote :modi :any} :semicolon]]}
 
-(define-key key-translation-map (kbd "C-|") (kbd "|")) ; C-pipe is pipe |
-(define-key key-translation-map (kbd "C-\\") (kbd "\\")) ; C-backslash is backslash \
-#+end_src
+   ;; backlash to quote
+   {:des "Shift backslash to double" :rules [[{:key :backslash :modi :left_shift} {:key :quote :modi :left_shift}]]}
+   {:des "Backslash to quote" :rules [[{:key :backslash} {:key :quote}]]}
 
-#+begin_src emacs-lisp
-(define-key key-translation-map (kbd "[") (kbd "<DEL>"))
-(define-key key-translation-map (kbd "{") (kbd "<DEL>"))
+   ;; control backlash to backslash
+   {:des "Shift control-backslash to pipe" :rules [[{:key :backslash :modi [:left_shift :control]} {:key :backslash :modi [:left_shift]}]]}
+   {:des "Control-backslash to backslash" :rules [[{:key :backslash :modi :control} :backslash]]}
 
-(define-key key-translation-map (kbd "]") (kbd "["))
-(define-key key-translation-map (kbd "}") (kbd "{"))
+   ;; mad scientist mode - delete
+   {:des "Open bracket to delete" :rules [[{:key :open_bracket :modi :any} :delete_or_backspace]]}
 
-(define-key key-translation-map (kbd "C-]") (kbd "["))
-(define-key key-translation-map (kbd "C-}") (kbd "{"))
-#+end_src
+   ;; open brancket to close bracket
+   {:des "Close bracket to open bracket" :rules [[{:key :close_bracket} :open_bracket]]}
+   {:des "Shift close bracket to open curly bracket" :rules [[{:key :close_bracket :modi [:left_shift]} {:key :open_bracket :modi [:left_shift]}]]}
 
-The result should be less strain from moving the hand to reach the enter key repeatedly.
+   ;; control close bracket to close bracket
+   {:des "Control close bracket to open bracket" :rules [[{:key :close_bracket :modi :control} :close_bracket]]}
+   {:des "Shift close bracket to open curly bracket" :rules [[{:key :close_bracket :modi [:left_shift :control]} {:key :close_bracket :modi [:left_shift]}]]}
+
+ ]
+}
+#+end_example
 
 Quick access to append-line and first-non-black functions:
 
