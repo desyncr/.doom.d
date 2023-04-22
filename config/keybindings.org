@@ -410,7 +410,6 @@ I'm currently using a inverted-L type keyboard. For me the distance between the 
 #+attr_html: :alt  :align left :class img
 [[../resources/remappings.png][Mad scientist remappings]]
 
-
 #+begin_src emacs-lisp
 (define-key key-translation-map (kbd ":") (kbd "<RET>"))
 (define-key key-translation-map (kbd ";") (kbd "<RET>"))
