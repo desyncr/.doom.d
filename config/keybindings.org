@@ -410,6 +410,8 @@ I'm currently using a inverted-L type keyboard. For me the distance between the 
 #+attr_html: :alt  :align left :class img
 [[../resources/remappings.png][Mad scientist remappings]]
 
+This can also be archived using Karabiner Elements or similar software.
+
 #+begin_src emacs-lisp
 (define-key key-translation-map (kbd ":") (kbd "<RET>"))
 (define-key key-translation-map (kbd ";") (kbd "<RET>"))
@@ -463,14 +465,6 @@ Mapping =0= (or =)=) to jump to first non blank character, which is quite useful
 ; Note: Doesn't work with smart parens / electric
 ;(define-key evil-insert-state-map (kbd "0") (lambda () (interactive) (insert ")")))
 ;(define-key evil-insert-state-map (kbd ")") (lambda () (interactive) (insert "0")))
-#+end_src
-
-Avoid use of hard to reach =DEL= key. Here I'm replacing this key usage with a bit more accessible =M-u= and =M-U=:
-
-#+begin_src emacs-lisp
-(map! "M-u" (kbd "<DEL>"))
-(map! "M-U" 'evil-delete-backward-word) ;; also C-u
-;; src: https://stackoverflow.com/a/9953097
 #+end_src
 
 #+begin_src emacs-lisp
