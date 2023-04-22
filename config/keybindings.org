@@ -414,6 +414,8 @@ I'm currently using a inverted-L type keyboard. For me the distance between the 
 (define-key key-translation-map (kbd ":") (kbd "<RET>"))
 (define-key key-translation-map (kbd ";") (kbd "<RET>"))
 
+(define-key key-translation-map (kbd "C-;") (kbd "C-RET"))
+
 (define-key key-translation-map (kbd "'") (kbd ";")) ; double quotes is colon (S-; is colon)
 (define-key key-translation-map (kbd "\"") (kbd ":")) ; single quote is semi colon
 
