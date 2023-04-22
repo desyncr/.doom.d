@@ -410,14 +410,11 @@ I'm currenly using a inverted-L type keyboard. For me the distance between the r
 |-----------+---------|
 | Character | Mapping |
 |-----------+---------|
-| '         | Enter   |
-| "         | '       |
-| M-'       | "       |
+| M-'       | Enter   |
 |-----------+---------|
 
 #+begin_src emacs-lisp
-;(define-key key-translation-map (kbd "\\") (kbd "<RET>"))
-;(map! "M-\'" (lambda () (interactive) (insert "\"")))
+(define-key key-translation-map (kbd "M-'") (kbd "<RET>"))
 #+end_src
 
 The result should be less strain from moving the hand to reach the enter key repetedly.
