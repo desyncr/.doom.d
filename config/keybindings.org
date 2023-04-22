@@ -405,23 +405,42 @@ Disclaimer: I'm trying these settings out and figuring out exactly what's my bes
 
 Note that I'm configuring (via OS settings) CapsLock to ESC.
 
-I'm currenly using a inverted-L type keyboard. For me the distance between the row keys and the enter key is too much. As a workaround for these type of keyboards I'm remapping these keys:
+I'm currently using a inverted-L type keyboard. For me the distance between the row keys and the enter key is too much. As a workaround for these type of keyboards I'm remapping these keys:
 
-|-----------+---------|
-| Character | Mapping |
-|-----------+---------|
-| M-'       | Enter   |
-|-----------+---------|
+#+attr_html: :alt  :align left :class img
+[[../resources/remappings.png][Mad scientist remappings]]
+
 
 #+begin_src emacs-lisp
-(define-key key-translation-map (kbd "M-'") (kbd "<RET>"))
+(define-key key-translation-map (kbd ":") (kbd "<RET>"))
+(define-key key-translation-map (kbd ";") (kbd "<RET>"))
+
+(define-key key-translation-map (kbd "'") (kbd ";")) ; double quotes is colon (S-; is colon)
+(define-key key-translation-map (kbd "\"") (kbd ":")) ; single quote is semi colon
+
+(define-key key-translation-map (kbd "|") (kbd "\"")) ; pipe is double quotes ""
+(define-key key-translation-map (kbd "\\") (kbd "'")) ; backslash is single quote ''
+
+(define-key key-translation-map (kbd "C-|") (kbd "|")) ; C-pipe is pipe |
+(define-key key-translation-map (kbd "C-\\") (kbd "\\")) ; C-backslash is backslash \
 #+end_src
 
-The result should be less strain from moving the hand to reach the enter key repetedly.
+#+begin_src emacs-lisp
+(define-key key-translation-map (kbd "[") (kbd "<DEL>"))
+(define-key key-translation-map (kbd "{") (kbd "<DEL>"))
+
+(define-key key-translation-map (kbd "]") (kbd "["))
+(define-key key-translation-map (kbd "}") (kbd "{"))
+
+(define-key key-translation-map (kbd "C-]") (kbd "["))
+(define-key key-translation-map (kbd "C-}") (kbd "{"))
+#+end_src
+
+The result should be less strain from moving the hand to reach the enter key repeatedly.
 
 Quick access to append-line and first-non-black functions:
 
-I notificed that I make quite a usage of these two (in one way or another) so I should have quick access to it.
+I notified that I make quite a usage of these two (in one way or another) so I should have quick access to it.
 
 I generally use 'i' for inserting and 'A' for appending at the end of the line.
 
