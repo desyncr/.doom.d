@@ -38,14 +38,7 @@ Anyway, in the above code setting the commit's summary max length to 100 so I'm 
 #+begin_src emacs-lisp
 (map! :leader :desc "Magit push" "g p" #'magit-push-current-to-upstream)
 (map! :leader :desc "Magit pull" "g f" #'magit-pull-from-upstream)
-#+end_src
-
-
-#+begin_src emacs-lisp
-(map! :after magit
-      :map magit-mode-map
-      :desc "Magit quit" :nvi "M-q" '+magit/quit
-)
+(map! :map magit-mode-map :desc "Magit quit" :nvi "M-q" '+magit/quit)
 #+end_src
 
 Use [[kbd:][M-q]] or [[kbd:][M-k]] to cancel an "editor", for example, magit commit. Use [[kbd:][M-RET]] to confirm.
@@ -57,7 +50,7 @@ Use [[kbd:][M-q]] or [[kbd:][M-k]] to cancel an "editor", for example, magit com
    "M-q" 'with-editor-cancel
    "M-k" 'with-editor-cancel
    "M-RET" 'with-editor-finish)
-   ('insert with-editor-mode-map
+  ('insert with-editor-mode-map
    "M-q" 'with-editor-cancel
    "M-k" 'with-editor-cancel
    "M-RET" 'with-editor-finish))
