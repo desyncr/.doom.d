@@ -91,47 +91,6 @@ Configure language:
 * Writegood
 Check the [[https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/][original article]] for writegood.
 
-* Deft
-#+begin_src emacs-lisp
-(use-package deft
-  :commands (deft deft-open-file deft-new-file-named)
-  :config (setq deft-extensions '("org")
-                deft-directory "~/Personal/notes"
-                deft-auto-save-interval 0
-                deft-recursive t
-                deft-current-sort-method 'title
-                deft-use-filter-string-for-filename t
-                deft-use-filename-as-title nil
-                deft-file-naming-rules '(
-                     (noslash . "-")
-                     (nospace . "-")
-                     (case-fn . downcase))))
-
-(map! :after deft
-      :map deft-mode-map
-      :desc "Deft quit" :nvi "M-q" #'kill-this-buffer
-      :desc "Deft down list" :nvi "C-j" #'evil-next-line
-      :desc "Deft up list" :nvi "C-k" #'evil-previous-line
-      :desc "Deft clear filter" :nvi "C-u" #'deft-filter-clear
-      :desc "Deft quit" :n "q" #'kill-this-buffer)
-
-;; https://github.com/jrblevin/deft/issues/100#issuecomment-864659205
-(defun deft-parse-summary (contents title) title)
-(setq deft-filter-only-filenames nil)
-#+end_src
-
-#+begin_src emacs-lisp
-(defun me/deft-projectile ()
-  "Checks if directory is projectile-project and updates DEFT directory to the projects root folder."
-  (interactive)
-  (pcase (projectile-project-name)
-        ("Work" (setq deft-directory "~/Work/notes"))
-        (_ (setq deft-directory "~/Personal/notes")))
-  (deft))
-
-(map! :leader :desc "Deft" "n d" #'me/deft-projectile)
-#+end_src
-
 * Dictionary
 
 #+begin_src emacs-lisp

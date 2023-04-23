@@ -267,10 +267,23 @@ Org-roam is a package to create a non-hierarchical knowledge base. The package i
 (use-package org-roam
   :defer t
   :custom
-  (setq org-roam-directory "~/Personal/roam")
-  (setq org-roam-index-file "~/Personal/roam/index.org")
-  )
+    (org-roam-directory "~/Personal/notes")
+    (org-roam-index-file "~/Personal/notes/index.org")
+    (setq org-roam-node-display-template
+        (concat "${title:80} " (propertize "${tags:20}" 'face 'org-tag))
+        org-roam-node-annotation-function
+            (lambda (node) (marginalia--time (org-roam-node-file-mtime node))))
+    (org-roam-capture-templates
+        '(("d" "default" plain "%?"
+        :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n\n")
+        :unnarrowed t))))
 #+end_src
+
+Sources:
+- https://github.com/org-roam/org-roam/wiki/User-contributed-Tricks#modification-time-annotation-in-org-roam-node-find-minad
+-  https://systemcrafters.net/build-a-second-brain-in-emacs/capturing-notes-efficiently/
+- https://systemcrafters.net/build-a-second-brain-in-emacs/5-org-roam-hacks/
+- https://github.com/kot-behemoth/awesome-org-roam
 
 We're making only a few configurations only since Doom Emacs already integrates the package via ~:editor (org +roam)~.
 
