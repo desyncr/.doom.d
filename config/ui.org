@@ -19,7 +19,15 @@ This determines the style of line numbers in effect. If set to ~nil~, line numbe
 Configure emacs to turn fullscreen/maximized on startup:
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(defmacro with-system (type &rest body)
+  "Evaluate BODY if `system-type' equals TYPE."
+  (declare (indent defun))
+  `(when (eq system-type ',type)
+     ,@body))
+;; Source: https://stackoverflow.com/a/26137517
+
+(with-system darwin
+    (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 #+end_src
 
 Add word count to status/modeline. Useful for org documents and writing in general.

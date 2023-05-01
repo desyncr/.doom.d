@@ -82,15 +82,6 @@ https://github.com/jeetelongname/elfeed-goodies
 
 * browse-url
 #+begin_src emacs-lisp
-(defmacro with-system (type &rest body)
-  "Evaluate BODY if `system-type' equals TYPE."
-  (declare (indent defun))
-  `(when (eq system-type ',type)
-     ,@body))
-#+end_src
-Source: https://stackoverflow.com/a/26137517
-
-#+begin_src emacs-lisp
 (setq browse-url-browser-function 'browse-url-generic)
 (map! :leader :desc "Browse at remote" "c B" 'browse-at-remote)
 #+end_src
