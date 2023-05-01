@@ -37,6 +37,7 @@ This configuration is organised in a variety categories (see Organisation for de
 The current file you're reading (=Emacs.org=) is tangled into =config.el=, this file is loaded by Doom Emacs on start up. The section down below is responsable for loading the individual section's tangled file, in turns this loads the entire configuration.
 
 #+begin_src emacs-lisp
+(setq doom-theme 'doom-nord-aurora)
 (load "~/.config/doom/.elisp/general.el")
 (load "~/.config/doom/.elisp/ui.el")
 (load "~/.config/doom/.elisp/fonts.el")
