@@ -36,65 +36,6 @@ Here I'm binding [[kbd:][M-\=]] to =er/expand-region=:
 
 See mention [[https://takeonrules.com/2020/10/18/why-i-chose-emacs-as-my-new-text-editor/][here]].
 
-* Syntax entry
-The =modify-syntax-entry= function is an Emacs Lisp function that allows you to modify the syntax table of a buffer. The syntax table is used by Emacs to determine how to parse and highlight text in the buffer.
-
-The =modify-syntax-entry= function takes two arguments: a character and a syntax descriptor. The syntax descriptor is a string that describes the syntax of the character. The most common syntax descriptors are:
-
-- .: The character is a punctuation character.
-- =w=: The character is part of a word.
-- =_=: The character is part of a word, but is considered a symbol rather than a letter.
-- =(= or =)=: The character is an opening or closing parenthesis.
-- ="=: The character is a string delimiter.
-
-Here are some examples of using =modify-syntax-entry=:
-
-#+begin_src emacs-lisp
-(modify-syntax-entry ?_ "w") ;; Treat underscores as part of words.
-(modify-syntax-entry ?- "w") ;; Treat hyphens as part of words.
-(modify-syntax-entry ?# "<") ;; Treat hashtags as starting a comment.
-(modify-syntax-entry ?\n ">") ;; Treat newlines as ending a comment.
-#+end_src
-
-In the above example, we have modified the syntax table to treat underscores and hyphens as part of words, hashtags as starting a comment, and newlines as ending a comment.
-
-You can also use `modify-syntax-entry` to modify the syntax of entire character classes. For example, to treat all uppercase letters as part of words, you can do:
-
-#+begin_src emacs-lisp
-(modify-syntax-entry ?A "w")
-(modify-syntax-entry ?Z "w")
-#+end_src
-
-This will modify the syntax table to treat all uppercase letters as part of words.
-
-One common use of `modify-syntax-entry` is to modify the syntax of programming languages to make syntax highlighting more accurate. For example, to make Emacs treat `.` and `:` as punctuation in Ruby code, you can add the following to your Emacs configuration file:
-
-#+begin_src emacs-lisp
-(add-hook 'ruby-mode-hook
-          (lambda ()
-            (modify-syntax-entry ?. ".")
-            (modify-syntax-entry ?: ".")
-            ))
-#+end_src
-
-This will modify the syntax table for Ruby buffers so that `.` and `:` are treated as punctuation characters.
-
-
-#+begin_src emacs-lisp
-;(modify-syntax-entry ?# "< b")
-;(modify-syntax-entry ?\n "> b")
-;(modify-syntax-entry ?$ "w")
-;(modify-syntax-entry ?_ "w")
-;(modify-syntax-entry ?- "w")
-;(modify-syntax-entry ?+ "w")
-
-;(add-hook 'php-mode-hook '(lambda ( )
-    ;(modify-syntax-entry ?> "." php-mode-syntax-table)
-    ;(modify-syntax-entry ?- "." php-mode-syntax-table)
-    ;(modify-syntax-entry ?_ "w" php-mode-syntax-table)
-    ;(modify-syntax-entry ?$ "w" php-mode-syntax-table)
-;))
-#+end_src
 * Flycheck
 Flycheck is a package that provides on-the-fly syntax checking for programming languages. It integrates with various programming language-specific syntax checkers and linters to provide real-time feedback on code errors and warnings. The package supports many programming languages and can be customised to suit individual preferences.
 
