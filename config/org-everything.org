@@ -96,6 +96,7 @@ TODO: =SPC c= is used by code group. Maybe better to use =SPC n c ...= (i.e. not
 
 #+begin_src emacs-lisp
 (setq org-agenda-start-with-log-mode nil)
+(setq org-agenda-span 30)
 #+end_src
 
 Custom agenda commands! \o/
