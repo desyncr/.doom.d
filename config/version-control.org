@@ -178,19 +178,19 @@ https://tsdh.org/posts/2022-08-01-difftastic-diffing-with-magit.html
 #+end_src
 
 #+begin_src emacs-lisp
-(after! magit
-    (transient-define-prefix th/magit-aux-commands ()
-        "My personal auxiliary magit commands."
-        ["Auxiliary commands"
-        ("d" "Difftastic Diff (dwim)" th/magit-diff-with-difftastic)
-        ("s" "Difftastic Show" th/magit-show-with-difftastic)]))
+;;(after! magit
+;;    (transient-define-prefix th/magit-aux-commands ()
+;;        "My personal auxiliary magit commands."
+;;        ["Auxiliary commands"
+;;        ("d" "Difftastic Diff (dwim)" th/magit-diff-with-difftastic)
+;;        ("s" "Difftastic Show" th/magit-show-with-difftastic)]))
 #+end_src
 
 #+begin_src emacs-lisp
-(after! magit
-    (transient-append-suffix 'magit-dispatch "!"
-        '("$" "Custom commands" th/magit-aux-commands))
+;;(after! magit
+    ;;(transient-append-suffix 'magit-dispatch "!"
+    ;;    '("$" "Custom commands" th/magit-aux-commands))
 
-    (define-key magit-status-mode-map (kbd "$") #'th/magit-aux-commands)
-    (define-key magit-status-mode-map (kbd "ESC") #'+magit/quit))
+    ;;(define-key magit-status-mode-map (kbd "$") #'th/magit-aux-commands)
+;;    (define-key magit-status-mode-map (kbd "ESC") #'+magit/quit))
 #+end_src
