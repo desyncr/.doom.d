@@ -29,10 +29,10 @@ Archive entries in sub-directory. Source: [[https://emacs.stackexchange.com/a/25
 Automatically save open buffers on certain events.
 
 #+begin_src emacs-lisp
-(use-package super-save
-  :defer t
-  :config
-  (super-save-mode +1))
+(use-package super-save)
+(super-save-mode +1)
+(setq super-save-auto-save-when-idle t)
+(add-to-list 'super-save-hook-triggers 'find-file-hook)
 #+end_src
 
 Super-save/lsp-mode were causing issues while typing. When a function call was typed (e.g. =call-to-func(=), lsp-mode would show the signature in the echo area, this will in turn cause super-save to save the file - as it lost focus - and switch to normal mode via the ~after-save-hook~ configured in the General section.
