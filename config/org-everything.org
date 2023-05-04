@@ -113,6 +113,8 @@ Custom agenda commands! \o/
             ((tags "projects/TODO|INPROGRESS|NEXT")))
         ("e" "List :emacs:"
             ((tags "emacs/TODO|INPROGRESS|NEXT")))
+        ("r" "List :read:"
+            ((tags "read/TODO|INPROGRESS|NEXT")))
         ("l" "List :learning:"
             ((tags "learning")))))
 #+end_src
@@ -154,6 +156,7 @@ Keybinding to specific org-agenda views:
 (map! :leader :desc "Projects view" "o a P" (lambda() (interactive) (me/org-agenda-view "P")))
 (map! :leader :desc "Emacs view" "o a e" (lambda() (interactive) (me/org-agenda-view "e")))
 (map! :leader :desc "Learning view" "o a l" (lambda() (interactive) (me/org-agenda-view "l")))
+(map! :leader :desc "Read view" "o a r" (lambda() (interactive) (me/org-agenda-view "r")))
 
 ;; agenda view depends on project
 (map! :leader :desc "Org agenda week view" "o a a" (lambda() (interactive) (me/org-agenda-view "a")))
@@ -270,7 +273,7 @@ Org-roam is a package to create a non-hierarchical knowledge base. The package i
   :custom
     (org-roam-directory "~/Personal/notes")
     (org-roam-index-file "~/Personal/notes/index.org")
-    (setq org-roam-node-display-template
+    (org-roam-node-display-template
         (concat "${title:80} " (propertize "${tags:20}" 'face 'org-tag))
         org-roam-node-annotation-function
             (lambda (node) (marginalia--time (org-roam-node-file-mtime node))))
