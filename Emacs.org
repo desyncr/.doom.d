@@ -47,7 +47,6 @@ The current file you're reading (=Emacs.org=) is tangled into =config.el=, this 
 (load "~/.config/doom/.elisp/project-management.el")
 (load "~/.config/doom/.elisp/org-everything.el")
 (load "~/.config/doom/.elisp/other.el")
-
 #+end_src
 
 =TODO=: Test loading =.el= files [[https://emacs.stackexchange.com/a/7605][via glob]]. Ideally it should not cause any problem, /but/ some keybindings might be overwritten here and there.
