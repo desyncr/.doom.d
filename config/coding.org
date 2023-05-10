@@ -142,6 +142,7 @@ Configure LSP to ignore specific directories or files when watching for changes 
       lsp-restart 'auto-restart
       lsp-intelephense-completion-trigger-parameter-hints t
       lsp-signature-function 'lsp-signature-posframe)
+(company-box-mode -1)
 #+end_src
 
 #+begin_src emacs-lisp

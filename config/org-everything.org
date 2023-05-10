@@ -272,7 +272,6 @@ Org-roam is a package to create a non-hierarchical knowledge base. The package i
   :defer t
   :custom
     (org-roam-directory "~/Personal/notes")
-    (org-roam-index-file "~/Personal/notes/index.org")
     (org-roam-node-display-template
         (concat "${title:80} " (propertize "${tags:20}" 'face 'org-tag))
         org-roam-node-annotation-function
@@ -285,7 +284,7 @@ Org-roam is a package to create a non-hierarchical knowledge base. The package i
 
 Sources:
 - https://github.com/org-roam/org-roam/wiki/User-contributed-Tricks#modification-time-annotation-in-org-roam-node-find-minad
--  https://systemcrafters.net/build-a-second-brain-in-emacs/capturing-notes-efficiently/
+- https://systemcrafters.net/build-a-second-brain-in-emacs/capturing-notes-efficiently/
 - https://systemcrafters.net/build-a-second-brain-in-emacs/5-org-roam-hacks/
 - https://github.com/kot-behemoth/awesome-org-roam
 
