@@ -56,6 +56,7 @@ https://github.com/jeetelongname/elfeed-goodies
   (setq elfeed-feeds
         '(
           ("https://sachachua.com/blog/category/emacs-news/feed/" emacs)
+          ("https://systemcrafters.net/rss/news.xml" emacs)
           ("https://planet.emacslife.com/atom.xml" emacs)
           ("http://nedroid.com/feed/" webcomic)
           ("https://hnrss.org/frontpage" news)
