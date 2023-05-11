@@ -422,32 +422,17 @@ Here's a Karabiner Elements configuration using https://github.com/yqrashawn/Gok
 
    ;; semicolon to enter
    {:des "Semicolon to ENTER" :rules [[:semicolon :return_or_enter]]}
-   {:des "Shift semicolon to ENTER" :rules [[{:key :semicolon :modi :left_shift} {:key :return_or_enter}]]}
-   {:des "Control semicolon to C-ENTER" :rules [[{:key :semicolon :modi :control} {:key :return_or_enter :modi :control}]]}
-
-   ;; quote to semicolon
-   {:des "Shift quote to semicolon" :rules [[{:key :quote :modi :left_shift} {:key :semicolon :modi :left_shift}]]}
-   {:des "Quote to semicolon" :rules [[{:key :quote :modi :any} :semicolon]]}
-
-   ;; backlash to quote
-   {:des "Shift backslash to double" :rules [[{:key :backslash :modi :left_shift} {:key :quote :modi :left_shift}]]}
-   {:des "Backslash to quote" :rules [[{:key :backslash} {:key :quote}]]}
-
-   ;; control backlash to backslash
-   {:des "Shift control-backslash to pipe" :rules [[{:key :backslash :modi [:left_shift :control]} {:key :backslash :modi [:left_shift]}]]}
-   {:des "Control-backslash to backslash" :rules [[{:key :backslash :modi :control} :backslash]]}
+   {:des "Control semicolon to semicolon" :rules [[{:key :semicolon :modi :control} {:key :semicolon}]]}
+   {:des "Shift semicolon to colon" :rules [[{:key :semicolon :modi [:left_shift]} {:key :semicolon :modi :left_shift}]]}
 
    ;; mad scientist mode - delete
-   {:des "Open bracket to delete" :rules [[{:key :open_bracket :modi :any} :delete_or_backspace]]}
+   {:des "Open bracket to delete" :rules [[{:key :open_bracket} :delete_or_backspace]]}
+   {:des "Control open bracket to open bracket" :rules [[{:key :open_bracket :modi :control} :open_bracket]]}
+   {:des "Shift open bracket to open bracket" :rules [[{:key :open_bracket :modi [:left_shift]} {:key :open_bracket :modi :left_shift}]]}
 
-   ;; open brancket to close bracket
-   {:des "Close bracket to open bracket" :rules [[{:key :close_bracket} :open_bracket]]}
-   {:des "Shift close bracket to open curly bracket" :rules [[{:key :close_bracket :modi [:left_shift]} {:key :open_bracket :modi [:left_shift]}]]}
-
-   ;; control close bracket to close bracket
-   {:des "Control close bracket to open bracket" :rules [[{:key :close_bracket :modi :control} :close_bracket]]}
-   {:des "Shift close bracket to open curly bracket" :rules [[{:key :close_bracket :modi [:left_shift :control]} {:key :close_bracket :modi [:left_shift]}]]}
-
+   ;; / to right shift
+   {:des "Slash to shift" :rules [[{:key :slash} :right_shift]]}
+   {:des "Control slash to slash " :rules [[{:key :slash :modi [:control]} :slash]]}
  ]
 }
 #+end_example
