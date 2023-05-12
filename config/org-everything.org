@@ -162,7 +162,8 @@ Keybinding to specific org-agenda views:
 (map! :leader :desc "Org agenda week view" "o a a" (lambda() (interactive) (me/org-agenda-view "a")))
 
 ;; Use SPC o A to access the agenda dispatcher
-(map! "M-o" (lambda() (interactive) (me/org-agenda-view "a")))
+(map! "M-o" (lambda() (interactive) (evil-window-vsplit) (me/org-agenda-view "a")))
+(define-key org-agenda-mode-map (kbd "q") '+workspace/close-window-or-workspace)
 #+end_src
 
 Source: [[https://emacs.stackexchange.com/a/868][Stackoverflow]].
@@ -187,6 +188,32 @@ Archive entries in "DONE":
 
 Source: [[https://stackoverflow.com/questions/6997387/how-to-archive-all-the-done-tasks-using-a-single-command/71374607#71374607][Stackoverflow]].
 
+Order entries in "DONE":
+#+begin_src emacs-lisp
+(defun me/org-move-done-tasks-to-bottom ()
+  "Sort all tasks in the topmost heading by TODO state."
+  (interactive)
+  (save-excursion
+    (org-sort-entries nil ?o))
+
+  ;; Reset the view of TODO items
+  (org-overview)
+  (org-show-entry)
+  (org-show-children))
+
+#+end_src
+
+Source: https://systemcrafters.net/newsletter/sc-news-001.html (tip of the week section)
+
+Disable the '$' symbol when truncation happens (this is annoying in org-agenda view).
+
+#+begin_src emacs-lisp
+(set-display-table-slot standard-display-table 0 ?\ )
+#+end_src
+
+Source: https://stackoverflow.com/a/8371037
+
+
 * TODO Org-modern
 It's overkill but I'm using =org-modern= to prettify symbols such as +title and +begin_src. I'm actually happy with =org-bullets=.
 
@@ -199,6 +226,7 @@ It's overkill but I'm using =org-modern= to prettify symbols such as +title and 
         org-modern-tag nil
         org-modern-statistics nil
         org-modern-table nil
+        org-agenda-span 30
         org-modern-hide-stars nil)
     (custom-set-faces
     '(org-modern-block-name ((t nil))))
@@ -315,6 +343,7 @@ Search org-roam notes via consult (source: [[https://github.com/jgru/consult-org
 #+end_src
 
 Keybinding example (see this [[https://rameezkhan.me/adding-keybindings-to-doom-emacs/][blog]]).
+
 * Org-todo-keywords
 Custom ~org-todo-keywords~. It needs to be wrapper in (~after! ..~) block to apply correctly (see [[https://github.com/doomemacs/doomemacs/issues/2913#issuecomment-614773557][comment]]).
 

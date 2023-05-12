@@ -326,10 +326,15 @@ Use =M-n= to create a new empty buffer. The following advices will automatically
             ("^\\*helpful.*" :slot 1 :size 0.4 :select t)
             ("^\\*Async.*" :size 0.3 :select nil :quit t :ttl t)
             ("^\\*Search" :size 0.3 :select t :quit nil :ttl t)
-            ("^\\*Org Agenda" :slot 1 :side right :size 0.35 :select t)
+            ;; ("^\\*Org Agenda" :slot 1 :side right :size 0.35 :select t)
             ;; Right
             ("^\\*Org todo" :slot 1 :side right :size 0.35 :select t)
-            ("^\\*Org Agenda" :slot 1 :side right :size 0.35 :select t)
+            ;; ("^\\*Org Agenda" :slot 1 :side right :size 0.35 :select t)
             ("\\*doom eval\\*" :side bottom :actions (display-buffer-no-window))
             ("^\\*Org Src" :slot -1 :size 0.3 :select t :quit nil))))
+#+end_src
+
+#+begin_src emacs-lisp
+(add-hook! '+popup-buffer-mode-hook
+  (set-window-margins (selected-window) 1 1))
 #+end_src
