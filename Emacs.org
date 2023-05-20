@@ -25,7 +25,7 @@ This [[http://en.wikipedia.org/wiki/Literate_programming][literate]] Emacs confi
 Note: Most of the configurations here are copy/pasted from the package repositories README.md or other sources. I added attribution/source wherever possible.
 #+end_quote
 
-My approach to configuration organisation is to split into logical units that can be updated independently. This means both the source configuration (org file) and the output (elisp file) are maintained independendly from one unit to the other. Ideally it should be easier to work with this approach by having less lines of code per file and having files enforcing organisation.
+My approach to configuration organisation is to split into logical units that can be updated independently. This means both the source configuration (org file) and the output (elisp file) are maintained independently from one unit to the other. Ideally it should be easier to work with this approach by having less lines of code per file and having files enforcing organisation.
 
 But first let's start with an obligatory screenshot:
 #+attr_org: :width 800
