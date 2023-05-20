@@ -31,10 +31,10 @@ But first let's start with an obligatory screenshot:
 #+attr_org: :width 800
 [[./resources/preview.png]]
 
-This configuration is organised in a variety categories (see Organisation for details). This forces me to segregate configuration into files (per category) and keep the over all length of these to a level I'm confortable with.
+This configuration is organised in a variety categories (see Organisation for details). This forces me to segregate configuration into files (per category) and keep the over all length of these to a level I'm comfortable with.
 
 ** How it works
-The current file you're reading (=Emacs.org=) is tangled into =config.el=, this file is loaded by Doom Emacs on start up. The section down below is responsable for loading the individual section's tangled file, in turns this loads the entire configuration.
+The current file you're reading (=Emacs.org=) is tangled into =config.el=, this file is loaded by Doom Emacs on start up. The section down below is responsible for loading the individual section's tangled file, in turns this loads the entire configuration.
 
 #+begin_src emacs-lisp
 (load "~/.config/doom/.elisp/general.el")
@@ -51,7 +51,7 @@ The current file you're reading (=Emacs.org=) is tangled into =config.el=, this 
 
 =TODO=: Test loading =.el= files [[https://emacs.stackexchange.com/a/7605][via glob]]. Ideally it should not cause any problem, /but/ some keybindings might be overwritten here and there.
 
-Doom Emacs loads =init.el= from the user's configuration directory (=~/.config/doom/=). This file is responsable for activating the various Doom Emacs modules.
+Doom Emacs loads =init.el= from the user's configuration directory (=~/.config/doom/=). This file is responsible for activating Doom Emacs modules.
 
 In order to tangle the different sections you'll need to run the following command:
 
@@ -59,7 +59,7 @@ In order to tangle the different sections you'll need to run the following comma
 $ ~/.emacs.d/bin/org-tangle ~/.config/doom/config
 #+end_src
 
-Alternatively you can use the =make= command to tangle your configuration inteligently and additionally run =doom sync=.
+Alternatively you can use the =make= command to tangle your configuration intelligently and additionally run =doom sync=.
 
 The command above will tangle the Org files in the user's directory. The sections define the output's location via property headers such as:
 
