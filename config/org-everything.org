@@ -163,7 +163,10 @@ Keybinding to specific org-agenda views:
 
 ;; Use SPC o A to access the agenda dispatcher
 (map! "M-o" (lambda() (interactive) (evil-window-vsplit) (me/org-agenda-view "a")))
-(define-key org-agenda-mode-map (kbd "q") '+workspace/close-window-or-workspace)
+
+;; source: https://emacs.stackexchange.com/q/48252
+(add-hook 'org-agenda-mode-hook
+  (lambda () (local-set-key (kbd "q") '+workspace/close-window-or-workspace)))
 #+end_src
 
 Source: [[https://emacs.stackexchange.com/a/868][Stackoverflow]].
