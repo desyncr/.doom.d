@@ -422,11 +422,13 @@ Here's a Karabiner Elements configuration using https://github.com/yqrashawn/Gok
 
    ;; semicolon to enter
    {:des "Semicolon to ENTER" :rules [[:semicolon :return_or_enter]]}
-   {:des "Control semicolon to semicolon" :rules [[{:key :semicolon :modi :control} {:key :semicolon}]]}
-   {:des "Shift semicolon to colon" :rules [[{:key :semicolon :modi [:left_shift]} {:key :semicolon :modi :left_shift}]]}
+
+   {:des "Control quote to quote" :rules [[{:key :quote :modi :control} {:key :quote}]]}
+   {:des "Shift quote to double-quote" :rules [[{:key :quote :modi [:left_shift]} {:key :quote :modi :left_shift}]]}
 
    ;; mad scientist mode - delete
    {:des "Open bracket to delete" :rules [[{:key :open_bracket} :delete_or_backspace]]}
+
    {:des "Control open bracket to open bracket" :rules [[{:key :open_bracket :modi :control} :open_bracket]]}
    {:des "Shift open bracket to open bracket" :rules [[{:key :open_bracket :modi [:left_shift]} {:key :open_bracket :modi :left_shift}]]}
 
