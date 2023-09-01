@@ -171,11 +171,12 @@ I don't like the default ~SPC w s~ and ~SPC w v~ keybindings. So for quickly cre
 Next/previous window:
 
 #+begin_src emacs-lisp
-(map! "M-L" 'next-window-any-frame)
-(map! "M-H" 'previous-window-any-frame)
+(map! "M-l" 'next-window-any-frame)
+(map! "M-h" 'previous-window-any-frame)
+
 (after! evil-org
-  (define-key evil-org-mode-map (kbd "<normal-state> M-L") 'next-window-any-frame)
-  (define-key evil-org-mode-map (kbd "<normal-state> M-H") 'previous-window-any-frame))
+  (define-key evil-org-mode-map (kbd "<normal-state> M-l") 'next-window-any-frame)
+  (define-key evil-org-mode-map (kbd "<normal-state> M-h") 'previous-window-any-frame))
 #+end_src
 
 Use =M-w= to delete window or workspace (last window is preserved):
@@ -183,6 +184,7 @@ Use =M-w= to delete window or workspace (last window is preserved):
 #+begin_src emacs-lisp
 (map! "M-w" 'delete-window)
 #+end_src
+
 * TODO Coding
  |------------+-------------------------------|
  | Keybinding | Action                        |
@@ -420,21 +422,23 @@ Here's a Karabiner Elements configuration using https://github.com/yqrashawn/Gok
 
    ;; mad scientist mode - extended home row
 
-   ;; semicolon to enter
-   {:des "Semicolon to ENTER" :rules [[:semicolon :return_or_enter]]}
-
-   {:des "Control quote to quote" :rules [[{:key :quote :modi :control} {:key :quote}]]}
-   {:des "Shift quote to double-quote" :rules [[{:key :quote :modi [:left_shift]} {:key :quote :modi :left_shift}]]}
+   ;; quote to enter
+   {:des "Control semi-colon to enter" :rules [[{:key :semicolon :modi :control} {:key :return_or_enter}]]}
+   {:des "Control shift semi-colon to control enter" :rules [[{:key :semicolon :modi [:control :left_shift]} {:key :return_or_enter :modi :control}]]}
 
    ;; mad scientist mode - delete
-   {:des "Open bracket to delete" :rules [[{:key :open_bracket} :delete_or_backspace]]}
-
-   {:des "Control open bracket to open bracket" :rules [[{:key :open_bracket :modi :control} :open_bracket]]}
-   {:des "Shift open bracket to open bracket" :rules [[{:key :open_bracket :modi [:left_shift]} {:key :open_bracket :modi :left_shift}]]}
+   {:des "Control open bracket to delete" :rules [[{:key :open_bracket :modi :left_control} :delete_or_backspace]]}
+   {:des "Control shift open bracket to control delete" :rules [[{:key :open_bracket :modi [:left_control :left_shift]} {:key :delete_or_backspace :modi :control}]]}
 
    ;; / to right shift
    {:des "Slash to shift" :rules [[{:key :slash} :right_shift]]}
    {:des "Control slash to slash " :rules [[{:key :slash :modi [:control]} :slash]]}
+
+   ;; arrows
+   {:des "Control+h to left arrow" :rules [[{:key :h :modi :control} {:key :left_arrow}]]}
+   {:des "Control+j to down arrow" :rules [[{:key :j :modi :control} {:key :down_arrow}]]}
+   {:des "Control+k to up arrow" :rules [[{:key :k :modi :control} {:key :up_arrow}]]}
+   {:des "Control+l to up arrow" :rules [[{:key :l :modi :control} {:key :right_arrow}]]}
  ]
 }
 #+end_example
