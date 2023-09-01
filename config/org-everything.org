@@ -140,9 +140,9 @@ Command to open an specific agenda view with their corresponding org-agenda-file
   (setq org-agenda-files '("~/Personal"))
   ;; special case for agenda view which depends on project
   (pcase (projectile-project-name)
-      ("Work" (setq org-agenda-files '("~/Work" "~/Work/notes"))))
+      ("Work" (setq org-agenda-files '("~/Work"))))
   (pcase type
-         ("w" (setq org-agenda-files '("~/Work" "~/Work/notes")) (org-todo-list))
+         ("w" (setq org-agenda-files '("~/Work")) (org-todo-list))
          ("d" (setq org-agenda-files '("~/.config/doom/config")) (org-todo-list))
          (_ (org-agenda arg type))))
 #+end_src
@@ -302,7 +302,7 @@ Org-roam is a package to create a non-hierarchical knowledge base. The package i
 (use-package org-roam
   :defer t
   :custom
-    (org-roam-directory "~/Personal/notes")
+    (org-roam-directory "~/Work/notes")
     (org-roam-node-display-template
         (concat "${title:80} " (propertize "${tags:20}" 'face 'org-tag))
         org-roam-node-annotation-function
