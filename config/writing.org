@@ -16,8 +16,6 @@ Change dictionary with the following:
         company-transformers '(company-sort-by-occurrence))
     (add-hook 'org-mode-hook 'flyspell-mode)
     (add-hook 'text-mode-hook 'company-mode)
-    (set-company-backend! 'org-mode
-        '(company-ispell company-capf))
     (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 #+end_src
 
@@ -54,10 +52,14 @@ Company-mode page: http://company-mode.github.io/
 (use-package company
   :config
   (setq
-    company-dabbrev-minimum-length 1
+    company-dabbrev-char-regexp "\\(?:\\sw\\|\\s_\\|[A-Z]\\)"
+    company-dabbrev-minimum-length 3
     company-dabbrev-other-buffers t
-    company-dabbrev-ignore-case t
-    company-dabbrev-downcase t))
+    company-dabbrev-ignore-case 'keep-prefix
+    company-dabbrev-downcase nil))
+
+(set-company-backend! 'org-mode
+        '(:separate company-dabbrev company-yasnippet company-ispell company-capf))
 #+end_src
 
 Doom Emacs also come with these 2 packages for grammar checking:
