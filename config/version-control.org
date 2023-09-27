@@ -67,6 +67,26 @@ https://github.com/alphapapa/magit-todos
 (after! magit
     (magit-todos-mode))
 #+end_src
+* Magit quick commit
+
+#+begin_src emacs-lisp
+(defun me/magit-stage-commit-push ()
+  "Stage, commit, and push all modified files to 'origin'."
+  (interactive)
+  (if (not (magit-anything-modified-p))
+      (message "No modified files to commit.")
+    (magit-stage-modified)
+    (let* ((timestamp (format-time-string "%Y-%m-%d %H:%M:%S"))
+      (commit-msg (concat "Update notes " timestamp)))
+      (magit-commit-create (list "-m" commit-msg))
+      (magit-push-current-to-upstream "p"))))
+#+end_src
+
+This function first checks if there are any modified files using =magit-anything-modified-p=. If there are no modified files, it displays a message. Otherwise, it stages the modified files using =magit-stage-modified=, prompts you for a commit message, creates a commit using =magit-commit-create=, and finally pushes the changes to the "origin" remote using =magit-push-current-to-upstream=.
+
+#+begin_src emacs-lisp
+(map! :leader :desc "Magit quick push" "p p" #'me/magit-stage-commit-push)
+#+end_src
 
 * Diff-hl
 #+begin_src emacs-lisp
