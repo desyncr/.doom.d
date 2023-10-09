@@ -51,7 +51,9 @@ Most projects I work with are somewhat following the =PSR12= standard, so let's 
 (setq flycheck-phpcs-standard "PSR12"
       flycheck-phpstan-executable "/Users/dario/.composer/vendor/bin/phpstan"
       flycheck-php-phpcs-executable "/usr/local/bin/phpcs"
-      flycheck-check-syntax-automatically '(save mode-enable))
+      ;; Disabled to improve emacs performance
+      ;;flycheck-check-syntax-automatically '(save mode-enable)
+)
 
 (defun my-php-mode-setup ()
     "My PHP-mode hook."
@@ -65,7 +67,8 @@ Most projects I work with are somewhat following the =PSR12= standard, so let's 
         phpstan-level 4)
     (flycheck-mode t))
 
-(add-hook 'php-mode-hook 'my-php-mode-setup)
+;; Disabled to improve emacs performance
+;; (add-hook 'php-mode-hook 'my-php-mode-setup)
 #+end_src
 
 * LSP
@@ -131,16 +134,16 @@ Configure LSP to ignore specific directories or files when watching for changes 
       company-tooltip-maximum-width 200
       lsp-ui-doc-max-width 150
       lsp-ui-doc-max-height 100
-      lsp-ui-doc-include-signature t
-      lsp-ui-doc-enable t
-      lsp-signature-render-documentation t
-      lsp-signature-auto-activate t
-      lsp-enable-snippet t
-      company-lsp-enable-snippet t
-      lsp-enable-symbol-highlighting t
-      lsp-enable-links t
-      lsp-restart 'auto-restart
-      lsp-intelephense-completion-trigger-parameter-hints t
+      lsp-ui-doc-include-signature nil
+      lsp-ui-doc-enable nil
+      lsp-signature-render-documentation nil
+      lsp-signature-auto-activate nil
+      lsp-enable-snippet nil
+      company-lsp-enable-snippet nil
+      lsp-enable-symbol-highlighting nil
+      lsp-enable-links nil
+      lsp-restart nil ;; 'auto-restart
+      lsp-intelephense-completion-trigger-parameter-hints nil
       lsp-signature-function 'lsp-signature-posframe)
 (company-box-mode -1)
 #+end_src
