@@ -100,27 +100,28 @@ Configure LSP to ignore specific directories or files when watching for changes 
 
 | Option                                              | Description                                                          |
 |-----------------------------------------------------+----------------------------------------------------------------------|
-| =lsp-idle-delay=                                      | Delay before activating the LSP server.                              |
-| =company-idle-delay=                                  | Delay before showing Company completion.                             |
-| =company-tooltip-idle-delay=                          | Delay in seconds until tooltip is shown.                            |
-| =gc-cons-thresh=                                      | Value at which Emacs garbage collection is triggered.                |
-| =company-minimum-prefix-length=                       | Minimum number of characters required to trigger Company completion. |
-| =company-tooltip-limit=                               | Maximum number of candidates to show in the Company tooltip.         |
-| =company-tooltip-minimum-width=                       | Minimum width of the Company tooltip.                                |
-| =company-tooltip-maximum-width=                       | Maximum width of the Company tooltip.                                |
-| =lsp-ui-doc-max-width=                                | Maximum width of the LSP documentation.                              |
-| =lsp-ui-doc-max-height=                               | Maximum height of the LSP documentation.                             |
-| =lsp-ui-doc-include-signature=                        | Whether to include function signatures in the LSP documentation.     |
-| =lsp-ui-doc-enable=                                   | Whether to enable the LSP documentation.                             |
-| =lsp-signature-render-documentation=                  | Whether to render documentation in LSP signatures.                   |
-| =lsp-signature-auto-activate=                         | Whether to automatically activate LSP signatures.                    |
-| =lsp-enable-snippet=                                  | Whether to enable LSP snippets.                                      |
-| =company-lsp-enable-snippet=                          | Whether to enable Company LSP snippets.                              |
-| =lsp-enable-symbol-highlighting=                      | Whether to enable symbol highlighting in LSP.                        |
-| =lsp-enable-links=                                    | Whether to enable links in LSP.                                      |
-| =lsp-restart=                                         | Restart LSP server.                                                  |
-| =lsp-intelephense-completion-trigger-parameter-hints= | Whether to show parameter hints in Intelephense completion.          |
-| =lsp-signature-function=                              | Function used to create the LSP signature.                           |
+| lsp-idle-delay                                      | Delay before activating the LSP server.                              |
+| company-idle-delay                                  | Delay before showing Company completion.                             |
+| company-tooltip-idle-delay                          | Delay in seconds until tooltip is shown.                             |
+| gc-cons-thresh                                      | Value at which Emacs garbage collection is triggered.                |
+| company-minimum-prefix-length                       | Minimum number of characters required to trigger Company completion. |
+| company-tooltip-limit                               | Maximum number of candidates to show in the Company tooltip.         |
+| company-tooltip-minimum-width                       | Minimum width of the Company tooltip.                                |
+| company-tooltip-maximum-width                       | Maximum width of the Company tooltip.                                |
+| lsp-ui-doc-max-width                                | Maximum width of the LSP documentation.                              |
+| lsp-ui-doc-max-height                               | Maximum height of the LSP documentation.                             |
+| lsp-ui-doc-include-signature                        | Whether to include function signatures in the LSP documentation.     |
+| lsp-ui-doc-enable                                   | Whether to enable the LSP documentation.                             |
+| lsp-signature-render-documentation                  | Whether to render documentation in LSP signatures.                   |
+| lsp-signature-auto-activate                         | Whether to automatically activate LSP signatures.                    |
+| lsp-enable-snippet                                  | Whether to enable LSP snippets.                                      |
+| company-lsp-enable-snippet                          | Whether to enable Company LSP snippets.                              |
+| lsp-enable-symbol-highlighting                      | Whether to enable symbol highlighting in LSP.                        |
+| lsp-enable-links                                    | Whether to enable links in LSP.                                      |
+| lsp-restart                                         | Restart LSP server.                                                  |
+| lsp-intelephense-completion-trigger-parameter-hints | Whether to show parameter hints in Intelephense completion.          |
+| lsp-signature-function                              | Function used to create the LSP signature.                           |
+|-----------------------------------------------------+----------------------------------------------------------------------|
 
 
 #+begin_src emacs-lisp
